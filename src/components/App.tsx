@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
+import Navbar from './Navbar';
+import Hero from './Hero';
 
-const Index = () => {
+const App = () => {
   return (
     <div className="min-h-screen bg-brand-primary">
       <Navbar />
@@ -11,4 +11,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default App;

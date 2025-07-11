@@ -18,6 +18,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'heebo': ['Heebo', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,6 +64,13 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				brand: {
+					primary: 'hsl(var(--brand-primary))',
+					accent: 'hsl(var(--brand-accent))',
+					text: 'hsl(var(--brand-text))',
+					surface: 'hsl(var(--brand-surface))',
+					glow: 'hsl(var(--brand-glow))',
 				}
 			},
 			borderRadius: {
