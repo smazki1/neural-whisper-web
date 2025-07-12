@@ -27,7 +27,7 @@ const Solution = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-4xl lg:text-5xl font-bold premium-text-gradient mb-6 md:mb-8 leading-tight text-center"
+            className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold premium-text-gradient mb-6 md:mb-8 leading-snug sm:leading-tight text-center"
           >
             אתם לא צריכים עוד קורס שילמד אתכם לעבוד עם AI -{' '}
             <span className="premium-accent-gradient">אתם צריכים להבין איך להפוך את ה-AI לעוזר האישי שלכם.</span>
@@ -38,19 +38,19 @@ const Solution = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="space-y-6 text-lg md:text-xl lg:text-2xl premium-text-gradient leading-relaxed text-center"
+            className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl premium-text-gradient leading-relaxed text-center"
           >
-            <p className="px-2">
+            <p className="px-2 sm:px-4">
               הטעות הנפוצה היא לראות ב-AI עוד תוכנה. אנחנו רואים בו את{' '}
               <span className="premium-accent-gradient font-semibold">העובד החדש שלכם</span>, שמחכה שתכשירו אותו בעסק שנקרא{' '}
               <span className="premium-accent-gradient font-semibold">החיים שלכם</span>.
             </p>
             
-            <div className="bg-gradient-to-r from-[#eec643]/20 to-[#eec643]/10 rounded-xl p-4 md:p-6 border border-[#eec643]/30 mx-2">
-              <p className="text-xl md:text-2xl lg:text-3xl font-bold text-brand-accent mb-3 md:mb-4">
+            <div className="bg-gradient-to-r from-slate-800/40 to-slate-700/30 rounded-xl p-4 md:p-6 border border-slate-600/20 backdrop-blur-sm mx-2">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-brand-accent mb-3 md:mb-4">
                 זו ההבטחה שלנו:
               </p>
-              <p className="text-base md:text-lg lg:text-xl">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl">
                 אנחנו לא מלמדים אתכם פקודות,{' '}
                 <span className="premium-accent-gradient font-semibold">אנחנו מלמדים אתכם לנהל</span>. במקום להתמקד בטכניקה, אנחנו מתמקדים בכם – ביכולת שלכם להכשיר את ה-AI, להפוך אותו לעוזר אישי שמבין אתכם לפני שאתם מסיימים לדבר.
               </p>
