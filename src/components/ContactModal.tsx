@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface ContactModalProps {
 }
 
 const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,15 +34,30 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
       });
 
       if (response.ok) {
-        console.log('Form submitted successfully');
+        // Show success message
+        toast({
+          title: "תודה רבה!",
+          description: "ההודעה נשלחה בהצלחה. נחזור אליך תוך 24 שעות.",
+          duration: 5000,
+        });
+        
         // Reset form and close modal
         setFormData({ name: '', email: '', message: '' });
         onClose();
       } else {
-        console.error('Form submission failed');
+        toast({
+          title: "שגיאה",
+          description: "אירעה שגיאה בשליחת ההודעה. אנא נסה שוב.",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      toast({
+        title: "שגיאה",
+        description: "אירעה שגיאה בשליחת ההודעה. אנא נסה שוב.",
+        variant: "destructive",
+      });
     }
   };
 

@@ -7,6 +7,7 @@ import Outcome from '../components/Outcome';
 import CTA from '../components/CTA';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
+import { Toaster } from '@/components/ui/toaster';
 import '../index.css'; // Ensure global styles are imported
 
 function Index() {
@@ -32,6 +33,7 @@ function Index() {
       </main>
       <Footer />
       <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+      <Toaster />
     </div>
   );
 }
