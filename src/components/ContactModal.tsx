@@ -13,13 +13,35 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form and close modal
-    setFormData({ name: '', email: '', message: '' });
-    onClose();
+    
+    try {
+      const response = await fetch('https://hook.eu2.make.com/mil6u6k80s78p8i0r2y4sjccia8kegwe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          timestamp: new Date().toISOString(),
+          source: 'AI Master Website'
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Form submitted successfully');
+        // Reset form and close modal
+        setFormData({ name: '', email: '', message: '' });
+        onClose();
+      } else {
+        console.error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
