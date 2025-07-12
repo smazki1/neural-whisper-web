@@ -1,179 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-interface Node {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  opacity: number;
-}
-
-const NeuralNetwork: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>();
-  const nodesRef = useRef<Node[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-
-    const initNodes = () => {
-      const nodeCount = 100;
-      nodesRef.current = Array.from({ length: nodeCount }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        opacity: 0.2 + Math.random() * 0.5,
-      }));
-    };
-
-    const drawNode = (node: Node) => {
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, 2.5, 0, Math.PI * 2);
-      
-      // Enhanced glow effect
-      const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, 10);
-      gradient.addColorStop(0, `rgba(238, 198, 67, ${node.opacity})`);
-      gradient.addColorStop(0.3, `rgba(238, 198, 67, ${node.opacity * 0.6})`);
-      gradient.addColorStop(1, `rgba(238, 198, 67, 0)`);
-      
-      ctx.fillStyle = gradient;
-      ctx.fill();
-      
-      // Core node
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(238, 198, 67, ${Math.min(1, node.opacity * 1.5)})`;
-      ctx.fill();
-    };
-
-    const drawConnection = (node1: Node, node2: Node, distance: number) => {
-      const maxDistance = 120;
-      const opacity = Math.max(0, 1 - distance / maxDistance) * 0.4;
-      
-      const gradient = ctx.createLinearGradient(node1.x, node1.y, node2.x, node2.y);
-      gradient.addColorStop(0, `rgba(238, 198, 67, ${opacity * node1.opacity})`);
-      gradient.addColorStop(0.5, `rgba(238, 198, 67, ${opacity * Math.max(node1.opacity, node2.opacity)})`);
-      gradient.addColorStop(1, `rgba(238, 198, 67, ${opacity * node2.opacity})`);
-      
-      ctx.beginPath();
-      ctx.moveTo(node1.x, node1.y);
-      ctx.lineTo(node2.x, node2.y);
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = 0.8;
-      ctx.stroke();
-    };
-
-    const drawMouseConnections = () => {
-      const maxDistance = 150;
-      nodesRef.current.forEach(node => {
-        const dx = mouseRef.current.x - node.x;
-        const dy = mouseRef.current.y - node.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < maxDistance) {
-          const opacity = Math.max(0, 1 - distance / maxDistance) * 0.6;
-          const gradient = ctx.createLinearGradient(node.x, node.y, mouseRef.current.x, mouseRef.current.y);
-          gradient.addColorStop(0, `rgba(238, 198, 67, ${opacity * node.opacity})`);
-          gradient.addColorStop(1, `rgba(238, 198, 67, ${opacity})`);
-          
-          ctx.beginPath();
-          ctx.moveTo(node.x, node.y);
-          ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
-          ctx.strokeStyle = gradient;
-          ctx.lineWidth = 1.2;
-          ctx.stroke();
-        }
-      });
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      nodesRef.current.forEach(node => {
-        node.x += node.vx;
-        node.y += node.vy;
-        
-        if (node.x <= 0 || node.x >= canvas.width) node.vx *= -1;
-        if (node.y <= 0 || node.y >= canvas.height) node.vy *= -1;
-        
-        node.x = Math.max(0, Math.min(canvas.width, node.x));
-        node.y = Math.max(0, Math.min(canvas.height, node.y));
-        
-        drawNode(node);
-      });
-      
-      for (let i = 0; i < nodesRef.current.length; i++) {
-        for (let j = i + 1; j < nodesRef.current.length; j++) {
-          const node1 = nodesRef.current[i];
-          const node2 = nodesRef.current[j];
-          const dx = node1.x - node2.x;
-          const dy = node1.y - node2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 120) {
-            drawConnection(node1, node2, distance);
-          }
-        }
-      }
-      
-      drawMouseConnections();
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current.x = e.clientX - rect.left;
-      mouseRef.current.y = e.clientY - rect.top;
-    };
-
-    const handleResize = () => {
-      resizeCanvas();
-      initNodes();
-    };
-
-    resizeCanvas();
-    initNodes();
-    
-    // Add a small delay to ensure everything is loaded
-    setTimeout(() => {
-      setIsLoaded(true);
-      animate();
-    }, 100);
-
-    window.addEventListener('resize', handleResize);
-    canvas.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      window.removeEventListener('resize', handleResize);
-      canvas.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${
-        isLoaded ? 'opacity-100' : 'opacity-0'
-      }`}
-      style={{ background: 'transparent' }}
-    />
-  );
-};
+import React from 'react';
+import heroBackground from '../assets/hero-background.jpg';
 
 const Hero = () => {
   const scrollToOffers = () => {
@@ -184,19 +10,20 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden font-heebo pt-16 md:pt-16" dir="rtl">
-      {/* Premium Background - Always visible */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#101933] via-[#0d1528] to-[#0a111f]"></div>
-      
-      {/* Neural Network Animation */}
-      <div className="absolute inset-0 z-0">
-        <NeuralNetwork />
-      </div>
-
-      {/* Ambient Gradient Overlays */}
+    <section 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden font-heebo pt-16 md:pt-16"
+      dir="rtl"
+      style={{
+        backgroundImage: `linear-gradient(rgba(16, 25, 51, 0.7), rgba(16, 25, 51, 0.7)), url(${heroBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Subtle Ambient Gradient Overlays */}
       <div className="absolute inset-0 z-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-[#eec643]/10 to-transparent rounded-full blur-3xl animate-premium-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-l from-[#eec643]/8 to-transparent rounded-full blur-3xl animate-premium-float" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-[#eec643]/5 to-transparent rounded-full blur-3xl animate-premium-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-l from-[#eec643]/3 to-transparent rounded-full blur-3xl animate-premium-float" style={{ animationDelay: '3s' }}></div>
       </div>
 
       {/* Content Container */}
