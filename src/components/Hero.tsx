@@ -1,5 +1,5 @@
 import React from 'react';
-import heroBackground from '../assets/hero-background.jpg';
+import heroBackground from '../assets/backgrounds/hero/hero-background-01.jpg';
 import HeroBackground from './Hero/HeroBackground';
 import HeroContent from './Hero/HeroContent';
 import HeroCTA from './Hero/HeroCTA';
