@@ -27,10 +27,10 @@ const Problem = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold premium-text-gradient mb-6 md:mb-8 leading-snug sm:leading-tight text-center"
+            className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-snug sm:leading-tight text-center hebrew-mobile-wrap"
           >
             אם ניסיתם לעבוד עם כלי-AI וקיבלתם תוצאות רובוטיות, או שאתם פשוט{' '}
-            <span className="premium-accent-gradient">לא יודעים מאיפה להתחיל</span>
+            <span className="text-[#eec643] font-bold">לא יודעים מאיפה להתחיל</span>
             {' '}- אתם לא לבד.
           </motion.h2>
           
@@ -39,16 +39,16 @@ const Problem = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl premium-text-gradient leading-relaxed text-center"
+            className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center"
           >
-            <p className="px-2 sm:px-4">
+            <p className="px-2 sm:px-4 hebrew-mobile-wrap">
               יש פער עצום בין ההבטחה של מהפכת ה-AI לבין המציאות. אתם רואים אנשים עובדים עם הכלים האלו ומגיעים לתוצאות פורצות דרך, שומעים על זה בחדשות וברשתות, ומרגישים שאתם{' '}
-              <span className="premium-accent-gradient font-semibold">עומדים במקום בזמן שהעולם דוהר קדימה</span>.
+              <span className="text-[#eec643] font-semibold">עומדים במקום בזמן שהעולם דוהר קדימה</span>.
             </p>
             
-            <p className="px-2 sm:px-4">
+            <p className="px-2 sm:px-4 hebrew-mobile-wrap">
               מה שעוצר אתכם הוא לא המחסום הטכנולוגי. זה משהו הרבה יותר עמוק. זה{' '}
-              <span className="premium-accent-gradient font-semibold">הפחד שלא תדעו איך לגרום ל-AI להבין אתכם</span>. כל ניסיון שמוביל לתוצאה גנרית מרגיש כמו עוד הוכחה שהכלים האלו פשוט לא בשבילכם.
+              <span className="text-[#eec643] font-semibold">הפחד שלא תדעו איך לגרום ל-AI להבין אתכם</span>. כל ניסיון שמוביל לתוצאה גנרית מרגיש כמו עוד הוכחה שהכלים האלו פשוט לא בשבילכם.
             </p>
           </motion.div>
         </motion.div>

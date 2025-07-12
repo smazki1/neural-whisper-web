@@ -27,10 +27,10 @@ const Solution = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold premium-text-gradient mb-6 md:mb-8 leading-snug sm:leading-tight text-center"
+            className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-snug sm:leading-tight text-center hebrew-mobile-wrap"
           >
             אתם לא צריכים עוד קורס שילמד אתכם לעבוד עם AI -{' '}
-            <span className="premium-accent-gradient">אתם צריכים להבין איך להפוך את ה-AI לעוזר האישי שלכם.</span>
+            <span className="text-[#eec643] font-bold">אתם צריכים להבין איך להפוך את ה-AI לעוזר האישי שלכם.</span>
           </motion.h2>
           
           <motion.div
@@ -38,21 +38,21 @@ const Solution = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl premium-text-gradient leading-relaxed text-center"
+            className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center"
           >
-            <p className="px-2 sm:px-4">
+            <p className="px-2 sm:px-4 hebrew-mobile-wrap">
               הטעות הנפוצה היא לראות ב-AI עוד תוכנה. אנחנו רואים בו את{' '}
-              <span className="premium-accent-gradient font-semibold">העובד החדש שלכם</span>, שמחכה שתכשירו אותו בעסק שנקרא{' '}
-              <span className="premium-accent-gradient font-semibold">החיים שלכם</span>.
+              <span className="text-[#eec643] font-semibold">העובד החדש שלכם</span>, שמחכה שתכשירו אותו בעסק שנקרא{' '}
+              <span className="text-[#eec643] font-semibold">החיים שלכם</span>.
             </p>
             
             <div className="bg-gradient-to-r from-slate-800/40 to-slate-700/30 rounded-xl p-4 md:p-6 border border-slate-600/20 backdrop-blur-sm mx-2">
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-brand-accent mb-3 md:mb-4">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-[#eec643] mb-3 md:mb-4 hebrew-mobile-wrap">
                 זו ההבטחה שלנו:
               </p>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 hebrew-mobile-wrap">
                 אנחנו לא מלמדים אתכם פקודות,{' '}
-                <span className="premium-accent-gradient font-semibold">אנחנו מלמדים אתכם לנהל</span>. במקום להתמקד בטכניקה, אנחנו מתמקדים בכם – ביכולת שלכם להכשיר את ה-AI, להפוך אותו לעוזר אישי שמבין אתכם לפני שאתם מסיימים לדבר.
+                <span className="text-[#eec643] font-semibold">אנחנו מלמדים אתכם לנהל</span>. במקום להתמקד בטכניקה, אנחנו מתמקדים בכם – ביכולת שלכם להכשיר את ה-AI, להפוך אותו לעוזר אישי שמבין אתכם לפני שאתם מסיימים לדבר.
               </p>
             </div>
           </motion.div>

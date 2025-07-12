@@ -96,10 +96,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                         </svg>
                       </div>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold premium-accent-gradient mb-3">
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#eec643] mb-3 hebrew-mobile-wrap">
                       בואו נתחיל לעבוד יחד
                     </h2>
-                    <p className="text-lg text-brand-text/80 premium-text-gradient">
+                    <p className="text-lg text-gray-300 hebrew-mobile-wrap">
                       ספר לנו על הפרויקט שלך ונחזור אליך תוך 24 שעות
                     </p>
                   </motion.div>

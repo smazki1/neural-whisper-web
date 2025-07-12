@@ -148,17 +148,35 @@
   }
 
   .premium-text-gradient {
+    color: hsl(var(--brand-text)); /* Fallback color */
     background: var(--brand-gradient-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
+  /* Fallback for browsers that don't support background-clip */
+  @supports not (background-clip: text) {
+    .premium-text-gradient {
+      color: hsl(var(--brand-text));
+      background: none;
+    }
+  }
+
   .premium-accent-gradient {
+    color: hsl(var(--brand-accent)); /* Fallback color */
     background: var(--brand-gradient-accent);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Fallback for browsers that don't support background-clip */
+  @supports not (background-clip: text) {
+    .premium-accent-gradient {
+      color: hsl(var(--brand-accent));
+      background: none;
+    }
   }
 
   .premium-glow {
@@ -258,4 +276,13 @@
   background: rgba(16, 25, 51, 0.8);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(238, 198, 67, 0.2);
+}
+
+/* Hebrew Text Optimization - Minimal word wrap fix only */
+@media (max-width: 640px) {
+  .hebrew-mobile-wrap {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
 }

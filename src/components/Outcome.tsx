@@ -64,8 +64,8 @@ const Outcome = () => {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold premium-text-gradient mb-6 md:mb-8 leading-tight px-2">
-            <span className="text-brand-accent">כאן תגלו איך להפוך את המכונה</span>{' '}
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-tight px-2 hebrew-mobile-wrap">
+            <span className="text-[#eec643] font-bold">כאן תגלו איך להפוך את המכונה</span>{' '}
             לשותף יצירתי אמיתי
           </h2>
         </motion.div>
@@ -87,10 +87,10 @@ const Outcome = () => {
                 <div className="mb-4 md:mb-6 p-3 md:p-4 bg-brand-accent/10 rounded-full border border-[#eec643]/20">
                   {benefit.icon}
                 </div>
-                <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-brand-accent mb-3 md:mb-4 leading-snug">
+                <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-[#eec643] mb-3 md:mb-4 leading-snug hebrew-mobile-wrap">
                   {benefit.title}
                 </h3>
-                <p className="text-base md:text-lg text-brand-text/90 leading-relaxed text-center">
+                <p className="text-base md:text-lg text-gray-300 leading-relaxed text-center hebrew-mobile-wrap">
                   {benefit.text}
                 </p>
               </div>

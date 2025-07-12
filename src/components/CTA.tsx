@@ -31,9 +31,9 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-4xl lg:text-5xl font-bold premium-text-gradient mb-8 md:mb-12 leading-tight px-2"
+            className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-8 md:mb-12 leading-tight px-2 hebrew-mobile-wrap"
           >
-            <span className="premium-accent-gradient">מוכנים להתחיל?</span>{' '}
+            <span className="text-[#eec643] font-bold">מוכנים להתחיל?</span>{' '}
             שלא נבזבז זמן.
           </motion.h2>
 
@@ -52,7 +52,7 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
               whileTap={{ scale: 0.95 }}
               className="premium-button-primary premium-glow text-base md:text-lg lg:text-xl px-6 md:px-8 py-3 md:py-4 group w-full lg:w-auto min-w-[280px] md:min-w-[300px]"
             >
-              <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
+              <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3 hebrew-mobile-wrap">
                 למד אותי לחשוב עם AI
                 <svg className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -67,7 +67,7 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
               whileTap={{ scale: 0.95 }}
               className="premium-button-secondary text-base md:text-lg lg:text-xl px-6 md:px-8 py-3 md:py-4 group w-full lg:w-auto min-w-[280px] md:min-w-[300px] border-2 border-[#eec643] text-[#eec643] hover:bg-[#eec643] hover:text-[#101933] transition-all duration-300"
             >
-              <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
+              <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3 hebrew-mobile-wrap">
                 למד את הצוות שלי לחשוב עם AI
                 <svg className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
@@ -82,7 +82,7 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="text-lg md:text-xl lg:text-2xl premium-text-gradient leading-relaxed mb-12 md:mb-16 px-2"
+            className="text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed mb-12 md:mb-16 px-2 hebrew-mobile-wrap"
           >
             בין אם אתם יזמים עם מחברת מלאה ברעיונות, ובין אם אתם אנשי מקצוע שרוצים להפוך את המהפכה הזו להזדמנות שלכם – יש לנו את המסלול המדויק עבורכם.
           </motion.p>
@@ -96,7 +96,7 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
             className="mt-12 md:mt-16"
           >
             <div className="glassmorphism-dark rounded-2xl p-6 md:p-8 border border-[#eec643]/20">
-              <p className="text-lg md:text-xl premium-text-gradient mb-4 md:mb-6">
+              <p className="text-lg md:text-xl text-gray-300 mb-4 md:mb-6 hebrew-mobile-wrap">
                 יש לכם שאלות? רוצים לדעת יותר?
               </p>
               <button 
