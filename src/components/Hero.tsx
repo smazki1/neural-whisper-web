@@ -1,4 +1,6 @@
 import React from 'react';
+// To test different backgrounds, simply change the number below (01-11 available)
+// hero-background-01.png through hero-background-10.png and hero-background-11.jpeg
 import heroBackground from '../assets/backgrounds/hero/hero-background-01.png';
 import HeroBackground from './Hero/HeroBackground';
 import HeroContent from './Hero/HeroContent';
