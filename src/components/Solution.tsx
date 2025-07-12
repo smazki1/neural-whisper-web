@@ -3,25 +3,59 @@ import { motion } from 'framer-motion';
 
 const Solution = () => {
   return (
-    <section className="py-20 bg-brand-primary font-heebo" dir="rtl">
-      <div className="container mx-auto px-6 max-w-6xl">
+    <section className="py-16 md:py-20 font-heebo relative overflow-hidden" dir="rtl">
+      {/* Premium Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#101933] via-[#0d1528] to-[#101933]"></div>
+      
+      {/* Ambient Elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-l from-[#eec643]/5 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/2 left-0 w-80 h-80 bg-gradient-to-r from-[#eec643]/3 to-transparent rounded-full blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="bg-brand-surface rounded-xl p-8 md:p-12 shadow-2xl border border-brand-surface/50"
+          className="premium-card p-6 md:p-8 lg:p-12 relative group"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-brand-text mb-8 leading-tight">
-            אני לא אלמד אותך AI,{' '}
-            <span className="text-brand-accent">אני אלמד אותך לחשוב עם AI.</span>
-          </h2>
+          {/* Premium Glow Effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#eec643]/10 via-transparent to-[#eec643]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
           
-          <p className="text-xl md:text-2xl text-brand-text/90 leading-relaxed">
-            הסדנאות וההדרכות שלנו לא עוסקות בקוד או במונחים טכניים. הן עוסקות במתודולוגיות מעשיות: איך לשאול את השאלות הנכונות, איך להפוך רעיון מופשט לתוכנית פעולה, ואיך להשתמש בבינה מלאכותית כ{' '}
-            <span className="text-brand-accent font-semibold">'מראה קוגניטיבית'</span>{' '}
-            שמספקת לך בהירות מיידית. זהו שיתוף פעולה בין האינטואיציה האנושית שלך לעוצמת העיבוד של המכונה.
-          </p>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-2xl md:text-4xl lg:text-5xl font-bold premium-text-gradient mb-6 md:mb-8 leading-tight text-center"
+          >
+            אתם לא צריכים עוד קורס שילמד אתכם לעבוד עם AI -{' '}
+            <span className="premium-accent-gradient">אתם צריכים להבין איך להפוך את ה-AI לעוזר האישי שלכם.</span>
+          </motion.h2>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="space-y-6 text-lg md:text-xl lg:text-2xl premium-text-gradient leading-relaxed text-center"
+          >
+            <p className="px-2">
+              הטעות הנפוצה היא לראות ב-AI עוד תוכנה. אנחנו רואים בו את{' '}
+              <span className="premium-accent-gradient font-semibold">העובד החדש שלכם</span>, שמחכה שתכשירו אותו בעסק שנקרא{' '}
+              <span className="premium-accent-gradient font-semibold">החיים שלכם</span>.
+            </p>
+            
+            <div className="bg-gradient-to-r from-[#eec643]/20 to-[#eec643]/10 rounded-xl p-4 md:p-6 border border-[#eec643]/30 mx-2">
+              <p className="text-xl md:text-2xl lg:text-3xl font-bold text-brand-accent mb-3 md:mb-4">
+                זו ההבטחה שלנו:
+              </p>
+              <p className="text-base md:text-lg lg:text-xl">
+                אנחנו לא מלמדים אתכם פקודות,{' '}
+                <span className="premium-accent-gradient font-semibold">אנחנו מלמדים אתכם לנהל</span>. במקום להתמקד בטכניקה, אנחנו מתמקדים בכם – ביכולת שלכם להכשיר את ה-AI, להפוך אותו לעוזר אישי שמבין אתכם לפני שאתם מסיימים לדבר.
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-brand-accent">AI Visionary</h3>
+            <h3 className="text-2xl font-bold text-brand-accent">AI Master</h3>
             <p className="text-brand-text/80 leading-relaxed">
               הופכים רעיונות למציאות בעזרת בינה מלאכותית והכלים המתקדמים ביותר.
             </p>
@@ -64,7 +64,7 @@ const Footer = () => {
 
         <div className="border-t border-brand-surface mt-8 pt-8 text-center">
           <p className="text-brand-text/60">
-            © 2024 AI Visionary. כל הזכויות שמורות.
+            © 2024 AI Master. כל הזכויות שמורות.
           </p>
         </div>
       </div>

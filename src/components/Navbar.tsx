@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+interface NavbarProps {
+  onContactClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -23,47 +28,49 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Brand Name - Right Side */}
-          <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-brand-accent">
-              AI Visionary
-            </h1>
-          </div>
-
-          {/* Navigation Links and Contact Button - Left Side */}
-          <div className="hidden md:flex items-center space-x-8 space-x-reverse">
-            {/* Navigation Links */}
-            <div className="flex items-center space-x-6 space-x-reverse">
-              <a
-                href="#home"
-                className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
-              >
-                בית
-              </a>
-              <a
-                href="#about"
-                className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
-              >
-                אודות
-              </a>
-              <a
-                href="#courses"
-                className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
-              >
-                סדנאות וקורסים
-              </a>
-              <a
-                href="#blog"
-                className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
-              >
-                בלוג
-              </a>
-            </div>
-
-            {/* Contact Button */}
-            <button className="px-6 py-2 border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-200 rounded-md font-medium">
+          {/* Contact Button - Far Left (in RTL) */}
+          <div className="hidden md:block">
+            <button
+              onClick={onContactClick}
+              className="px-6 py-2 border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-200 rounded-md font-medium"
+            >
               צור קשר
             </button>
+          </div>
+
+          {/* Navigation Links - Center */}
+          <div className="hidden md:flex items-center space-x-6 space-x-reverse">
+            <Link
+              to="/"
+              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
+            >
+              בית
+            </Link>
+            <Link
+              to="/about"
+              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
+            >
+              אודות
+            </Link>
+            <a
+              href="#courses"
+              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
+            >
+              סדנאות וקורסים
+            </a>
+            <a
+              href="#blog"
+              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
+            >
+              בלוג
+            </a>
+          </div>
+
+          {/* Brand Name - Far Right (in RTL) */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="text-2xl font-bold text-brand-accent">
+              AI Master
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
