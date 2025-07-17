@@ -58,12 +58,12 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             >
               סדנאות וקורסים
             </a>
-            <a
-              href="#blog"
+            <Link
+              to="/blog"
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
             >
               בלוג
-            </a>
+            </Link>
           </div>
 
           {/* Brand Name - Far Right (in RTL) */}
