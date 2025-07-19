@@ -44,8 +44,8 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-xl font-semibold text-brand-text">צור קשר</h4>
             <div className="space-y-2 text-brand-text/80">
-              <p>info@aivisionary.co.il</p>
-              <p>054-123-4567</p>
+              <p>avifrid121@gmail.com</p>
+              <p>052-777-2807</p>
               <div className="flex space-x-4 space-x-reverse pt-4">
                 <a href="#" className="text-brand-text/80 hover:text-brand-accent transition-colors duration-200">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -64,7 +64,7 @@ const Footer = () => {
 
         <div className="border-t border-brand-surface mt-8 pt-8 text-center">
           <p className="text-brand-text/60">
-            © 2024 AI Master. כל הזכויות שמורות.
+            © 2025 AI Master. כל הזכויות שמורות.
           </p>
         </div>
       </div>
