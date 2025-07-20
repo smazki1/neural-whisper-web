@@ -44,7 +44,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-xl font-semibold text-brand-text">צור קשר</h4>
             <div className="space-y-2 text-brand-text/80">
-              <p>avifrid121@gmail.com</p>
+              <p>avi@ai-master.co.il</p>
               <p>052-777-2807</p>
               <div className="flex space-x-4 space-x-reverse pt-4">
                 <a href="#" className="text-brand-text/80 hover:text-brand-accent transition-colors duration-200">
