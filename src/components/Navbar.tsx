@@ -52,6 +52,19 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             >
               אודות
             </Link>
+            <div className="relative group">
+              <span className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium cursor-pointer">
+                עסקים
+              </span>
+              <div className="absolute top-full right-0 mt-2 w-64 bg-brand-primary border border-brand-surface rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <Link
+                  to="/business-workshop"
+                  className="block px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  סדנת AI לעסקים
+                </Link>
+              </div>
+            </div>
             <a
               href="#courses"
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
