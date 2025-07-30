@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 
 interface NavbarProps {
   onContactClick: () => void;
@@ -7,6 +8,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,18 +59,20 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 עסקים
               </span>
               <div className="absolute top-full right-0 mt-2 w-64 bg-brand-primary border border-brand-surface rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <Link
-                  to="/business-workshop"
-                  className="block px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                <button
+                  onClick={() => setIsComingSoonOpen(true)}
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
                 >
                   סדנת AI לעסקים
-                </Link>
-                <Link
-                  to="/ai-strategy-course"
-                  className="block px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                  <span className="text-xs text-brand-accent mr-2">בקרוב</span>
+                </button>
+                <button
+                  onClick={() => setIsComingSoonOpen(true)}
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
                 >
                   קורס AI אסטרטגי
-                </Link>
+                  <span className="text-xs text-brand-accent mr-2">בקרוב</span>
+                </button>
               </div>
             </div>
             <a
@@ -112,6 +116,24 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
           </div>
         </div>
       </div>
+      
+      <Dialog open={isComingSoonOpen} onOpenChange={setIsComingSoonOpen}>
+        <DialogContent className="bg-brand-primary border border-brand-surface" dir="rtl">
+          <DialogHeader>
+            <DialogTitle className="text-brand-accent text-center text-xl">
+              בקרוב
+            </DialogTitle>
+          </DialogHeader>
+          <div className="text-center py-6">
+            <p className="text-brand-text text-lg mb-4">
+              העמוד הזה נמצא בפיתוח ויהיה זמין בקרוב
+            </p>
+            <p className="text-brand-text/80">
+              תודה על הסבלנות 🚀
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </nav>
   );
 };
