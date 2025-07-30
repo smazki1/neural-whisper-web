@@ -63,6 +63,12 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 >
                   סדנת AI לעסקים
                 </Link>
+                <Link
+                  to="/ai-strategy-course"
+                  className="block px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  קורס AI אסטרטגי
+                </Link>
               </div>
             </div>
             <a
