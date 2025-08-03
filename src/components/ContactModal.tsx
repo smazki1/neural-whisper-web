@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { Checkbox } from './ui/checkbox';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -12,11 +13,21 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    acceptPrivacy: false
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.acceptPrivacy) {
+      toast({
+        title: "נדרש אישור מדיניות הפרטיות",
+        description: "יש לאשר את מדיניות הפרטיות לפני שליחת הטופס.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     try {
       const response = await fetch('https://hook.eu2.make.com/mil6u6k80s78p8i0r2y4sjccia8kegwe', {
@@ -42,7 +53,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
         });
         
         // Reset form and close modal
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', message: '', acceptPrivacy: false });
         onClose();
       } else {
         toast({
@@ -65,6 +76,13 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
+    });
+  };
+
+  const handleCheckboxChange = (checked: boolean) => {
+    setFormData({
+      ...formData,
+      acceptPrivacy: checked
     });
   };
 
@@ -223,6 +241,33 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                       </div>
                     </motion.div>
 
+                    {/* Privacy Policy Checkbox */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.75 }}
+                      className="flex items-start space-x-3 space-x-reverse"
+                    >
+                      <Checkbox
+                        id="acceptPrivacy"
+                        checked={formData.acceptPrivacy}
+                        onCheckedChange={handleCheckboxChange}
+                        className="mt-1"
+                      />
+                      <label htmlFor="acceptPrivacy" className="text-sm text-brand-text/80 leading-relaxed">
+                        קראתי ואני מסכים ל
+                        <a 
+                          href="/privacy-policy" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-[#eec643] hover:underline mx-1"
+                        >
+                          מדיניות הפרטיות
+                        </a>
+                        של האתר
+                      </label>
+                    </motion.div>
+
                     {/* Submit button */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -233,7 +278,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                         type="submit"
                         whileHover={{ scale: 1.02, y: -2 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full premium-button-primary text-xl py-4 group relative overflow-hidden"
+                        disabled={!formData.acceptPrivacy}
+                        className="w-full premium-button-primary text-xl py-4 group relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <span className="relative z-10 flex items-center justify-center gap-3">
                           שלח הודעה

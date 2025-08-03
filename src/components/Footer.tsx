@@ -62,8 +62,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-brand-surface mt-8 pt-8 text-center">
-          <p className="text-brand-text/60">
+        <div className="border-t border-brand-surface mt-8 pt-8">
+          <div className="flex justify-center items-center space-x-4 space-x-reverse mb-4">
+            <a href="/privacy-policy" className="text-brand-text/60 hover:text-brand-accent transition-colors duration-200">
+              מדיניות פרטיות
+            </a>
+          </div>
+          <p className="text-brand-text/60 text-center">
             © 2025 AI Master. כל הזכויות שמורות.
           </p>
         </div>
