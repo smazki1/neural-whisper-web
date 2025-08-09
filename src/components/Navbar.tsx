@@ -82,6 +82,12 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               סדנאות וקורסים
             </a>
             <Link
+              to="/learn"
+              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
+            >
+              פלטפורמת למידה
+            </Link>
+            <Link
               to="/blog"
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
             >
