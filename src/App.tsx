@@ -13,6 +13,7 @@ import AIStrategyCourse from "./pages/AIStrategyCourse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import LearningPlatform from "./pages/LearningPlatform";
+import CourseManager from "./pages/CourseManager";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/business-workshop" element={<BusinessWorkshop />} />
             <Route path="/ai-strategy-course" element={<AIStrategyCourse />} />
             <Route path="/learn" element={<LearningPlatform />} />
+            <Route path="/courses/manage" element={<CourseManager />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/admin101" element={<Admin />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
