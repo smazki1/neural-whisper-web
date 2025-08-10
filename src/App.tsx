@@ -14,6 +14,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import LearningPlatform from "./pages/LearningPlatform";
 import CourseManager from "./pages/CourseManager";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
+import Auth from "./pages/Auth";
 
 const queryClient = new QueryClient();
 
@@ -26,14 +28,15 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/business-workshop" element={<BusinessWorkshop />} />
             <Route path="/ai-strategy-course" element={<AIStrategyCourse />} />
             <Route path="/learn" element={<LearningPlatform />} />
-            <Route path="/courses/manage" element={<CourseManager />} />
+            <Route path="/courses/manage" element={<ProtectedRoute><CourseManager /></ProtectedRoute>} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/admin101" element={<Admin />} />
+            <Route path="/admin101" element={<ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

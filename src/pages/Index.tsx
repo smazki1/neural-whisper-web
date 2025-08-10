@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Problem from '../components/Problem';
@@ -30,6 +31,9 @@ function Index() {
         <Solution />
         <Outcome />
         <CTA onContactClick={handleContactClick} />
+        <div className="text-center py-6">
+          <Link to="/auth" className="underline">התחברות / הרשמה</Link>
+        </div>
       </main>
       <Footer />
       <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
