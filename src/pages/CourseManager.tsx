@@ -425,13 +425,13 @@ const CourseManager: React.FC = () => {
       <Navbar onContactClick={() => {}} />
 
       <main className="container mx-auto px-6 lg:px-8 pt-28 pb-16">
-        <h1 className="text-3xl md:text-4xl font-bold mb-6">ניהול קורסים</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-6 animate-fade-in">ניהול קורסים</h1>
         <p className="text-muted-foreground mb-8">
           שים לב: כדי ליצור ולעדכן נתונים יש להתחבר לחשבון Supabase. משתמשים לא מחוברים יראו רשימה ריקה (עקב RLS).
         </p>
 
         <div className="grid lg:grid-cols-2 gap-6">
-          <Card>
+          <Card className="animate-fade-in">
             <CardHeader>
               <CardTitle>יצירת/עדכון קורס</CardTitle>
             </CardHeader>

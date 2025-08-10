@@ -130,12 +130,12 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-background p-8" dir="rtl">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-foreground">פאנל ניהול - דאשבורד</h1>
+        <h1 className="text-4xl font-bold mb-8 text-foreground animate-fade-in">פאנל ניהול - דאשבורד</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Form Section */}
           <div className="lg:col-span-1">
-            <Card className="p-6">
+            <Card className="p-6 animate-fade-in">
               <h2 className="text-2xl font-semibold mb-4">
                 {isEditing ? 'עריכת פוסט' : 'יצירת פוסט חדש'}
               </h2>
@@ -197,11 +197,11 @@ const Admin = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button type="submit" className="flex-1">
+                  <Button type="submit" className="flex-1 hover-scale">
                     {isEditing ? 'עדכן פוסט' : 'צור פוסט'}
                   </Button>
                   {isEditing && (
-                    <Button type="button" variant="outline" onClick={cancelEdit}>
+                    <Button type="button" variant="outline" onClick={cancelEdit} className="hover-scale">
                       ביטול
                     </Button>
                   )}
@@ -212,7 +212,7 @@ const Admin = () => {
 
           {/* Posts List Section */}
           <div className="lg:col-span-2">
-            <Card className="p-6">
+            <Card className="p-6 animate-fade-in">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold">רשימת פוסטים</h2>
                 <div className="text-sm text-muted-foreground">

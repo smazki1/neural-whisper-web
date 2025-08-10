@@ -23,16 +23,16 @@ function Index() {
   };
 
   return (
-    <div className="bg-[#101933] text-[#d8d5db] font-['Heebo']">
+    <div className="bg-[#101933] text-[#d8d5db] font-['Heebo'] animate-fade-in">
       <Navbar onContactClick={handleContactClick} />
-      <main>
+      <main className="animate-fade-in">
         <Hero />
         <Problem />
         <Solution />
         <Outcome />
         <CTA onContactClick={handleContactClick} />
         <div className="text-center py-6">
-          <Link to="/auth" className="underline">התחברות / הרשמה</Link>
+          <Link to="/auth" className="story-link">התחברות / הרשמה</Link>
         </div>
       </main>
       <Footer />
