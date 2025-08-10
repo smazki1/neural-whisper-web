@@ -11,7 +11,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Switch } from "@/components/ui/switch";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel as ShadFormLabel, FormMessage } from "@/components/ui/form";
 
 // Local types to match DB schema
 type CourseCategory = "strategy" | "marketing" | "tech";
@@ -66,6 +70,25 @@ const levelLabel: Record<CourseLevel, string> = {
   advanced: "מתקדמים",
 };
 
+// Validation schemas
+const CourseSchema = z.object({
+  title: z.string().min(2, "שם הקורס חייב להכיל לפחות 2 תווים"),
+  category: z.enum(["strategy", "marketing", "tech"], { required_error: "בחרו קטגוריה" }),
+  level: z.enum(["beginner", "intermediate", "advanced"], { required_error: "בחרו רמה" }),
+  duration: z.string().max(100).optional().nullable(),
+  description: z.string().max(2000).optional().nullable(),
+  published: z.boolean().optional(),
+});
+export type CourseFormValues = z.infer<typeof CourseSchema>;
+
+const ResourceSchema = z.object({
+  lesson_id: z.string().min(1, "בחרו שיעור"),
+  type: z.enum(["video", "pdf", "slides", "link"]),
+  label: z.string().max(120).optional().nullable(),
+  url: z.string().url("קישור לא תקין"),
+});
+export type ResourceFormValues = z.infer<typeof ResourceSchema>;
+
 const CourseManager: React.FC = () => {
   const { toast } = useToast();
 
@@ -76,16 +99,68 @@ const CourseManager: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // Forms state
-  const [courseForm, setCourseForm] = useState<Partial<Course>>({
-    title: "",
-    category: "strategy",
-    level: "beginner",
-    duration: "",
-    description: "",
-    published: false,
-  });
+  // Edit state
   const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
+
+  // React Hook Form for Course
+  const courseFormHook = useForm<CourseFormValues>({
+    resolver: zodResolver(CourseSchema),
+    defaultValues: {
+      title: "",
+      category: "strategy",
+      level: "beginner",
+      duration: "",
+      description: "",
+      published: false,
+    },
+  });
+
+  const onSubmitCourse = async (values: CourseFormValues) => {
+    try {
+      if (editingCourseId) {
+        const { error } = await supabase
+          .from("courses")
+          .update({
+            title: values.title,
+            category: values.category,
+            level: values.level,
+            duration: values.duration ?? null,
+            description: values.description ?? null,
+            published: !!values.published,
+          })
+          .eq("id", editingCourseId);
+        if (error) throw error;
+        toast({ title: "הקורס עודכן" });
+      } else {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const userId = sessionData.session?.user?.id;
+        if (!userId) {
+          toast({
+            title: "נדרש להתחבר",
+            description: "כדי ליצור קורס חדש, התחברו לחשבון",
+            variant: "destructive",
+          });
+          return;
+        }
+        const { error } = await supabase.from("courses").insert({
+          user_id: userId,
+          title: values.title,
+          category: values.category,
+          level: values.level,
+          duration: values.duration || null,
+          description: values.description || null,
+          published: !!values.published,
+        });
+        if (error) throw error;
+        toast({ title: "קורס נוצר בהצלחה" });
+      }
+      courseFormHook.reset();
+      setEditingCourseId(null);
+      await loadAll();
+    } catch (error: any) {
+      toast({ title: "שגיאה בשמירה", description: error.message, variant: "destructive" });
+    }
+  };
 
   const [moduleForm, setModuleForm] = useState<{ course_id: string; title: string; description: string; position: number }>({
     course_id: "",
@@ -213,64 +288,17 @@ const CourseManager: React.FC = () => {
   }, []);
 
   const resetCourseForm = () => {
-    setCourseForm({ title: "", category: "strategy", level: "beginner", duration: "", description: "", published: false });
+    courseFormHook.reset({ title: "", category: "strategy", level: "beginner", duration: "", description: "", published: false });
     setEditingCourseId(null);
   };
 
-  const handleSaveCourse = async () => {
-    if (!courseForm.title || !courseForm.category || !courseForm.level) {
-      toast({ title: "חסר מידע", description: "שם, קטגוריה ורמה נדרשים" });
-      return;
-    }
-
-    try {
-      if (editingCourseId) {
-        const { error } = await supabase
-          .from("courses")
-          .update({
-            title: courseForm.title,
-            category: courseForm.category,
-            level: courseForm.level,
-            duration: courseForm.duration ?? null,
-            description: courseForm.description ?? null,
-            published: !!courseForm.published,
-          })
-          .eq("id", editingCourseId);
-        if (error) throw error;
-        toast({ title: "הקורס עודכן" });
-      } else {
-        const { data: sessionData } = await supabase.auth.getSession();
-        const userId = sessionData.session?.user?.id;
-        if (!userId) {
-          toast({
-            title: "נדרש להתחבר",
-            description: "כדי ליצור קורס חדש, התחברו לחשבון",
-            variant: "destructive",
-          });
-          return;
-        }
-        const { error } = await supabase.from("courses").insert({
-          user_id: userId,
-          title: courseForm.title!,
-          category: courseForm.category as CourseCategory,
-          level: courseForm.level as CourseLevel,
-          duration: courseForm.duration || null,
-          description: courseForm.description || null,
-          published: !!courseForm.published,
-        });
-        if (error) throw error;
-        toast({ title: "קורס נוצר בהצלחה" });
-      }
-      resetCourseForm();
-      await loadAll();
-    } catch (error: any) {
-      toast({ title: "שגיאה בשמירה", description: error.message, variant: "destructive" });
-    }
+  const handleSaveCourse = () => {
+    courseFormHook.handleSubmit(onSubmitCourse)();
   };
 
   const handleEditCourse = (c: Course) => {
     setEditingCourseId(c.id);
-    setCourseForm({
+    courseFormHook.reset({
       title: c.title,
       category: c.category,
       level: c.level,
@@ -375,56 +403,116 @@ const CourseManager: React.FC = () => {
               <CardTitle>יצירת/עדכון קורס</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title">שם הקורס</Label>
-                <Input id="title" value={courseForm.title || ""} onChange={(e) => setCourseForm((p) => ({ ...p, title: e.target.value }))} />
-              </div>
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="grid gap-2">
-                  <Label>קטגוריה</Label>
-                  <Select value={(courseForm.category as CourseCategory) || "strategy"} onValueChange={(v) => setCourseForm((p) => ({ ...p, category: v as CourseCategory }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="בחר קטגוריה" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="strategy">אסטרטגיה</SelectItem>
-                      <SelectItem value="marketing">שיווק</SelectItem>
-                      <SelectItem value="tech">טכנולוגיה</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-2">
-                  <Label>רמה</Label>
-                  <Select value={(courseForm.level as CourseLevel) || "beginner"} onValueChange={(v) => setCourseForm((p) => ({ ...p, level: v as CourseLevel }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="בחר רמה" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="beginner">מתחילים</SelectItem>
-                      <SelectItem value="intermediate">ביניים</SelectItem>
-                      <SelectItem value="advanced">מתקדמים</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="duration">משך</Label>
-                  <Input id="duration" value={courseForm.duration || ""} onChange={(e) => setCourseForm((p) => ({ ...p, duration: e.target.value }))} />
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">תיאור</Label>
-                <Textarea id="description" value={courseForm.description || ""} onChange={(e) => setCourseForm((p) => ({ ...p, description: e.target.value }))} />
-              </div>
-              <div className="flex items-center gap-3">
-                <Switch checked={!!courseForm.published} onCheckedChange={(v) => setCourseForm((p) => ({ ...p, published: v }))} />
-                <span>פרסום קורס</span>
-              </div>
-              <div className="flex gap-3">
-                <Button onClick={handleSaveCourse}>{editingCourseId ? "עדכון" : "שמירה"}</Button>
-                {editingCourseId && (
-                  <Button variant="outline" onClick={resetCourseForm}>ביטול עריכה</Button>
-                )}
-              </div>
+              <Form {...courseFormHook}>
+                <form onSubmit={courseFormHook.handleSubmit(onSubmitCourse)} className="space-y-4">
+                  <FormField
+                    control={courseFormHook.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <ShadFormLabel>שם הקורס</ShadFormLabel>
+                        <FormControl>
+                          <Input placeholder="לדוגמה: AI Business Mastery" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <FormField
+                      control={courseFormHook.control}
+                      name="category"
+                      render={({ field }) => (
+                        <FormItem>
+                          <ShadFormLabel>קטגוריה</ShadFormLabel>
+                          <Select value={field.value} onValueChange={field.onChange}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="בחר קטגוריה" />
+                            </SelectTrigger>
+                            <SelectContent className="z-[60]">
+                              <SelectItem value="strategy">אסטרטגיה</SelectItem>
+                              <SelectItem value="marketing">שיווק</SelectItem>
+                              <SelectItem value="tech">טכנולוגיה</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={courseFormHook.control}
+                      name="level"
+                      render={({ field }) => (
+                        <FormItem>
+                          <ShadFormLabel>רמה</ShadFormLabel>
+                          <Select value={field.value} onValueChange={field.onChange}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="בחר רמה" />
+                            </SelectTrigger>
+                            <SelectContent className="z-[60]">
+                              <SelectItem value="beginner">מתחילים</SelectItem>
+                              <SelectItem value="intermediate">ביניים</SelectItem>
+                              <SelectItem value="advanced">מתקדמים</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={courseFormHook.control}
+                      name="duration"
+                      render={({ field }) => (
+                        <FormItem>
+                          <ShadFormLabel>משך</ShadFormLabel>
+                          <FormControl>
+                            <Input placeholder="לדוגמה: 9 שעות · 3 מפגשים" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={courseFormHook.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <ShadFormLabel>תיאור</ShadFormLabel>
+                        <FormControl>
+                          <Textarea rows={4} placeholder="תיאור קצר של הקורס" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={courseFormHook.control}
+                    name="published"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center gap-3">
+                          <Switch checked={!!field.value} onCheckedChange={field.onChange} />
+                          <ShadFormLabel className="m-0">פרסום קורס</ShadFormLabel>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="flex gap-3">
+                    <Button type="submit">{editingCourseId ? "עדכון" : "שמירה"}</Button>
+                    {editingCourseId && (
+                      <Button variant="outline" type="button" onClick={resetCourseForm}>ביטול עריכה</Button>
+                    )}
+                  </div>
+                </form>
+              </Form>
             </CardContent>
           </Card>
 
@@ -439,7 +527,7 @@ const CourseManager: React.FC = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="בחר קורס" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[60]">
                     {courses.map((c) => (
                       <SelectItem key={c.id} value={c.id}>{c.title}</SelectItem>
                     ))}
@@ -457,7 +545,7 @@ const CourseManager: React.FC = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="בחר מודול" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[60]">
                     {modules.map((m) => (
                       <SelectItem key={m.id} value={m.id}>{m.title}</SelectItem>
                     ))}
@@ -476,7 +564,7 @@ const CourseManager: React.FC = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="בחר שיעור" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[60]">
                     {lessons.map((l) => (
                       <SelectItem key={l.id} value={l.id}>{l.title}</SelectItem>
                     ))}
@@ -486,7 +574,7 @@ const CourseManager: React.FC = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="סוג" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[60]">
                     <SelectItem value="video">וידאו</SelectItem>
                     <SelectItem value="pdf">PDF</SelectItem>
                     <SelectItem value="slides">מצגת</SelectItem>
