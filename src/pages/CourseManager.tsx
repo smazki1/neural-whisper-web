@@ -287,6 +287,39 @@ const CourseManager: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Realtime updates: listen to changes on courses/modules/lessons/resources
+  useEffect(() => {
+    const handleChange = (payload: any) => {
+      const table = payload.table as string;
+      const event = payload.eventType as 'INSERT' | 'UPDATE' | 'DELETE';
+      const tableLabel = table === 'courses' ? 'קורס' : table === 'modules' ? 'מודול' : table === 'lessons' ? 'שיעור' : 'משאב';
+      const actionLabel = event === 'INSERT' ? 'נוסף' : event === 'UPDATE' ? 'עודכן' : 'נמחק';
+
+      toast({ title: 'עדכון בזמן אמת', description: `${tableLabel} ${actionLabel}` });
+      // Refresh data
+      loadAll();
+    };
+
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'courses' }, handleChange)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'courses' }, handleChange)
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'courses' }, handleChange)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'modules' }, handleChange)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'modules' }, handleChange)
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'modules' }, handleChange)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'lessons' }, handleChange)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'lessons' }, handleChange)
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'lessons' }, handleChange)
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'resources' }, handleChange)
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'resources' }, handleChange)
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'resources' }, handleChange)
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [toast]);
   const resetCourseForm = () => {
     courseFormHook.reset({ title: "", category: "strategy", level: "beginner", duration: "", description: "", published: false });
     setEditingCourseId(null);
