@@ -16,7 +16,7 @@ import LearningPlatform from "./pages/LearningPlatform";
 import CourseManager from "./pages/CourseManager";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Auth from "./pages/Auth";
-
+import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -37,6 +37,7 @@ const App = () => (
             <Route path="/courses/manage" element={<ProtectedRoute><CourseManager /></ProtectedRoute>} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/admin101" element={<ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
+            <Route path="/landing/ai-marketing-accelerator" element={<AIMarketingAccelerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
