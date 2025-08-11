@@ -1,182 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-// Simple demo data. You can later connect this to Supabase for dynamic content.
-interface Resource {
-  type: "video" | "pdf" | "slides" | "link";
-  label: string;
-  url: string;
-}
-
-interface Lesson {
-  title: string;
-  duration?: string;
-  resources: Resource[];
-}
-
-interface Module {
-  title: string;
-  lessons: Lesson[];
-}
+import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
+import { BookOpen, Clock, Tag } from "lucide-react";
 
 interface Course {
   id: string;
   title: string;
-  category: "strategy" | "marketing" | "tech";
-  level: "beginner" | "intermediate" | "advanced";
+  category: string;
+  level: string;
   duration: string;
   description: string;
-  modules: Module[];
 }
 
-const courses: Course[] = [
-  {
-    id: "ai-business-mastery",
-    title: "AI Business Mastery",
-    category: "strategy",
-    level: "advanced",
-    duration: "9 שעות · 3 מפגשים",
-    description:
-      "תוכנית אסטרטגית מקיפה לבעלי עסקים שרוצים להפוך את ה-AI למנוע צמיחה תחרותי ולבנות יתרון ארוך טווח.",
-    modules: [
-      {
-        title: "אסטרטגיית שוק ומיצוב תחרותי",
-        lessons: [
-          {
-            title: "מיפוי הזדמנויות ונישות עם AI",
-            duration: "50 ד׳",
-            resources: [
-              { type: "video", label: "וידאו מלא", url: "#" },
-              { type: "pdf", label: "דוח הזדמנויות", url: "#" },
-              { type: "slides", label: "מצגת השיעור", url: "#" },
-            ],
-          },
-          {
-            title: "חקר קהל והתנהגות",
-            duration: "35 ד׳",
-            resources: [
-              { type: "video", label: "וידאו", url: "#" },
-              { type: "link", label: "תבנית פרסונות", url: "#" },
-            ],
-          },
-        ],
-      },
-      {
-        title: "מיתוג ומסרים אסטרטגיים",
-        lessons: [
-          {
-            title: "DNA מותג וקול ייחודי",
-            duration: "40 ד׳",
-            resources: [
-              { type: "video", label: "וידאו", url: "#" },
-              { type: "pdf", label: "מדריך מותג", url: "#" },
-            ],
-          },
-          {
-            title: "היררכיית מסרים ובדיקות",
-            duration: "30 ד׳",
-            resources: [
-              { type: "video", label: "וידאו", url: "#" },
-              { type: "slides", label: "שקפים", url: "#" },
-            ],
-          },
-        ],
-      },
-      {
-        title: "מערכות שיווק ואופטימיזציה",
-        lessons: [
-          {
-            title: "מפעל תוכן חכם",
-            duration: "45 ד׳",
-            resources: [
-              { type: "video", label: "וידאו", url: "#" },
-              { type: "link", label: "מחולל תוכן", url: "#" },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "ai-marketing-systems",
-    title: "AI Marketing Systems",
-    category: "marketing",
-    level: "intermediate",
-    duration: "6 שעות · 2 מפגשים",
-    description:
-      "בניית מערכות שיווק מבוססות AI: משפכי מכירה, אוטומציות ואופטימיזציה להמרות.",
-    modules: [
-      {
-        title: "תוכן שממיר",
-        lessons: [
-          {
-            title: "ארכיטקטורת תוכן לפלטפורמות שונות",
-            duration: "35 ד׳",
-            resources: [
-              { type: "video", label: "וידאו", url: "#" },
-              { type: "pdf", label: "צ׳קליסט", url: "#" },
-            ],
-          },
-        ],
-      },
-      {
-        title: "אופטימיזציית המרות",
-        lessons: [
-          {
-            title: "A/B Testing חכם",
-            duration: "30 ד׳",
-            resources: [
-              { type: "slides", label: "מצגת", url: "#" },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "prompt-engineering-tech",
-    title: "Prompt Engineering Tech",
-    category: "tech",
-    level: "beginner",
-    duration: "4 שעות · 1 מפגש",
-    description:
-      "יסודות פרומפטינג מעשיים לבניית תהליכי עבודה יעילים ויציבים.",
-    modules: [
-      {
-        title: "יסודות",
-        lessons: [
-          {
-            title: "מסגרות פרומפטינג",
-            duration: "25 ד׳",
-            resources: [
-              { type: "video", label: "וידאו", url: "#" },
-              { type: "pdf", label: "סיכום", url: "#" },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-];
-
-const levelLabel: Record<Course["level"], string> = {
-  beginner: "מתחילים",
-  intermediate: "ביניים",
-  advanced: "מתקדמים",
-};
-
-const categoryLabel: Record<Course["category"], string> = {
+const categoryLabel: Record<string, string> = {
   strategy: "אסטרטגיה",
   marketing: "שיווק",
   tech: "טכנולוגיה",
 };
 
+const levelLabel: Record<string, string> = {
+  beginner: "מתחילים",
+  intermediate: "ביניים",
+  advanced: "מתקדמים",
+};
+
 const LearningPlatform: React.FC = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select('id, title, category, level, duration, description')
+          .eq('published', true)
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching courses:', error);
+        } else {
+          setCourses(data || []);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const handleStartLearning = (courseId: string) => {
+    navigate(`/courses/${courseId}`);
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -219,80 +105,108 @@ const LearningPlatform: React.FC = () => {
       <main>
         <section className="pb-16">
           <div className="container mx-auto px-6 lg:px-8">
-            <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid grid-cols-4 sm:inline-flex">
-                <TabsTrigger value="all">הכל</TabsTrigger>
-                <TabsTrigger value="strategy">אסטרטגיה</TabsTrigger>
-                <TabsTrigger value="marketing">שיווק</TabsTrigger>
-                <TabsTrigger value="tech">טכנולוגיה</TabsTrigger>
-              </TabsList>
+            {loading ? (
+              <div className="space-y-6">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {[...Array(6)].map((_, i) => (
+                    <Card key={i} className="flex flex-col">
+                      <CardHeader>
+                        <Skeleton className="h-6 w-3/4" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-2/3" />
+                      </CardHeader>
+                      <CardContent>
+                        <Skeleton className="h-10 w-full" />
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            ) : courses.length === 0 ? (
+              <div className="text-center py-16">
+                <BookOpen className="mx-auto h-16 w-16 text-muted-foreground mb-4" />
+                <h2 className="text-2xl font-semibold mb-2">אין קורסים זמינים</h2>
+                <p className="text-muted-foreground">
+                  בקרוב יהיו פה קורסים מדהימים! בינתיים, עקבו אחרינו לעדכונים.
+                </p>
+              </div>
+            ) : (
+              <Tabs defaultValue="all" className="w-full">
+                <TabsList className="grid grid-cols-4 sm:inline-flex mb-8">
+                  <TabsTrigger value="all">הכל</TabsTrigger>
+                  <TabsTrigger value="strategy">אסטרטגיה</TabsTrigger>
+                  <TabsTrigger value="marketing">שיווק</TabsTrigger>
+                  <TabsTrigger value="tech">טכנולוגיה</TabsTrigger>
+                </TabsList>
 
-              {(["all", "strategy", "marketing", "tech"] as const).map((tab) => (
-                <TabsContent key={tab} value={tab} className="mt-6">
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {courses
-                      .filter((c) => (tab === "all" ? true : c.category === tab))
-                      .map((course) => (
-                        <Card key={course.id} className="flex flex-col">
-                          <CardHeader>
-                            <div className="flex items-center justify-between">
-                              <CardTitle className="text-xl">{course.title}</CardTitle>
-                              <Badge variant="secondary">{levelLabel[course.level]}</Badge>
-                            </div>
-                            <CardDescription>{course.description}</CardDescription>
-                            <div className="mt-2 text-sm text-muted-foreground">
-                              קטגוריה: {categoryLabel[course.category]} · משך: {course.duration}
-                            </div>
-                          </CardHeader>
-                          <CardContent className="flex-1">
-                            <Accordion type="single" collapsible className="w-full">
-                              {course.modules.map((m, idx) => (
-                                <AccordionItem key={idx} value={`item-${idx}`}>
-                                  <AccordionTrigger className="text-base">
-                                    {m.title}
-                                  </AccordionTrigger>
-                                  <AccordionContent>
-                                    <ul className="space-y-4">
-                                      {m.lessons.map((lesson, li) => (
-                                        <li key={li} className="rounded-md border p-4">
-                                          <div className="flex items-center justify-between gap-4">
-                                            <div>
-                                              <p className="font-medium">{lesson.title}</p>
-                                              {lesson.duration && (
-                                                <p className="text-sm text-muted-foreground">משך: {lesson.duration}</p>
-                                              )}
-                                            </div>
-                                            <div className="flex flex-wrap gap-2 justify-end">
-                                              {lesson.resources.map((r, ri) => (
-                                                <a
-                                                  key={ri}
-                                                  href={r.url}
-                                                  onClick={(e) => r.url === "#" && e.preventDefault()}
-                                                  className=""
-                                                  aria-label={`${r.label} לשיעור ${lesson.title}`}
-                                                >
-                                                  <Button variant="outline" size="sm">
-                                                    {resourceIcon(r.type)}
-                                                    {r.label}
-                                                  </Button>
-                                                </a>
-                                              ))}
-                                            </div>
-                                          </div>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </AccordionContent>
-                                </AccordionItem>
-                              ))}
-                            </Accordion>
-                          </CardContent>
-                        </Card>
-                      ))}
-                  </div>
-                </TabsContent>
-              ))}
-            </Tabs>
+                {(["all", "strategy", "marketing", "tech"] as const).map((tab) => (
+                  <TabsContent key={tab} value={tab} className="mt-6">
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {courses
+                        .filter((c) => (tab === "all" ? true : c.category === tab))
+                        .map((course) => (
+                          <Card 
+                            key={course.id} 
+                            className="group flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 hover:border-primary/20"
+                          >
+                            <CardHeader className="flex-1">
+                              <div className="flex items-start justify-between gap-4">
+                                <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                                  {course.title}
+                                </CardTitle>
+                                <Badge 
+                                  variant="secondary" 
+                                  className="shrink-0 bg-gradient-to-r from-primary/10 to-primary/20 text-primary border-primary/20"
+                                >
+                                  {levelLabel[course.level] || course.level}
+                                </Badge>
+                              </div>
+                              
+                              <CardDescription className="text-base leading-relaxed mt-3">
+                                {course.description}
+                              </CardDescription>
+                              
+                              <div className="flex items-center gap-4 mt-4 text-sm text-muted-foreground">
+                                <div className="flex items-center gap-1">
+                                  <Tag className="h-4 w-4" />
+                                  {categoryLabel[course.category] || course.category}
+                                </div>
+                                {course.duration && (
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="h-4 w-4" />
+                                    {course.duration}
+                                  </div>
+                                )}
+                              </div>
+                            </CardHeader>
+                            
+                            <CardContent className="pt-0">
+                              <Button 
+                                onClick={() => handleStartLearning(course.id)}
+                                className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                                size="lg"
+                              >
+                                <BookOpen className="ml-2 h-4 w-4" />
+                                התחל ללמוד
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        ))}
+                    </div>
+                    
+                    {courses.filter((c) => (tab === "all" ? true : c.category === tab)).length === 0 && (
+                      <div className="text-center py-12">
+                        <Tag className="mx-auto h-12 w-12 text-muted-foreground mb-3" />
+                        <h3 className="text-lg font-medium mb-2">אין קורסים בקטגוריה זו</h3>
+                        <p className="text-muted-foreground">
+                          נסו לחפש בקטגוריות אחרות או חזרו מאוחר יותר.
+                        </p>
+                      </div>
+                    )}
+                  </TabsContent>
+                ))}
+              </Tabs>
+            )}
           </div>
         </section>
       </main>
@@ -300,19 +214,5 @@ const LearningPlatform: React.FC = () => {
   );
 };
 
-function resourceIcon(type: Resource["type"]) {
-  // lightweight inline icons (unicode) to avoid extra deps
-  const className = "mr-1";
-  switch (type) {
-    case "video":
-      return <span className={className}>🎬</span>;
-    case "pdf":
-      return <span className={className}>📄</span>;
-    case "slides":
-      return <span className={className}>🖥️</span>;
-    default:
-      return <span className={className}>🔗</span>;
-  }
-}
 
 export default LearningPlatform;
