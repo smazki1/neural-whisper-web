@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, BookOpen, Clock, Tag, Lock, User } from "lucide-react";
+import { Search, BookOpen, Clock, Tag } from "lucide-react";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
 
 interface Resource {
   id: string;
@@ -44,21 +42,8 @@ interface Course {
   duration?: string;
   description?: string;
   published: boolean;
-  user_id: string;
   modules: Module[];
 }
-
-const levelColors: Record<Course["level"], string> = {
-  beginner: "bg-green-100 text-green-800 border-green-200",
-  intermediate: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  advanced: "bg-red-100 text-red-800 border-red-200",
-};
-
-const categoryColors: Record<Course["category"], string> = {
-  strategy: "bg-blue-100 text-blue-800 border-blue-200",
-  marketing: "bg-purple-100 text-purple-800 border-purple-200",
-  tech: "bg-orange-100 text-orange-800 border-orange-200",
-};
 
 const levelLabel: Record<Course["level"], string> = {
   beginner: "מתחילים",
@@ -72,8 +57,19 @@ const categoryLabel: Record<Course["category"], string> = {
   tech: "טכנולוגיה",
 };
 
-const LearningPlatform: React.FC = () => {
-  const { user } = useAuth();
+const levelColors: Record<Course["level"], string> = {
+  beginner: "bg-green-100 text-green-800 border-green-200",
+  intermediate: "bg-yellow-100 text-yellow-800 border-yellow-200",
+  advanced: "bg-red-100 text-red-800 border-red-200",
+};
+
+const categoryColors: Record<Course["category"], string> = {
+  strategy: "bg-blue-100 text-blue-800 border-blue-200",
+  marketing: "bg-purple-100 text-purple-800 border-purple-200",
+  tech: "bg-orange-100 text-orange-800 border-orange-200",
+};
+
+const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -81,22 +77,15 @@ const LearningPlatform: React.FC = () => {
 
   useEffect(() => {
     loadCourses();
-  }, [user]);
+  }, []);
 
   const loadCourses = async () => {
     try {
-      // Load courses that are either published OR owned by the current user
-      let query = supabase.from("courses").select("*");
-      
-      if (user) {
-        // Authenticated users see published courses + their own unpublished courses
-        query = query.or(`published.eq.true,user_id.eq.${user.id}`);
-      } else {
-        // Unauthenticated users see only published courses
-        query = query.eq("published", true);
-      }
-
-      const { data: coursesData, error: coursesError } = await query
+      // Load published courses with their modules, lessons, and resources
+      const { data: coursesData, error: coursesError } = await supabase
+        .from("courses")
+        .select("*")
+        .eq("published", true)
         .order("created_at", { ascending: false });
 
       if (coursesError) throw coursesError;
@@ -144,7 +133,6 @@ const LearningPlatform: React.FC = () => {
         duration: course.duration,
         description: course.description,
         published: course.published,
-        user_id: course.user_id,
         modules: (modulesData || [])
           .filter(module => module.course_id === course.id)
           .map(module => ({
@@ -239,12 +227,12 @@ const LearningPlatform: React.FC = () => {
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
       <Helmet>
-        <title>פלטפורמת למידה: קורסים וחומרי עזר | AI Master</title>
+        <title>קורסים מפורסמים | AI Master</title>
         <meta
           name="description"
-          content="פלטפורמת למידה אינטראקטיבית: קורסים מלאים וחומרי עזר לכל שיעור. למדו אסטרטגיה, שיווק וטכנולוגיה עם AI."
+          content="גלה את הקורסים המפורסמים שלנו ברכיבי AI, שיווק ואסטרטגיה עסקית. חומרי למידה איכותיים ומעשיים."
         />
-        <link rel="canonical" href="https://ai-master.co.il/learn" />
+        <link rel="canonical" href="https://ai-master.co.il/courses" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
@@ -253,29 +241,12 @@ const LearningPlatform: React.FC = () => {
           <div className="flex items-center gap-3 mb-4">
             <BookOpen className="h-8 w-8 text-primary" />
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-              פלטפורמת למידה אינטראקטיבית
+              קורסים מפורסמים
             </h1>
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mb-6">
-            מרחב מודרני להצגת קורסים מלאים, מערכי שיעור וחומרי עזר קלים להורדה
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            גלה את הקורסים המפורסמים שלנו עם תוכן מקיף, שיעורים מובנים וחומרי עזר מעשיים
           </p>
-          
-          <div className="flex flex-wrap gap-3">
-            <Link to="/courses">
-              <Button variant="outline" className="gap-2">
-                <BookOpen className="h-4 w-4" />
-                צפה בקורסים מפורסמים
-              </Button>
-            </Link>
-            {user && (
-              <Link to="/courses/manage">
-                <Button variant="outline" className="gap-2">
-                  <User className="h-4 w-4" />
-                  נהל את הקורסים שלך
-                </Button>
-              </Link>
-            )}
-          </div>
         </div>
       </header>
 
@@ -315,17 +286,9 @@ const LearningPlatform: React.FC = () => {
               <div className="text-center py-16">
                 <BookOpen className="h-16 w-16 text-muted-foreground/50 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-2">לא נמצאו קורסים</h3>
-                <p className="text-muted-foreground mb-4">
-                  {searchTerm ? "נסה לשנות את מונחי החיפוש" : "עדיין לא נוספו קורסים למערכת"}
+                <p className="text-muted-foreground">
+                  {searchTerm ? "נסה לשנות את מונחי החיפוש" : "עדיין לא פורסמו קורסים במערכת"}
                 </p>
-                {user && (
-                  <Link to="/courses/manage">
-                    <Button className="gap-2">
-                      <User className="h-4 w-4" />
-                      צור קורס חדש
-                    </Button>
-                  </Link>
-                )}
               </div>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -334,12 +297,6 @@ const LearningPlatform: React.FC = () => {
                     <CardHeader className="space-y-3">
                       <div className="flex items-start justify-between gap-2">
                         <CardTitle className="text-xl leading-tight">{course.title}</CardTitle>
-                        {!course.published && user && course.user_id === user.id && (
-                          <Badge variant="outline" className="bg-orange-100 text-orange-800 border-orange-200 gap-1">
-                            <Lock className="h-3 w-3" />
-                            טיוטה
-                          </Badge>
-                        )}
                       </div>
                       
                       <div className="flex flex-wrap gap-2">
@@ -445,5 +402,4 @@ const LearningPlatform: React.FC = () => {
   );
 };
 
-
-export default LearningPlatform;
+export default Courses;

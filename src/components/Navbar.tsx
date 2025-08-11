@@ -81,13 +81,32 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             >
               סדנאות וקורסים
             </a>
-            <button
-              onClick={() => setIsComingSoonOpen(true)}
-              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium flex items-center gap-2"
-            >
-              פלטפורמת למידה
-              <span className="text-xs text-brand-accent">בקרוב</span>
-            </button>
+            <div className="relative group">
+              <span className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium cursor-pointer">
+                פלטפורמת למידה
+              </span>
+              <div className="absolute top-full right-0 mt-2 w-64 bg-brand-primary border border-brand-surface rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <Link
+                  to="/courses"
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  קורסים מפורסמים
+                </Link>
+                <Link
+                  to="/learn"
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  פלטפורמת למידה מלאה
+                </Link>
+                <Link
+                  to="/courses/manage"
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  ניהול קורסים
+                  <span className="text-xs text-brand-accent mr-2">דורש הרשמה</span>
+                </Link>
+              </div>
+            </div>
             <Link
               to="/blog"
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
