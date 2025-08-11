@@ -1,38 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Search, BookOpen, Clock, Tag, Lock, User } from "lucide-react";
-import { toast } from "sonner";
-import { Link } from "react-router-dom";
 
+// Simple demo data. You can later connect this to Supabase for dynamic content.
 interface Resource {
-  id: string;
   type: "video" | "pdf" | "slides" | "link";
   label: string;
   url: string;
 }
 
 interface Lesson {
-  id: string;
   title: string;
-  content?: string;
   duration?: string;
-  position: number;
   resources: Resource[];
 }
 
 interface Module {
-  id: string;
   title: string;
-  description?: string;
-  position: number;
   lessons: Lesson[];
 }
 
@@ -41,24 +29,140 @@ interface Course {
   title: string;
   category: "strategy" | "marketing" | "tech";
   level: "beginner" | "intermediate" | "advanced";
-  duration?: string;
-  description?: string;
-  published: boolean;
-  user_id: string;
+  duration: string;
+  description: string;
   modules: Module[];
 }
 
-const levelColors: Record<Course["level"], string> = {
-  beginner: "bg-green-100 text-green-800 border-green-200",
-  intermediate: "bg-yellow-100 text-yellow-800 border-yellow-200",
-  advanced: "bg-red-100 text-red-800 border-red-200",
-};
-
-const categoryColors: Record<Course["category"], string> = {
-  strategy: "bg-blue-100 text-blue-800 border-blue-200",
-  marketing: "bg-purple-100 text-purple-800 border-purple-200",
-  tech: "bg-orange-100 text-orange-800 border-orange-200",
-};
+const courses: Course[] = [
+  {
+    id: "ai-business-mastery",
+    title: "AI Business Mastery",
+    category: "strategy",
+    level: "advanced",
+    duration: "9 שעות · 3 מפגשים",
+    description:
+      "תוכנית אסטרטגית מקיפה לבעלי עסקים שרוצים להפוך את ה-AI למנוע צמיחה תחרותי ולבנות יתרון ארוך טווח.",
+    modules: [
+      {
+        title: "אסטרטגיית שוק ומיצוב תחרותי",
+        lessons: [
+          {
+            title: "מיפוי הזדמנויות ונישות עם AI",
+            duration: "50 ד׳",
+            resources: [
+              { type: "video", label: "וידאו מלא", url: "#" },
+              { type: "pdf", label: "דוח הזדמנויות", url: "#" },
+              { type: "slides", label: "מצגת השיעור", url: "#" },
+            ],
+          },
+          {
+            title: "חקר קהל והתנהגות",
+            duration: "35 ד׳",
+            resources: [
+              { type: "video", label: "וידאו", url: "#" },
+              { type: "link", label: "תבנית פרסונות", url: "#" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "מיתוג ומסרים אסטרטגיים",
+        lessons: [
+          {
+            title: "DNA מותג וקול ייחודי",
+            duration: "40 ד׳",
+            resources: [
+              { type: "video", label: "וידאו", url: "#" },
+              { type: "pdf", label: "מדריך מותג", url: "#" },
+            ],
+          },
+          {
+            title: "היררכיית מסרים ובדיקות",
+            duration: "30 ד׳",
+            resources: [
+              { type: "video", label: "וידאו", url: "#" },
+              { type: "slides", label: "שקפים", url: "#" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "מערכות שיווק ואופטימיזציה",
+        lessons: [
+          {
+            title: "מפעל תוכן חכם",
+            duration: "45 ד׳",
+            resources: [
+              { type: "video", label: "וידאו", url: "#" },
+              { type: "link", label: "מחולל תוכן", url: "#" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "ai-marketing-systems",
+    title: "AI Marketing Systems",
+    category: "marketing",
+    level: "intermediate",
+    duration: "6 שעות · 2 מפגשים",
+    description:
+      "בניית מערכות שיווק מבוססות AI: משפכי מכירה, אוטומציות ואופטימיזציה להמרות.",
+    modules: [
+      {
+        title: "תוכן שממיר",
+        lessons: [
+          {
+            title: "ארכיטקטורת תוכן לפלטפורמות שונות",
+            duration: "35 ד׳",
+            resources: [
+              { type: "video", label: "וידאו", url: "#" },
+              { type: "pdf", label: "צ׳קליסט", url: "#" },
+            ],
+          },
+        ],
+      },
+      {
+        title: "אופטימיזציית המרות",
+        lessons: [
+          {
+            title: "A/B Testing חכם",
+            duration: "30 ד׳",
+            resources: [
+              { type: "slides", label: "מצגת", url: "#" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "prompt-engineering-tech",
+    title: "Prompt Engineering Tech",
+    category: "tech",
+    level: "beginner",
+    duration: "4 שעות · 1 מפגש",
+    description:
+      "יסודות פרומפטינג מעשיים לבניית תהליכי עבודה יעילים ויציבים.",
+    modules: [
+      {
+        title: "יסודות",
+        lessons: [
+          {
+            title: "מסגרות פרומפטינג",
+            duration: "25 ד׳",
+            resources: [
+              { type: "video", label: "וידאו", url: "#" },
+              { type: "pdf", label: "סיכום", url: "#" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
 
 const levelLabel: Record<Course["level"], string> = {
   beginner: "מתחילים",
@@ -73,125 +177,10 @@ const categoryLabel: Record<Course["category"], string> = {
 };
 
 const LearningPlatform: React.FC = () => {
-  const { user } = useAuth();
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-
-  useEffect(() => {
-    loadCourses();
-  }, [user]);
-
-  const loadCourses = async () => {
-    try {
-      // Load courses that are either published OR owned by the current user
-      let query = supabase.from("courses").select("*");
-      
-      if (user) {
-        // Authenticated users see published courses + their own unpublished courses
-        query = query.or(`published.eq.true,user_id.eq.${user.id}`);
-      } else {
-        // Unauthenticated users see only published courses
-        query = query.eq("published", true);
-      }
-
-      const { data: coursesData, error: coursesError } = await query
-        .order("created_at", { ascending: false });
-
-      if (coursesError) throw coursesError;
-
-      if (!coursesData || coursesData.length === 0) {
-        setCourses([]);
-        setLoading(false);
-        return;
-      }
-
-      // Load modules for these courses
-      const { data: modulesData, error: modulesError } = await supabase
-        .from("modules")
-        .select("*")
-        .in("course_id", coursesData.map(c => c.id))
-        .order("position", { ascending: true });
-
-      if (modulesError) throw modulesError;
-
-      // Load lessons for these modules
-      const moduleIds = modulesData?.map(m => m.id) || [];
-      const { data: lessonsData, error: lessonsError } = await supabase
-        .from("lessons")
-        .select("*")
-        .in("module_id", moduleIds)
-        .order("position", { ascending: true });
-
-      if (lessonsError) throw lessonsError;
-
-      // Load resources for these lessons
-      const lessonIds = lessonsData?.map(l => l.id) || [];
-      const { data: resourcesData, error: resourcesError } = await supabase
-        .from("resources")
-        .select("*")
-        .in("lesson_id", lessonIds);
-
-      if (resourcesError) throw resourcesError;
-
-      // Organize the data structure
-      const coursesWithData: Course[] = coursesData.map(course => ({
-        id: course.id,
-        title: course.title,
-        category: course.category as Course["category"],
-        level: course.level as Course["level"],
-        duration: course.duration,
-        description: course.description,
-        published: course.published,
-        user_id: course.user_id,
-        modules: (modulesData || [])
-          .filter(module => module.course_id === course.id)
-          .map(module => ({
-            id: module.id,
-            title: module.title,
-            description: module.description,
-            position: module.position,
-            lessons: (lessonsData || [])
-              .filter(lesson => lesson.module_id === module.id)
-              .map(lesson => ({
-                id: lesson.id,
-                title: lesson.title,
-                content: lesson.content,
-                duration: lesson.duration,
-                position: lesson.position,
-                resources: (resourcesData || [])
-                  .filter(resource => resource.lesson_id === lesson.id)
-                  .map(resource => ({
-                    id: resource.id,
-                    type: resource.type as Resource["type"],
-                    label: resource.label || "משאב",
-                    url: resource.url,
-                  })),
-              })),
-          })),
-      }));
-
-      setCourses(coursesWithData);
-    } catch (error) {
-      console.error("Error loading courses:", error);
-      toast.error("שגיאה בטעינת הקורסים");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filteredCourses = courses.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         course.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || course.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    itemListElement: filteredCourses.map((c, i) => ({
+    itemListElement: courses.map((c, i) => ({
       "@type": "Course",
       position: i + 1,
       name: c.title,
@@ -203,38 +192,6 @@ const LearningPlatform: React.FC = () => {
       },
     })),
   };
-
-  const resourceIcon = (type: Resource["type"]) => {
-    const className = "mr-1";
-    switch (type) {
-      case "video":
-        return <span className={className}>🎬</span>;
-      case "pdf":
-        return <span className={className}>📄</span>;
-      case "slides":
-        return <span className={className}>🖥️</span>;
-      default:
-        return <span className={className}>🔗</span>;
-    }
-  };
-
-  if (loading) {
-    return (
-      <div dir="rtl" className="min-h-screen bg-background">
-        <div className="container mx-auto px-6 lg:px-8 pt-28 pb-16">
-          <div className="space-y-6">
-            <div className="h-8 bg-muted rounded animate-pulse"></div>
-            <div className="h-4 bg-muted rounded w-2/3 animate-pulse"></div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-64 bg-muted rounded-lg animate-pulse"></div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
@@ -248,196 +205,94 @@ const LearningPlatform: React.FC = () => {
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
-      <header className="pt-28 pb-8 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <header className="pt-28 pb-8">
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-              פלטפורמת למידה אינטראקטיבית
-            </h1>
-          </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mb-6">
-            מרחב מודרני להצגת קורסים מלאים, מערכי שיעור וחומרי עזר קלים להורדה
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+            פלטפורמת למידה אינטראקטיבית
+          </h1>
+          <p className="mt-3 text-muted-foreground max-w-2xl">
+            מרחב מודרני להצגת קורסים מלאים, מערכי שיעור וחומרי עזר קלים להורדה.
           </p>
-          
-          <div className="flex flex-wrap gap-3">
-            <Link to="/courses">
-              <Button variant="outline" className="gap-2">
-                <BookOpen className="h-4 w-4" />
-                צפה בקורסים מפורסמים
-              </Button>
-            </Link>
-            {user && (
-              <Link to="/courses/manage">
-                <Button variant="outline" className="gap-2">
-                  <User className="h-4 w-4" />
-                  נהל את הקורסים שלך
-                </Button>
-              </Link>
-            )}
-          </div>
         </div>
       </header>
 
       <main>
         <section className="pb-16">
           <div className="container mx-auto px-6 lg:px-8">
-            {/* Search and Filters */}
-            <div className="mb-8 space-y-4">
-              <div className="relative max-w-md">
-                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="חפש קורסים..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pr-10"
-                />
-              </div>
-              
-              <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-                <TabsList className="grid grid-cols-4 sm:inline-flex">
-                  <TabsTrigger value="all">הכל ({courses.length})</TabsTrigger>
-                  <TabsTrigger value="strategy">
-                    אסטרטגיה ({courses.filter(c => c.category === "strategy").length})
-                  </TabsTrigger>
-                  <TabsTrigger value="marketing">
-                    שיווק ({courses.filter(c => c.category === "marketing").length})
-                  </TabsTrigger>
-                  <TabsTrigger value="tech">
-                    טכנולוגיה ({courses.filter(c => c.category === "tech").length})
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </div>
+            <Tabs defaultValue="all" className="w-full">
+              <TabsList className="grid grid-cols-4 sm:inline-flex">
+                <TabsTrigger value="all">הכל</TabsTrigger>
+                <TabsTrigger value="strategy">אסטרטגיה</TabsTrigger>
+                <TabsTrigger value="marketing">שיווק</TabsTrigger>
+                <TabsTrigger value="tech">טכנולוגיה</TabsTrigger>
+              </TabsList>
 
-            {/* Results */}
-            {filteredCourses.length === 0 ? (
-              <div className="text-center py-16">
-                <BookOpen className="h-16 w-16 text-muted-foreground/50 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">לא נמצאו קורסים</h3>
-                <p className="text-muted-foreground mb-4">
-                  {searchTerm ? "נסה לשנות את מונחי החיפוש" : "עדיין לא נוספו קורסים למערכת"}
-                </p>
-                {user && (
-                  <Link to="/courses/manage">
-                    <Button className="gap-2">
-                      <User className="h-4 w-4" />
-                      צור קורס חדש
-                    </Button>
-                  </Link>
-                )}
-              </div>
-            ) : (
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredCourses.map((course) => (
-                  <Card key={course.id} className="flex flex-col hover:shadow-lg transition-shadow duration-300">
-                    <CardHeader className="space-y-3">
-                      <div className="flex items-start justify-between gap-2">
-                        <CardTitle className="text-xl leading-tight">{course.title}</CardTitle>
-                        {!course.published && user && course.user_id === user.id && (
-                          <Badge variant="outline" className="bg-orange-100 text-orange-800 border-orange-200 gap-1">
-                            <Lock className="h-3 w-3" />
-                            טיוטה
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-2">
-                        <Badge variant="outline" className={levelColors[course.level]}>
-                          {levelLabel[course.level]}
-                        </Badge>
-                        <Badge variant="outline" className={categoryColors[course.category]}>
-                          <Tag className="h-3 w-3 mr-1" />
-                          {categoryLabel[course.category]}
-                        </Badge>
-                      </div>
-                      
-                      {course.duration && (
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <Clock className="h-4 w-4" />
-                          {course.duration}
-                        </div>
-                      )}
-                      
-                      <CardDescription className="line-clamp-3">
-                        {course.description}
-                      </CardDescription>
-                    </CardHeader>
-                    
-                    <CardContent className="flex-1">
-                      {course.modules.length > 0 ? (
-                        <Accordion type="single" collapsible className="w-full">
-                          {course.modules.map((module, idx) => (
-                            <AccordionItem key={module.id} value={`module-${idx}`}>
-                              <AccordionTrigger className="text-base font-semibold hover:no-underline">
-                                <div className="flex items-center gap-2">
-                                  <span className="bg-primary/10 text-primary rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-                                    {idx + 1}
-                                  </span>
-                                  {module.title}
-                                </div>
-                              </AccordionTrigger>
-                              <AccordionContent>
-                                {module.description && (
-                                  <p className="text-sm text-muted-foreground mb-4">{module.description}</p>
-                                )}
-                                <ul className="space-y-4">
-                                  {module.lessons.map((lesson, li) => (
-                                    <li key={lesson.id} className="rounded-md border p-4 bg-muted/30">
-                                      <div className="space-y-3">
-                                        <div className="flex items-center justify-between gap-4">
-                                          <div className="flex-1">
-                                            <p className="font-medium">{lesson.title}</p>
-                                            {lesson.duration && (
-                                              <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
-                                                <Clock className="h-3 w-3" />
-                                                {lesson.duration}
-                                              </p>
-                                            )}
+              {(["all", "strategy", "marketing", "tech"] as const).map((tab) => (
+                <TabsContent key={tab} value={tab} className="mt-6">
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {courses
+                      .filter((c) => (tab === "all" ? true : c.category === tab))
+                      .map((course) => (
+                        <Card key={course.id} className="flex flex-col">
+                          <CardHeader>
+                            <div className="flex items-center justify-between">
+                              <CardTitle className="text-xl">{course.title}</CardTitle>
+                              <Badge variant="secondary">{levelLabel[course.level]}</Badge>
+                            </div>
+                            <CardDescription>{course.description}</CardDescription>
+                            <div className="mt-2 text-sm text-muted-foreground">
+                              קטגוריה: {categoryLabel[course.category]} · משך: {course.duration}
+                            </div>
+                          </CardHeader>
+                          <CardContent className="flex-1">
+                            <Accordion type="single" collapsible className="w-full">
+                              {course.modules.map((m, idx) => (
+                                <AccordionItem key={idx} value={`item-${idx}`}>
+                                  <AccordionTrigger className="text-base">
+                                    {m.title}
+                                  </AccordionTrigger>
+                                  <AccordionContent>
+                                    <ul className="space-y-4">
+                                      {m.lessons.map((lesson, li) => (
+                                        <li key={li} className="rounded-md border p-4">
+                                          <div className="flex items-center justify-between gap-4">
+                                            <div>
+                                              <p className="font-medium">{lesson.title}</p>
+                                              {lesson.duration && (
+                                                <p className="text-sm text-muted-foreground">משך: {lesson.duration}</p>
+                                              )}
+                                            </div>
+                                            <div className="flex flex-wrap gap-2 justify-end">
+                                              {lesson.resources.map((r, ri) => (
+                                                <a
+                                                  key={ri}
+                                                  href={r.url}
+                                                  onClick={(e) => r.url === "#" && e.preventDefault()}
+                                                  className=""
+                                                  aria-label={`${r.label} לשיעור ${lesson.title}`}
+                                                >
+                                                  <Button variant="outline" size="sm">
+                                                    {resourceIcon(r.type)}
+                                                    {r.label}
+                                                  </Button>
+                                                </a>
+                                              ))}
+                                            </div>
                                           </div>
-                                        </div>
-                                        
-                                        {lesson.content && (
-                                          <p className="text-sm text-muted-foreground">{lesson.content}</p>
-                                        )}
-                                        
-                                        {lesson.resources.length > 0 && (
-                                          <div className="flex flex-wrap gap-2">
-                                            {lesson.resources.map((resource) => (
-                                              <a
-                                                key={resource.id}
-                                                href={resource.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-block"
-                                                aria-label={`${resource.label} לשיעור ${lesson.title}`}
-                                              >
-                                                <Button variant="outline" size="sm" className="text-xs">
-                                                  {resourceIcon(resource.type)}
-                                                  {resource.label}
-                                                </Button>
-                                              </a>
-                                            ))}
-                                          </div>
-                                        )}
-                                      </div>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </AccordionContent>
-                            </AccordionItem>
-                          ))}
-                        </Accordion>
-                      ) : (
-                        <p className="text-sm text-muted-foreground text-center py-4">
-                          עדיין לא נוספו מודולים לקורס זה
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </AccordionContent>
+                                </AccordionItem>
+                              ))}
+                            </Accordion>
+                          </CardContent>
+                        </Card>
+                      ))}
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
           </div>
         </section>
       </main>
@@ -445,5 +300,19 @@ const LearningPlatform: React.FC = () => {
   );
 };
 
+function resourceIcon(type: Resource["type"]) {
+  // lightweight inline icons (unicode) to avoid extra deps
+  const className = "mr-1";
+  switch (type) {
+    case "video":
+      return <span className={className}>🎬</span>;
+    case "pdf":
+      return <span className={className}>📄</span>;
+    case "slides":
+      return <span className={className}>🖥️</span>;
+    default:
+      return <span className={className}>🔗</span>;
+  }
+}
 
 export default LearningPlatform;

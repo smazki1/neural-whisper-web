@@ -14,7 +14,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import LearningPlatform from "./pages/LearningPlatform";
 import CourseManager from "./pages/CourseManager";
-import Courses from "./pages/Courses";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Auth from "./pages/Auth";
 import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
@@ -35,7 +34,6 @@ const App = () => (
             <Route path="/business-workshop" element={<BusinessWorkshop />} />
             <Route path="/ai-strategy-course" element={<AIStrategyCourse />} />
             <Route path="/learn" element={<LearningPlatform />} />
-            <Route path="/courses" element={<Courses />} />
             <Route path="/courses/manage" element={<ProtectedRoute><CourseManager /></ProtectedRoute>} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/admin101" element={<ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
