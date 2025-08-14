@@ -19,6 +19,9 @@ import Auth from "./pages/Auth";
 import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCanceled from "./pages/PaymentCanceled";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -35,6 +38,9 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
+            <Route path="/checkout/:productId" element={<Checkout />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-canceled" element={<PaymentCanceled />} />
             <Route path="/business-workshop" element={<BusinessWorkshop />} />
             <Route path="/ai-strategy-course" element={<AIStrategyCourse />} />
             <Route path="/learn" element={<LearningPlatform />} />

@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowRight, Clock, Tag, Play, Star, Check } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -27,6 +28,7 @@ interface Product {
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
@@ -58,13 +60,12 @@ const ProductDetail = () => {
   const handlePurchase = async () => {
     if (!user) {
       // Redirect to auth page
-      window.location.href = '/auth';
+      navigate('/auth');
       return;
     }
 
-    setPurchasing(true);
-    // TODO: Implement checkout logic
-    setTimeout(() => setPurchasing(false), 2000);
+    // Redirect to checkout page
+    navigate(`/checkout/${product?.id}`);
   };
 
   const getCategoryLabel = (category: string) => {
