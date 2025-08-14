@@ -99,6 +99,14 @@ const Auth: React.FC = () => {
                 </button>
                 <Link to="/" className="underline">חזרה לדף הבית</Link>
               </div>
+              
+              {mode === 'signin' && (
+                <div className="mt-4 text-center">
+                  <Link to="/reset-password" className="text-sm underline text-muted-foreground">
+                    שכחת סיסמה?
+                  </Link>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
