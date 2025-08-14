@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BookOpen, Clock, PlayCircle, CheckCircle, Lock, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { CourseSchema } from '@/components/SEO/CourseSchema';
 
 interface Course {
   id: string;
@@ -234,12 +235,10 @@ const Course: React.FC = () => {
 
   return (
     <div dir="rtl" className="min-h-screen bg-background">
-      <Helmet>
-        <title>{course.title} | AI Master</title>
-        <meta name="description" content={course.description || `קורס ${course.title} ב-AI Master`} />
-        <link rel="canonical" href={`https://ai-master.co.il/courses/${id}`} />
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      </Helmet>
+      <CourseSchema 
+        course={course} 
+        lessons={lessons || []} 
+      />
 
       <div className="container mx-auto px-6 lg:px-8 pt-28 pb-16">
         {/* Breadcrumb */}

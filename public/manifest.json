@@ -1,0 +1,63 @@
+{
+  "name": "AI Master - פלטפורמת למידת בינה מלאכותית",
+  "short_name": "AI Master",
+  "description": "הפלטפורמה המובילה ללמידת בינה מלאכותית בעברית",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity", "business"],
+  "screenshots": [
+    {
+      "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "דף הבית של AI Master"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "הקורסים שלי",
+      "short_name": "קורסים",
+      "description": "גישה מהירה לקורסים שרכשתי",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "מאמרים",
+      "short_name": "בלוג",
+      "description": "קריאת מאמרים על בינה מלאכותית",
+      "url": "/blog",
+      "icons": [
+        {
+          "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
