@@ -28,8 +28,27 @@ const PaymentSuccess = () => {
   useEffect(() => {
     if (orderId) {
       fetchOrder();
+      // Grant course access after successful payment
+      grantCourseAccess();
     }
   }, [orderId]);
+
+  const grantCourseAccess = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('grant-course-access', {
+        body: { orderId }
+      });
+
+      if (error) {
+        console.error("Error granting course access:", error);
+        return;
+      }
+
+      console.log("Course access granted:", data);
+    } catch (error) {
+      console.error("Error calling grant-course-access function:", error);
+    }
+  };
 
   const fetchOrder = async () => {
     try {

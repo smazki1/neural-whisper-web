@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowRight, Clock, Tag, Play, Star, Check } from 'lucide-react';
+import { ArrowRight, Clock, Tag, Play, Star, Check, BookOpen } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,6 +32,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
+  const [linkedCourses, setLinkedCourses] = useState<any[]>([]);
 
   useEffect(() => {
     if (slug) {
@@ -50,6 +51,26 @@ const ProductDetail = () => {
 
       if (error) throw error;
       setProduct(data);
+
+      // Fetch linked courses
+      if (data) {
+        const { data: coursesData, error: coursesError } = await supabase
+          .from("products_courses")
+          .select(`
+            courses (
+              id,
+              title,
+              description,
+              duration,
+              published
+            )
+          `)
+          .eq("product_id", data.id);
+
+        if (!coursesError && coursesData) {
+          setLinkedCourses(coursesData.map(item => item.courses).filter(Boolean));
+        }
+      }
     } catch (error) {
       console.error('Error fetching product:', error);
     } finally {
@@ -277,6 +298,39 @@ const ProductDetail = () => {
                   )}
                 </CardContent>
               </Card>
+
+              {/* Linked Courses Section */}
+              {linkedCourses.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <BookOpen className="h-5 w-5 text-primary" />
+                      הקורסים הכלולים במוצר זה
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {linkedCourses.map((course) => (
+                      <div key={course.id} className="flex items-start gap-3 p-3 border rounded-lg">
+                        <BookOpen className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                        <div className="flex-1">
+                          <h4 className="font-medium">{course.title}</h4>
+                          {course.description && (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {course.description}
+                            </p>
+                          )}
+                          {course.duration && (
+                            <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              משך: {course.duration}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Description */}
               {product.description && (

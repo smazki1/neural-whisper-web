@@ -14,11 +14,13 @@ import {
   DollarSign,
   TrendingUp,
   Calendar,
-  Eye
+  Eye,
+  BookOpen
 } from 'lucide-react';
 import AdminProducts from './Admin/AdminProducts';
 import AdminOrders from './Admin/AdminOrders';
 import AdminUsers from './Admin/AdminUsers';
+import AdminProductCourses from './Admin/AdminProductCourses';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface DashboardStats {
@@ -197,7 +199,7 @@ const Admin = () => {
 
           {/* Main Admin Tabs */}
           <Tabs defaultValue="products" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="products" className="flex items-center gap-2">
                 <Package className="h-4 w-4" />
                 ניהול מוצרים
@@ -209,6 +211,10 @@ const Admin = () => {
               <TabsTrigger value="users" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
                 ניהול משתמשים
+              </TabsTrigger>
+              <TabsTrigger value="courses" className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                קישור קורסים
               </TabsTrigger>
             </TabsList>
 
@@ -222,6 +228,10 @@ const Admin = () => {
 
             <TabsContent value="users">
               <AdminUsers onStatsUpdate={fetchDashboardStats} />
+            </TabsContent>
+
+            <TabsContent value="courses">
+              <AdminProductCourses />
             </TabsContent>
           </Tabs>
         </div>

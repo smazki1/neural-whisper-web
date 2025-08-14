@@ -351,6 +351,42 @@ export type Database = {
         }
         Relationships: []
       }
+      products_courses: {
+        Row: {
+          course_id: string
+          created_at: string
+          id: string
+          product_id: string
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          id?: string
+          product_id: string
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          id?: string
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_courses_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_courses_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -412,6 +448,58 @@ export type Database = {
             columns: ["lesson_id"]
             isOneToOne: false
             referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_course_access: {
+        Row: {
+          course_id: string
+          expires_at: string | null
+          granted_at: string
+          id: string
+          order_id: string
+          product_id: string
+          user_id: string
+        }
+        Insert: {
+          course_id: string
+          expires_at?: string | null
+          granted_at?: string
+          id?: string
+          order_id: string
+          product_id: string
+          user_id: string
+        }
+        Update: {
+          course_id?: string
+          expires_at?: string | null
+          granted_at?: string
+          id?: string
+          order_id?: string
+          product_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_course_access_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_course_access_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_course_access_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]

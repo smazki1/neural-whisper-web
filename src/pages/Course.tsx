@@ -110,8 +110,18 @@ const Course: React.FC = () => {
         setLessons(lessonsData || []);
       }
 
-      // Check if user has access and fetch progress
+      // Check user access and fetch progress if user is logged in
       if (user) {
+        // Check if user has access to this course
+        const { data: accessData } = await supabase
+          .from("user_course_access")
+          .select("id")
+          .eq("course_id", id)
+          .eq("user_id", user.id)
+          .single();
+
+        setHasAccess(!!accessData);
+
         const { data: progressData, error: progressError } = await supabase
           .from('user_progress')
           .select('*')
@@ -119,9 +129,10 @@ const Course: React.FC = () => {
           .eq('course_id', id);
 
         if (progressError) throw progressError;
-        
-        setHasAccess(progressData && progressData.length > 0);
         setUserProgress(progressData || []);
+      } else {
+        // If course is published, allow viewing but not access to content
+        setHasAccess(false);
       }
 
     } catch (error: any) {
@@ -151,10 +162,14 @@ const Course: React.FC = () => {
   };
 
   const handleStartLesson = (lessonId: string) => {
+    if (!hasAccess && !user) {
+      navigate("/auth");
+      return;
+    }
     if (!hasAccess) {
       toast({
         title: "גישה מוגבלת",
-        description: "יש לרכוש את הקורס כדי לגשת לשיעורים",
+        description: "אין לך גישה לקורס זה. יש לרכוש את המוצר המתאים.",
         variant: "destructive"
       });
       return;
