@@ -10,23 +10,32 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     // 1) Subscribe first
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
+      if (!mounted) return;
       console.log('Auth state change:', event, newSession?.user?.email);
       setSession(newSession);
       setUser(newSession?.user ?? null);
-      setLoading(false);
+      if (event !== 'INITIAL_SESSION') {
+        setLoading(false);
+      }
     });
 
     // 2) Then get current session
     supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return;
       console.log('Initial session:', data.session?.user?.email);
       setSession(data.session);
       setUser(data.session?.user ?? null);
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
