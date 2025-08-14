@@ -1,274 +1,232 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
+import { Helmet } from 'react-helmet-async';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Trash2, Edit, Plus } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { 
+  Users, 
+  Package, 
+  ShoppingCart, 
+  BarChart3, 
+  DollarSign,
+  TrendingUp,
+  Calendar,
+  Eye
+} from 'lucide-react';
+import AdminProducts from './Admin/AdminProducts';
+import AdminOrders from './Admin/AdminOrders';
+import AdminUsers from './Admin/AdminUsers';
+import { Skeleton } from '@/components/ui/skeleton';
 
-interface BlogPost {
-  id: string;
-  title: string;
-  content: string;
-  excerpt: string;
-  author: string;
-  date: string;
-  published: boolean;
+interface DashboardStats {
+  totalUsers: number;
+  totalProducts: number;
+  totalOrders: number;
+  totalRevenue: number;
+  monthlyOrders: number;
+  publishedProducts: number;
 }
 
 const Admin = () => {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentPost, setCurrentPost] = useState<BlogPost | null>(null);
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    excerpt: '',
-    author: '',
-    published: false
-  });
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Load posts from localStorage on component mount
   useEffect(() => {
-    const savedPosts = localStorage.getItem('blogPosts');
-    if (savedPosts) {
-      setPosts(JSON.parse(savedPosts));
-    }
+    fetchDashboardStats();
   }, []);
 
-  // Save posts to localStorage whenever posts change
-  useEffect(() => {
-    localStorage.setItem('blogPosts', JSON.stringify(posts));
-  }, [posts]);
+  const fetchDashboardStats = async () => {
+    try {
+      // Get total users count
+      const { count: totalUsers } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.title || !formData.content) {
+      // Get total products
+      const { count: totalProducts } = await supabase
+        .from('products')
+        .select('*', { count: 'exact', head: true });
+
+      // Get published products
+      const { count: publishedProducts } = await supabase
+        .from('products')
+        .select('*', { count: 'exact', head: true })
+        .eq('is_published', true);
+
+      // Get total orders
+      const { count: totalOrders } = await supabase
+        .from('orders')
+        .select('*', { count: 'exact', head: true });
+
+      // Get orders from this month
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const { count: monthlyOrders } = await supabase
+        .from('orders')
+        .select('*', { count: 'exact', head: true })
+        .gte('created_at', startOfMonth.toISOString());
+
+      // Calculate total revenue
+      const { data: revenueData } = await supabase
+        .from('orders')
+        .select('total_amount')
+        .eq('status', 'completed');
+
+      const totalRevenue = revenueData?.reduce((sum, order) => sum + Number(order.total_amount), 0) || 0;
+
+      setStats({
+        totalUsers: totalUsers || 0,
+        totalProducts: totalProducts || 0,
+        totalOrders: totalOrders || 0,
+        totalRevenue,
+        monthlyOrders: monthlyOrders || 0,
+        publishedProducts: publishedProducts || 0
+      });
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
       toast({
         title: "שגיאה",
-        description: "יש למלא את כל השדות הנדרשים",
+        description: "שגיאה בטעינת נתוני הדאשבורד",
         variant: "destructive"
       });
-      return;
-    }
-
-    const newPost: BlogPost = {
-      id: currentPost?.id || Date.now().toString(),
-      title: formData.title,
-      content: formData.content,
-      excerpt: formData.excerpt || formData.content.substring(0, 150) + '...',
-      author: formData.author || 'Admin',
-      date: currentPost?.date || new Date().toISOString(),
-      published: formData.published
-    };
-
-    if (currentPost) {
-      // Update existing post
-      setPosts(posts.map(post => post.id === currentPost.id ? newPost : post));
-      toast({
-        title: "הצלחה!",
-        description: "הפוסט עודכן בהצלחה"
-      });
-    } else {
-      // Create new post
-      setPosts([newPost, ...posts]);
-      toast({
-        title: "הצלחה!",
-        description: "פוסט חדש נוצר בהצלחה"
-      });
-    }
-
-    // Reset form
-    setFormData({
-      title: '',
-      content: '',
-      excerpt: '',
-      author: '',
-      published: false
-    });
-    setIsEditing(false);
-    setCurrentPost(null);
-  };
-
-  const handleEdit = (post: BlogPost) => {
-    setCurrentPost(post);
-    setFormData({
-      title: post.title,
-      content: post.content,
-      excerpt: post.excerpt,
-      author: post.author,
-      published: post.published
-    });
-    setIsEditing(true);
-  };
-
-  const handleDelete = (id: string) => {
-    if (window.confirm('האם אתה בטוח שברצונך למחוק את הפוסט?')) {
-      setPosts(posts.filter(post => post.id !== id));
-      toast({
-        title: "הצלחה!",
-        description: "הפוסט נמחק בהצלחה"
-      });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const cancelEdit = () => {
-    setIsEditing(false);
-    setCurrentPost(null);
-    setFormData({
-      title: '',
-      content: '',
-      excerpt: '',
-      author: '',
-      published: false
-    });
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('he-IL', {
+      style: 'currency',
+      currency: 'ILS'
+    }).format(amount);
   };
 
   return (
-    <div className="min-h-screen bg-background p-8" dir="rtl">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-foreground animate-fade-in">פאנל ניהול - דאשבורד</h1>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Form Section */}
-          <div className="lg:col-span-1">
-            <Card className="p-6 animate-fade-in">
-              <h2 className="text-2xl font-semibold mb-4">
-                {isEditing ? 'עריכת פוסט' : 'יצירת פוסט חדש'}
-              </h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Label htmlFor="title">כותרת *</Label>
-                  <Input
-                    id="title"
-                    value={formData.title}
-                    onChange={(e) => setFormData({...formData, title: e.target.value})}
-                    placeholder="הכנס כותרת לפוסט"
-                    required
-                  />
-                </div>
+    <>
+      <Helmet>
+        <title>אזור ניהול - AI Master</title>
+        <meta name="description" content="פאנל ניהול למנהלי המערכת - ניהול מוצרים, הזמנות ומשתמשים" />
+      </Helmet>
 
-                <div>
-                  <Label htmlFor="author">כותב</Label>
-                  <Input
-                    id="author"
-                    value={formData.author}
-                    onChange={(e) => setFormData({...formData, author: e.target.value})}
-                    placeholder="שם הכותב"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="excerpt">תקציר</Label>
-                  <Textarea
-                    id="excerpt"
-                    value={formData.excerpt}
-                    onChange={(e) => setFormData({...formData, excerpt: e.target.value})}
-                    placeholder="תקציר קצר של הפוסט"
-                    rows={3}
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="content">תוכן הפוסט *</Label>
-                  <Textarea
-                    id="content"
-                    value={formData.content}
-                    onChange={(e) => setFormData({...formData, content: e.target.value})}
-                    placeholder="כתוב את תוכן הפוסט כאן..."
-                    rows={10}
-                    required
-                  />
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="published"
-                    checked={formData.published}
-                    onChange={(e) => setFormData({...formData, published: e.target.checked})}
-                    className="rounded"
-                  />
-                  <Label htmlFor="published">פרסם מיד</Label>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button type="submit" className="flex-1 hover-scale">
-                    {isEditing ? 'עדכן פוסט' : 'צור פוסט'}
-                  </Button>
-                  {isEditing && (
-                    <Button type="button" variant="outline" onClick={cancelEdit} className="hover-scale">
-                      ביטול
-                    </Button>
-                  )}
-                </div>
-              </form>
-            </Card>
+      <div className="min-h-screen bg-background" dir="rtl">
+        <div className="container mx-auto px-6 py-8">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              אזור ניהול
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              ניהול מוצרים, הזמנות ומשתמשים
+            </p>
           </div>
 
-          {/* Posts List Section */}
-          <div className="lg:col-span-2">
-            <Card className="p-6 animate-fade-in">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-semibold">רשימת פוסטים</h2>
-                <div className="text-sm text-muted-foreground">
-                  {posts.length} פוסטים בסך הכל
-                </div>
-              </div>
+          {/* Dashboard Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {loading ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <Card key={i}>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-4 w-4" />
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="h-8 w-16 mb-2" />
+                    <Skeleton className="h-3 w-24" />
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">סך המשתמשים</CardTitle>
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{stats?.totalUsers}</div>
+                    <p className="text-xs text-muted-foreground">משתמשים רשומים</p>
+                  </CardContent>
+                </Card>
 
-              {posts.length === 0 ? (
-                <div className="text-center text-muted-foreground py-8">
-                  <Plus className="mx-auto h-12 w-12 mb-4 opacity-50" />
-                  <p>אין פוסטים עדיין. צור את הפוסט הראשון שלך!</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {posts.map((post) => (
-                    <div key={post.id} className="border rounded-lg p-4 hover:bg-muted/50 transition-colors">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-lg">{post.title}</h3>
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleEdit(post)}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => handleDelete(post.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <p className="text-muted-foreground text-sm mb-2">
-                        {post.excerpt}
-                      </p>
-                      
-                      <div className="flex justify-between items-center text-xs text-muted-foreground">
-                        <span>מאת: {post.author}</span>
-                        <span>{new Date(post.date).toLocaleDateString('he-IL')}</span>
-                        <span className={`px-2 py-1 rounded ${post.published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                          {post.published ? 'פורסם' : 'טיוטה'}
-                        </span>
-                      </div>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">מוצרים</CardTitle>
+                    <Package className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{stats?.totalProducts}</div>
+                    <p className="text-xs text-muted-foreground">
+                      {stats?.publishedProducts} פורסמו
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">הזמנות</CardTitle>
+                    <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{stats?.totalOrders}</div>
+                    <p className="text-xs text-muted-foreground">
+                      {stats?.monthlyOrders} החודש
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">הכנסות</CardTitle>
+                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">
+                      {formatCurrency(stats?.totalRevenue || 0)}
                     </div>
-                  ))}
-                </div>
-              )}
-            </Card>
+                    <p className="text-xs text-muted-foreground">סך ההכנסות</p>
+                  </CardContent>
+                </Card>
+              </>
+            )}
           </div>
+
+          {/* Main Admin Tabs */}
+          <Tabs defaultValue="products" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="products" className="flex items-center gap-2">
+                <Package className="h-4 w-4" />
+                ניהול מוצרים
+              </TabsTrigger>
+              <TabsTrigger value="orders" className="flex items-center gap-2">
+                <ShoppingCart className="h-4 w-4" />
+                ניהול הזמנות
+              </TabsTrigger>
+              <TabsTrigger value="users" className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                ניהול משתמשים
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="products">
+              <AdminProducts onStatsUpdate={fetchDashboardStats} />
+            </TabsContent>
+
+            <TabsContent value="orders">
+              <AdminOrders onStatsUpdate={fetchDashboardStats} />
+            </TabsContent>
+
+            <TabsContent value="users">
+              <AdminUsers onStatsUpdate={fetchDashboardStats} />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
