@@ -79,8 +79,13 @@ serve(async (req) => {
       throw new Error('iCount API token not configured');
     }
 
+    // Validate that product has icount_paypage_id configured
+    if (!product.icount_paypage_id) {
+      throw new Error('Product does not have iCount paypage ID configured');
+    }
+
     const icountData = new URLSearchParams({
-      'paypage_id': '1', // You'll need to configure this in iCount
+      'paypage_id': product.icount_paypage_id,
       'currency_id': '5', // ILS
       'items[0][unitprice_incl]': product.price.toString(),
       'items[0][description]': product.title,

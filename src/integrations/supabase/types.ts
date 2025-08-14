@@ -300,6 +300,7 @@ export type Database = {
           created_at: string
           description: string | null
           duration: string | null
+          icount_paypage_id: string | null
           id: string
           is_featured: boolean
           is_published: boolean
@@ -317,6 +318,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           duration?: string | null
+          icount_paypage_id?: string | null
           id?: string
           is_featured?: boolean
           is_published?: boolean
@@ -334,6 +336,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           duration?: string | null
+          icount_paypage_id?: string | null
           id?: string
           is_featured?: boolean
           is_published?: boolean
