@@ -75,19 +75,18 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 </button>
               </div>
             </div>
-            <a
-              href="#courses"
+            <Link
+              to="/products"
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
             >
-              סדנאות וקורסים
-            </a>
-            <button
-              onClick={() => setIsComingSoonOpen(true)}
-              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium flex items-center gap-2"
+              מוצרים וקורסים
+            </Link>
+            <Link
+              to="/learn"
+              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
             >
               פלטפורמת למידה
-              <span className="text-xs text-brand-accent">בקרוב</span>
-            </button>
+            </Link>
             <Link
               to="/blog"
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"

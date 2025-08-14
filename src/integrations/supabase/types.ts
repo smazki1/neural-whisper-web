@@ -7,13 +7,90 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          author_id: string
+          category_id: string | null
+          content: string
+          created_at: string
+          excerpt: string | null
+          featured_image_url: string | null
+          id: string
+          is_published: boolean
+          published_at: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          category_id?: string | null
+          content: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          is_published?: boolean
+          published_at?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          category_id?: string | null
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          is_published?: boolean
+          published_at?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           category: Database["public"]["Enums"]["course_category"]
@@ -132,6 +209,145 @@ export type Database = {
           },
         ]
       }
+      orders: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          status: Database["public"]["Enums"]["order_status"]
+          stripe_session_id: string | null
+          total_amount: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          status?: Database["public"]["Enums"]["order_status"]
+          stripe_session_id?: string | null
+          total_amount: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          status?: Database["public"]["Enums"]["order_status"]
+          stripe_session_id?: string | null
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          order_id: string
+          payment_method: string | null
+          processed_at: string | null
+          status: Database["public"]["Enums"]["payment_status"]
+          transaction_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          id?: string
+          order_id: string
+          payment_method?: string | null
+          processed_at?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          transaction_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          order_id?: string
+          payment_method?: string | null
+          processed_at?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          transaction_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          category: Database["public"]["Enums"]["product_category"]
+          created_at: string
+          description: string | null
+          duration: string | null
+          id: string
+          is_featured: boolean
+          is_published: boolean
+          price: number
+          product_type: Database["public"]["Enums"]["product_type"]
+          short_description: string | null
+          slug: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          video_preview_url: string | null
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["product_category"]
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          is_featured?: boolean
+          is_published?: boolean
+          price?: number
+          product_type?: Database["public"]["Enums"]["product_type"]
+          short_description?: string | null
+          slug: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          video_preview_url?: string | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["product_category"]
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          is_featured?: boolean
+          is_published?: boolean
+          price?: number
+          product_type?: Database["public"]["Enums"]["product_type"]
+          short_description?: string | null
+          slug?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          video_preview_url?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -197,6 +413,54 @@ export type Database = {
           },
         ]
       }
+      user_progress: {
+        Row: {
+          completed_at: string | null
+          course_id: string
+          created_at: string
+          id: string
+          lesson_id: string | null
+          progress_percentage: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          course_id: string
+          created_at?: string
+          id?: string
+          lesson_id?: string | null
+          progress_percentage?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          course_id?: string
+          created_at?: string
+          id?: string
+          lesson_id?: string | null
+          progress_percentage?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -225,8 +489,8 @@ export type Database = {
     Functions: {
       has_role: {
         Args: {
-          _user_id: string
           _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
         }
         Returns: boolean
       }
@@ -235,6 +499,10 @@ export type Database = {
       app_role: "admin" | "instructor" | "student"
       course_category: "strategy" | "marketing" | "tech"
       course_level: "beginner" | "intermediate" | "advanced"
+      order_status: "pending" | "completed" | "failed" | "refunded"
+      payment_status: "pending" | "completed" | "failed" | "refunded"
+      product_category: "basic" | "advanced" | "business"
+      product_type: "course" | "workshop" | "consultation"
       resource_type: "video" | "pdf" | "slides" | "link"
     }
     CompositeTypes: {
@@ -366,6 +634,10 @@ export const Constants = {
       app_role: ["admin", "instructor", "student"],
       course_category: ["strategy", "marketing", "tech"],
       course_level: ["beginner", "intermediate", "advanced"],
+      order_status: ["pending", "completed", "failed", "refunded"],
+      payment_status: ["pending", "completed", "failed", "refunded"],
+      product_category: ["basic", "advanced", "business"],
+      product_type: ["course", "workshop", "consultation"],
       resource_type: ["video", "pdf", "slides", "link"],
     },
   },

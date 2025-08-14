@@ -17,6 +17,8 @@ import CourseManager from "./pages/CourseManager";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Auth from "./pages/Auth";
 import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
+import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -31,6 +33,8 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:slug" element={<ProductDetail />} />
             <Route path="/business-workshop" element={<BusinessWorkshop />} />
             <Route path="/ai-strategy-course" element={<AIStrategyCourse />} />
             <Route path="/learn" element={<LearningPlatform />} />
