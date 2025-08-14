@@ -11,11 +11,19 @@ import { useAuth } from "@/hooks/useAuth";
 const Auth: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation() as any;
-  const { signIn, signUp, signInWithGoogle } = useAuth();
+  const { user, signIn, signUp, signInWithGoogle } = useAuth();
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Redirect if already authenticated
+  React.useEffect(() => {
+    if (user) {
+      const to = location.state?.from?.pathname || '/';
+      navigate(to, { replace: true });
+    }
+  }, [user, navigate, location]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

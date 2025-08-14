@@ -11,13 +11,16 @@ export function useAuth() {
 
   useEffect(() => {
     // 1) Subscribe first
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, newSession) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
+      console.log('Auth state change:', event, newSession?.user?.email);
       setSession(newSession);
       setUser(newSession?.user ?? null);
+      setLoading(false);
     });
 
     // 2) Then get current session
     supabase.auth.getSession().then(({ data }) => {
+      console.log('Initial session:', data.session?.user?.email);
       setSession(data.session);
       setUser(data.session?.user ?? null);
       setLoading(false);
