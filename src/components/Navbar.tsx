@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { Button } from './ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { useAuth } from '@/hooks/useAuth';
+import { User, Settings, LogOut, BookOpen } from 'lucide-react';
 
 interface NavbarProps {
   onContactClick: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
 
@@ -30,14 +37,80 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     >
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Contact Button - Far Left (in RTL) */}
+          {/* User Menu or Contact Button - Far Left (in RTL) */}
           <div className="hidden md:block">
-            <button
-              onClick={onContactClick}
-              className="px-6 py-2 border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-200 rounded-md font-medium"
-            >
-              צור קשר
-            </button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.display_name || 'Profile'} />
+                      <AvatarFallback>
+                        {user.email?.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="start" forceMount>
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1 leading-none">
+                      <p className="font-medium">{user.user_metadata?.display_name || 'משתמש'}</p>
+                      <p className="w-[200px] truncate text-sm text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard" className="flex items-center">
+                      <BookOpen className="mr-2 h-4 w-4" />
+                      <span>לוח הבקרה</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="flex items-center">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>פרופיל</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/courses/manage" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>ניהול קורסים</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onSelect={async (event) => {
+                      event.preventDefault();
+                      await signOut();
+                      navigate('/');
+                    }}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>התנתק</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate('/auth')}
+                  className="border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-primary"
+                >
+                  התחבר
+                </Button>
+                <button
+                  onClick={onContactClick}
+                  className="px-4 py-2 border border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-primary transition-all duration-200 rounded-md font-medium text-sm"
+                >
+                  צור קשר
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Navigation Links - Center */}

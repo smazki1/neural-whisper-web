@@ -17,6 +17,7 @@ import CourseManager from "./pages/CourseManager";
 import Course from "./pages/Course";
 import Lesson from "./pages/Lesson";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Auth from "./pages/Auth";
 import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/courses/:id" element={<Course />} />
             <Route path="/courses/:id/lesson/:lessonId" element={<ProtectedRoute><Lesson /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/admin101" element={<ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
             <Route path="/landing/ai-marketing-accelerator" element={<AIMarketingAccelerator />} />

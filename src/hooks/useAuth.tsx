@@ -29,10 +29,10 @@ export function useAuth() {
   const signIn = useCallback(async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      toast({ title: "שגיאה בהתחברות", description: error.message, variant: "destructive" });
       return { error };
     }
-    toast({ title: "Welcome back" });
+    toast({ title: "ברוך הבא!" });
     return { error: null };
   }, [toast]);
 
@@ -44,20 +44,20 @@ export function useAuth() {
       options: { emailRedirectTo: redirectUrl }
     });
     if (error) {
-      toast({ title: "Signup failed", description: error.message, variant: "destructive" });
+      toast({ title: "שגיאה בהרשמה", description: error.message, variant: "destructive" });
       return { error };
     }
-    toast({ title: "Check your email", description: "Confirm your address to finish signup." });
+    toast({ title: "בדוק את האימייל שלך", description: "אשר את כתובת האימייל כדי לסיים את ההרשמה." });
     return { error: null };
   }, [toast]);
 
   const signOut = useCallback(async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      toast({ title: "Sign out failed", description: error.message, variant: "destructive" });
+      toast({ title: "שגיאה בהתנתקות", description: error.message, variant: "destructive" });
       return { error };
     }
-    toast({ title: "Signed out" });
+    toast({ title: "התנתקת בהצלחה" });
     return { error: null };
   }, [toast]);
 
