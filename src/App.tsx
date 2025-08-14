@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import BlogManager from "./pages/BlogManager";
+import BlogEditor from "./pages/BlogEditor";
 import BusinessWorkshop from "./pages/BusinessWorkshop";
 import AIStrategyCourse from "./pages/AIStrategyCourse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -41,6 +44,10 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/blog/manager" element={<ProtectedRoute><BlogManager /></ProtectedRoute>} />
+            <Route path="/blog/editor" element={<ProtectedRoute><BlogEditor /></ProtectedRoute>} />
+            <Route path="/blog/editor/:postId" element={<ProtectedRoute><BlogEditor /></ProtectedRoute>} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
             <Route path="/checkout/:productId" element={<Checkout />} />
