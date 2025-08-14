@@ -51,6 +51,20 @@ export function useAuth() {
     return { error: null };
   }, [toast]);
 
+  const signInWithGoogle = useCallback(async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/`
+      }
+    });
+    if (error) {
+      toast({ title: "שגיאה בהתחברות עם Google", description: error.message, variant: "destructive" });
+      return { error };
+    }
+    return { error: null };
+  }, [toast]);
+
   const signOut = useCallback(async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -61,5 +75,5 @@ export function useAuth() {
     return { error: null };
   }, [toast]);
 
-  return { session, user, loading, signIn, signUp, signOut };
+  return { session, user, loading, signIn, signUp, signInWithGoogle, signOut };
 }
