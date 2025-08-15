@@ -12,11 +12,6 @@ export function useAuth() {
   useEffect(() => {
     let mounted = true;
 
-    // Clean URL hash if it contains auth tokens (Google OAuth callback)
-    if (window.location.hash.includes('access_token')) {
-      window.history.replaceState(null, '', window.location.pathname);
-    }
-
     // 1) Subscribe first
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
       if (!mounted) return;
