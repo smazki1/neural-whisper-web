@@ -14,7 +14,15 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   const { user, loading } = useAuth();
   const { roles, loading: rolesLoading } = useUserRoles(allowedRoles ? user?.id : null);
 
-  console.log('ProtectedRoute:', { user: user?.email, loading, allowedRoles, roles, rolesLoading });
+  console.log('ProtectedRoute:', { 
+    userEmail: user?.email, 
+    userId: user?.id, 
+    loading, 
+    allowedRoles, 
+    roles, 
+    rolesLoading,
+    hasUser: !!user 
+  });
 
   if (loading) {
     return (
