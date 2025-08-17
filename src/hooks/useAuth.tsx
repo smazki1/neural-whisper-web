@@ -13,18 +13,26 @@ export function useAuth() {
     let mounted = true;
 
     // 1) Subscribe first
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newSession) => {
       if (!mounted) return;
-      console.log('Auth state change:', event, newSession?.user?.email);
+      console.log('Auth state change:', event, newSession?.user?.email, 'User ID:', newSession?.user?.id);
+      
       setSession(newSession);
       setUser(newSession?.user ?? null);
       setLoading(false);
+
+      // Clean URL after successful sign in
+      if (event === 'SIGNED_IN' && window.location.hash.includes('access_token')) {
+        setTimeout(() => {
+          window.history.replaceState(null, '', window.location.pathname);
+        }, 100);
+      }
     });
 
     // 2) Then get current session
     supabase.auth.getSession().then(({ data }) => {
       if (!mounted) return;
-      console.log('Initial session:', data.session?.user?.email);
+      console.log('Initial session:', data.session?.user?.email, 'User ID:', data.session?.user?.id);
       setSession(data.session);
       setUser(data.session?.user ?? null);
       setLoading(false);

@@ -11,17 +11,19 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
   const location = useLocation();
-  const { user, loading } = useAuth();
+  const { user, session, loading } = useAuth();
   const { roles, loading: rolesLoading } = useUserRoles(allowedRoles ? user?.id : null);
 
-  console.log('ProtectedRoute:', { 
+  console.log('ProtectedRoute Details:', { 
     userEmail: user?.email, 
     userId: user?.id, 
     loading, 
     allowedRoles, 
     roles, 
     rolesLoading,
-    hasUser: !!user 
+    hasUser: !!user,
+    sessionExists: !!session,
+    userFromSession: session?.user?.email
   });
 
   if (loading) {
