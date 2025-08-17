@@ -79,6 +79,18 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       <span>ניהול קורסים</span>
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/blog/manager" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>ניהול מאמרים</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin101" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>ניהול מערכת (אדמין)</span>
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="cursor-pointer"
