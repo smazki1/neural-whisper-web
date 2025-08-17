@@ -50,22 +50,24 @@ const levelLabel: Record<string, string> = {
 };
 
 const Dashboard: React.FC = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const [courses, setCourses] = useState<Course[]>([]);
   const [userProgress, setUserProgress] = useState<UserProgress[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !loading) {
       navigate('/auth');
       return;
     }
-    fetchDashboardData();
-  }, [user, navigate]);
+    if (user) {
+      fetchDashboardData();
+    }
+  }, [user, loading, navigate]);
 
   const fetchDashboardData = async () => {
     if (!user) return;
@@ -116,7 +118,7 @@ const Dashboard: React.FC = () => {
         variant: "destructive"
       });
     } finally {
-      setLoading(false);
+      setPageLoading(false);
     }
   };
 
@@ -145,7 +147,7 @@ const Dashboard: React.FC = () => {
     return courses.length * 2; // Assuming 2 hours per course as example
   };
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div dir="rtl" className="min-h-screen bg-background">
         <div className="container mx-auto px-6 lg:px-8 pt-28 pb-16">

@@ -22,12 +22,12 @@ interface Profile {
 }
 
 const Profile: React.FC = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   
   const [displayName, setDisplayName] = useState('');
@@ -35,12 +35,14 @@ const Profile: React.FC = () => {
   const [avatarUrl, setAvatarUrl] = useState('');
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !loading) {
       navigate('/auth');
       return;
     }
-    fetchProfile();
-  }, [user, navigate]);
+    if (user) {
+      fetchProfile();
+    }
+  }, [user, loading, navigate]);
 
   const fetchProfile = async () => {
     if (!user) return;
@@ -73,7 +75,7 @@ const Profile: React.FC = () => {
         variant: "destructive"
       });
     } finally {
-      setLoading(false);
+      setPageLoading(false);
     }
   };
 
@@ -126,7 +128,7 @@ const Profile: React.FC = () => {
       .slice(0, 2);
   };
 
-  if (loading) {
+  if (pageLoading) {
     return (
       <div dir="rtl" className="min-h-screen bg-background">
         <div className="container mx-auto px-6 lg:px-8 pt-28 pb-16">
