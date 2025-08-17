@@ -91,6 +91,96 @@ export type Database = {
         }
         Relationships: []
       }
+      content_categories: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      content_services: {
+        Row: {
+          action_link: string | null
+          additional_info: string | null
+          content_structure: string | null
+          content_type: string
+          created_at: string
+          detailed_description: string | null
+          display_order: number | null
+          duration: string | null
+          id: string
+          main_image_url: string | null
+          name: string
+          page_title: string | null
+          prerequisites: string | null
+          price: number | null
+          search_tags: string | null
+          short_description: string | null
+          status: string
+          suitable_for: string | null
+          updated_at: string
+          what_included: string | null
+        }
+        Insert: {
+          action_link?: string | null
+          additional_info?: string | null
+          content_structure?: string | null
+          content_type: string
+          created_at?: string
+          detailed_description?: string | null
+          display_order?: number | null
+          duration?: string | null
+          id?: string
+          main_image_url?: string | null
+          name: string
+          page_title?: string | null
+          prerequisites?: string | null
+          price?: number | null
+          search_tags?: string | null
+          short_description?: string | null
+          status?: string
+          suitable_for?: string | null
+          updated_at?: string
+          what_included?: string | null
+        }
+        Update: {
+          action_link?: string | null
+          additional_info?: string | null
+          content_structure?: string | null
+          content_type?: string
+          created_at?: string
+          detailed_description?: string | null
+          display_order?: number | null
+          duration?: string | null
+          id?: string
+          main_image_url?: string | null
+          name?: string
+          page_title?: string | null
+          prerequisites?: string | null
+          price?: number | null
+          search_tags?: string | null
+          short_description?: string | null
+          status?: string
+          suitable_for?: string | null
+          updated_at?: string
+          what_included?: string | null
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           category: Database["public"]["Enums"]["course_category"]

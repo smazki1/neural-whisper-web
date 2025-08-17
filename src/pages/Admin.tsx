@@ -15,12 +15,14 @@ import {
   TrendingUp,
   Calendar,
   Eye,
-  BookOpen
+  BookOpen,
+  FileText
 } from 'lucide-react';
 import AdminProducts from './Admin/AdminProducts';
 import AdminOrders from './Admin/AdminOrders';
 import AdminUsers from './Admin/AdminUsers';
 import AdminProductCourses from './Admin/AdminProductCourses';
+import AdminContentServices from './Admin/AdminContentServices';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface DashboardStats {
@@ -199,7 +201,7 @@ const Admin = () => {
 
           {/* Main Admin Tabs */}
           <Tabs defaultValue="products" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="products" className="flex items-center gap-2">
                 <Package className="h-4 w-4" />
                 ניהול מוצרים
@@ -215,6 +217,10 @@ const Admin = () => {
               <TabsTrigger value="courses" className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
                 קישור קורסים
+              </TabsTrigger>
+              <TabsTrigger value="content" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                תכנים ושירותים
               </TabsTrigger>
             </TabsList>
 
@@ -232,6 +238,10 @@ const Admin = () => {
 
             <TabsContent value="courses">
               <AdminProductCourses />
+            </TabsContent>
+
+            <TabsContent value="content">
+              <AdminContentServices />
             </TabsContent>
           </Tabs>
         </div>
