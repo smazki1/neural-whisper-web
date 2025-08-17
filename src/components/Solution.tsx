@@ -29,8 +29,7 @@ const Solution = () => {
             viewport={{ once: true }}
             className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-snug sm:leading-tight text-center hebrew-mobile-wrap"
           >
-            אתם לא צריכים עוד קורס שילמד אתכם לעבוד עם AI -{' '}
-            <span className="text-[#eec643] font-bold">אתם צריכים להבין איך להפוך את ה-AI לעוזר האישי שלכם.</span>
+            <span className="text-[#eec643] font-bold">אתה לא צריך עוד קורס שילמד אותך לעבוד עם AI - אתה צריך להבין איך להפוך את ה-AI לעוזר האישי שלך.</span>
           </motion.h2>
           
           <motion.div

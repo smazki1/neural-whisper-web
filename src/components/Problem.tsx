@@ -29,9 +29,9 @@ const Problem = () => {
             viewport={{ once: true }}
             className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-snug sm:leading-tight text-center hebrew-mobile-wrap"
           >
-            אם ניסיתם לעבוד עם כלי-AI וקיבלתם תוצאות רובוטיות, או שאתם פשוט{' '}
-            <span className="text-[#eec643] font-bold">לא יודעים מאיפה להתחיל</span>
-            {' '}- אתם לא לבד.
+            אם ניסית לעבוד עם כלי AI וקיבלת תוצאות רובוטיות, או שאתה פשוט{' '}
+            <span className="text-[#eec643] font-bold">לא יודע מאיפה להתחיל</span>
+            {' '}- אתה לא לבד.
           </motion.h2>
           
           <motion.div
@@ -42,13 +42,13 @@ const Problem = () => {
             className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center"
           >
             <p className="px-2 sm:px-4 hebrew-mobile-wrap">
-              יש פער עצום בין ההבטחה של מהפכת ה-AI לבין המציאות. אתם רואים אנשים עובדים עם הכלים האלו ומגיעים לתוצאות פורצות דרך, שומעים על זה בחדשות וברשתות, ומרגישים שאתם{' '}
-              <span className="text-[#eec643] font-semibold">עומדים במקום בזמן שהעולם דוהר קדימה</span>.
+              יש פער עצום בין ההבטחה של מהפכת ה-AI לבין המציאות. אתה רואה אנשים עובדים עם הכלים האלו ומגיעים לתוצאות פורצות דרך, שומע על זה בחדשות וברשתות, ומרגיש שאתה{' '}
+              <span className="text-[#eec643] font-semibold">עומד במקום בזמן שהעולם דוהר קדימה</span>.
             </p>
             
             <p className="px-2 sm:px-4 hebrew-mobile-wrap">
-              מה שעוצר אתכם הוא לא המחסום הטכנולוגי. זה משהו הרבה יותר עמוק. זה{' '}
-              <span className="text-[#eec643] font-semibold">הפחד שלא תדעו איך לגרום ל-AI להבין אתכם</span>. כל ניסיון שמוביל לתוצאה גנרית מרגיש כמו עוד הוכחה שהכלים האלו פשוט לא בשבילכם.
+              מה שעוצר אותך הוא לא המחסום הטכנולוגי. זה משהו הרבה יותר עמוק. זה{' '}
+              <span className="text-[#eec643] font-semibold">הפחד שלא תדע איך לגרום ל-AI להבין אותך</span>.
             </p>
           </motion.div>
         </motion.div>

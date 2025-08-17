@@ -4,8 +4,8 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Problem from '../components/Problem';
 import Solution from '../components/Solution';
-import Outcome from '../components/Outcome';
-import CTA from '../components/CTA';
+import Articles from '../components/Articles';
+import ProductsSection from '../components/ProductsSection';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
 import { Toaster } from '@/components/ui/toaster';
@@ -29,8 +29,8 @@ function Index() {
         <Hero />
         <Problem />
         <Solution />
-        <Outcome />
-        <CTA onContactClick={handleContactClick} />
+        <Articles />
+        <ProductsSection />
         <div className="text-center py-6">
           <Link to="/auth" className="story-link">התחברות / הרשמה</Link>
         </div>
