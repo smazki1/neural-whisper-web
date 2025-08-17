@@ -22,33 +22,24 @@ const Problem = () => {
           {/* Premium Glow Effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#eec643]/10 via-transparent to-[#eec643]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
           
-          <motion.h2
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-snug sm:leading-tight text-center hebrew-mobile-wrap"
-          >
-            אם ניסית לעבוד עם כלי AI וקיבלת תוצאות רובוטיות, או שאתה פשוט{' '}
-            <span className="text-[#eec643] font-bold">לא יודע מאיפה להתחיל</span>
-            {' '}- אתה לא לבד.
-          </motion.h2>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
             className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center"
           >
             <p className="px-2 sm:px-4 hebrew-mobile-wrap">
-              יש פער עצום בין ההבטחה של מהפכת ה-AI לבין המציאות. אתה רואה אנשים עובדים עם הכלים האלו ומגיעים לתוצאות פורצות דרך, שומע על זה בחדשות וברשתות, ומרגיש שאתה{' '}
-              <span className="text-[#eec643] font-semibold">עומד במקום בזמן שהעולם דוהר קדימה</span>.
+              אנחנו חיים בתקופה שבה בינה מלאכותית הופכת לחלק מהחיים היומיומיים שלנו. מעבר לשימושים הטכניים, יש כאן הזדמנות לחקור איך הכלים האלו יכולים לעזור לנו להבין את עצמנו טוב יותר, לפתח רעיונות חדשים ולמצוא דרכים חדשות לפתור בעיות.
             </p>
             
             <p className="px-2 sm:px-4 hebrew-mobile-wrap">
-              מה שעוצר אותך הוא לא המחסום הטכנולוגי. זה משהו הרבה יותר עמוק. זה{' '}
-              <span className="text-[#eec643] font-semibold">הפחד שלא תדע איך לגרום ל-AI להבין אותך</span>.
+              בינה מלאכותית היא לא רק טכנולוגיה - היא{' '}
+              <span className="text-[#eec643] font-semibold">מראה שמחזירה לנו את החשיבה שלנו בצורה חדשה</span>. כשאנחנו מנסחים שאלות ל-AI, אנחנו למעשה מבהירים לעצמנו מה אנחנו באמת מחפשים.
+            </p>
+            
+            <p className="px-2 sm:px-4 hebrew-mobile-wrap">
+              יש כאן פוטנציאל שעדיין לא חקרנו לעומק. המטרה שלי היא לחלוק תובנות, כלים ודרכי חשיבה שעוזרים לכל אחד למצוא את הדרך שלו עם הטכנולוגיה הזו.
             </p>
           </motion.div>
         </motion.div>

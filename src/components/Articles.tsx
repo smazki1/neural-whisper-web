@@ -5,22 +5,22 @@ import { Link } from 'react-router-dom';
 const Articles = () => {
   const articles = [
     {
-      title: "איך לגרום ל-ChatGPT לחשוב בדיוק כמוך",
-      description: "המדריך המלא להטמעת הקול שלך ב-AI",
-      href: "/blog/chatgpt-thinking-like-you",
-      type: "המדריך"
+      title: "איך לפתח דיאלוג משמעותי עם AI",
+      description: "כלים ושיטות ליצירת תקשורת עמוקה יותר עם בינה מלאכותית",
+      href: "/blog/meaningful-ai-dialogue",
+      type: "מדריך"
     },
     {
-      title: "בדוק כמה אתה מנצל מהפוטנציאל שלך",
-      description: "כלי הערכה אישי לבדיקת יעילות ה-AI שלך",
-      href: "/blog/ai-potential-test",
-      type: "כלי"
+      title: "הפילוסופיה מאחורי שיתוף פעולה אדם-מכונה",
+      description: "חקירה של המשמעות העמוקה של העבודה המשותפת עם AI",
+      href: "/blog/human-ai-collaboration-philosophy",
+      type: "תובנה"
     },
     {
-      title: "5 דרכים להכפיל את היעילות שלך עם AI",
-      description: "אסטרטגיות מתקדמות לשיפור ביצועים מיידי",
-      href: "/blog/double-efficiency-ai",
-      type: "אסטרטגיה"
+      title: "כלים לחשיבה יצירתית עם בינה מלאכותית",
+      description: "גישות מעשיות לפיתוח יצירתיות בעזרת AI",
+      href: "/blog/creative-thinking-ai-tools",
+      type: "כלים"
     }
   ];
 
@@ -42,7 +42,7 @@ const Articles = () => {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight hebrew-mobile-wrap">
-            <span className="text-[#eec643] font-bold">רעיונות ותכנים על AI:</span>
+            <span className="text-[#eec643] font-bold">תובנות ומדריכים:</span>
           </h2>
         </motion.div>
 
