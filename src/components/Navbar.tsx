@@ -134,50 +134,51 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               בית
             </Link>
             <Link
+              to="/blog"
+              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
+            >
+              מאמרים ומדריכים
+            </Link>
+            <div className="relative group">
+              <Link
+                to="/products"
+                className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium cursor-pointer"
+              >
+                מוצרים
+              </Link>
+              <div className="absolute top-full right-0 mt-2 w-64 bg-brand-primary border border-brand-surface rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <Link
+                  to="/products?category=digital"
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  קורסים דיגיטליים
+                </Link>
+                <Link
+                  to="/products?category=workshops"
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  סדנאות
+                </Link>
+                <button
+                  onClick={onContactClick}
+                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
+                >
+                  ייעוץ אישי
+                </button>
+              </div>
+            </div>
+            <Link
               to="/about"
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
             >
               אודות
             </Link>
-            <div className="relative group">
-              <span className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium cursor-pointer">
-                עסקים
-              </span>
-              <div className="absolute top-full right-0 mt-2 w-64 bg-brand-primary border border-brand-surface rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <button
-                  onClick={() => setIsComingSoonOpen(true)}
-                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
-                >
-                  סדנת AI לעסקים
-                  <span className="text-xs text-brand-accent mr-2">בקרוב</span>
-                </button>
-                <button
-                  onClick={() => setIsComingSoonOpen(true)}
-                  className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
-                >
-                  קורס AI אסטרטגי
-                  <span className="text-xs text-brand-accent mr-2">בקרוב</span>
-                </button>
-              </div>
-            </div>
-            <Link
-              to="/products"
+            <button
+              onClick={onContactClick}
               className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
             >
-              מוצרים וקורסים
-            </Link>
-            <Link
-              to="/learn"
-              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
-            >
-              פלטפורמת למידה
-            </Link>
-            <Link
-              to="/blog"
-              className="text-brand-text hover:text-brand-accent transition-colors duration-200 font-medium"
-            >
-              בלוג
-            </Link>
+              צור קשר
+            </button>
           </div>
 
           {/* Brand Name - Far Right (in RTL) */}
