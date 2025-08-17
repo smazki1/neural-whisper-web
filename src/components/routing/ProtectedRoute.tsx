@@ -12,7 +12,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
   const location = useLocation();
   const { user, session, loading } = useAuth();
-  const { roles, loading: rolesLoading } = useUserRoles(allowedRoles ? user?.id : null);
+  const { roles, loading: rolesLoading } = useUserRoles(user?.id); // Always load roles for authenticated users
 
   console.log('ProtectedRoute Details:', { 
     userEmail: user?.email, 
@@ -23,7 +23,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     rolesLoading,
     hasUser: !!user,
     sessionExists: !!session,
-    userFromSession: session?.user?.email
+    userFromSession: session?.user?.email,
+    checkingRoles: allowedRoles ? 'yes' : 'no'
   });
 
   if (loading) {
@@ -42,7 +43,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     return <Navigate to="/auth" replace state={{ from: location }} />;
   }
 
-  if (allowedRoles) {
+  if (allowedRoles && allowedRoles.length > 0) {
     if (rolesLoading) {
       return (
         <div className="container mx-auto px-6 lg:px-8 pt-28 pb-16">
@@ -55,7 +56,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     }
     
     if (!allowedRoles.some(r => roles.includes(r))) {
-      console.log('User lacks required roles, redirecting to home');
+      console.log('User lacks required roles:', { required: allowedRoles, userRoles: roles });
       return <Navigate to="/" replace />;
     }
   }
