@@ -23,6 +23,7 @@ import AdminOrders from './Admin/AdminOrders';
 import AdminUsers from './Admin/AdminUsers';
 import AdminProductCourses from './Admin/AdminProductCourses';
 import AdminContentServices from './Admin/AdminContentServices';
+import AdminPortfolio from './Admin/AdminPortfolio';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface DashboardStats {

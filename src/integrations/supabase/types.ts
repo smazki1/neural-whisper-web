@@ -414,12 +414,49 @@ export type Database = {
           },
         ]
       }
+      portfolio: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          image_url: string | null
+          is_published: boolean
+          project_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          project_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_published?: boolean
+          project_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: Database["public"]["Enums"]["product_category"]
           created_at: string
           description: string | null
           duration: string | null
+          external_url: string | null
           icount_paypage_id: string | null
           id: string
           is_featured: boolean
@@ -438,6 +475,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           duration?: string | null
+          external_url?: string | null
           icount_paypage_id?: string | null
           id?: string
           is_featured?: boolean
@@ -456,6 +494,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           duration?: string | null
+          external_url?: string | null
           icount_paypage_id?: string | null
           id?: string
           is_featured?: boolean

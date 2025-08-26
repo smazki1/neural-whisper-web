@@ -21,6 +21,7 @@ interface Product {
   product_type: 'course' | 'workshop' | 'consultation';
   duration: string;
   thumbnail_url: string;
+  external_url: string;
   is_featured: boolean;
 }
 
@@ -253,11 +254,19 @@ const Products = () => {
                   </CardContent>
 
                   <CardFooter>
-                    <Link to={`/products/${product.slug}`} className="w-full">
-                      <Button className="w-full" size="lg">
-                        למידע נוסף
-                      </Button>
-                    </Link>
+                    {product.external_url ? (
+                      <a href={product.external_url} target="_blank" rel="noopener noreferrer" className="w-full">
+                        <Button className="w-full" size="lg">
+                          למידע נוסף
+                        </Button>
+                      </a>
+                    ) : (
+                      <Link to={`/products/${product.slug}`} className="w-full">
+                        <Button className="w-full" size="lg">
+                          למידע נוסף
+                        </Button>
+                      </Link>
+                    )}
                   </CardFooter>
                 </Card>
               ))}

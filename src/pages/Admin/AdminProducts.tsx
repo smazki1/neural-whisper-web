@@ -34,6 +34,7 @@ interface Product {
   duration: string | null;
   thumbnail_url: string | null;
   video_preview_url: string | null;
+  external_url: string | null;
   is_published: boolean;
   is_featured: boolean;
   created_at: string;
@@ -61,6 +62,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
     duration: '',
     thumbnail_url: '',
     video_preview_url: '',
+    external_url: '',
     is_published: false,
     is_featured: false
   });
@@ -119,6 +121,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
       duration: '',
       thumbnail_url: '',
       video_preview_url: '',
+      external_url: '',
       is_published: false,
       is_featured: false
     });
@@ -150,6 +153,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
         duration: formData.duration || null,
         thumbnail_url: formData.thumbnail_url || null,
         video_preview_url: formData.video_preview_url || null,
+        external_url: formData.external_url || null,
         is_published: formData.is_published,
         is_featured: formData.is_featured
       };
@@ -206,6 +210,7 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
       duration: product.duration || '',
       thumbnail_url: product.thumbnail_url || '',
       video_preview_url: product.video_preview_url || '',
+      external_url: product.external_url || '',
       is_published: product.is_published,
       is_featured: product.is_featured
     });
@@ -410,6 +415,19 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
                     placeholder="https://..."
                   />
                 </div>
+              </div>
+
+              <div>
+                <Label htmlFor="external_url">קישור לעמוד נחיתה חיצוני</Label>
+                <Input
+                  id="external_url"
+                  value={formData.external_url}
+                  onChange={(e) => setFormData({...formData, external_url: e.target.value})}
+                  placeholder="https://landing-page.com"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  אם מוגדר, לחיצה על המוצר תוביל לקישור זה במקום לעמוד המוצר הפנימי
+                </p>
               </div>
 
               <div className="flex gap-6">

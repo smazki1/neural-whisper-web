@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -10,26 +12,37 @@ interface BlogPost {
   title: string;
   content: string;
   excerpt: string;
-  author: string;
-  date: string;
-  published: boolean;
+  author_id: string;
+  created_at: string;
+  is_published: boolean;
+  slug: string;
 }
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedPosts = localStorage.getItem('blogPosts');
-    if (savedPosts) {
-      const allPosts = JSON.parse(savedPosts);
-      // Show only published posts, sorted by date (newest first)
-      const publishedPosts = allPosts
-        .filter((post: BlogPost) => post.published)
-        .sort((a: BlogPost, b: BlogPost) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      setPosts(publishedPosts);
-    }
+    fetchPosts();
   }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('is_published', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPosts(data || []);
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (selectedPost) {
     return (
@@ -53,11 +66,11 @@ const Blog = () => {
               <div className="flex items-center gap-4 text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  <span>{selectedPost.author}</span>
+                  <span>AI Master</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span>{new Date(selectedPost.date).toLocaleDateString('he-IL')}</span>
+                  <span>{new Date(selectedPost.created_at).toLocaleDateString('he-IL')}</span>
                 </div>
               </div>
             </header>
@@ -118,11 +131,11 @@ const Blog = () => {
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <User className="h-4 w-4" />
-                      <span>{post.author}</span>
+                      <span>AI Master</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      <span>{new Date(post.date).toLocaleDateString('he-IL')}</span>
+                      <span>{new Date(post.created_at).toLocaleDateString('he-IL')}</span>
                     </div>
                   </div>
                   

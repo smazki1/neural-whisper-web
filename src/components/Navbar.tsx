@@ -148,13 +148,13 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               </Link>
               <div className="absolute top-full right-0 mt-2 w-64 bg-brand-primary border border-brand-surface rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <Link
-                  to="/products?category=digital"
+                  to="/products?type=course"
                   className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
                 >
                   קורסים דיגיטליים
                 </Link>
                 <Link
-                  to="/products?category=workshops"
+                  to="/products?type=workshop"
                   className="block w-full text-right px-4 py-3 text-brand-text hover:text-brand-accent hover:bg-brand-surface transition-colors duration-200"
                 >
                   סדנאות
