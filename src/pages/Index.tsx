@@ -31,8 +31,13 @@ function Index() {
         <Solution />
         <Articles />
         <ProductsSection />
-        <div className="text-center py-6">
-          <Link to="/auth" className="story-link">התחברות / הרשמה</Link>
+        <div className="text-center py-12">
+          <Link 
+            to="/contact" 
+            className="premium-button-primary text-lg px-8 py-4 hover:scale-105 transition-transform duration-300"
+          >
+            צור קשר
+          </Link>
         </div>
       </main>
       <Footer />
