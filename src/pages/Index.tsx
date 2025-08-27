@@ -8,6 +8,7 @@ import Articles from '../components/Articles';
 import ProductsSection from '../components/ProductsSection';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
+import AboutSection from '../components/VideoSection';
 import { Toaster } from '@/components/ui/toaster';
 import '../index.css'; // Ensure global styles are imported
 
@@ -29,6 +30,7 @@ function Index() {
         <Hero />
         <Problem />
         <Solution />
+        <AboutSection />
         <Articles />
         <ProductsSection />
         <div className="text-center py-12">
