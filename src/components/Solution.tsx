@@ -27,10 +27,22 @@ const Solution = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-tight hebrew-mobile-wrap text-center"
+            className="text-2xl md:text-4xl lg:text-5xl font-bold text-[#eec643] mb-6 md:mb-8 leading-tight hebrew-mobile-wrap text-center"
           >
-            <span className="text-[#eec643] font-bold">תובנות ומדריכים:</span>
+            הטעות הגדולה ביותר היא להתייחס ל-AI כאל עוד תוכנה.
           </motion.h2>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center hebrew-mobile-wrap relative z-10"
+          >
+            <p className="px-2 sm:px-4 max-w-4xl mx-auto">
+              רוב האנשים מנסים ללמוד "איך לתפעל את הכלי". זו טעות. זה כמו לנסות ללמוד לכתוב שיר באמצעות קריאת מדריך למשתמש של המקלדת. בינה מלאכותית היא לא כלי, היא שותף לחשיבה. כשלומדים איך לנהל איתה שיחה, לאתגר אותה ולשלב אותה בתהליכים שלנו – היא הופכת למאיץ ליכולות האנושיות שלנו. היא לא מחליפה אותך, היא משחררת את הגרסה הטובה ביותר שלך.
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>
