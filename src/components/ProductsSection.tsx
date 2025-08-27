@@ -47,7 +47,7 @@ const ProductsSection = () => {
   ];
 
   return (
-    <section id="offers" className="py-16 md:py-20 font-heebo relative overflow-hidden" dir="rtl">
+    <section id="events" className="py-16 md:py-20 font-heebo relative overflow-hidden" dir="rtl">
       {/* Premium Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#101933] via-[#0f1a30] to-[#101933]"></div>
       
@@ -64,7 +64,7 @@ const ProductsSection = () => {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight hebrew-mobile-wrap">
-            <span className="text-[#eec643] font-bold">ללמוד ולחקור יחד:</span>
+            <span className="text-[#eec643] font-bold">האירועים הקרובים:</span>
           </h2>
         </motion.div>
 

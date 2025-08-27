@@ -27,20 +27,69 @@ const Problem = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="space-y-6 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center"
+            className="space-y-8"
           >
-            <p className="px-2 sm:px-4 hebrew-mobile-wrap">
-              אנחנו חיים בתקופה שבה בינה מלאכותית הופכת לחלק מהחיים היומיומיים שלנו. מעבר לשימושים הטכניים, יש כאן הזדמנות לחקור איך הכלים האלו יכולים לעזור לנו להבין את עצמנו טוב יותר, לפתח רעיונות חדשים ולמצוא דרכים חדשות לפתור בעיות.
-            </p>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-8 leading-tight hebrew-mobile-wrap">
+              בין אם אתה בעל עסק, במסלול קריירה חדש או יזמית בתחילת הדרך – כולנו מרגישים את זה.
+            </h2>
             
-            <p className="px-2 sm:px-4 hebrew-mobile-wrap">
-              בינה מלאכותית היא לא רק טכנולוגיה - היא{' '}
-              <span className="text-[#eec643] font-semibold">מראה שמחזירה לנו את החשיבה שלנו בצורה חדשה</span>. כשאנחנו מנסחים שאלות ל-AI, אנחנו למעשה מבהירים לעצמנו מה אנחנו באמת מחפשים.
-            </p>
-            
-            <p className="px-2 sm:px-4 hebrew-mobile-wrap">
-              יש כאן פוטנציאל שעדיין לא חקרנו לעומק. המטרה שלי היא לחלוק תובנות, כלים ודרכי חשיבה שעוזרים לכל אחד למצוא את הדרך שלו עם הטכנולוגיה הזו.
-            </p>
+            <div className="grid gap-6 md:gap-8 max-w-4xl mx-auto">
+              <div className="flex items-start gap-4 p-6 premium-card">
+                <div className="flex-shrink-0 w-12 h-12 bg-[#eec643]/10 rounded-full flex items-center justify-center border border-[#eec643]/20">
+                  <svg className="w-6 h-6 text-[#eec643]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">תחושת דחיפות</h3>
+                  <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
+                    פחד עמוק להישאר מאחור בזמן שהעולם דוהר קדימה.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 premium-card">
+                <div className="flex-shrink-0 w-12 h-12 bg-[#eec643]/10 rounded-full flex items-center justify-center border border-[#eec643]/20">
+                  <svg className="w-6 h-6 text-[#eec643]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">הצפה של מידע</h3>
+                  <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
+                    אינסוף כלים, חדשות ומושגים שמרגישים מורכבים ומפחידים מדי.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 premium-card">
+                <div className="flex-shrink-0 w-12 h-12 bg-[#eec643]/10 rounded-full flex items-center justify-center border border-[#eec643]/20">
+                  <svg className="w-6 h-6 text-[#eec643]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">פער פוטנציאל</h3>
+                  <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
+                    הרגשה שיש לך רעיונות ויכולות, אבל חסר לך הגשר לתרגם אותם לתוצאות ממשיות בעולם החדש.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 premium-card">
+                <div className="flex-shrink-0 w-12 h-12 bg-[#eec643]/10 rounded-full flex items-center justify-center border border-[#eec643]/20">
+                  <svg className="w-6 h-6 text-[#eec643]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">ספק עצמי</h3>
+                  <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
+                    "אני כבר מבוגר מדי ללמוד", "טכנולוגיה זה לא בשבילי", "אני לא טכנולוג, זה גדול עליי".
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </div>

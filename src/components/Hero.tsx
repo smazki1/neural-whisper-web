@@ -10,9 +10,9 @@ import HeroScrollIndicator from './Hero/HeroScrollIndicator';
 
 const Hero = () => {
   const scrollToOffers = () => {
-    const offersSection = document.getElementById('offers');
-    if (offersSection) {
-      offersSection.scrollIntoView({ behavior: 'smooth' });
+    const eventsSection = document.getElementById('events');
+    if (eventsSection) {
+      eventsSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
