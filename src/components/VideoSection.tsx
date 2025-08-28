@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import aviFriedPhoto from '../assets/avi-fried-photo.jpg';
 
 const AboutSection = () => {
   return (
@@ -27,7 +26,7 @@ const AboutSection = () => {
               <div className="relative bg-[#101933] rounded-xl overflow-hidden">
                 <div className="relative w-full aspect-square">
                   <img
-                    src={aviFriedPhoto}
+                    src="/lovable-uploads/6471f652-e053-4640-8a34-0f7db2486913.png"
                     alt="אבי פריד - מומחה AI ויזם"
                     className="absolute inset-0 w-full h-full object-cover rounded-xl"
                   />
