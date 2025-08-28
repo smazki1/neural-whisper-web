@@ -30,7 +30,7 @@ const Problem = () => {
             className="space-y-8"
           >
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-8 leading-tight hebrew-mobile-wrap">
-              בין אם אתה בעל עסק, במסלול קריירה חדש או יזמית בתחילת הדרך – כולנו מרגישים את זה.
+              העולם דוהר קדימה. אם הרגשת את אחד מאלה, אתה לא לבד:
             </h2>
             
             <div className="grid gap-6 md:gap-8 max-w-4xl mx-auto">
@@ -41,9 +41,9 @@ const Problem = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">תחושת דחיפות</h3>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">הפחד להישאר מאחור</h3>
                   <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
-                    פחד עמוק להישאר מאחור בזמן שהעולם דוהר קדימה.
+                    תחושת הדחיפות הזו, לראות את כולם מתקדמים ולהרגיש שאתה עלול לפספס את הרכבת.
                   </p>
                 </div>
               </div>
@@ -55,9 +55,9 @@ const Problem = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">הצפה של מידע</h3>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">הצפת המידע</h3>
                   <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
-                    אינסוף כלים, חדשות ומושגים שמרגישים מורכבים ומפחידים מדי.
+                    אינסוף כלים, חדשות ומושגים מורכבים שגורמים ל-AI להיראות כמו משימה בלתי אפשרית.
                   </p>
                 </div>
               </div>
@@ -69,9 +69,9 @@ const Problem = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">פער פוטנציאל</h3>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">פער בין רעיון למציאות</h3>
                   <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
-                    הרגשה שיש לך רעיונות ויכולות, אבל חסר לך הגשר לתרגם אותם לתוצאות ממשיות בעולם החדש.
+                    ההרגשה שיש לך רעיונות גדולים, אבל חסר לך הגשר לתרגם אותם לתוצאות ממשיות בעולם החדש.
                   </p>
                 </div>
               </div>
@@ -83,9 +83,9 @@ const Problem = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">ספק עצמי</h3>
+                  <h3 className="text-xl font-semibold text-[#eec643] mb-2 hebrew-mobile-wrap">הקול שאומר "זה לא בשבילי"</h3>
                   <p className="text-gray-300 leading-relaxed hebrew-mobile-wrap">
-                    "אני כבר מבוגר מדי ללמוד", "טכנולוגיה זה לא בשבילי", "אני לא טכנולוג, זה גדול עליי".
+                    "אני לא טכנולוג", "טכנולוגיה זה מסובך", "אני כבר מבוגר מדי בשביל זה".
                   </p>
                 </div>
               </div>

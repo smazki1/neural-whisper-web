@@ -31,7 +31,6 @@ function Index() {
         <Problem />
         <Solution />
         <AboutSection />
-        <Articles />
         <ProductsSection />
         <div className="text-center py-12">
           <Link 
