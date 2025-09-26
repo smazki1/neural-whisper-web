@@ -76,7 +76,7 @@ interface User {
   display_name?: string;
   created_at: string;
   roles: Array<{
-    role: 'admin' | 'moderator' | 'user';
+    role: 'admin' | 'instructor' | 'student';
   }>;
 }
 
@@ -157,7 +157,7 @@ export const SettingsPanel = () => {
         email: 'לא זמין', // Email not available in profiles table
         display_name: user.display_name,
         created_at: user.created_at,
-        roles: [] as Array<{role: 'admin' | 'moderator' | 'user'}>
+        roles: [] as Array<{role: 'admin' | 'instructor' | 'student'}>
       })) || [];
 
       setUsers(usersData);
@@ -253,7 +253,7 @@ export const SettingsPanel = () => {
     }
   };
 
-  const updateUserRole = async (userId: string, role: 'admin' | 'moderator' | 'user') => {
+  const updateUserRole = async (userId: string, role: 'admin' | 'instructor' | 'student') => {
     try {
       // First, remove existing roles for this user
       await supabase
@@ -664,19 +664,19 @@ export const SettingsPanel = () => {
                       {user.roles.map((role, index) => (
                         <Badge key={index} variant="outline">
                           {role.role === 'admin' ? 'מנהל' : 
-                           role.role === 'moderator' ? 'מנהל תוכן' : 'משתמש'}
+                           role.role === 'instructor' ? 'מדריך' : 'תלמיד'}
                         </Badge>
                       ))}
                       <Select 
-                        defaultValue={user.roles[0]?.role || 'user'}
+                        defaultValue={user.roles[0]?.role || 'student'}
                         onValueChange={(value) => updateUserRole(user.id, value as any)}
                       >
                         <SelectTrigger className="w-32">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="user">משתמש</SelectItem>
-                          <SelectItem value="moderator">מנהל תוכן</SelectItem>
+                          <SelectItem value="student">תלמיד</SelectItem>
+                          <SelectItem value="instructor">מדריך</SelectItem>
                           <SelectItem value="admin">מנהל</SelectItem>
                         </SelectContent>
                       </Select>

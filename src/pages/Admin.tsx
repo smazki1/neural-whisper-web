@@ -26,6 +26,10 @@ import AdminProductCourses from './Admin/AdminProductCourses';
 import AdminContentServices from './Admin/AdminContentServices';
 import AdminPortfolio from './Admin/AdminPortfolio';
 import AdminLeads from './Admin/AdminLeads';
+import { DashboardOverview } from '@/components/Admin/DashboardOverview';
+import { ContentManager } from '@/components/Admin/ContentManager';
+import { LeadPipeline } from '@/components/Admin/LeadPipeline';
+import { SettingsPanel } from '@/components/Admin/SettingsPanel';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface DashboardStats {
@@ -40,6 +44,7 @@ interface DashboardStats {
 const Admin = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('dashboard');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -133,110 +138,58 @@ const Admin = () => {
           </div>
 
           {/* Dashboard Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {loading ? (
-              Array.from({ length: 4 }).map((_, i) => (
-                <Card key={i}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-4 w-4" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-8 w-16 mb-2" />
-                    <Skeleton className="h-3 w-24" />
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">סך המשתמשים</CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{stats?.totalUsers}</div>
-                    <p className="text-xs text-muted-foreground">משתמשים רשומים</p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">מוצרים</CardTitle>
-                    <Package className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{stats?.totalProducts}</div>
-                    <p className="text-xs text-muted-foreground">
-                      {stats?.publishedProducts} פורסמו
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">הזמנות</CardTitle>
-                    <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{stats?.totalOrders}</div>
-                    <p className="text-xs text-muted-foreground">
-                      {stats?.monthlyOrders} החודש
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">הכנסות</CardTitle>
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">
-                      {formatCurrency(stats?.totalRevenue || 0)}
-                    </div>
-                    <p className="text-xs text-muted-foreground">סך ההכנסות</p>
-                  </CardContent>
-                </Card>
-              </>
-            )}
-          </div>
+          <DashboardOverview onNavigateToTab={setActiveTab} />
 
           {/* Main Admin Tabs */}
-          <Tabs defaultValue="products" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-6">
-              <TabsTrigger value="products" className="flex items-center gap-2">
-                <Package className="h-4 w-4" />
-                ניהול מוצרים
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-7">
+              <TabsTrigger value="dashboard" className="flex items-center gap-2">
+                <BarChart3 className="h-4 w-4" />
+                דאשבורד
+              </TabsTrigger>
+              <TabsTrigger value="blog" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                ניהול תוכן
               </TabsTrigger>
               <TabsTrigger value="leads" className="flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />
-                ניהול ליידים
+                ליידים
+              </TabsTrigger>
+              <TabsTrigger value="products" className="flex items-center gap-2">
+                <Package className="h-4 w-4" />
+                מוצרים
               </TabsTrigger>
               <TabsTrigger value="orders" className="flex items-center gap-2">
                 <ShoppingCart className="h-4 w-4" />
-                ניהול הזמנות
+                הזמנות
               </TabsTrigger>
               <TabsTrigger value="users" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
-                ניהול משתמשים
+                משתמשים
               </TabsTrigger>
-              <TabsTrigger value="courses" className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />
-                קישור קורסים
-              </TabsTrigger>
-              <TabsTrigger value="content" className="flex items-center gap-2">
-                <FileText className="h-4 w-4" />
-                תכנים ושירותים
+              <TabsTrigger value="settings" className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                הגדרות
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="products">
-              <AdminProducts onStatsUpdate={fetchDashboardStats} />
+            <TabsContent value="dashboard">
+              <DashboardOverview onNavigateToTab={setActiveTab} />
+            </TabsContent>
+
+            <TabsContent value="blog">
+              <ContentManager 
+                onPostCreated={fetchDashboardStats}
+                onPostUpdated={fetchDashboardStats}
+              />
             </TabsContent>
 
             <TabsContent value="leads">
-              <AdminLeads />
+              <LeadPipeline onLeadUpdated={fetchDashboardStats} />
+            </TabsContent>
+
+            <TabsContent value="products">
+              <AdminProducts onStatsUpdate={fetchDashboardStats} />
             </TabsContent>
 
             <TabsContent value="orders">
@@ -247,6 +200,11 @@ const Admin = () => {
               <AdminUsers onStatsUpdate={fetchDashboardStats} />
             </TabsContent>
 
+            <TabsContent value="settings">
+              <SettingsPanel />
+            </TabsContent>
+
+            {/* Legacy tabs for backward compatibility */}
             <TabsContent value="courses">
               <AdminProductCourses />
             </TabsContent>
