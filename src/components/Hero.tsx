@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import heroBackground from '../assets/hero-bg-ai-modern.jpg';
 
 const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -19,13 +20,34 @@ const Hero = () => {
   };
 
   return (
-    <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden font-heebo"
+    <motion.section 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden font-heebo group cursor-default"
       dir="rtl"
       style={{
-        background: 'linear-gradient(135deg, hsl(289, 13%, 85%) 0%, hsl(0, 0%, 100%) 50%, hsl(289, 13%, 90%) 100%)'
+        backgroundImage: `url(${heroBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
       }}
+      whileHover={{ 
+        backgroundSize: '110% 110%',
+      }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
     >
+      {/* Dynamic Overlay */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-br from-brand-text/60 via-brand-text/50 to-brand-text/40 transition-opacity duration-800 ease-in-out group-hover:opacity-40"
+        initial={{ opacity: 0.5 }}
+      />
+      
+      {/* Fallback Background */}
+      <div 
+        className="absolute inset-0 -z-10"
+        style={{
+          background: 'linear-gradient(135deg, hsl(289, 13%, 85%) 0%, hsl(0, 0%, 100%) 50%, hsl(289, 13%, 90%) 100%)'
+        }}
+      />
       {/* Subtle Background Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.03]"
@@ -73,14 +95,17 @@ const Hero = () => {
         }}
       >
         <motion.h1 
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.2] tracking-wide"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.2] tracking-wide text-white relative z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
           style={{
-            color: 'hsl(var(--brand-text))',
-            textShadow: '0 2px 20px hsl(var(--brand-text) / 0.1)',
-            filter: 'drop-shadow(0 0 1px hsl(var(--brand-text) / 0.1))',
+            textShadow: '0 4px 40px rgba(0, 0, 0, 0.8), 0 2px 20px rgba(0, 0, 0, 0.6)',
+            filter: 'drop-shadow(0 0 2px rgba(255, 255, 255, 0.1))',
+          }}
+          whileHover={{
+            filter: 'drop-shadow(0 0 20px rgba(238, 198, 67, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.2))',
+            textShadow: '0 4px 40px rgba(0, 0, 0, 0.8), 0 2px 20px rgba(238, 198, 67, 0.3)',
           }}
         >
           <motion.span
@@ -94,18 +119,24 @@ const Hero = () => {
             }}
           >
             להיות על זה בעידן ה-
-            <span 
-              className="premium-accent-gradient"
+            <motion.span 
+              className="inline-block"
               style={{
                 background: 'var(--gradient-accent)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: 700,
+                filter: 'drop-shadow(0 0 10px rgba(238, 198, 67, 0.3))',
               }}
+              whileHover={{
+                filter: 'drop-shadow(0 0 20px rgba(238, 198, 67, 0.6))',
+                scale: 1.05,
+              }}
+              transition={{ duration: 0.3 }}
             >
               AI
-            </span>
+            </motion.span>
           </motion.span>
         </motion.h1>
       </motion.div>
@@ -134,43 +165,48 @@ const Hero = () => {
           }}
         >
           <motion.span 
-            className="text-sm font-medium transition-colors duration-300"
-            style={{ color: 'hsl(var(--brand-text) / 0.7)' }}
+            className="text-sm font-medium text-white/80 transition-colors duration-300"
             whileHover={{ color: 'hsl(var(--brand-accent))' }}
           >
             גלול למטה
           </motion.span>
           <motion.div
+            animate={{ 
+              y: [0, -2, 0],
+            }}
+            transition={{ 
+              duration: 2, 
+              repeat: Infinity, 
+              ease: "easeInOut"
+            }}
             whileHover={{ 
               color: 'hsl(var(--brand-accent))',
-              filter: 'drop-shadow(0 0 8px hsl(var(--brand-accent) / 0.5))'
+              filter: 'drop-shadow(0 0 12px hsl(var(--brand-accent) / 0.8))',
+              scale: 1.1,
             }}
-            transition={{ duration: 0.3 }}
           >
             <ChevronDown 
-              className="w-5 h-5 transition-all duration-300" 
-              style={{ color: 'hsl(var(--brand-text) / 0.7)' }}
+              className="w-5 h-5 text-white/80 transition-all duration-300" 
             />
           </motion.div>
           
           {/* Subtle glow ring */}
           <motion.div
-            className="absolute inset-0 rounded-full border opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{
-              borderColor: 'hsl(var(--brand-accent) / 0.3)',
-            }}
+            className="absolute inset-0 rounded-full border border-brand-accent/30 opacity-0 transition-opacity duration-300"
+            whileHover={{ opacity: 1 }}
             animate={{ 
-              scale: [1, 1.2, 1],
+              scale: [1, 1.3, 1],
+              opacity: [0, 0.4, 0],
             }}
             transition={{ 
-              duration: 2, 
+              duration: 3, 
               repeat: Infinity, 
               ease: "easeOut"
             }}
           />
         </motion.div>
       </motion.div>
-    </section>
+    </motion.section>
   );
 };
 
