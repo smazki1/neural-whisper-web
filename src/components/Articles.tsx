@@ -25,21 +25,21 @@ const Articles = () => {
   ];
 
   return (
-    <section className="py-16 md:py-20 font-heebo professional-section-alt" dir="rtl">
-      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+    <section className="modern-section" dir="rtl">
+      <div className="modern-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-16"
         >
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold professional-text-primary mb-6 leading-tight hebrew-mobile-wrap">
-            <span className="professional-text-accent font-bold">תובנות ומדריכים:</span>
+          <h2 className="modern-heading-2 mb-6 hebrew-mobile-wrap">
+            <span className="modern-text-accent font-bold">תובנות ומדריכים</span>
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+        <div className="modern-grid-3">
           {articles.map((article, index) => (
             <motion.div
               key={index}
@@ -47,28 +47,28 @@ const Articles = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="professional-card p-6 group hover:scale-[1.02] transition-all duration-300"
+              className="modern-card p-8 group hover:scale-[1.02] transition-all duration-300"
             >
-              <div className="mb-4">
-                <span className="inline-block px-3 py-1 bg-accent/10 professional-text-accent text-sm font-semibold rounded-full border border-accent/20">
+              <div className="mb-6">
+                <span className="inline-block px-4 py-2 bg-emerald-50 text-emerald-600 text-sm font-semibold rounded-full border border-emerald-200">
                   {article.type}
                 </span>
               </div>
               
-              <h3 className="text-lg md:text-xl font-bold professional-text-primary mb-3 leading-snug hebrew-mobile-wrap">
+              <h3 className="modern-heading-4 mb-4 hebrew-mobile-wrap">
                 {article.title}
               </h3>
               
-              <p className="professional-text-body mb-6 leading-relaxed hebrew-mobile-wrap">
+              <p className="modern-body mb-8 hebrew-mobile-wrap">
                 {article.description}
               </p>
               
               <Link
                 to={article.href}
-                className="inline-flex items-center gap-2 professional-text-accent hover:text-accent transition-colors duration-200 font-semibold"
+                className="modern-link font-semibold"
               >
                 קרא עוד
-                <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
                 </svg>
               </Link>

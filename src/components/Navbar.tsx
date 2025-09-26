@@ -66,8 +66,8 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
       <motion.nav
         className={`fixed top-0 w-full z-50 transition-all duration-500 font-heebo ${
           isScrolled
-            ? 'professional-backdrop border-b'
-            : 'bg-background/95 backdrop-blur-xl'
+            ? 'modern-backdrop border-b border-slate-200/60'
+            : 'bg-white/95 backdrop-blur-xl'
         }`}
         dir="rtl"
         initial={{ y: -100 }}
@@ -88,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`professional-text-body ${social.color} transition-all duration-300 hover:scale-110`}
+                        className="modern-text-muted hover:text-slate-800 transition-all duration-300 hover:scale-110"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -103,10 +103,10 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button variant="ghost" className="relative h-12 w-12 rounded-full professional-backdrop border">
+                      <Button variant="ghost" className="relative h-12 w-12 rounded-full modern-backdrop border border-slate-200/60">
                         <Avatar className="h-10 w-10">
                           <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.display_name || 'Profile'} />
-                          <AvatarFallback className="bg-accent text-accent-foreground font-semibold">
+                          <AvatarFallback className="bg-blue-500 text-white font-semibold">
                             {user.email?.charAt(0).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
@@ -194,7 +194,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       onMouseLeave={() => setIsInspirationDropdownOpen(false)}
                     >
                       <motion.button
-                        className="flex items-center gap-1 professional-text-primary hover:text-accent transition-all duration-300 font-semibold py-2"
+                        className="flex items-center gap-1 text-slate-800 hover:text-blue-600 transition-all duration-300 font-semibold py-2"
                         whileHover={{ scale: 1.05 }}
                       >
                         {item.name}
@@ -228,18 +228,18 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       {item.action ? (
                         <button
                           onClick={item.action}
-                          className="professional-text-primary hover:text-accent transition-all duration-300 font-semibold py-2 relative group"
+                          className="text-slate-800 hover:text-blue-600 transition-all duration-300 font-semibold py-2 relative group"
                         >
                           {item.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                         </button>
                       ) : (
                         <Link
                           to={item.href}
-                          className="professional-text-primary hover:text-accent transition-all duration-300 font-semibold py-2 relative group"
+                          className="text-slate-800 hover:text-blue-600 transition-all duration-300 font-semibold py-2 relative group"
                         >
                           {item.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                         </Link>
                       )}
                     </motion.div>
@@ -253,7 +253,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               className="flex-shrink-0"
               whileHover={{ scale: 1.05 }}
             >
-              <Link to="/" className="text-2xl font-bold professional-text-accent tracking-tight">
+              <Link to="/" className="modern-heading-3 modern-text-accent tracking-tight">
                 AI Master
               </Link>
             </motion.div>
