@@ -15,9 +15,9 @@ const VideoAboutSection = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl modern-glow">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl modern-glow max-w-lg mx-auto">
               {/* Portrait Image */}
-              <div className="relative aspect-video bg-gradient-to-br from-accent/10 to-primary/10">
+              <div className="relative aspect-[4/3] bg-gradient-to-br from-accent/10 to-primary/10">
                 <img
                   src={aviPortrait}
                   alt="אבי פריד - יזם טכנולוגי ומומחה AI"
