@@ -6,8 +6,8 @@
 
 @layer base {
   :root {
-    /* Professional Color Palette - High Contrast */
-    --background: 0 0% 98%; /* #fafafa - Clean white background */
+    /* Modern Professional Color Palette */
+    --background: 0 0% 100%; /* Pure white background */
     --foreground: 218 48% 12%; /* #101933 - Dark navy for primary text */
 
     --card: 0 0% 100%; /* #ffffff - Pure white card backgrounds */
@@ -22,7 +22,7 @@
     --secondary: 218 48% 12%; /* #101933 - Dark for secondary buttons */
     --secondary-foreground: 0 0% 100%; /* White text on dark */
 
-    --muted: 0 0% 96%; /* #f5f5f5 - Very subtle gray for muted elements */
+    --muted: 223 27% 96%; /* #f8f9fb - Very light blue-gray for sections */
     --muted-foreground: 218 50% 16%; /* #162347 - Medium navy for muted text */
 
     --accent: 222 53% 28%; /* #213670 - Blue for accents and subheadings */
@@ -31,14 +31,14 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%; /* #e6e6e6 - Subtle borders */
+    --border: 220 13% 91%; /* Subtle borders */
     --input: 0 0% 100%; /* White input backgrounds */
     --ring: 48 78% 60%; /* Yellow focus rings */
 
     --radius: 0.75rem; /* Professional rounded corners */
 
-    /* Professional Brand System */
-    --brand-primary: 0 0% 98%; /* #fafafa - Clean background */
+    /* Professional Brand System - Enhanced */
+    --brand-primary: 0 0% 100%; /* Pure white background */
     --brand-accent: 48 78% 60%; /* #eec643 - Yellow accent (buttons/highlights only) */
     --brand-secondary: 222 53% 28%; /* #213670 - Blue for subheadings */
     --brand-surface: 0 0% 100%; /* #ffffff - White surfaces */
@@ -46,6 +46,10 @@
     --brand-text-body: 218 50% 16%; /* #162347 - Body text */
     --brand-text-sub: 222 53% 28%; /* #213670 - Subheadings */
     --brand-text-muted: 0 0% 40%; /* #666666 - Muted text */
+    
+    /* Section Backgrounds */
+    --section-white: 0 0% 100%; /* Pure white */
+    --section-alt: 223 27% 96%; /* Very light blue-gray #f8f9fb */
 
     /* Professional Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 100%) 50%, hsl(0, 0%, 98%) 100%);
@@ -131,8 +135,22 @@
 
   .professional-card:hover {
     box-shadow: var(--shadow-card-hover);
-    transform: translateY(-1px);
-    border-color: hsl(var(--brand-accent) / 0.2);
+    transform: translateY(-2px);
+    border-color: hsl(var(--brand-accent) / 0.3);
+    box-shadow: 0 8px 32px hsl(var(--brand-accent) / 0.15);
+  }
+
+  .professional-card-featured {
+    @apply rounded-xl border-l-4 transition-all duration-300;
+    background: hsl(var(--brand-surface));
+    border: 1px solid hsl(var(--border));
+    border-left: 4px solid hsl(var(--brand-accent));
+    box-shadow: var(--shadow-card);
+  }
+
+  .professional-card-featured:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px hsl(var(--brand-accent) / 0.2);
   }
 
   .professional-button-primary {
@@ -188,11 +206,17 @@
   }
 
   .professional-section-bg {
-    background: hsl(var(--background));
+    background: hsl(var(--section-white));
   }
 
   .professional-section-alt {
-    background: var(--gradient-section-alt);
+    background: hsl(var(--section-alt));
+  }
+
+  .section-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, hsl(var(--brand-accent) / 0.3), transparent);
+    margin: 2rem 0;
   }
 
   .professional-backdrop {

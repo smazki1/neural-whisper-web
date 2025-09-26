@@ -107,7 +107,8 @@ const ProductsSection = () => {
   }
 
   return (
-    <section id="events" className="py-16 md:py-20 font-heebo professional-section-bg" dir="rtl">      
+    <section id="events" className="py-16 md:py-20 font-heebo professional-section-bg" dir="rtl">
+      <div className="section-divider"></div>
       <div className="container mx-auto px-4 md:px-6 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -129,7 +130,7 @@ const ProductsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="professional-card p-6 group hover:scale-[1.02] transition-all duration-300"
+              className="professional-card-featured p-6 group hover:scale-[1.02] transition-all duration-300"
             >
               <div className="text-center">
                 <div className="mb-4 flex justify-center">

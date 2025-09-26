@@ -28,7 +28,8 @@ const HowICanHelpSection = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-32 relative" dir="rtl">
+    <section className="py-20 lg:py-32 relative professional-section-alt" dir="rtl">
+      <div className="section-divider"></div>
       <div className="container mx-auto px-6 lg:px-8">
         {/* Section Header */}
         <motion.div 
@@ -45,12 +46,12 @@ const HowICanHelpSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <span className="block text-brand-text mb-2">איך אני יכול</span>
-            <span className="block premium-accent-gradient">לעזור לך</span>
+            <span className="block professional-text-primary mb-2">איך אני יכול</span>
+            <span className="block professional-text-accent">לעזור לך</span>
           </motion.h2>
           
           <motion.p 
-            className="text-xl lg:text-2xl text-brand-text-secondary max-w-3xl mx-auto leading-relaxed"
+            className="text-xl lg:text-2xl professional-text-body max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -73,9 +74,9 @@ const HowICanHelpSection = () => {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 viewport={{ once: true }}
               >
-                <div className="modern-card p-8 lg:p-10 h-full relative overflow-hidden group-hover:shadow-2xl transition-all duration-500">
-                  {/* Background Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                <div className="professional-card p-8 lg:p-10 h-full relative overflow-hidden">
+                  {/* Subtle Hover Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   {/* Icon */}
                   <motion.div 
@@ -90,11 +91,11 @@ const HowICanHelpSection = () => {
 
                   {/* Content */}
                   <div className="relative space-y-6">
-                    <h3 className="text-2xl lg:text-3xl font-bold text-brand-text leading-tight">
+                    <h3 className="text-2xl lg:text-3xl font-bold professional-text-primary leading-tight">
                       {card.title}
                     </h3>
                     
-                    <p className="text-brand-text-secondary text-lg leading-relaxed">
+                    <p className="professional-text-body text-lg leading-relaxed">
                       {card.description}
                     </p>
 
@@ -124,11 +125,11 @@ const HowICanHelpSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className="text-lg text-brand-text-secondary mb-8">
+          <p className="text-lg professional-text-body mb-8">
             מוכן להתחיל? בוא נתכנן יחד את השלב הבא שלך
           </p>
           <motion.button 
-            className="premium-button-primary text-xl px-10 py-4 modern-glow"
+            className="professional-button-primary text-xl px-10 py-4"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.98 }}
           >

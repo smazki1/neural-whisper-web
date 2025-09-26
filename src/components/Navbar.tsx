@@ -253,7 +253,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               className="flex-shrink-0"
               whileHover={{ scale: 1.05 }}
             >
-              <Link to="/" className="text-2xl font-bold professional-text-accent tracking-tight">
+              <Link to="/" className="text-2xl font-bold professional-text-primary tracking-tight hover:text-accent transition-colors duration-300">
                 AI Master
               </Link>
             </motion.div>
