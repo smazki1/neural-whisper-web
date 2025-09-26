@@ -1,49 +1,61 @@
 import React from 'react';
-// To test different backgrounds, simply change the number below (01-11 available)
-// hero-background-01.png through hero-background-10.png and hero-background-11.jpeg
-import heroBackground from '../assets/backgrounds/hero/hero-background-19.png';
-import HeroBackground from './Hero/HeroBackground';
-import HeroContent from './Hero/HeroContent';
-import HeroCTA from './Hero/HeroCTA';
-import HeroFloatingElements from './Hero/HeroFloatingElements';
-import HeroScrollIndicator from './Hero/HeroScrollIndicator';
+import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 
 const Hero = () => {
-  const scrollToOffers = () => {
-    const eventsSection = document.getElementById('events');
-    if (eventsSection) {
-      eventsSection.scrollIntoView({ behavior: 'smooth' });
+  const scrollToNext = () => {
+    const nextSection = document.querySelector('section:nth-of-type(2)');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
     <section 
-      className="relative min-h-[120vh] flex items-center justify-center overflow-hidden font-heebo pt-16 md:pt-16 pb-32"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden font-heebo"
       dir="rtl"
       style={{
-        backgroundImage: `url(${heroBackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        background: 'var(--gradient-hero)'
       }}
     >
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#101933]/70 via-[#101933]/70 to-[#101933]/90"></div>
-      
-      {/* Bottom Gradient Transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#101933] to-transparent"></div>
-      
-      <HeroBackground />
+      {/* Main Content */}
+      <motion.div 
+        className="relative z-10 text-center px-4 md:px-6 max-w-4xl mx-auto"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        <motion.h1 
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-brand-text leading-[1.2] tracking-wide"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+        >
+          להיות על זה בעידן ה-AI
+        </motion.h1>
+      </motion.div>
 
-      <div className="relative z-20 text-center px-4 md:px-6 max-w-5xl mx-auto">
-        <div className="space-y-8 md:space-y-12">
-          <HeroContent />
-          <HeroCTA onScrollToOffers={scrollToOffers} />
-        </div>
-        <HeroFloatingElements />
-      </div>
-
-      <HeroScrollIndicator />
+      {/* Scroll Indicator */}
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.5 }}
+        onClick={scrollToNext}
+      >
+        <motion.div 
+          className="flex flex-col items-center space-y-2"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "easeInOut"
+          }}
+        >
+          <span className="text-sm text-brand-text/70 font-medium">גלול למטה</span>
+          <ChevronDown className="w-5 h-5 text-brand-text/70" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
