@@ -35,10 +35,6 @@ interface BlogPost {
     name: string;
     slug: string;
   } | null;
-  profiles?: {
-    display_name: string | null;
-    avatar_url: string | null;
-  } | null;
 }
 
 interface RelatedPost {
@@ -73,10 +69,6 @@ const BlogPost = () => {
           categories (
             name,
             slug
-          ),
-          profiles (
-            display_name,
-            avatar_url
           )
         `)
         .eq('slug', slug)
@@ -228,7 +220,7 @@ const BlogPost = () => {
       <div className="min-h-screen bg-background">
         <Navbar onContactClick={() => {}} />
         
-        <article className="container mx-auto px-6 py-8 pt-28 max-w-4xl">
+        <article className="container mx-auto px-6 py-8 pt-32 max-w-4xl" dir="rtl">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
             <Button variant="ghost" size="sm" onClick={() => navigate('/blog')}>
@@ -253,41 +245,33 @@ const BlogPost = () => {
               </Badge>
             )}
             
-            <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-bold text-brand-text mb-4 leading-tight">
               {post.title}
             </h1>
             
             {post.excerpt && (
-              <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
+              <p className="text-xl text-brand-text-secondary mb-6 leading-relaxed">
                 {post.excerpt}
               </p>
             )}
 
-            <div className="flex items-center justify-between flex-wrap gap-4 py-4 border-t border-b">
+            <div className="flex items-center justify-between flex-wrap gap-4 py-4 border-t border-b border-border">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  {post.profiles?.avatar_url ? (
-                    <img 
-                      src={post.profiles.avatar_url} 
-                      alt={post.profiles.display_name || 'כותב'}
-                      className="w-8 h-8 rounded-full"
-                    />
-                  ) : (
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                      <User className="h-4 w-4" />
-                    </div>
-                  )}
-                  <span className="text-sm font-medium">
-                    {post.profiles?.display_name || 'כותב אנונימי'}
+                  <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+                    <User className="h-4 w-4 text-background" />
+                  </div>
+                  <span className="text-sm font-medium text-brand-text">
+                    אבי פריד
                   </span>
                 </div>
                 
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1 text-sm text-brand-text-secondary">
                   <Calendar className="h-3 w-3" />
                   {formatDate(post.published_at)}
                 </div>
                 
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1 text-sm text-brand-text-secondary">
                   <Clock className="h-3 w-3" />
                   {getReadingTime(post.content)}
                 </div>
@@ -313,51 +297,85 @@ const BlogPost = () => {
 
           {/* Article Content */}
           <div 
-            className="prose prose-lg max-w-none mb-12 [&>*]:text-foreground [&_h1]:text-foreground [&_h2]:text-foreground [&_h3]:text-foreground [&_h4]:text-foreground [&_h5]:text-foreground [&_h6]:text-foreground"
+            className="prose prose-lg max-w-none mb-12 text-brand-text [&>h1]:text-brand-text [&>h2]:text-brand-text [&>h3]:text-brand-text [&>h4]:text-brand-text [&>h5]:text-brand-text [&>h6]:text-brand-text [&>p]:text-brand-text [&>li]:text-brand-text [&>blockquote]:text-brand-text-secondary [&>blockquote]:border-r-accent [&>a]:text-accent [&>a:hover]:text-accent/80"
             dangerouslySetInnerHTML={{ __html: post.content }}
             dir="rtl"
           />
 
-          {/* Related Posts */}
-          {relatedPosts.length > 0 && (
-            <section className="mt-16 pt-8 border-t">
-              <h2 className="text-2xl font-bold mb-6">מאמרים קשורים</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {relatedPosts.map((relatedPost) => (
-                  <Card key={relatedPost.id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                    <div onClick={() => navigate(`/blog/${relatedPost.slug}`)}>
-                      {relatedPost.featured_image_url && (
-                        <div className="aspect-video overflow-hidden">
-                          <img 
-                            src={relatedPost.featured_image_url} 
-                            alt={relatedPost.title}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                          />
-                        </div>
-                      )}
-                      
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-lg mb-2 hover:text-primary transition-colors line-clamp-2">
-                          {relatedPost.title}
-                        </h3>
-                        
-                        {relatedPost.excerpt && (
-                          <p className="text-muted-foreground text-sm line-clamp-3 mb-2">
-                            {relatedPost.excerpt}
-                          </p>
-                        )}
-                        
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Calendar className="h-3 w-3" />
-                          {formatDate(relatedPost.published_at)}
-                        </div>
-                      </CardContent>
-                    </div>
-                  </Card>
-                ))}
+          {/* Share Buttons */}
+          <div className="flex items-center gap-4 mb-8">
+            <h3 className="text-lg font-semibold text-brand-text">שתף את המאמר:</h3>
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+                  window.open(shareUrl, '_blank', 'width=600,height=400');
+                }}
+                className="flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                Facebook
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`;
+                  window.open(shareUrl, '_blank', 'width=600,height=400');
+                }}
+                className="flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+                Twitter
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
+                  window.open(shareUrl, '_blank', 'width=600,height=400');
+                }}
+                className="flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                LinkedIn
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleShare}
+                className="flex items-center gap-2"
+              >
+                <Share2 className="w-4 h-4" />
+                העתק קישור
+              </Button>
+            </div>
+          </div>
+
+          {/* Author Bio Section */}
+          <div className="modern-card p-8 mb-12">
+            <div className="flex items-start gap-6">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-accent to-accent/80 flex items-center justify-center flex-shrink-0">
+                <User className="w-10 h-10 text-background" />
               </div>
-            </section>
-          )}
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-brand-text mb-2">אבי פריד</h3>
+                <p className="text-brand-accent font-medium mb-3">יזם טכנולוגי ומומחה AI</p>
+                <p className="text-brand-text-secondary leading-relaxed">
+                  יזם מנוסה ומומחה בתחום הבינה המלאכותית עם מעל 15 שנות ניסיון בעולמות השיווק הדיגיטלי ופיתוח עסקי. 
+                  מלמד ומדריך אנשי עסקים ויזמים כיצד להטמיע בינה מלאכותית בעסק שלהם ולהשיג תוצאות מרשימות.
+                </p>
+              </div>
+            </div>
+          </div>
         </article>
 
         <Footer />
