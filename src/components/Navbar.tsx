@@ -33,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
     { name: 'על אבי', href: '/about' },
     { name: 'תהליכים וקורסים', href: '/products' },
-    { name: 'יעוץ אישי', href: '#', action: onContactClick },
+    { name: 'יעוץ אישי', href: '/consulting' },
     { name: 'הרצאות לארגונים', href: '#', action: () => setIsComingSoonOpen(true) },
     { 
       name: 'השראה', 
