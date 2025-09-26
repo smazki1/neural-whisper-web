@@ -74,25 +74,6 @@ const Consulting = () => {
         description: "נחזור אליך תוך 24 שעות עם פרטי הייעוץ המותאם"
       });
 
-      // Send confirmation email
-      try {
-        await supabase.functions.invoke('send-consultation-email', {
-          body: {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            company: formData.company,
-            businessType: formData.businessType,
-            currentChallenge: formData.currentChallenge,
-            timeline: formData.timeline,
-            budget: formData.budget,
-            message: formData.message
-          }
-        });
-      } catch (emailError) {
-        console.log('Email sending failed, but lead was saved:', emailError);
-      }
-
       // Reset form
       setFormData({
         name: '',
