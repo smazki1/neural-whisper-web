@@ -30,10 +30,6 @@ const Hero = () => {
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
       }}
-      whileHover={{ 
-        backgroundSize: '110% 110%',
-      }}
-      transition={{ duration: 0.8, ease: "easeInOut" }}
     >
       {/* Dynamic Overlay */}
       <motion.div 
