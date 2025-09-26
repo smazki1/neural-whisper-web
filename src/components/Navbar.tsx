@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
         { name: 'בלוג', href: '/blog' }
       ]
     },
-    { name: 'יצירת קשר', href: '#', action: onContactClick }
+    { name: 'יצירת קשר', href: '/contact' }
   ];
 
   const socialLinks = [

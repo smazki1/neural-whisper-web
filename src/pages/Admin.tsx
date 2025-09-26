@@ -16,7 +16,8 @@ import {
   Calendar,
   Eye,
   BookOpen,
-  FileText
+  FileText,
+  MessageSquare
 } from 'lucide-react';
 import AdminProducts from './Admin/AdminProducts';
 import AdminOrders from './Admin/AdminOrders';
@@ -24,6 +25,7 @@ import AdminUsers from './Admin/AdminUsers';
 import AdminProductCourses from './Admin/AdminProductCourses';
 import AdminContentServices from './Admin/AdminContentServices';
 import AdminPortfolio from './Admin/AdminPortfolio';
+import AdminLeads from './Admin/AdminLeads';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface DashboardStats {
@@ -202,10 +204,14 @@ const Admin = () => {
 
           {/* Main Admin Tabs */}
           <Tabs defaultValue="products" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="products" className="flex items-center gap-2">
                 <Package className="h-4 w-4" />
                 ניהול מוצרים
+              </TabsTrigger>
+              <TabsTrigger value="leads" className="flex items-center gap-2">
+                <MessageSquare className="h-4 w-4" />
+                ניהול ליידים
               </TabsTrigger>
               <TabsTrigger value="orders" className="flex items-center gap-2">
                 <ShoppingCart className="h-4 w-4" />
@@ -227,6 +233,10 @@ const Admin = () => {
 
             <TabsContent value="products">
               <AdminProducts onStatsUpdate={fetchDashboardStats} />
+            </TabsContent>
+
+            <TabsContent value="leads">
+              <AdminLeads />
             </TabsContent>
 
             <TabsContent value="orders">

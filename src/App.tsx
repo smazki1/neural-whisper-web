@@ -28,6 +28,7 @@ import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
 import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Contact from "./pages/Contact";
 import Consulting from "./pages/Consulting";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
@@ -62,7 +63,8 @@ const App = () => {
             <Route path="/blog/editor/:postId" element={<ProtectedRoute><BlogEditor /></ProtectedRoute>} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
-            <Route path="/consulting" element={<Consulting />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/consulting" element={<Consulting />} />
             <Route path="/checkout/:productId" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-canceled" element={<PaymentCanceled />} />
