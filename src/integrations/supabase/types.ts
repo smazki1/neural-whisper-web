@@ -24,8 +24,11 @@ export type Database = {
           featured_image_url: string | null
           id: string
           is_published: boolean
+          meta_description: string | null
+          meta_title: string | null
           published_at: string | null
           slug: string
+          tags: string[] | null
           title: string
           updated_at: string
         }
@@ -38,8 +41,11 @@ export type Database = {
           featured_image_url?: string | null
           id?: string
           is_published?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
           slug: string
+          tags?: string[] | null
           title: string
           updated_at?: string
         }
@@ -52,8 +58,11 @@ export type Database = {
           featured_image_url?: string | null
           id?: string
           is_published?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
           slug?: string
+          tags?: string[] | null
           title?: string
           updated_at?: string
         }
@@ -220,6 +229,54 @@ export type Database = {
         }
         Relationships: []
       }
+      leads: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          follow_up_date: string | null
+          id: string
+          message: string | null
+          name: string
+          notes: string | null
+          phone: string | null
+          service_interest: string | null
+          source: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          follow_up_date?: string | null
+          id?: string
+          message?: string | null
+          name: string
+          notes?: string | null
+          phone?: string | null
+          service_interest?: string | null
+          source?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          follow_up_date?: string | null
+          id?: string
+          message?: string | null
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          service_interest?: string | null
+          source?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       lessons: {
         Row: {
           content: string | null
@@ -336,6 +393,13 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "published_products"
             referencedColumns: ["id"]
           },
         ]
@@ -461,6 +525,8 @@ export type Database = {
           id: string
           is_featured: boolean
           is_published: boolean
+          meta_description: string | null
+          meta_title: string | null
           price: number
           product_type: Database["public"]["Enums"]["product_type"]
           short_description: string | null
@@ -480,6 +546,8 @@ export type Database = {
           id?: string
           is_featured?: boolean
           is_published?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           price?: number
           product_type?: Database["public"]["Enums"]["product_type"]
           short_description?: string | null
@@ -499,6 +567,8 @@ export type Database = {
           id?: string
           is_featured?: boolean
           is_published?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           price?: number
           product_type?: Database["public"]["Enums"]["product_type"]
           short_description?: string | null
@@ -542,6 +612,13 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_courses_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "published_products"
             referencedColumns: ["id"]
           },
         ]
@@ -611,6 +688,54 @@ export type Database = {
           },
         ]
       }
+      services: {
+        Row: {
+          category: string | null
+          created_at: string
+          currency: string | null
+          description: string | null
+          display_order: number | null
+          duration: string | null
+          features: string[] | null
+          id: string
+          is_featured: boolean | null
+          name: string
+          price: number | null
+          short_description: string | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          currency?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          is_featured?: boolean | null
+          name: string
+          price?: number | null
+          short_description?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          currency?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration?: string | null
+          features?: string[] | null
+          id?: string
+          is_featured?: boolean | null
+          name?: string
+          price?: number | null
+          short_description?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_course_access: {
         Row: {
           course_id: string
@@ -659,6 +784,13 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_course_access_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "published_products"
             referencedColumns: ["id"]
           },
         ]
@@ -734,7 +866,110 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      published_posts: {
+        Row: {
+          category_id: string | null
+          content: string | null
+          created_at: string | null
+          excerpt: string | null
+          featured_image_url: string | null
+          id: string | null
+          is_published: boolean | null
+          meta_description: string | null
+          meta_title: string | null
+          published_at: string | null
+          slug: string | null
+          tags: string[] | null
+          title: string | null
+        }
+        Insert: {
+          category_id?: string | null
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string | null
+          is_published?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+        }
+        Update: {
+          category_id?: string | null
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string | null
+          is_published?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      published_products: {
+        Row: {
+          category: Database["public"]["Enums"]["product_category"] | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          is_featured: boolean | null
+          meta_description: string | null
+          meta_title: string | null
+          price: number | null
+          product_type: Database["public"]["Enums"]["product_type"] | null
+          short_description: string | null
+          slug: string | null
+          thumbnail_url: string | null
+          title: string | null
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["product_category"] | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          price?: number | null
+          product_type?: Database["public"]["Enums"]["product_type"] | null
+          short_description?: string | null
+          slug?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["product_category"] | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
+          price?: number | null
+          product_type?: Database["public"]["Enums"]["product_type"] | null
+          short_description?: string | null
+          slug?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
