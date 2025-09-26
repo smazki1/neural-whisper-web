@@ -7,8 +7,8 @@ interface CTAProps {
 
 const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
   return (
-    <section id="offers" className="modern-section modern-section-alt" dir="rtl">
-      <div className="modern-container">
+    <section id="offers" className="py-16 md:py-20 font-heebo professional-section-bg" dir="rtl">
+      <div className="container mx-auto px-4 md:px-6 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -21,9 +21,9 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="modern-heading-2 mb-12 hebrew-mobile-wrap"
+            className="text-2xl md:text-4xl lg:text-5xl font-bold professional-text-primary mb-8 md:mb-12 leading-tight px-2 hebrew-mobile-wrap"
           >
-            <span className="modern-text-accent font-bold">מוכנים להתחיל?</span>{' '}
+            <span className="professional-text-accent font-bold">מוכנים להתחיל?</span>{' '}
             שלא נבזבז זמן.
           </motion.h2>
 
@@ -32,13 +32,13 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             viewport={{ once: true }}
-            className="flex flex-col lg:flex-row gap-6 justify-center items-center mb-16"
+            className="flex flex-col lg:flex-row gap-4 md:gap-6 justify-center items-center mb-8 md:mb-12"
           >
             <motion.button 
               onClick={onContactClick}
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="modern-button-primary px-8 py-4 text-lg font-bold w-full lg:w-auto min-w-[300px] shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="professional-button-primary text-base md:text-lg px-8 py-4 group w-full lg:w-auto min-w-[280px] md:min-w-[300px]"
             >
               <span className="flex items-center justify-center gap-3 hebrew-mobile-wrap">
                 למד אותי לחשוב עם AI
@@ -50,9 +50,9 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
 
             <motion.button 
               onClick={onContactClick}
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="modern-button-secondary px-8 py-4 text-lg font-bold w-full lg:w-auto min-w-[300px]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="professional-button-secondary text-base md:text-lg px-8 py-4 group w-full lg:w-auto min-w-[280px] md:min-w-[300px]"
             >
               <span className="flex items-center justify-center gap-3 hebrew-mobile-wrap">
                 למד את הצוות שלי לחשוב עם AI
@@ -68,7 +68,7 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="modern-body-large mb-16 hebrew-mobile-wrap max-w-4xl mx-auto"
+            className="text-lg md:text-xl professional-text-body leading-relaxed mb-12 px-2 hebrew-mobile-wrap"
           >
             בין אם אתם יזמים עם מחברת מלאה ברעיונות, ובין אם אתם אנשי מקצוע שרוצים להפוך את המהפכה הזו להזדמנות שלכם – יש לנו את המסלול המדויק עבורכם.
           </motion.p>
@@ -78,14 +78,15 @@ const CTA: React.FC<CTAProps> = ({ onContactClick }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
+            className="mt-12 md:mt-16"
           >
-            <div className="modern-card-elevated p-8 max-w-lg mx-auto">
-              <p className="modern-body-large mb-6 hebrew-mobile-wrap">
+            <div className="professional-card p-6 md:p-8">
+              <p className="text-lg md:text-xl professional-text-body mb-6 hebrew-mobile-wrap">
                 יש לכם שאלות? רוצים לדעת יותר?
               </p>
               <button 
                 onClick={onContactClick}
-                className="modern-button-ghost px-6 py-3 group"
+                className="professional-button-secondary text-base md:text-lg px-6 py-3 group"
               >
                 <span className="flex items-center justify-center gap-2">
                   צור קשר
