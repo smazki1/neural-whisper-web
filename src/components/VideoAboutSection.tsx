@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import aviPortrait from '@/assets/avi-fried-portrait.png';
 
 const VideoAboutSection = () => {
   return (
@@ -15,19 +16,17 @@ const VideoAboutSection = () => {
             viewport={{ once: true }}
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl modern-glow">
-              {/* Video Background */}
-              <div className="relative aspect-video bg-white">
-                <iframe
-                  src="https://www.youtube.com/embed/NCUAuyB7hpg?autoplay=1&mute=1&loop=1&playlist=NCUAuyB7hpg&controls=0&modestbranding=1&rel=0&showinfo=0"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                  title="Avi Fried AI Introduction Video"
+              {/* Portrait Image */}
+              <div className="relative aspect-video bg-gradient-to-br from-accent/10 to-primary/10">
+                <img
+                  src={aviPortrait}
+                  alt="אבי פריד - יזם טכנולוגי ומומחה AI"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                 />
                 
-                {/* Subtle Gradient Overlay for bright theme */}
-                <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/10" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+                {/* Subtle Gradient Overlay for professional look */}
+                <div className="absolute inset-0 bg-gradient-to-r from-background/10 via-transparent to-background/5" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
               </div>
             </div>
             
