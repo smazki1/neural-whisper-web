@@ -1,26 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import aviPortrait from '../assets/avi-fried-portrait.png';
 
 const VideoAboutSection = () => {
   return (
     <section className="py-20 lg:py-32 relative overflow-hidden" dir="rtl">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Image Section - Left Side */}
+          {/* Video Section - Left Side */}
           <motion.div 
-            className="relative order-2 lg:order-1 lg:w-2/5"
+            className="relative order-2 lg:order-1"
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-lg">
-              <img
-                src={aviPortrait}
-                alt="אבי פריד - מומחה בינה מלאכותית"
-                className="w-full h-auto object-cover aspect-[4/5]"
-              />
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl modern-glow">
+              {/* Video Background */}
+              <div className="relative aspect-video bg-white">
+                <iframe
+                  src="https://www.youtube.com/embed/NCUAuyB7hpg?autoplay=1&mute=1&loop=1&playlist=NCUAuyB7hpg&controls=0&modestbranding=1&rel=0&showinfo=0"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  title="Avi Fried AI Introduction Video"
+                />
+                
+                {/* Subtle Gradient Overlay for bright theme */}
+                <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+              </div>
             </div>
             
             {/* Decorative Elements */}
@@ -30,7 +38,7 @@ const VideoAboutSection = () => {
 
           {/* Content Section - Right Side */}
           <motion.div 
-            className="order-1 lg:order-2 lg:w-3/5 space-y-8"
+            className="order-1 lg:order-2 space-y-8"
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
