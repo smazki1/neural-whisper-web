@@ -51,10 +51,10 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <SEOProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <SEOProvider>
               <SkipLink href="#main-content">דלג לתוכן הראשי</SkipLink>
               <SkipLink href="#main-navigation">דלג לניווט</SkipLink>
               <Routes>
@@ -91,8 +91,8 @@ const App = () => {
               </Routes>
               <InstallPrompt />
               <UpdatePrompt />
-            </BrowserRouter>
-          </SEOProvider>
+            </SEOProvider>
+          </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
     </HelmetProvider>
