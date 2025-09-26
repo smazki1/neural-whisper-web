@@ -37,20 +37,27 @@ import { InstallPrompt } from "./components/PWA/InstallPrompt";
 import { UpdatePrompt } from "./components/PWA/UpdatePrompt";
 import { usePerformance } from "./hooks/usePerformance";
 import { createOptimizedQueryClient } from "./hooks/useOptimizedQuery";
+import { SEOProvider } from "./components/SEO/SEOProvider";
+import { SkipLink } from "./components/Accessibility/SkipLink";
+import { useAccessibility } from "./hooks/useAccessibility";
 
 const queryClient = createOptimizedQueryClient();
 
 const App = () => {
-  usePerformance(); // Initialize performance monitoring
+  usePerformance();
+  useAccessibility();
 
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-          <Routes>
+          <SEOProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <SkipLink href="#main-content">דלג לתוכן הראשי</SkipLink>
+              <SkipLink href="#main-navigation">דלג לניווט</SkipLink>
+              <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/reset-password" element={<ResetPassword />} />
@@ -81,13 +88,14 @@ const App = () => {
             <Route path="/landing/ai-marketing-accelerator" element={<AIMarketingAccelerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
-          <InstallPrompt />
-          <UpdatePrompt />
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
+              </Routes>
+              <InstallPrompt />
+              <UpdatePrompt />
+            </BrowserRouter>
+          </SEOProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 

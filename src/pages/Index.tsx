@@ -8,7 +8,8 @@ import FreeResourcesSection from '../components/FreeResourcesSection';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
 import { Toaster } from '@/components/ui/toaster';
-import '../index.css'; // Ensure global styles are imported
+import { SEOHead } from '@/components/SEO/SEOHead';
+import '../index.css';
 
 function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -23,8 +24,12 @@ function Index() {
 
   return (
     <div className="bg-background text-foreground font-heebo animate-fade-in">
+      <SEOHead 
+        title="AI Master - מומחה בינה מלאכותית לעסקים"
+        description="הפוך את הרעיונות שלך למציאות עם בינה מלאכותית. סדנאות, קורסים וייעוץ אישי לבעלי עסקים"
+      />
       <Navbar onContactClick={handleContactClick} />
-      <main className="animate-fade-in">
+      <main id="main-content" className="animate-fade-in">
         <Hero />
         <VideoAboutSection />
         <HowICanHelpSection />
