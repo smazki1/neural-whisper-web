@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.54.0";
-import { Resend } from "npm:resend@2.0.0";
+import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -52,9 +52,13 @@ const handler = async (req: Request): Promise<Response> => {
       }
 
       // Check if user exists
-      const { data: user } = await supabase.auth.admin.getUserByEmail(email);
+      const { data: users } = await supabase.auth.admin.listUsers({
+        page: 1,
+        perPage: 1000
+      });
+      const user = users?.users?.find(u => u.email === email);
       
-      if (!user.user) {
+      if (!user) {
         // Return success for security (don't reveal if email exists)
         return new Response(
           JSON.stringify({ success: true, message: "If the email exists, a reset link has been sent." }),
@@ -68,7 +72,7 @@ const handler = async (req: Request): Promise<Response> => {
 
       // Store reset token
       await supabase.from('password_resets').insert({
-        user_id: user.user.id,
+        user_id: user.id,
         email: email,
         token: resetToken,
         expires_at: expiresAt.toISOString()
@@ -161,10 +165,10 @@ const handler = async (req: Request): Promise<Response> => {
       { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Password reset error:", error);
     return new Response(
-      JSON.stringify({ error: "Internal server error" }),
+      JSON.stringify({ error: error instanceof Error ? error.message : "Internal server error" }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }

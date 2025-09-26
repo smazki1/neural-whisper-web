@@ -82,10 +82,10 @@ serve(async (req) => {
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error granting course access:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Internal server error' }),
       { 
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 500 
