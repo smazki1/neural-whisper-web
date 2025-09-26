@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import Problem from '../components/Problem';
-import Solution from '../components/Solution';
-import Articles from '../components/Articles';
-import ProductsSection from '../components/ProductsSection';
+import VideoAboutSection from '../components/VideoAboutSection';
+import HowICanHelpSection from '../components/HowICanHelpSection';
+import FreeResourcesSection from '../components/FreeResourcesSection';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
-import AboutSection from '../components/VideoSection';
 import { Toaster } from '@/components/ui/toaster';
 import '../index.css'; // Ensure global styles are imported
 
@@ -24,22 +22,13 @@ function Index() {
   };
 
   return (
-    <div className="bg-[#101933] text-[#d8d5db] font-['Heebo'] animate-fade-in">
+    <div className="bg-background text-foreground font-heebo animate-fade-in">
       <Navbar onContactClick={handleContactClick} />
       <main className="animate-fade-in">
         <Hero />
-        <Problem />
-        <Solution />
-        <AboutSection />
-        <ProductsSection />
-        <div className="text-center py-12">
-          <Link 
-            to="/contact" 
-            className="premium-button-primary text-lg px-8 py-4 hover:scale-105 transition-transform duration-300"
-          >
-            צור קשר
-          </Link>
-        </div>
+        <VideoAboutSection />
+        <HowICanHelpSection />
+        <FreeResourcesSection />
       </main>
       <Footer />
       <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />

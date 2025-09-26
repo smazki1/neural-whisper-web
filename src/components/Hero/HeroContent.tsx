@@ -18,23 +18,15 @@ const HeroContent = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/10 to-transparent blur-3xl animate-pulse" />
         <h1 className="relative text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] hebrew-mobile-wrap text-center">
-          <span className="block modern-text-gradient mb-4">
-            בעידן ה-AI,
+          <span className="block modern-text-gradient mb-6">
+            איך להצליח בעידן החדש -
           </span>
-          <span className="block text-brand-light/90 mb-4">
-            הפוטנציאל שלך הוא
+          <span className="block premium-accent-gradient mb-4">
+            הפוך את הבינה המלאכותית
           </span>
-          <span className="block premium-accent-gradient">
-            הנכס החשוב ביותר.
+          <span className="block text-brand-light/90">
+            לכוח העל שלך
           </span>
-          <motion.span 
-            className="block text-brand-light/80 text-3xl md:text-4xl lg:text-5xl mt-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
-            בוא נשחרר אותו.
-          </motion.span>
         </h1>
       </motion.div>
 
