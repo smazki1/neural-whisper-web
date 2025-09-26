@@ -76,27 +76,27 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
       >
         <div className="container mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Social Media & User Menu - Left Side */}
-            <div className="hidden lg:flex items-center gap-6">
-              {/* Social Media Links */}
-              <div className="flex items-center gap-4">
-                {socialLinks.map((social) => {
-                  const IconComponent = social.icon;
-                  return (
-                    <motion.a
-                      key={social.name}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`text-brand-light/60 ${social.color} transition-all duration-300 hover:scale-110`}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <IconComponent className="h-5 w-5" />
-                    </motion.a>
-                  );
-                })}
-              </div>
+              {/* Social Media & User Menu - Left Side */}
+              <div className="hidden lg:flex items-center gap-6">
+                {/* Social Media Links */}
+                <div className="flex items-center gap-4">
+                  {socialLinks.map((social) => {
+                    const IconComponent = social.icon;
+                    return (
+                      <motion.a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`text-brand-text-secondary ${social.color} transition-all duration-300 hover:scale-110`}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <IconComponent className="h-5 w-5" />
+                      </motion.a>
+                    );
+                  })}
+                </div>
 
               {/* User Menu or Login */}
               {user ? (
@@ -122,8 +122,8 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col space-y-1">
-                        <p className="font-semibold text-brand-light">{user.user_metadata?.display_name || 'משתמש'}</p>
-                        <p className="text-sm text-brand-light/60 truncate w-[160px]">
+                        <p className="font-semibold text-brand-text">{user.user_metadata?.display_name || 'משתמש'}</p>
+                        <p className="text-sm text-brand-text-secondary truncate w-[160px]">
                           {user.email}
                         </p>
                       </div>
@@ -132,25 +132,25 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                     <DropdownMenuItem asChild>
                       <Link to="/dashboard" className="flex items-center px-4 py-3 hover:bg-accent/10">
                         <BookOpen className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-light">לוח הבקרה</span>
+                        <span className="text-brand-text">לוח הבקרה</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to="/profile" className="flex items-center px-4 py-3 hover:bg-accent/10">
                         <User className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-light">פרופיל</span>
+                        <span className="text-brand-text">פרופיל</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to="/blog/manager" className="flex items-center px-4 py-3 hover:bg-accent/10">
                         <Settings className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-light">ניהול מאמרים</span>
+                        <span className="text-brand-text">ניהול מאמרים</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to="/admin101" className="flex items-center px-4 py-3 hover:bg-accent/10">
                         <Settings className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-light">ניהול מערכת</span>
+                        <span className="text-brand-text">ניהול מערכת</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator className="bg-accent/20" />
@@ -194,7 +194,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       onMouseLeave={() => setIsInspirationDropdownOpen(false)}
                     >
                       <motion.button
-                        className="flex items-center gap-1 text-brand-light/80 hover:text-accent transition-all duration-300 font-medium py-2"
+                        className="flex items-center gap-1 text-brand-text hover:text-accent transition-all duration-300 font-medium py-2"
                         whileHover={{ scale: 1.05 }}
                       >
                         {item.name}
@@ -214,7 +214,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                               <Link
                                 key={dropdownItem.name}
                                 to={dropdownItem.href}
-                                className="block w-full text-right px-4 py-3 text-brand-light/80 hover:text-accent hover:bg-accent/10 transition-all duration-200"
+                                className="block w-full text-right px-4 py-3 text-brand-text hover:text-accent hover:bg-accent/10 transition-all duration-200"
                               >
                                 {dropdownItem.name}
                               </Link>
@@ -228,7 +228,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       {item.action ? (
                         <button
                           onClick={item.action}
-                          className="text-brand-light/80 hover:text-accent transition-all duration-300 font-medium py-2 relative group"
+                          className="text-brand-text hover:text-accent transition-all duration-300 font-medium py-2 relative group"
                         >
                           {item.name}
                           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
@@ -236,7 +236,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       ) : (
                         <Link
                           to={item.href}
-                          className="text-brand-light/80 hover:text-accent transition-all duration-300 font-medium py-2 relative group"
+                          className="text-brand-text hover:text-accent transition-all duration-300 font-medium py-2 relative group"
                         >
                           {item.name}
                           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
@@ -262,7 +262,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             <div className="lg:hidden">
               <motion.button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-brand-light hover:text-accent transition-colors duration-300 p-2"
+                className="text-brand-text hover:text-accent transition-colors duration-300 p-2"
                 whileTap={{ scale: 0.95 }}
               >
                 {isMobileMenuOpen ? (

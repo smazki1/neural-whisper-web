@@ -60,12 +60,12 @@ const FreeResourcesSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <span className="block text-brand-light mb-2">מרחבי השראה ולימוד</span>
+            <span className="block text-brand-text mb-2">מרחבי השראה ולימוד</span>
             <span className="block premium-accent-gradient">ללא תשלום</span>
           </motion.h2>
           
           <motion.p 
-            className="text-xl lg:text-2xl text-brand-light/70 max-w-4xl mx-auto leading-relaxed"
+            className="text-xl lg:text-2xl text-brand-text-secondary max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -99,7 +99,7 @@ const FreeResourcesSection = () => {
                         <IconComponent className="w-7 h-7 text-accent" />
                       </div>
                       <div>
-                        <p className="text-brand-light/60 text-sm font-medium">{resource.type}</p>
+                        <p className="text-brand-text-secondary text-sm font-medium">{resource.type}</p>
                         <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mt-1 ${resource.tagColor}`}>
                           {resource.tag}
                         </div>
@@ -109,17 +109,17 @@ const FreeResourcesSection = () => {
 
                   {/* Content */}
                   <div className="relative space-y-6">
-                    <h3 className="text-2xl lg:text-2xl font-bold text-brand-light leading-tight group-hover:text-accent transition-colors duration-300">
+                    <h3 className="text-2xl lg:text-2xl font-bold text-brand-text leading-tight group-hover:text-accent transition-colors duration-300">
                       {resource.title}
                     </h3>
                     
-                    <p className="text-brand-light/80 text-base leading-relaxed">
+                    <p className="text-brand-text-secondary text-base leading-relaxed">
                       {resource.description}
                     </p>
 
                     {/* Meta Info */}
-                    <div className="flex items-center justify-between pt-4 border-t border-brand-light/10">
-                      <span className="text-brand-light/60 text-sm">{resource.readTime}</span>
+                    <div className="flex items-center justify-between pt-4 border-t border-brand-text/10">
+                      <span className="text-brand-text-secondary text-sm">{resource.readTime}</span>
                       <motion.div 
                         className="flex items-center gap-2 text-accent font-medium opacity-0 group-hover:opacity-100 transition-all duration-300"
                         whileHover={{ x: -5 }}
@@ -150,17 +150,17 @@ const FreeResourcesSection = () => {
           viewport={{ once: true }}
         >
           <div className="modern-backdrop rounded-2xl p-8 lg:p-12 max-w-4xl mx-auto">
-            <h3 className="text-2xl lg:text-3xl font-bold text-brand-light mb-4">
+            <h3 className="text-2xl lg:text-3xl font-bold text-brand-text mb-4">
               רוצה לקבל עדכונים על תוכן חדש?
             </h3>
-            <p className="text-brand-light/70 text-lg mb-8">
+            <p className="text-brand-text-secondary text-lg mb-8">
               הצטרף לרשימת התפוצה שלי וקבל גישה מיידית לכל התוכן החדש, בלעדי ופרקטי
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
               <input 
                 type="email" 
                 placeholder="הכנס את המייל שלך"
-                className="w-full px-6 py-4 rounded-xl bg-background/50 border border-accent/20 text-brand-light placeholder-brand-light/50 focus:outline-none focus:border-accent/50 transition-colors"
+                className="w-full px-6 py-4 rounded-xl bg-background border border-accent/20 text-brand-text placeholder-brand-text-secondary focus:outline-none focus:border-accent/50 transition-colors"
               />
               <motion.button 
                 className="premium-button-primary px-8 py-4 whitespace-nowrap"

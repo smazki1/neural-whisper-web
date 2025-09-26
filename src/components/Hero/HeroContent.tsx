@@ -18,13 +18,13 @@ const HeroContent = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/10 to-transparent blur-3xl animate-pulse" />
         <h1 className="relative text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] hebrew-mobile-wrap text-center">
-          <span className="block modern-text-gradient mb-6">
+          <span className="block text-brand-text mb-6">
             איך להצליח בעידן החדש -
           </span>
           <span className="block premium-accent-gradient mb-4">
             הפוך את הבינה המלאכותית
           </span>
-          <span className="block text-brand-light/90">
+          <span className="block text-brand-text">
             לכוח העל שלך
           </span>
         </h1>
@@ -41,7 +41,7 @@ const HeroContent = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
           
-          <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl text-brand-light/90 font-medium leading-relaxed hebrew-mobile-wrap text-center">
+          <h2 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl text-brand-text font-medium leading-relaxed hebrew-mobile-wrap text-center">
             <motion.span 
               className="block mb-6"
               initial={{ opacity: 0 }}

@@ -20,7 +20,7 @@ const HeroScrollIndicator = () => {
         whileHover={{ scale: 1.1 }}
       >
         <motion.svg 
-          className="w-6 h-6 md:w-7 md:h-7 premium-accent-gradient group-hover:drop-shadow-lg transition-all duration-300" 
+          className="w-6 h-6 md:w-7 md:h-7 text-accent group-hover:drop-shadow-lg transition-all duration-300" 
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"
@@ -42,7 +42,7 @@ const HeroScrollIndicator = () => {
         className="absolute inset-0 border border-accent/30 rounded-full"
         animate={{ 
           scale: [1, 1.5, 1],
-          opacity: [0.5, 0, 0.5]
+          opacity: [0.3, 0, 0.3]
         }}
         transition={{ 
           duration: 2, 

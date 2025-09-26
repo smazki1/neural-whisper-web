@@ -45,12 +45,12 @@ const HowICanHelpSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <span className="block text-brand-light mb-2">איך אני יכול</span>
+            <span className="block text-brand-text mb-2">איך אני יכול</span>
             <span className="block premium-accent-gradient">לעזור לך</span>
           </motion.h2>
           
           <motion.p 
-            className="text-xl lg:text-2xl text-brand-light/80 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl lg:text-2xl text-brand-text-secondary max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -90,11 +90,11 @@ const HowICanHelpSection = () => {
 
                   {/* Content */}
                   <div className="relative space-y-6">
-                    <h3 className="text-2xl lg:text-3xl font-bold text-brand-light leading-tight">
+                    <h3 className="text-2xl lg:text-3xl font-bold text-brand-text leading-tight">
                       {card.title}
                     </h3>
                     
-                    <p className="text-brand-light/80 text-lg leading-relaxed">
+                    <p className="text-brand-text-secondary text-lg leading-relaxed">
                       {card.description}
                     </p>
 
@@ -124,7 +124,7 @@ const HowICanHelpSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className="text-lg text-brand-light/70 mb-8">
+          <p className="text-lg text-brand-text-secondary mb-8">
             מוכן להתחיל? בוא נתכנן יחד את השלב הבא שלך
           </p>
           <motion.button 

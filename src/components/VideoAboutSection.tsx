@@ -16,7 +16,7 @@ const VideoAboutSection = () => {
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl modern-glow">
               {/* Video Background */}
-              <div className="relative aspect-video">
+              <div className="relative aspect-video bg-white">
                 <iframe
                   src="https://www.youtube.com/embed/NCUAuyB7hpg?autoplay=1&mute=1&loop=1&playlist=NCUAuyB7hpg&controls=0&modestbranding=1&rel=0&showinfo=0"
                   className="absolute inset-0 w-full h-full object-cover"
@@ -25,9 +25,9 @@ const VideoAboutSection = () => {
                   title="Avi Fried AI Introduction Video"
                 />
                 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/20" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+                {/* Subtle Gradient Overlay for bright theme */}
+                <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
               </div>
             </div>
             
@@ -52,7 +52,7 @@ const VideoAboutSection = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <span className="block text-brand-light mb-2">שלום, אני</span>
+                <span className="block text-brand-text mb-2">שלום, אני</span>
                 <span className="block premium-accent-gradient">אבי פריד</span>
               </motion.h2>
               
@@ -66,7 +66,7 @@ const VideoAboutSection = () => {
             </div>
 
             <motion.div 
-              className="space-y-6 text-lg lg:text-xl leading-relaxed text-brand-light/90"
+              className="space-y-6 text-lg lg:text-xl leading-relaxed text-brand-text"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -91,15 +91,15 @@ const VideoAboutSection = () => {
               <div className="flex flex-wrap gap-4 pt-4">
                 <div className="modern-backdrop px-4 py-2 rounded-full">
                   <span className="text-accent font-medium">✓</span>
-                  <span className="mr-2 text-brand-light/80">יזם מנוסה</span>
+                  <span className="mr-2 text-brand-text-secondary">יזם מנוסה</span>
                 </div>
                 <div className="modern-backdrop px-4 py-2 rounded-full">
                   <span className="text-accent font-medium">✓</span>
-                  <span className="mr-2 text-brand-light/80">מומחה AI</span>
+                  <span className="mr-2 text-brand-text-secondary">מומחה AI</span>
                 </div>
                 <div className="modern-backdrop px-4 py-2 rounded-full">
                   <span className="text-accent font-medium">✓</span>
-                  <span className="mr-2 text-brand-light/80">מרצה מבוקש</span>
+                  <span className="mr-2 text-brand-text-secondary">מרצה מבוקש</span>
                 </div>
               </div>
             </motion.div>
@@ -111,7 +111,7 @@ const VideoAboutSection = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              <p className="text-brand-light/70 italic text-lg">
+              <p className="text-brand-text-secondary italic text-lg">
                 "הטכנולוגיה לא צריכה להיות מפחידה. היא צריכה להיות כלי שמשחרר אותנו לעשות את מה שאנחנו הכי טובים בו."
               </p>
             </motion.div>
