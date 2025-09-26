@@ -6,63 +6,64 @@
 
 @layer base {
   :root {
-    /* Bright Modern Color Palette */
-    --background: 289 13% 85%; /* #d8d5db - Light warm gray main background */
-    --foreground: 218 48% 12%; /* #101933 - Dark navy for text */
+    /* Professional Color Palette - High Contrast */
+    --background: 0 0% 98%; /* #fafafa - Clean white background */
+    --foreground: 218 48% 12%; /* #101933 - Dark navy for primary text */
 
-    --card: 0 0% 100%; /* #ffffff - White card backgrounds */
+    --card: 0 0% 100%; /* #ffffff - Pure white card backgrounds */
     --card-foreground: 218 48% 12%; /* Dark navy text on cards */
 
     --popover: 0 0% 100%; /* White popover backgrounds */
     --popover-foreground: 218 48% 12%;
 
-    --primary: 48 78% 60%; /* #eec643 - Bright yellow for CTAs */
+    --primary: 48 78% 60%; /* #eec643 - Yellow for CTAs only */
     --primary-foreground: 218 48% 12%; /* Dark text on yellow */
 
-    --secondary: 0 0% 100%; /* White secondary elements */
-    --secondary-foreground: 218 48% 12%; /* Dark text */
+    --secondary: 218 48% 12%; /* #101933 - Dark for secondary buttons */
+    --secondary-foreground: 0 0% 100%; /* White text on dark */
 
-    --muted: 289 13% 90%; /* Very light gray for muted elements */
-    --muted-foreground: 218 50% 16%; /* Medium navy for muted text */
+    --muted: 0 0% 96%; /* #f5f5f5 - Very subtle gray for muted elements */
+    --muted-foreground: 218 50% 16%; /* #162347 - Medium navy for muted text */
 
-    --accent: 222 53% 28%; /* #213670 - Bright blue for accents */
+    --accent: 222 53% 28%; /* #213670 - Blue for accents and subheadings */
     --accent-foreground: 0 0% 100%; /* White text on blue */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 289 13% 80%; /* Light gray borders */
+    --border: 0 0% 90%; /* #e6e6e6 - Subtle borders */
     --input: 0 0% 100%; /* White input backgrounds */
     --ring: 48 78% 60%; /* Yellow focus rings */
 
-    --radius: 1rem; /* Modern rounded corners */
+    --radius: 0.75rem; /* Professional rounded corners */
 
-    /* Brand System - Bright Theme */
-    --brand-primary: 289 13% 85%; /* #d8d5db - Main background */
-    --brand-accent: 48 78% 60%; /* #eec643 - Yellow accent */
-    --brand-secondary: 222 53% 28%; /* #213670 - Blue accent */
+    /* Professional Brand System */
+    --brand-primary: 0 0% 98%; /* #fafafa - Clean background */
+    --brand-accent: 48 78% 60%; /* #eec643 - Yellow accent (buttons/highlights only) */
+    --brand-secondary: 222 53% 28%; /* #213670 - Blue for subheadings */
     --brand-surface: 0 0% 100%; /* #ffffff - White surfaces */
-    --brand-text: 218 48% 12%; /* #101933 - Dark text */
-    --brand-text-secondary: 218 50% 16%; /* #162347 - Medium navy */
-    --brand-glow: 48 78% 60%; /* Yellow glow effects */
+    --brand-text-primary: 218 48% 12%; /* #101933 - Primary headers */
+    --brand-text-body: 218 50% 16%; /* #162347 - Body text */
+    --brand-text-sub: 222 53% 28%; /* #213670 - Subheadings */
+    --brand-text-muted: 0 0% 40%; /* #666666 - Muted text */
 
-    /* Modern Bright Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(289, 13%, 85%) 0%, hsl(0, 0%, 98%) 50%, hsl(289, 13%, 85%) 100%);
-    --gradient-surface: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(289, 13%, 95%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(48, 78%, 60%) 0%, hsl(48, 78%, 65%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(222, 53%, 28%) 0%, hsl(222, 53%, 35%) 100%);
-    --gradient-glow: radial-gradient(circle at center, hsl(48, 78%, 60% / 0.15) 0%, transparent 70%);
+    /* Professional Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 100%) 50%, hsl(0, 0%, 98%) 100%);
+    --gradient-surface: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(48, 78%, 60%) 0%, hsl(48, 78%, 55%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(218, 48%, 12%) 0%, hsl(222, 53%, 28%) 100%);
+    --gradient-section-alt: linear-gradient(180deg, hsl(0, 0%, 98%) 0%, hsl(0, 0%, 100%) 100%);
     
-    /* Clean Shadow System */
-    --shadow-xs: 0 1px 3px hsl(218, 48%, 12% / 0.1);
-    --shadow-sm: 0 4px 8px hsl(218, 48%, 12% / 0.08);
-    --shadow-md: 0 8px 20px hsl(218, 48%, 12% / 0.12);
-    --shadow-lg: 0 12px 32px hsl(218, 48%, 12% / 0.15);
-    --shadow-xl: 0 20px 48px hsl(218, 48%, 12% / 0.18);
-    --shadow-2xl: 0 32px 64px hsl(218, 48%, 12% / 0.22);
-    --shadow-accent: 0 8px 32px hsl(48, 78%, 60% / 0.25);
-    --shadow-accent-lg: 0 16px 48px hsl(48, 78%, 60% / 0.3);
-    --shadow-glow: 0 0 40px hsl(48, 78%, 60% / 0.4);
+    /* Professional Shadow System */
+    --shadow-xs: 0 1px 2px hsl(0, 0%, 0% / 0.05);
+    --shadow-sm: 0 2px 4px hsl(0, 0%, 0% / 0.06);
+    --shadow-md: 0 4px 12px hsl(0, 0%, 0% / 0.08);
+    --shadow-lg: 0 8px 24px hsl(0, 0%, 0% / 0.12);
+    --shadow-xl: 0 16px 40px hsl(0, 0%, 0% / 0.16);
+    --shadow-card: 0 2px 8px hsl(0, 0%, 0% / 0.04);
+    --shadow-card-hover: 0 4px 16px hsl(0, 0%, 0% / 0.08);
+    --shadow-button: 0 2px 4px hsl(48, 78%, 60% / 0.2);
+    --shadow-button-hover: 0 4px 12px hsl(48, 78%, 60% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -112,150 +113,91 @@
 
   body {
     @apply bg-background text-foreground font-heebo;
-    background: var(--gradient-hero);
-    background-attachment: fixed;
-    line-height: 1.7;
+    background: hsl(var(--background));
+    line-height: 1.6;
     font-feature-settings: "liga" 1, "kern" 1;
-    color: hsl(var(--brand-text));
+    color: hsl(var(--brand-text-body));
   }
 }
 
-/* Modern Bright UI Components */
+/* Professional UI Components */
 @layer components {
-  .modern-card {
-    @apply rounded-2xl border backdrop-blur-sm transition-all duration-500;
+  .professional-card {
+    @apply rounded-xl border transition-all duration-300;
     background: hsl(var(--brand-surface));
     border: 1px solid hsl(var(--border));
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
+    box-shadow: var(--shadow-card);
   }
 
-  .modern-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--brand-accent) / 0.3), transparent);
-  }
-
-  .modern-card:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
+  .professional-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
     border-color: hsl(var(--brand-accent) / 0.2);
   }
 
-  .premium-button-primary {
-    @apply relative px-8 py-4 font-semibold text-lg rounded-xl transition-all duration-500 overflow-hidden;
-    background: var(--gradient-accent);
-    color: hsl(var(--brand-text));
-    box-shadow: var(--shadow-sm), inset 0 1px 0 hsl(48, 78%, 70% / 0.3);
-    transform: translateY(0);
-    border: 1px solid hsl(48, 78%, 50% / 0.3);
+  .professional-button-primary {
+    @apply relative px-6 py-3 font-semibold text-base rounded-lg transition-all duration-300;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-button);
+    border: 1px solid hsl(var(--primary));
   }
 
-  .premium-button-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, hsl(48, 78%, 65%) 0%, hsl(48, 78%, 55%) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  .professional-button-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-button-hover);
+    background: hsl(var(--primary) / 0.9);
   }
 
-  .premium-button-primary:hover::before {
-    opacity: 1;
+  .professional-button-secondary {
+    @apply relative px-6 py-3 font-semibold text-base rounded-lg border transition-all duration-300;
+    border: 2px solid hsl(var(--brand-text-primary));
+    color: hsl(var(--brand-text-primary));
+    background: transparent;
   }
 
-  .premium-button-primary:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: var(--shadow-md), var(--shadow-accent);
+  .professional-button-secondary:hover {
+    background: hsl(var(--brand-text-primary));
+    color: hsl(var(--brand-surface));
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
   }
 
-  .premium-button-secondary {
-    @apply relative px-8 py-4 font-semibold text-lg rounded-xl border transition-all duration-500;
-    border: 1px solid hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
-    background: var(--gradient-secondary);
-    transform: translateY(0);
-  }
-
-  .premium-button-secondary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: hsl(var(--accent) / 0.1);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border-radius: inherit;
-  }
-
-  .premium-button-secondary:hover::before {
-    opacity: 1;
-  }
-
-  .premium-button-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .modern-text-gradient {
-    background: linear-gradient(135deg, hsl(var(--brand-text)) 0%, hsl(var(--brand-accent)) 50%, hsl(var(--brand-text)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradient-flow 6s ease-in-out infinite;
-  }
-
-  @keyframes gradient-flow {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  .premium-accent-gradient {
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .professional-text-accent {
+    color: hsl(var(--brand-accent));
     font-weight: 600;
   }
 
-  /* Fallback for browsers that don't support background-clip */
-  @supports not (background-clip: text) {
-    .modern-text-gradient,
-    .premium-accent-gradient {
-      color: hsl(var(--brand-accent));
-      background: none;
-    }
+  .professional-text-primary {
+    color: hsl(var(--brand-text-primary));
+    font-weight: 700;
   }
 
-  .modern-glow {
-    position: relative;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  .professional-text-body {
+    color: hsl(var(--brand-text-body));
+    line-height: 1.6;
   }
 
-  .modern-glow::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    background: var(--gradient-glow);
-    border-radius: inherit;
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
-    filter: blur(20px);
+  .professional-text-sub {
+    color: hsl(var(--brand-text-sub));
+    font-weight: 600;
   }
 
-  .modern-glow:hover::before {
-    opacity: 1;
-    transform: scale(1.05);
+  .professional-text-muted {
+    color: hsl(var(--brand-text-muted));
   }
 
-  .modern-backdrop {
-    background: hsl(var(--brand-surface) / 0.8);
-    backdrop-filter: blur(12px) saturate(150%);
+  .professional-section-bg {
+    background: hsl(var(--background));
+  }
+
+  .professional-section-alt {
+    background: var(--gradient-section-alt);
+  }
+
+  .professional-backdrop {
+    background: hsl(var(--brand-surface) / 0.95);
+    backdrop-filter: blur(8px);
     border: 1px solid hsl(var(--border));
   }
 }

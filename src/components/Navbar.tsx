@@ -51,13 +51,13 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
       name: 'Facebook', 
       href: 'https://www.facebook.com/avi.frid.3/', 
       icon: Facebook,
-      color: 'hover:text-blue-500'
+      color: 'hover:text-blue-600'
     },
     { 
       name: 'Instagram', 
       href: 'https://www.instagram.com/avifrid_ai/', 
       icon: Instagram,
-      color: 'hover:text-pink-500'
+      color: 'hover:text-pink-600'
     }
   ];
 
@@ -66,8 +66,8 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
       <motion.nav
         className={`fixed top-0 w-full z-50 transition-all duration-500 font-heebo ${
           isScrolled
-            ? 'modern-backdrop border-b border-accent/20'
-            : 'bg-background/80 backdrop-blur-xl'
+            ? 'professional-backdrop border-b'
+            : 'bg-background/95 backdrop-blur-xl'
         }`}
         dir="rtl"
         initial={{ y: -100 }}
@@ -88,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`text-brand-text-secondary ${social.color} transition-all duration-300 hover:scale-110`}
+                        className={`professional-text-body ${social.color} transition-all duration-300 hover:scale-110`}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -103,57 +103,57 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button variant="ghost" className="relative h-12 w-12 rounded-full modern-backdrop border border-accent/20">
+                      <Button variant="ghost" className="relative h-12 w-12 rounded-full professional-backdrop border">
                         <Avatar className="h-10 w-10">
                           <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.display_name || 'Profile'} />
-                          <AvatarFallback className="bg-accent text-background font-semibold">
+                          <AvatarFallback className="bg-accent text-accent-foreground font-semibold">
                             {user.email?.charAt(0).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                       </Button>
                     </motion.div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-64 modern-backdrop border border-accent/20" align="start" forceMount>
+                  <DropdownMenuContent className="w-64 professional-backdrop border" align="start" forceMount>
                     <div className="flex items-center justify-start gap-3 p-4">
                       <Avatar className="h-10 w-10">
                         <AvatarImage src={user.user_metadata?.avatar_url} />
-                        <AvatarFallback className="bg-accent text-background">
+                        <AvatarFallback className="bg-accent text-accent-foreground">
                           {user.email?.charAt(0).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col space-y-1">
-                        <p className="font-semibold text-brand-text">{user.user_metadata?.display_name || 'משתמש'}</p>
-                        <p className="text-sm text-brand-text-secondary truncate w-[160px]">
+                        <p className="font-semibold professional-text-primary">{user.user_metadata?.display_name || 'משתמש'}</p>
+                        <p className="text-sm professional-text-muted truncate w-[160px]">
                           {user.email}
                         </p>
                       </div>
                     </div>
-                    <DropdownMenuSeparator className="bg-accent/20" />
+                    <DropdownMenuSeparator className="bg-border" />
                     <DropdownMenuItem asChild>
-                      <Link to="/dashboard" className="flex items-center px-4 py-3 hover:bg-accent/10">
+                      <Link to="/dashboard" className="flex items-center px-4 py-3 hover:bg-muted">
                         <BookOpen className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-text">לוח הבקרה</span>
+                        <span className="professional-text-body">לוח הבקרה</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/profile" className="flex items-center px-4 py-3 hover:bg-accent/10">
+                      <Link to="/profile" className="flex items-center px-4 py-3 hover:bg-muted">
                         <User className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-text">פרופיל</span>
+                        <span className="professional-text-body">פרופיל</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/blog/manager" className="flex items-center px-4 py-3 hover:bg-accent/10">
+                      <Link to="/blog/manager" className="flex items-center px-4 py-3 hover:bg-muted">
                         <Settings className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-text">ניהול מאמרים</span>
+                        <span className="professional-text-body">ניהול מאמרים</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/admin101" className="flex items-center px-4 py-3 hover:bg-accent/10">
+                      <Link to="/admin101" className="flex items-center px-4 py-3 hover:bg-muted">
                         <Settings className="ml-3 h-4 w-4 text-accent" />
-                        <span className="text-brand-text">ניהול מערכת</span>
+                        <span className="professional-text-body">ניהול מערכת</span>
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-accent/20" />
+                    <DropdownMenuSeparator className="bg-border" />
                     <DropdownMenuItem
                       className="cursor-pointer px-4 py-3 hover:bg-destructive/10"
                       onSelect={async (event) => {
@@ -171,10 +171,10 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 <div className="flex items-center gap-3">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button
-                      variant="outline"
+                      variant="secondary"
                       size="sm"
                       onClick={() => navigate('/auth')}
-                      className="premium-button-secondary px-6 py-2 text-sm"
+                      className="px-6 py-2 text-sm"
                     >
                       התחבר
                     </Button>
@@ -194,7 +194,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       onMouseLeave={() => setIsInspirationDropdownOpen(false)}
                     >
                       <motion.button
-                        className="flex items-center gap-1 text-brand-text hover:text-accent transition-all duration-300 font-medium py-2"
+                        className="flex items-center gap-1 professional-text-primary hover:text-accent transition-all duration-300 font-semibold py-2"
                         whileHover={{ scale: 1.05 }}
                       >
                         {item.name}
@@ -204,7 +204,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       <AnimatePresence>
                         {isInspirationDropdownOpen && (
                           <motion.div
-                            className="absolute top-full right-0 mt-2 w-44 modern-backdrop border border-accent/20 rounded-xl shadow-xl overflow-hidden"
+                            className="absolute top-full right-0 mt-2 w-44 professional-backdrop border rounded-xl shadow-lg overflow-hidden"
                             initial={{ opacity: 0, y: -10, scale: 0.95 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -214,7 +214,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                               <Link
                                 key={dropdownItem.name}
                                 to={dropdownItem.href}
-                                className="block w-full text-right px-4 py-3 text-brand-text hover:text-accent hover:bg-accent/10 transition-all duration-200"
+                                className="block w-full text-right px-4 py-3 professional-text-body hover:text-accent hover:bg-muted transition-all duration-200"
                               >
                                 {dropdownItem.name}
                               </Link>
@@ -228,7 +228,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       {item.action ? (
                         <button
                           onClick={item.action}
-                          className="text-brand-text hover:text-accent transition-all duration-300 font-medium py-2 relative group"
+                          className="professional-text-primary hover:text-accent transition-all duration-300 font-semibold py-2 relative group"
                         >
                           {item.name}
                           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
@@ -236,7 +236,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       ) : (
                         <Link
                           to={item.href}
-                          className="text-brand-text hover:text-accent transition-all duration-300 font-medium py-2 relative group"
+                          className="professional-text-primary hover:text-accent transition-all duration-300 font-semibold py-2 relative group"
                         >
                           {item.name}
                           <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
@@ -253,7 +253,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               className="flex-shrink-0"
               whileHover={{ scale: 1.05 }}
             >
-              <Link to="/" className="text-3xl font-bold premium-accent-gradient tracking-tight">
+              <Link to="/" className="text-2xl font-bold professional-text-accent tracking-tight">
                 AI Master
               </Link>
             </motion.div>
@@ -262,7 +262,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             <div className="lg:hidden">
               <motion.button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-brand-text hover:text-accent transition-colors duration-300 p-2"
+                className="professional-text-primary hover:text-accent transition-colors duration-300 p-2"
                 whileTap={{ scale: 0.95 }}
               >
                 {isMobileMenuOpen ? (
@@ -279,7 +279,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="lg:hidden modern-backdrop border-t border-accent/20"
+              className="lg:hidden professional-backdrop border-t"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -296,14 +296,14 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                     >
                       {item.hasDropdown ? (
                         <div className="space-y-2">
-                          <div className="text-brand-light font-medium py-2 border-b border-accent/20">
+                          <div className="professional-text-primary font-semibold py-2 border-b">
                             {item.name}
                           </div>
                           {item.dropdownItems?.map((dropdownItem) => (
                             <Link
                               key={dropdownItem.name}
                               to={dropdownItem.href}
-                              className="block text-brand-light/80 hover:text-accent transition-colors duration-200 py-2 pl-4"
+                              className="block professional-text-body hover:text-accent transition-colors duration-200 py-2 pl-4"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {dropdownItem.name}
@@ -316,14 +316,14 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                             item.action?.();
                             setIsMobileMenuOpen(false);
                           }}
-                          className="block w-full text-right text-brand-light/80 hover:text-accent transition-colors duration-200 py-2"
+                          className="block w-full text-right professional-text-body hover:text-accent transition-colors duration-200 py-2"
                         >
                           {item.name}
                         </button>
                       ) : (
                         <Link
                           to={item.href}
-                          className="block text-brand-light/80 hover:text-accent transition-colors duration-200 py-2"
+                          className="block professional-text-body hover:text-accent transition-colors duration-200 py-2"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {item.name}
@@ -333,7 +333,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                   ))}
                   
                   {/* Mobile Social Links */}
-                  <div className="flex items-center justify-center gap-6 pt-4 border-t border-accent/20">
+                  <div className="flex items-center justify-center gap-6 pt-4 border-t">
                     {socialLinks.map((social) => {
                       const IconComponent = social.icon;
                       return (
@@ -342,7 +342,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`text-brand-light/60 ${social.color} transition-colors duration-300`}
+                          className={`professional-text-muted ${social.color} transition-colors duration-300`}
                         >
                           <IconComponent className="h-6 w-6" />
                         </a>
@@ -358,7 +358,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                           navigate('/auth');
                           setIsMobileMenuOpen(false);
                         }}
-                        className="premium-button-primary w-full"
+                        className="w-full"
                       >
                         התחבר
                       </Button>
@@ -373,9 +373,9 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
       
       {/* Coming Soon Dialog */}
       <Dialog open={isComingSoonOpen} onOpenChange={setIsComingSoonOpen}>
-        <DialogContent className="modern-backdrop border border-accent/20 rounded-2xl" dir="rtl">
+        <DialogContent className="professional-backdrop border rounded-2xl" dir="rtl">
           <DialogHeader>
-            <DialogTitle className="premium-accent-gradient text-center text-2xl font-bold">
+            <DialogTitle className="professional-text-accent text-center text-2xl font-bold">
               בקרוב
             </DialogTitle>
           </DialogHeader>
@@ -385,10 +385,10 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-brand-light text-lg mb-6 leading-relaxed">
+              <p className="professional-text-body text-lg mb-6 leading-relaxed">
                 העמוד הזה נמצא בפיתוח ויהיה זמין בקרוב
               </p>
-              <p className="text-brand-light/70 text-base">
+              <p className="professional-text-muted text-base">
                 תודה על הסבלנות 🚀
               </p>
             </motion.div>
