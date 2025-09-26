@@ -60,8 +60,8 @@ const AdminLeads = () => {
   const fetchLeads = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("leads" as any)
+      const { data, error } = await (supabase as any)
+        .from("leads")
         .select("*")
         .order("created_at", { ascending: false });
 
@@ -81,8 +81,8 @@ const AdminLeads = () => {
 
   const updateLeadStatus = async (leadId: string, newStatus: string) => {
     try {
-      const { error } = await supabase
-        .from("leads" as any)
+      const { error } = await (supabase as any)
+        .from("leads")
         .update({ status: newStatus, updated_at: new Date().toISOString() })
         .eq("id", leadId);
 
@@ -114,8 +114,8 @@ const AdminLeads = () => {
     if (!confirm("האם אתה בטוח שברצונך למחוק את הליד הזה?")) return;
 
     try {
-      const { error } = await supabase
-        .from("leads" as any)
+      const { error } = await (supabase as any)
+        .from("leads")
         .delete()
         .eq("id", leadId);
 

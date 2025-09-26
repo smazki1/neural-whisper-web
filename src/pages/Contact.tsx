@@ -69,8 +69,8 @@ const Contact = () => {
       setErrors({});
 
       // Insert into leads table
-      const { error } = await supabase
-        .from("leads" as any)
+      const { error } = await (supabase as any)
+        .from("leads")
         .insert({
           name: validatedData.name,
           email: validatedData.email,
