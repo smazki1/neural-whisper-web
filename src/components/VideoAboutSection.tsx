@@ -15,19 +15,12 @@ const VideoAboutSection = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl modern-glow">
-              {/* Static Image replacing video */}
-              <div className="relative aspect-video bg-white">
-                <img
-                  src={aviPortrait}
-                  alt="אבי פריד - מומחה בינה מלאכותית"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                
-                {/* Subtle Gradient Overlay for bright theme */}
-                <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/10" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
-              </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-lg">
+              <img
+                src={aviPortrait}
+                alt="אבי פריד - מומחה בינה מלאכותית"
+                className="w-full h-auto object-cover aspect-[4/5]"
+              />
             </div>
             
             {/* Decorative Elements */}
