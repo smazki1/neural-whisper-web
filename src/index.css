@@ -6,57 +6,62 @@
 
 @layer base {
   :root {
-    /* AI Master Brand Colors */
-    --background: 218 48% 12%; /* #101933 */
-    --foreground: 289 13% 85%; /* #d8d5db */
+    /* Modern AI Master Color Palette */
+    --background: 218 48% 12%; /* #101933 - Primary */
+    --foreground: 289 13% 85%; /* #d8d5db - Light */
 
-    --card: 218 48% 12%;
+    --card: 218 50% 16%; /* #162347 - Dark elevated surface */
     --card-foreground: 289 13% 85%;
 
-    --popover: 218 48% 12%;
+    --popover: 218 50% 16%;
     --popover-foreground: 289 13% 85%;
 
-    --primary: 218 48% 12%; /* Brand dark blue */
-    --primary-foreground: 289 13% 85%;
+    --primary: 48 78% 60%; /* #eec643 - Accent (Golden) */
+    --primary-foreground: 218 48% 12%;
 
-    --secondary: 218 48% 15%;
+    --secondary: 222 53% 28%; /* #213670 - Secondary */
     --secondary-foreground: 289 13% 85%;
 
-    --muted: 218 48% 15%;
+    --muted: 218 50% 16%; /* #162347 - Dark */
     --muted-foreground: 289 13% 70%;
 
-    --accent: 48 78% 60%; /* #eec643 - Brand yellow */
+    --accent: 48 78% 60%; /* #eec643 - Accent */
     --accent-foreground: 218 48% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 289 13% 85%;
 
-    --border: 218 48% 20%;
-    --input: 218 48% 20%;
-    --ring: 48 78% 60%;
+    --border: 222 53% 28% / 0.2; /* Secondary with opacity */
+    --input: 218 50% 16%; /* Dark surface */
+    --ring: 48 78% 60%; /* Accent focus ring */
 
-    --radius: 0.75rem;
+    --radius: 1rem; /* More modern rounded corners */
 
-    /* Premium AI Master Variables */
+    /* Premium Brand System */
     --brand-primary: 218 48% 12%; /* #101933 */
     --brand-accent: 48 78% 60%; /* #eec643 */
-    --brand-text: 289 13% 85%; /* #d8d5db */
-    --brand-surface: 218 48% 15%;
-    --brand-glow: 48 78% 60%; /* Accent glow */
+    --brand-secondary: 222 53% 28%; /* #213670 */
+    --brand-dark: 218 50% 16%; /* #162347 */
+    --brand-light: 289 13% 85%; /* #d8d5db */
+    --brand-glow: 48 78% 60%;
 
-    /* Advanced Design Tokens */
-    --brand-gradient-primary: linear-gradient(135deg, hsl(218, 48%, 12%) 0%, hsl(218, 48%, 8%) 100%);
-    --brand-gradient-surface: linear-gradient(135deg, hsl(218, 48%, 15%) 0%, hsl(218, 48%, 12%) 100%);
-    --brand-gradient-accent: linear-gradient(135deg, hsl(48, 78%, 60%) 0%, hsl(48, 78%, 50%) 100%);
-    --brand-gradient-text: linear-gradient(135deg, hsl(289, 13%, 85%) 0%, hsl(289, 13%, 70%) 100%);
+    /* Sophisticated Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(218, 48%, 12%) 0%, hsl(218, 50%, 16%) 50%, hsl(218, 48%, 12%) 100%);
+    --gradient-surface: linear-gradient(135deg, hsl(218, 50%, 16% / 0.9) 0%, hsl(218, 48%, 12% / 0.8) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(48, 78%, 60%) 0%, hsl(48, 78%, 55%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(222, 53%, 28%) 0%, hsl(218, 50%, 16%) 100%);
+    --gradient-glow: radial-gradient(circle at center, hsl(48, 78%, 60% / 0.3) 0%, transparent 70%);
     
-    --shadow-sm: 0 2px 4px hsl(218, 48%, 8%, 0.1);
-    --shadow-md: 0 4px 12px hsl(218, 48%, 8%, 0.15);
-    --shadow-lg: 0 8px 25px hsl(218, 48%, 8%, 0.2);
-    --shadow-xl: 0 12px 40px hsl(218, 48%, 8%, 0.25);
-    --shadow-2xl: 0 20px 60px hsl(218, 48%, 8%, 0.3);
-    --shadow-accent: 0 8px 25px hsl(48, 78%, 60%, 0.15);
-    --shadow-accent-lg: 0 12px 40px hsl(48, 78%, 60%, 0.2);
+    /* Modern Shadow System */
+    --shadow-xs: 0 1px 3px hsl(218, 48%, 8% / 0.1);
+    --shadow-sm: 0 4px 8px hsl(218, 48%, 8% / 0.12);
+    --shadow-md: 0 8px 20px hsl(218, 48%, 8% / 0.15);
+    --shadow-lg: 0 12px 32px hsl(218, 48%, 8% / 0.18);
+    --shadow-xl: 0 20px 48px hsl(218, 48%, 8% / 0.22);
+    --shadow-2xl: 0 32px 64px hsl(218, 48%, 8% / 0.28);
+    --shadow-accent: 0 8px 32px hsl(48, 78%, 60% / 0.25);
+    --shadow-accent-lg: 0 16px 48px hsl(48, 78%, 60% / 0.3);
+    --shadow-glow: 0 0 40px hsl(48, 78%, 60% / 0.4);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -106,97 +111,151 @@
 
   body {
     @apply bg-background text-foreground font-heebo;
-    background: var(--brand-gradient-primary);
+    background: var(--gradient-hero);
     background-attachment: fixed;
+    line-height: 1.7;
+    font-feature-settings: "liga" 1, "kern" 1;
   }
 }
 
-/* Premium UI Components */
+/* Modern UI Components */
 @layer components {
-  .premium-card {
-    @apply bg-brand-surface/80 backdrop-blur-xl rounded-2xl border border-brand-surface/30;
-    background: var(--brand-gradient-surface);
-    box-shadow: var(--shadow-xl), inset 0 1px 0 hsl(289, 13%, 85%, 0.1);
+  .modern-card {
+    @apply rounded-2xl border backdrop-blur-2xl transition-all duration-500;
+    background: var(--gradient-surface);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .modern-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--brand-accent) / 0.3), transparent);
+  }
+
+  .modern-card:hover {
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+    transform: translateY(-2px);
   }
 
   .premium-button-primary {
-    @apply px-8 py-4 font-bold text-lg rounded-xl transition-all duration-300;
-    background: var(--brand-gradient-accent);
+    @apply relative px-8 py-4 font-semibold text-lg rounded-xl transition-all duration-500 overflow-hidden;
+    background: var(--gradient-accent);
     color: hsl(var(--brand-primary));
-    box-shadow: var(--shadow-accent-lg);
+    box-shadow: var(--shadow-accent), inset 0 1px 0 hsl(48, 78%, 70% / 0.3);
     transform: translateY(0);
+    border: 1px solid hsl(48, 78%, 70% / 0.2);
+  }
+
+  .premium-button-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, hsl(48, 78%, 65%) 0%, hsl(48, 78%, 55%) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .premium-button-primary:hover::before {
+    opacity: 1;
   }
 
   .premium-button-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-accent-lg), 0 16px 50px hsl(48, 78%, 60%, 0.25);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-accent-lg), var(--shadow-glow);
   }
 
   .premium-button-secondary {
-    @apply px-8 py-4 font-bold text-lg rounded-xl border-2 transition-all duration-300;
-    border: 2px solid hsl(var(--brand-accent));
+    @apply relative px-8 py-4 font-semibold text-lg rounded-xl border transition-all duration-500;
+    border: 1px solid hsl(var(--brand-accent) / 0.4);
     color: hsl(var(--brand-accent));
-    background: transparent;
-    backdrop-filter: blur(10px);
+    background: hsl(var(--brand-dark) / 0.5);
+    backdrop-filter: blur(20px);
     transform: translateY(0);
   }
 
-  .premium-button-secondary:hover {
-    background: hsl(var(--brand-accent), 0.1);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-accent);
+  .premium-button-secondary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: hsl(var(--brand-accent) / 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
   }
 
-  .premium-text-gradient {
-    color: hsl(var(--brand-text)); /* Fallback color */
-    background: var(--brand-gradient-text);
+  .premium-button-secondary:hover::before {
+    opacity: 1;
+  }
+
+  .premium-button-secondary:hover {
+    transform: translateY(-2px);
+    border-color: hsl(var(--brand-accent) / 0.6);
+    box-shadow: var(--shadow-md), 0 0 30px hsl(var(--brand-accent) / 0.2);
+  }
+
+  .modern-text-gradient {
+    background: linear-gradient(135deg, hsl(var(--brand-light)) 0%, hsl(var(--brand-accent)) 50%, hsl(var(--brand-light)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradient-flow 6s ease-in-out infinite;
   }
 
-  /* Fallback for browsers that don't support background-clip */
-  @supports not (background-clip: text) {
-    .premium-text-gradient {
-      color: hsl(var(--brand-text));
-      background: none;
-    }
+  @keyframes gradient-flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   .premium-accent-gradient {
-    color: hsl(var(--brand-accent)); /* Fallback color */
-    background: var(--brand-gradient-accent);
+    background:  var(--gradient-accent);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-weight: 600;
   }
 
   /* Fallback for browsers that don't support background-clip */
   @supports not (background-clip: text) {
+    .modern-text-gradient,
     .premium-accent-gradient {
       color: hsl(var(--brand-accent));
       background: none;
     }
   }
 
-  .premium-glow {
+  .modern-glow {
     position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .premium-glow::before {
+  .modern-glow::before {
     content: '';
     position: absolute;
-    inset: -2px;
-    background: var(--brand-gradient-accent);
+    inset: -4px;
+    background: var(--gradient-glow);
     border-radius: inherit;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: -1;
-    filter: blur(20px);
+    filter: blur(30px);
   }
 
-  .premium-glow:hover::before {
-    opacity: 0.7;
+  .modern-glow:hover::before {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .modern-backdrop {
+    background: hsl(var(--brand-dark) / 0.8);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid hsl(var(--brand-accent) / 0.2);
   }
 }
 
