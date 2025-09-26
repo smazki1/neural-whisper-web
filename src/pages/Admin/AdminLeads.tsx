@@ -60,13 +60,13 @@ const AdminLeads = () => {
   const fetchLeads = async () => {
     try {
       setLoading(true);
-      const { data, error } = await (supabase
-        .from("leads")
+      const { data, error } = await supabase
+        .from("leads" as any)
         .select("*")
-        .order("created_at", { ascending: false }) as any);
+        .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setLeads(data || []);
+      setLeads((data || []) as unknown as Lead[]);
     } catch (error) {
       console.error("Error fetching leads:", error);
       toast({
@@ -81,10 +81,10 @@ const AdminLeads = () => {
 
   const updateLeadStatus = async (leadId: string, newStatus: string) => {
     try {
-      const { error } = await (supabase
-        .from("leads")
+      const { error } = await supabase
+        .from("leads" as any)
         .update({ status: newStatus, updated_at: new Date().toISOString() })
-        .eq("id", leadId) as any);
+        .eq("id", leadId);
 
       if (error) throw error;
 
@@ -114,10 +114,10 @@ const AdminLeads = () => {
     if (!confirm("האם אתה בטוח שברצונך למחוק את הליד הזה?")) return;
 
     try {
-      const { error } = await (supabase
-        .from("leads")
+      const { error } = await supabase
+        .from("leads" as any)
         .delete()
-        .eq("id", leadId) as any);
+        .eq("id", leadId);
 
       if (error) throw error;
 
