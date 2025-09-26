@@ -64,7 +64,12 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
     video_preview_url: '',
     external_url: '',
     is_published: false,
-    is_featured: false
+    is_featured: false,
+    meta_title: '',
+    meta_description: '',
+    target_audience: '',
+    what_included: '',
+    what_not_included: ''
   });
   const { toast } = useToast();
 
@@ -123,7 +128,12 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
       video_preview_url: '',
       external_url: '',
       is_published: false,
-      is_featured: false
+      is_featured: false,
+      meta_title: '',
+      meta_description: '',
+      target_audience: '',
+      what_included: '',
+      what_not_included: ''
     });
     setCurrentProduct(null);
     setIsEditing(false);
@@ -212,7 +222,12 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
       video_preview_url: product.video_preview_url || '',
       external_url: product.external_url || '',
       is_published: product.is_published,
-      is_featured: product.is_featured
+      is_featured: product.is_featured,
+      meta_title: '',
+      meta_description: '',
+      target_audience: '',
+      what_included: '',
+      what_not_included: ''
     });
     setIsEditing(true);
     setDialogOpen(true);
@@ -354,8 +369,8 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
-                  placeholder="תיאור מפורט של המוצר"
-                  rows={4}
+                  placeholder="תיאור מפורט של המוצר - כולל מה כלול, למי מתאים, וכו'"
+                  rows={6}
                 />
               </div>
 
@@ -428,6 +443,69 @@ const AdminProducts: React.FC<AdminProductsProps> = ({ onStatsUpdate }) => {
                 <p className="text-xs text-muted-foreground mt-1">
                   אם מוגדר, לחיצה על המוצר תוביל לקישור זה במקום לעמוד המוצר הפנימי
                 </p>
+              </div>
+
+              {/* SEO Fields */}
+              <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                <h4 className="font-semibold text-sm text-muted-foreground">הגדרות SEO</h4>
+                <div>
+                  <Label htmlFor="meta_title">כותרת META (אופציונלי)</Label>
+                  <Input
+                    id="meta_title"
+                    value={formData.meta_title}
+                    onChange={(e) => setFormData({...formData, meta_title: e.target.value})}
+                    placeholder="כותרת לחיפוש בגוגל (אלטרנטיבה לכותרת הרגילה)"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="meta_description">תיאור META</Label>
+                  <Textarea
+                    id="meta_description"
+                    value={formData.meta_description}
+                    onChange={(e) => setFormData({...formData, meta_description: e.target.value})}
+                    placeholder="תיאור קצר למנועי חיפוש (עד 160 תווים)"
+                    rows={2}
+                    maxLength={160}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    {formData.meta_description.length}/160 תווים
+                  </p>
+                </div>
+              </div>
+
+              {/* Additional Content Fields */}
+              <div className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                <h4 className="font-semibold text-sm text-muted-foreground">תוכן נוסף לדף המוצר</h4>
+                <div>
+                  <Label htmlFor="target_audience">קהל יעד</Label>
+                  <Textarea
+                    id="target_audience"
+                    value={formData.target_audience}
+                    onChange={(e) => setFormData({...formData, target_audience: e.target.value})}
+                    placeholder="למי מתאים המוצר? (למשל: יזמים, מנהלים, מפתחים)"
+                    rows={3}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="what_included">מה כלול במוצר</Label>
+                  <Textarea
+                    id="what_included"
+                    value={formData.what_included}
+                    onChange={(e) => setFormData({...formData, what_included: e.target.value})}
+                    placeholder="רשימה של מה שהלקוח מקבל (כל שורה נפרדת)"
+                    rows={4}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="what_not_included">מה לא כלול</Label>
+                  <Textarea
+                    id="what_not_included"
+                    value={formData.what_not_included}
+                    onChange={(e) => setFormData({...formData, what_not_included: e.target.value})}
+                    placeholder="מה שלא כלול במוצר (אופציונלי)"
+                    rows={2}
+                  />
+                </div>
               </div>
 
               <div className="flex gap-6">

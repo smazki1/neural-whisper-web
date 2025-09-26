@@ -93,7 +93,8 @@ const Products = () => {
     const labels = {
       course: 'קורס',
       workshop: 'סדנה',
-      consultation: 'ייעוץ'
+      consultation: 'ייעוץ',
+      lecture: 'הרצאה'
     };
     return labels[type as keyof typeof labels] || type;
   };
@@ -142,11 +143,11 @@ const Products = () => {
         <div className="container mx-auto px-6 lg:px-8 py-16">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              מוצרים וקורסים
+            <h1 className="text-4xl lg:text-5xl font-bold text-brand-text mb-4">
+              המוצרים והשירותים שלנו
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              גלה את מגוון הקורסים והסדנאות שלנו בתחום הבינה המלאכותית
+            <p className="text-xl text-brand-text-secondary max-w-3xl mx-auto">
+              גלה את מגוון הקורסים, הסדנאות והייעוצים שלנו בתחום הבינה המלאכותית - מבסיסי ועד מתקדם
             </p>
           </div>
 
@@ -185,6 +186,7 @@ const Products = () => {
                 <SelectItem value="course">קורסים</SelectItem>
                 <SelectItem value="workshop">סדנאות</SelectItem>
                 <SelectItem value="consultation">ייעוץ</SelectItem>
+                <SelectItem value="lecture">הרצאות</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -193,81 +195,81 @@ const Products = () => {
           {filteredProducts.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-semibold text-foreground mb-2">
+              <h3 className="text-2xl font-semibold text-brand-text mb-2">
                 לא נמצאו מוצרים
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-brand-text-secondary">
                 נסה לשנות את קריטריוני החיפוש או הפילטרים
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredProducts.map((product) => (
-                <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                <Card key={product.id} className="modern-card overflow-hidden hover:shadow-xl transition-all duration-500 group">
                   {product.thumbnail_url && (
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-64 overflow-hidden">
                       <img
                         src={product.thumbnail_url}
                         alt={product.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       {product.is_featured && (
-                        <Badge className="absolute top-3 right-3 bg-primary text-primary-foreground">
+                        <Badge className="absolute top-4 right-4 bg-brand-accent text-brand-text font-medium px-3 py-1">
                           מומלץ
                         </Badge>
                       )}
+                      <div className="absolute bottom-4 right-4 left-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                            {getCategoryLabel(product.category)}
+                          </Badge>
+                          <Badge variant="outline" className="bg-white/20 text-white border-white/30">
+                            {getTypeLabel(product.product_type)}
+                          </Badge>
+                        </div>
+                      </div>
                     </div>
                   )}
                   
-                  <CardHeader>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="secondary">
-                        {getCategoryLabel(product.category)}
-                      </Badge>
-                      <Badge variant="outline">
-                        {getTypeLabel(product.product_type)}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                  <div className="p-6">
+                    <CardTitle className="text-2xl font-bold text-brand-text mb-3 group-hover:text-brand-accent transition-colors duration-300">
                       {product.title}
                     </CardTitle>
+                    
                     {product.short_description && (
-                      <p className="text-muted-foreground">
+                      <p className="text-brand-text-secondary mb-4 leading-relaxed">
                         {product.short_description}
                       </p>
                     )}
-                  </CardHeader>
 
-                  <CardContent>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                    <div className="flex items-center justify-between mb-6">
                       {product.duration && (
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-2 text-brand-text-secondary">
                           <Clock className="h-4 w-4" />
-                          <span>{product.duration}</span>
+                          <span className="text-sm">{product.duration}</span>
                         </div>
                       )}
+                      
+                      <div className="text-3xl font-bold text-brand-accent">
+                        {product.price > 0 ? `₪${product.price.toLocaleString()}` : 'חינם'}
+                      </div>
                     </div>
-                    
-                    <div className="text-2xl font-bold text-primary">
-                      {product.price > 0 ? `₪${product.price}` : 'חינם'}
-                    </div>
-                  </CardContent>
 
-                  <CardFooter>
                     {product.external_url ? (
-                      <a href={product.external_url} target="_blank" rel="noopener noreferrer" className="w-full">
-                        <Button className="w-full" size="lg">
-                          למידע נוסף
+                      <a href={product.external_url} target="_blank" rel="noopener noreferrer" className="block">
+                        <Button className="premium-button-primary w-full" size="lg">
+                          למד עוד
                         </Button>
                       </a>
                     ) : (
-                      <Link to={`/products/${product.slug}`} className="w-full">
-                        <Button className="w-full" size="lg">
-                          למידע נוסף
+                      <Link to={`/products/${product.slug}`} className="block">
+                        <Button className="premium-button-primary w-full" size="lg">
+                          למד עוד
                         </Button>
                       </Link>
                     )}
-                  </CardFooter>
+                  </div>
                 </Card>
               ))}
             </div>

@@ -102,7 +102,8 @@ const ProductDetail = () => {
     const labels = {
       course: 'קורס',
       workshop: 'סדנה',
-      consultation: 'ייעוץ'
+      consultation: 'ייעוץ',
+      lecture: 'הרצאה'
     };
     return labels[type as keyof typeof labels] || type;
   };
@@ -157,6 +158,10 @@ const ProductDetail = () => {
         <title>{product.title} | AI Master</title>
         <meta name="description" content={product.short_description || product.description} />
         <meta name="keywords" content={`AI, בינה מלאכותית, ${product.title}, ${getCategoryLabel(product.category)}`} />
+        <meta property="og:title" content={product.title} />
+        <meta property="og:description" content={product.short_description || product.description} />
+        <meta property="og:image" content={product.thumbnail_url || ''} />
+        <meta property="og:type" content="product" />
       </Helmet>
 
       <div className="min-h-screen bg-background pt-20" dir="rtl">
@@ -170,11 +175,70 @@ const ProductDetail = () => {
             <span className="text-foreground">{product.title}</span>
           </nav>
 
+          {/* Hero Section */}
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <Badge variant="secondary" className="text-lg px-4 py-2">
+                {getCategoryLabel(product.category)}
+              </Badge>
+              <Badge variant="outline" className="text-lg px-4 py-2">
+                {getTypeLabel(product.product_type)}
+              </Badge>
+              {product.is_featured && (
+                <Badge className="bg-brand-accent text-brand-text text-lg px-4 py-2">
+                  מומלץ
+                </Badge>
+              )}
+            </div>
+
+            <h1 className="text-5xl lg:text-6xl font-bold text-brand-text mb-6">
+              {product.title}
+            </h1>
+
+            {product.short_description && (
+              <p className="text-2xl text-brand-text-secondary max-w-4xl mx-auto mb-8 leading-relaxed">
+                {product.short_description}
+              </p>
+            )}
+
+            <div className="flex items-center justify-center gap-6 mb-8">
+              {product.duration && (
+                <div className="flex items-center gap-2 text-brand-text-secondary">
+                  <Clock className="h-5 w-5" />
+                  <span className="text-lg">{product.duration}</span>
+                </div>
+              )}
+              <div className="flex items-center gap-2 text-brand-text-secondary">
+                <Star className="h-5 w-5 fill-current text-yellow-500" />
+                <span className="text-lg">4.8 (123 ביקורות)</span>
+              </div>
+            </div>
+
+            <div className="text-5xl font-bold text-brand-accent mb-8">
+              {product.price > 0 ? `₪${product.price.toLocaleString()}` : 'חינם'}
+            </div>
+
+            <Button
+              onClick={handlePurchase}
+              className="premium-button-primary text-xl px-12 py-4"
+              size="lg"
+              disabled={purchasing}
+            >
+              {purchasing ? 'מעבד...' : product.price > 0 ? 'רכישה עכשיו' : 'התחל עכשיו'}
+            </Button>
+
+            {!user && (
+              <p className="text-brand-text-secondary mt-4">
+                נדרשת התחברות לרכישה
+              </p>
+            )}
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Product Media */}
             <div className="space-y-6">
               {product.video_preview_url ? (
-                <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
+                <div className="relative aspect-video bg-muted rounded-xl overflow-hidden shadow-2xl">
                   <video
                     src={product.video_preview_url}
                     poster={product.thumbnail_url}
@@ -185,7 +249,7 @@ const ProductDetail = () => {
                   </video>
                 </div>
               ) : product.thumbnail_url ? (
-                <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
+                <div className="relative aspect-video bg-muted rounded-xl overflow-hidden shadow-2xl">
                   <img
                     src={product.thumbnail_url}
                     alt={product.title}
@@ -193,109 +257,115 @@ const ProductDetail = () => {
                   />
                 </div>
               ) : (
-                <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
+                <div className="aspect-video bg-muted rounded-xl flex items-center justify-center shadow-2xl">
                   <Play className="h-16 w-16 text-muted-foreground" />
                 </div>
               )}
 
-              {/* Product Features */}
-              <Card>
+              {/* What's Included */}
+              <Card className="modern-card">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Check className="h-5 w-5 text-primary" />
-                    מה תקבל במוצר זה
+                  <CardTitle className="flex items-center gap-2 text-brand-text">
+                    <Check className="h-5 w-5 text-brand-accent" />
+                    מה כלול במוצר
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span>גישה מלאה לכל החומרים</span>
+                    <Check className="h-5 w-5 text-brand-accent flex-shrink-0" />
+                    <span className="text-brand-text">גישה מלאה לכל החומרים הדיגיטליים</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span>תעודת סיום</span>
+                    <Check className="h-5 w-5 text-brand-accent flex-shrink-0" />
+                    <span className="text-brand-text">תעודת סיום מוכרת</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span>תמיכה וליווי</span>
+                    <Check className="h-5 w-5 text-brand-accent flex-shrink-0" />
+                    <span className="text-brand-text">תמיכה אישית וליווי מקצועי</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-brand-accent flex-shrink-0" />
+                    <span className="text-brand-text">גישה לקהילת הלומדים הפרטית</span>
                   </div>
                   {product.duration && (
                     <div className="flex items-center gap-3">
-                      <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span>משך זמן: {product.duration}</span>
+                      <Check className="h-5 w-5 text-brand-accent flex-shrink-0" />
+                      <span className="text-brand-text">משך זמן: {product.duration}</span>
                     </div>
                   )}
+                  <div className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-brand-accent flex-shrink-0" />
+                    <span className="text-brand-text">עדכונים לכל החיים</span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Target Audience */}
+              <Card className="modern-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-brand-text">
+                    <Tag className="h-5 w-5 text-brand-accent" />
+                    למי מתאים המוצר
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-accent rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-brand-text">יזמים ובעלי עסקים שרוצים לשלב AI בעסק</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-accent rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-brand-text">אנשי מקצוע המעוניינים להתעדכן בטכנולוגיות חדשות</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-accent rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-brand-text">סטודנטים ואנשים המתחילים את דרכם בתחום</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-brand-accent rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-brand-text">כל מי שמעוניין להבין את עולם הבינה המלאכותית</span>
+                  </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Product Info */}
+            {/* Product Details */}
             <div className="space-y-6">
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <Badge variant="secondary">
-                    {getCategoryLabel(product.category)}
-                  </Badge>
-                  <Badge variant="outline">
-                    {getTypeLabel(product.product_type)}
-                  </Badge>
-                  {product.is_featured && (
-                    <Badge className="bg-primary text-primary-foreground">
-                      מומלץ
-                    </Badge>
-                  )}
-                </div>
-
-                <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                  {product.title}
-                </h1>
-
-                {product.short_description && (
-                  <p className="text-xl text-muted-foreground mb-6">
-                    {product.short_description}
-                  </p>
-                )}
-
-                <div className="flex items-center gap-4 mb-6">
-                  {product.duration && (
-                    <div className="flex items-center gap-1 text-muted-foreground">
-                      <Clock className="h-4 w-4" />
-                      <span>{product.duration}</span>
+              {/* Key Benefits */}
+              <Card className="modern-card">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-brand-text">
+                    למה לבחור במוצר הזה?
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-brand-text font-bold">1</span>
                     </div>
-                  )}
-                  <div className="flex items-center gap-1 text-muted-foreground">
-                    <Star className="h-4 w-4 fill-current text-yellow-500" />
-                    <span>4.8 (123 ביקורות)</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Pricing Card */}
-              <Card className="border-2 border-primary">
-                <CardContent className="p-6">
-                  <div className="text-center mb-6">
-                    <div className="text-4xl font-bold text-primary mb-2">
-                      {product.price > 0 ? `₪${product.price}` : 'חינם'}
+                    <div>
+                      <h4 className="font-semibold text-brand-text mb-1">מעשי ויישומי</h4>
+                      <p className="text-brand-text-secondary">כל מה שתלמד תוכל ליישם מיידית בעבודה או בפרויקטים שלך</p>
                     </div>
-                    {product.price > 0 && (
-                      <p className="text-muted-foreground">תשלום חד פעמי</p>
-                    )}
                   </div>
-
-                  <Button
-                    onClick={handlePurchase}
-                    className="w-full mb-4"
-                    size="lg"
-                    disabled={purchasing}
-                  >
-                    {purchasing ? 'מעבד...' : product.price > 0 ? 'רכישה עכשיו' : 'התחל עכשיו'}
-                  </Button>
-
-                  {!user && (
-                    <p className="text-sm text-muted-foreground text-center">
-                      נדרשת התחברות לרכישה
-                    </p>
-                  )}
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-brand-text font-bold">2</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-brand-text mb-1">מעודכן וקדימה</h4>
+                      <p className="text-brand-text-secondary">התכנים מתעדכנים בקביעות להתאים לטכנולוגיות החדשות ביותר</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-brand-text font-bold">3</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-brand-text mb-1">ליווי אישי</h4>
+                      <p className="text-brand-text-secondary">קבל תמיכה ומענה לשאלות במהלך כל התהליך</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -334,14 +404,14 @@ const ProductDetail = () => {
 
               {/* Description */}
               {product.description && (
-                <Card>
+                <Card className="modern-card">
                   <CardHeader>
-                    <CardTitle>תיאור המוצר</CardTitle>
+                    <CardTitle className="text-brand-text">תיאור מפורט</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="prose prose-slate max-w-none dark:prose-invert">
+                    <div className="prose prose-slate max-w-none text-brand-text">
                       {product.description.split('\n').map((paragraph, index) => (
-                        <p key={index} className="mb-4 last:mb-0">
+                        <p key={index} className="mb-4 last:mb-0 leading-relaxed">
                           {paragraph}
                         </p>
                       ))}
@@ -349,6 +419,84 @@ const ProductDetail = () => {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Testimonials Section */}
+              <Card className="modern-card">
+                <CardHeader>
+                  <CardTitle className="text-brand-text">מה אומרים עלינו</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="border-r-4 border-brand-accent pr-4">
+                    <p className="text-brand-text mb-3 italic">
+                      "הקורס שינה לי את הדרך להסתכל על הבינה המלאכותית. המידע מעשי ושימושי מאוד!"
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center">
+                        <span className="text-brand-text font-bold text-sm">ש</span>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-brand-text">שרה כהן</p>
+                        <p className="text-sm text-brand-text-secondary">מנהלת שיווק</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-r-4 border-brand-accent pr-4">
+                    <p className="text-brand-text mb-3 italic">
+                      "המרצה מסביר בצורה ברורה ומעניינת. הצלחתי ליישם את מה שלמדתי מיד בעבודה."
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center">
+                        <span className="text-brand-text font-bold text-sm">ד</span>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-brand-text">דני לוי</p>
+                        <p className="text-sm text-brand-text-secondary">מפתח תוכנה</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border-r-4 border-brand-accent pr-4">
+                    <p className="text-brand-text mb-3 italic">
+                      "השקעה שמשתלמת! המידע עדכני והכלים שלמדתי עוזרים לי כל יום."
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center">
+                        <span className="text-brand-text font-bold text-sm">מ</span>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-brand-text">מיכל אברמוביץ'</p>
+                        <p className="text-sm text-brand-text-secondary">יועצת עסקית</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Final CTA */}
+              <Card className="modern-card border-2 border-brand-accent bg-gradient-to-br from-brand-background to-white">
+                <CardContent className="p-8 text-center">
+                  <h3 className="text-2xl font-bold text-brand-text mb-4">
+                    מוכן להתחיל את המסע?
+                  </h3>
+                  <p className="text-brand-text-secondary mb-6">
+                    הצטרף אלינו עוד היום והתחל לפתח את הכישורים שלך בבינה מלאכותית
+                  </p>
+                  <Button
+                    onClick={handlePurchase}
+                    className="premium-button-primary text-xl px-12 py-4"
+                    size="lg"
+                    disabled={purchasing}
+                  >
+                    {purchasing ? 'מעבד...' : product.price > 0 ? `רכישה ב-₪${product.price.toLocaleString()}` : 'התחל עכשיו חינם'}
+                  </Button>
+                  {!user && (
+                    <p className="text-brand-text-secondary mt-4">
+                      נדרשת התחברות לרכישה
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
