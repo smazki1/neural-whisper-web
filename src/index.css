@@ -133,24 +133,12 @@
     box-shadow: var(--shadow-card);
   }
 
-  .professional-card:hover {
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-2px);
-    border-color: hsl(var(--brand-accent) / 0.3);
-    box-shadow: 0 8px 32px hsl(var(--brand-accent) / 0.15);
-  }
-
   .professional-card-featured {
-    @apply rounded-xl border-l-4 transition-all duration-300;
+    @apply rounded-xl border-l-4;
     background: hsl(var(--brand-surface));
     border: 1px solid hsl(var(--border));
     border-left: 4px solid hsl(var(--brand-accent));
     box-shadow: var(--shadow-card);
-  }
-
-  .professional-card-featured:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px hsl(var(--brand-accent) / 0.2);
   }
 
   .professional-button-primary {

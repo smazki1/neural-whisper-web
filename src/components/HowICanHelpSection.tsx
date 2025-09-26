@@ -68,26 +68,20 @@ const HowICanHelpSection = () => {
             return (
               <motion.div
                 key={index}
-                className="group relative"
+                className="relative"
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 viewport={{ once: true }}
               >
                 <div className="professional-card p-8 lg:p-10 h-full relative overflow-hidden">
-                  {/* Subtle Hover Glow */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   {/* Icon */}
-                  <motion.div 
-                    className="relative mb-8"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="w-20 h-20 bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl flex items-center justify-center group-hover:from-accent/30 group-hover:to-accent/10 transition-all duration-500">
+                  <div className="relative mb-8">
+                    <div className="w-20 h-20 bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl flex items-center justify-center">
                       <IconComponent className="w-10 h-10 text-accent" />
                     </div>
-                  </motion.div>
+                  </div>
 
                   {/* Content */}
                   <div className="relative space-y-6">
@@ -101,7 +95,7 @@ const HowICanHelpSection = () => {
 
                     {/* Decorative Element */}
                     <motion.div 
-                      className="w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      className="w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"
                       initial={{ scaleX: 0 }}
                       whileInView={{ scaleX: 1 }}
                       transition={{ duration: 0.8, delay: 0.5 + index * 0.1 }}
@@ -109,8 +103,6 @@ const HowICanHelpSection = () => {
                     />
                   </div>
 
-                  {/* Hover Effect Border */}
-                  <div className="absolute inset-0 border border-accent/0 group-hover:border-accent/20 rounded-2xl transition-all duration-500" />
                 </div>
               </motion.div>
             );

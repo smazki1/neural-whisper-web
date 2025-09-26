@@ -83,20 +83,18 @@ const FreeResourcesSection = () => {
             return (
               <motion.div
                 key={index}
-                className="group relative"
+                className="relative"
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.15 }}
                 viewport={{ once: true }}
               >
                 <div className="professional-card p-8 lg:p-10 h-full relative overflow-hidden cursor-pointer">
-                  {/* Subtle Hover Glow */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   {/* Header */}
                   <div className="relative mb-6 flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 bg-gradient-to-br from-accent/20 to-accent/5 rounded-xl flex items-center justify-center group-hover:from-accent/30 group-hover:to-accent/10 transition-all duration-500">
+                      <div className="w-14 h-14 bg-gradient-to-br from-accent/20 to-accent/5 rounded-xl flex items-center justify-center">
                         <IconComponent className="w-7 h-7 text-accent" />
                       </div>
                       <div>
@@ -110,7 +108,7 @@ const FreeResourcesSection = () => {
 
                   {/* Content */}
                   <div className="relative space-y-6">
-                    <h3 className="text-2xl lg:text-2xl font-bold professional-text-primary leading-tight group-hover:professional-text-accent transition-colors duration-300">
+                    <h3 className="text-2xl lg:text-2xl font-bold professional-text-primary leading-tight">
                       {resource.title}
                     </h3>
                     
@@ -121,21 +119,13 @@ const FreeResourcesSection = () => {
                     {/* Meta Info */}
                     <div className="flex items-center justify-between pt-4 border-t border-brand-text/10">
                       <span className="professional-text-muted text-sm">{resource.readTime}</span>
-                      <motion.div 
-                        className="flex items-center gap-2 professional-text-accent font-medium opacity-0 group-hover:opacity-100 transition-all duration-300"
-                        whileHover={{ x: -5 }}
-                      >
+                      <div className="flex items-center gap-2 professional-text-accent font-medium">
                         <span className="text-sm">קרא עוד</span>
                         <ArrowLeft className="w-4 h-4" />
-                      </motion.div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Hover Effect Border */}
-                  <div className="absolute inset-0 border border-accent/0 group-hover:border-accent/20 rounded-2xl transition-all duration-500" />
-                  
-                  {/* Corner Accent */}
-                  <div className="absolute top-4 left-4 w-8 h-8 border-r-2 border-b-2 border-accent/0 group-hover:border-accent/30 transition-all duration-500" />
                 </div>
               </motion.div>
             );

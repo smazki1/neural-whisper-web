@@ -130,7 +130,7 @@ const ProductsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="professional-card-featured p-6 group hover:scale-[1.02] transition-all duration-300"
+              className="professional-card-featured p-6 cursor-pointer"
             >
               <div className="text-center">
                 <div className="mb-4 flex justify-center">
@@ -158,7 +158,7 @@ const ProductsSection = () => {
                   className="inline-flex items-center gap-2 professional-text-accent hover:text-accent transition-colors duration-200 font-semibold"
                 >
                   למד עוד
-                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
                   </svg>
                 </Link>
