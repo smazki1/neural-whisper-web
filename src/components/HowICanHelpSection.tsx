@@ -24,16 +24,6 @@ const HowICanHelpSection = () => {
             <span className="block professional-text-primary mb-2">להצליח לעבוד עם AI</span>
             <span className="block professional-text-accent">מבלי ללכת לאיבוד</span>
           </motion.h2>
-          
-          <motion.p 
-            className="text-xl lg:text-2xl professional-text-body max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            קורסים, תהליכי ליווי, הרצאות וסדנאות – הכל כאן
-          </motion.p>
         </motion.div>
 
         {/* Two Button Layout */}
@@ -50,7 +40,7 @@ const HowICanHelpSection = () => {
             whileTap={{ scale: 0.98 }}
             onClick={() => {/* Link to individual services */}}
           >
-            קורסים, תהליכי ליווי, הרצאות וסדנאות – הכל כאן
+            התחל כאן
           </motion.button>
           
           <motion.button 

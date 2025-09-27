@@ -61,19 +61,8 @@ const FreeResourcesSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <span className="block professional-text-primary mb-2">מרחבי השראה ולימוד</span>
-            <span className="block professional-text-accent">ללא תשלום</span>
+            <span className="block professional-text-primary">מרחבי השראה ולימוד</span>
           </motion.h2>
-          
-          <motion.p 
-            className="text-xl lg:text-2xl professional-text-body max-w-4xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            יש אפשרויות לקבל השראה, ידע, רוח ותקווה מעשית ללא תשלום
-          </motion.p>
         </motion.div>
 
         {/* Resources Grid */}
