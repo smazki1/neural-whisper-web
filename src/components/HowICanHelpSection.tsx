@@ -38,28 +38,28 @@ const HowICanHelpSection = () => {
 
         {/* Two Button Layout */}
         <motion.div 
-          className="flex flex-col md:flex-row gap-6 md:gap-8 justify-center items-center max-w-2xl mx-auto"
+          className="flex flex-col gap-8 justify-center items-center max-w-4xl mx-auto"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
         >
           <motion.button 
-            className="professional-button-primary text-2xl px-12 py-6 w-full md:w-auto min-w-[200px]"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => {/* Link to corporate services */}}
-          >
-            ארגונים?
-          </motion.button>
-          
-          <motion.button 
-            className="professional-button-secondary text-2xl px-12 py-6 w-full md:w-auto min-w-[200px]"
-            whileHover={{ scale: 1.05, y: -2 }}
+            className="professional-button-primary text-xl lg:text-2xl px-8 py-6 w-full max-w-2xl text-center leading-relaxed"
+            whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => {/* Link to individual services */}}
           >
-            אתם פה
+            קורסים, תהליכי ליווי, הרצאות וסדנאות – הכל כאן
+          </motion.button>
+          
+          <motion.button 
+            className="professional-button-secondary text-xl lg:text-2xl px-8 py-6 w-full max-w-2xl text-center"
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {/* Link to corporate services */}}
+          >
+            ארגונים? אתם פה
           </motion.button>
         </motion.div>
       </div>
