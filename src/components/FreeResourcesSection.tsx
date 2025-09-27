@@ -131,38 +131,6 @@ const FreeResourcesSection = () => {
             );
           })}
         </div>
-
-        {/* Bottom Section */}
-        <motion.div 
-          className="text-center mt-16 lg:mt-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <div className="professional-backdrop rounded-2xl p-8 lg:p-12 max-w-4xl mx-auto">
-            <h3 className="text-2xl lg:text-3xl font-bold professional-text-primary mb-4">
-              רוצה לקבל עדכונים על תוכן חדש?
-            </h3>
-            <p className="professional-text-body text-lg mb-8">
-              הצטרף לרשימת התפוצה שלי וקבל גישה מיידית לכל התוכן החדש, בלעדי ופרקטי
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="הכנס את המייל שלך"
-                className="w-full px-6 py-4 rounded-xl bg-background border border-border professional-text-primary placeholder-professional-text-muted focus:outline-none focus:border-accent/50 transition-colors"
-              />
-              <motion.button 
-                className="professional-button-primary px-8 py-4 whitespace-nowrap"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                הרשם עכשיו
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
