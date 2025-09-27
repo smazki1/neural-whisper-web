@@ -51,7 +51,6 @@ const VideoAboutSection = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <span className="block text-brand-text mb-2">שלום, אני</span>
                 <span className="block premium-accent-gradient">אבי פריד</span>
               </motion.h2>
               
@@ -76,7 +75,7 @@ const VideoAboutSection = () => {
               </p>
               
               <p>
-                כאן זה בית ליוצרים, יזמים ואנשי מקצוע שלא מוכנים להישאר מאחור, ומבינים שהדרך להוביל היא לעבוד חכם יותר, לא קשה יותר.
+                כאן זה בית ליוצרים, יזמים ואנשי מקצוע שלא מוכנים להישאר מאחור, ומבינים שהמיומנות הקריטית ביותר היום היא לדעת איך לעבוד נכון עם AI, ולא רק להשתמש בו.
               </p>
               
               <p>
