@@ -51,7 +51,7 @@ const VideoAboutSection = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <span className="block premium-accent-gradient">אבי פריד</span>
+                <span className="block premium-accent-gradient">נעים מאוד, אבי פריד</span>
               </motion.h2>
               
               <motion.div 
@@ -71,7 +71,7 @@ const VideoAboutSection = () => {
               viewport={{ once: true }}
             >
               <p>
-                <strong className="text-accent">היי, אני אבי, ותודה שבאתם.</strong>
+                <strong className="text-accent">ברוכים הביאם ותודה שבאתם.</strong>
               </p>
               
               <p>
@@ -79,50 +79,15 @@ const VideoAboutSection = () => {
               </p>
               
               <p>
-                רובנו גדלנו על ההבטחה הפשוטה: תעבוד קשה, תצבור ניסיון, ותצליח. אבל התעוררנו לעולם שבו כללי המשחק משתנים בזמן אמת, לנגד עינינו. הניסיון והידע שצברנו מרגישים פתאום לא מספיקים, והחשש שהמומחיות שלנו תהפוך ללא רלוונטית הוא אמיתי ומשתק.
+                רובנו גדלנו על ההבטחה הפשוטה: תעבוד קשה, תצבור ניסיון, ותצליח. אבל התעוררנו לעולם שבו כללי המשחק משתנים בזמן אמת, והחשש שהמומחיות שלנו תהפוך ללא רלוונטית הוא אמיתי ומשתק.
               </p>
               
               <p>
-                מה אם הפתרון הוא לא לעבוד קשה יותר, אלא לחשוב אחרת? בדיוק מהמקום הזה אני מראה איך להפוך את ה-AI לעוזר אישי חכם, שמעצים את המומחיות שלכם ומבטיח שתישארו מובילים בתחומכם.
+                מה אם הפתרון הוא לא לעבוד קשה יותר, אלא לחשוב אחרת? זו לא מהפכה טכנולוגית, זו מהפכה תפיסתית. הכלים החדשים זמינים לכולם, אבל היכולת להפיק מהם תוצאות יוצאות דופן היא מיומנות נרכשת.
               </p>
               
               <p>
-                זו לא מהפכה טכנולוגית, זו מהפכה תפיסתית. הכלים החדשים זמינים לכולם, אבל היכולת להפיק מהם תוצאות יוצאות דופן היא מיומנות נרכשת.
-              </p>
-              
-              <p>
-                במקום ללמד אתכם על תוכנות ופיצ'רים, אנחנו מעניקים לכם סט כלים ומתודולוגיות עבודה מוכחות שיאפשרו לכם להפוך את ה-AI לעוזר אישי חכם, שותף אסטרטגי בתהליכי העבודה היומיומיים שלכם.
-              </p>
-              
-              <p>
-                המטרה שלנו היא לא ללמד אתכם להיות טכנולוגים, אלא להעצים אתכם להיות הגרסה הטובה ביותר של עצמכם – יצירתיים, יעילים ומובילים בתחומכם.
-              </p>
-              
-              <div className="flex flex-wrap gap-4 pt-4">
-                <div className="modern-backdrop px-4 py-2 rounded-full">
-                  <span className="text-accent font-medium">✓</span>
-                  <span className="mr-2 text-brand-text-secondary">יזם מנוסה</span>
-                </div>
-                <div className="modern-backdrop px-4 py-2 rounded-full">
-                  <span className="text-accent font-medium">✓</span>
-                  <span className="mr-2 text-brand-text-secondary">מומחה AI</span>
-                </div>
-                <div className="modern-backdrop px-4 py-2 rounded-full">
-                  <span className="text-accent font-medium">✓</span>
-                  <span className="mr-2 text-brand-text-secondary">מרצה מבוקש</span>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="pt-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <p className="text-brand-text-secondary italic text-lg">
-                "הטכנולוגיה לא צריכה להיות מפחידה. היא צריכה להיות כלי שמשחרר אותנו לעשות את מה שאנחנו הכי טובים בו."
+                במקום ללמד אתכם על תוכנות ופיצ'רים, אנחנו מעניקים לכם מתודולוגיות עבודה מוכחות שיהפכו את ה-AI לעוזר אישי חכם - שותף אסטרטגי שמעצים את המומחיות שלכם ומבטיח שתישארו מובילים בתחומכם.
               </p>
             </motion.div>
           </motion.div>
