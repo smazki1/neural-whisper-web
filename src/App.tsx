@@ -14,6 +14,7 @@ import BlogEditor from "./pages/BlogEditor";
 import BusinessWorkshop from "./pages/BusinessWorkshop";
 import AIStrategyCourse from "./pages/AIStrategyCourse";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 import LearningPlatform from "./pages/LearningPlatform";
 import CourseManager from "./pages/CourseManager";
@@ -84,6 +85,7 @@ const App = () => {
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/admin101" element={<ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
             <Route path="/landing/ai-marketing-accelerator" element={<AIMarketingAccelerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

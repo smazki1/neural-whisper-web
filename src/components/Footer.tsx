@@ -67,6 +67,10 @@ const Footer = () => {
             <a href="/privacy-policy" className="text-brand-text/60 hover:text-brand-accent transition-colors duration-200">
               מדיניות פרטיות
             </a>
+            <span className="text-brand-text/40">|</span>
+            <a href="/terms-of-service" className="text-brand-text/60 hover:text-brand-accent transition-colors duration-200">
+              תקנון שימוש
+            </a>
           </div>
           <p className="text-brand-text/60 text-center">
             © 2025 AI Master. כל הזכויות שמורות.
