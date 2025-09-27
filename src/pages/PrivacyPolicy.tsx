@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
           </h1>
           
           <div className="text-sm text-brand-text/80 mb-8 text-center">
-            עודכנה לאחרונה בתאריך: [נכניס תאריך עדכני]
+            עודכנה לאחרונה בתאריך: 27 בדצמבר 2024
           </div>
 
           <div className="space-y-8 text-brand-text leading-relaxed">

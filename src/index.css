@@ -170,7 +170,7 @@
   }
 
   .professional-text-accent {
-    color: hsl(var(--brand-accent));
+    color: hsl(var(--brand-text-primary));
     font-weight: 600;
   }
 
