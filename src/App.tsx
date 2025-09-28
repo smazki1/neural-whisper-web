@@ -7,6 +7,14 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Admin from "./pages/Admin";
+import { AdminLayout } from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminContent from "./pages/admin/AdminContent";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminLeads from "./pages/admin/AdminLeads";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminSettings from "./pages/admin/AdminSettings";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogManager from "./pages/BlogManager";
@@ -86,7 +94,27 @@ const App = () => {
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            {/* Legacy admin route */}
             <Route path="/admin101" element={<ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
+            {/* New admin dashboard with sidebar */}
+            <Route path="/admin/*" element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<AdminDashboard />} />
+              <Route path="content/*" element={<AdminContent />} />
+              <Route path="content/blog" element={<AdminContent />} />
+              <Route path="content/pages" element={<AdminContent />} />
+              <Route path="content/media" element={<AdminContent />} />
+              <Route path="products/*" element={<AdminProducts />} />
+              <Route path="products/new" element={<AdminProducts />} />
+              <Route path="products/categories" element={<AdminProducts />} />
+              <Route path="leads" element={<AdminLeads />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
             <Route path="/landing/ai-marketing-accelerator" element={<AIMarketingAccelerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
