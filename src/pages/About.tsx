@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Quote, MapPin, Calendar, Users, TrendingUp, Heart, Coffee, BookOpen, Lightbulb, Target, Award } from "lucide-react";
+import { Heart, Coffee, Code, Palette, Moon, Sun, Mail, Phone, MapPin, Users, Target, Award } from "lucide-react";
 import aviPhoto from "@/assets/avi-fried-photo.jpg";
 import { Helmet } from "react-helmet-async";
 
 const About = () => {
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
   };
 
   const staggerContainer = {
@@ -18,118 +16,98 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.3
       }
     }
   };
 
-  const milestones = [
-    {
-      year: "2020",
-      title: "תחילת המסע בעולם הבינה המלאכותית",
-      description: "גילוי הפוטנציאל העצום של AI ותחילת ההתמחות בתחום",
-      icon: <Lightbulb className="w-5 h-5" />
-    },
-    {
-      year: "2021",
-      title: "הקמת AI Master",
-      description: "יצירת הפלטפורמה הראשונה להכשרה בבינה מלאכותית בישראל",
-      icon: <Target className="w-5 h-5" />
-    },
-    {
-      year: "2022",
-      title: "1,000 תלמידים ראשונים",
-      description: "הגעה לאבן דרך משמעותיות עם קהילה של אלפי לומדים",
-      icon: <Users className="w-5 h-5" />
-    },
-    {
-      year: "2023",
-      title: "הרחבת המומחיות",
-      description: "פיתוח קורסים מתקדמים ושיתופי פעולה עם חברות מובילות",
-      icon: <TrendingUp className="w-5 h-5" />
-    },
-    {
-      year: "2024",
-      title: "מובילה בתחום",
-      description: "הכרה כאחד ממובילי החדשנות בבינה מלאכותית בישראל",
-      icon: <Award className="w-5 h-5" />
-    }
-  ];
-
-  const testimonials = [
-    {
-      quote: "אבי שינה את הדרך שלי לחשוב על עסק. הקורסים שלו לא רק לימדו אותי טכנולוגיה, אלא איך לחשוב אסטרטגית על העתיד.",
-      author: "שרה כהן",
-      role: "מנהלת שיווק, חברת היי-טק"
-    },
-    {
-      quote: "הגישה המעשית והחמה של אבי עזרה לי להבין שבינה מלאכותית זה לא רק טכנולוגיה - זה כלי לשיפור החיים שלנו.",
-      author: "דוד לוי",
-      role: "יזם ומייסד סטארטאפ"
-    },
-    {
-      quote: "אבי הוא לא רק מרצה מעולה, הוא מנטור אמיתי שמאמין בכל תלמיד וקהילה שלו.",
-      author: "מיכל רוזן",
-      role: "מפתחת תוכנה"
-    }
-  ];
-
-  const personalInterests = [
-    { icon: <Coffee className="w-6 h-6" />, title: "אוהב קפה טוב", description: "מתחיל כל בוקר עם כוס קפה מעולה ומחשבות על עתיד הטכנולוגיה" },
-    { icon: <BookOpen className="w-6 h-6" />, title: "קורא בלתי נלאה", description: "תמיד עם ספר בתיק, מעדיף ביוגרפיות של חדשנים ומובילים" },
-    { icon: <Heart className="w-6 h-6" />, title: "אב גאה", description: "השראה יומיומית מהילדים שלי ומהסקרנות הטבעית שלהם" },
-    { icon: <MapPin className="w-6 h-6" />, title: "מטייל בעולם", description: "אוהב לגלות תרבויות חדשות ללמוד איך טכנולוגיה משפיעה על חיים בכל מקום" }
-  ];
-
   return (
     <>
       <Helmet>
-        <title>אודות אבי פריד | AI Master - מומחה בינה מלאכותית</title>
-        <meta name="description" content="הכירו את אבי פריד, מייסד AI Master ומומחה בבינה מלאכותית. סיפור אישי, מומחיות מקצועית וגישה חדשנית לחינוך דיגיטלי." />
-        <meta name="keywords" content="אבי פריד, AI Master, בינה מלאכותית, חינוך דיגיטלי, מומחה AI" />
-        <meta property="og:title" content="אודות אבי פריד | AI Master" />
-        <meta property="og:description" content="הכירו את אבי פריד, מייסד AI Master ומומחה בבינה מלאכותית" />
+        <title>About • loveabel.dev - Where Code Meets Heart</title>
+        <meta name="description" content="The personal story behind loveabel.dev - a journey of passion, struggle, and the love for creating beautiful digital experiences that matter." />
+        <meta name="keywords" content="loveabel.dev, web development, design, personal story, developer journey" />
+        <meta property="og:title" content="About • loveabel.dev" />
+        <meta property="og:description" content="The personal story behind loveabel.dev" />
         <meta property="og:image" content={aviPhoto} />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
         {/* Hero Section */}
-        <section className="relative pt-20 pb-16 px-4">
+        <section className="relative pt-32 pb-20 px-6">
           <motion.div 
-            className="max-w-6xl mx-auto"
+            className="max-w-7xl mx-auto"
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
           >
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div variants={fadeInUp} className="text-center lg:text-right order-2 lg:order-1">
-                <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                  שלום, אני 
-                  <span className="text-primary block mt-2">אבי פריד</span>
-                </h1>
-                <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-                  מייסד AI Master, מומחה בינה מלאכותית וחסיד של החינוך הדיגיטלי. 
-                  אני מאמין שטכנולוגיה צריכה להיות נגישה לכולם ולשרת את האנושות.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90">
-                    בואו נכיר
-                  </Button>
-                  <Button size="lg" variant="outline">
-                    המסע שלי
-                  </Button>
+            <div className="grid lg:grid-cols-12 gap-16 items-center">
+              {/* Content - Left Side */}
+              <motion.div 
+                variants={fadeInUp} 
+                className="lg:col-span-7 space-y-8"
+              >
+                <div className="space-y-6">
+                  <div className="inline-block">
+                    <span className="text-sm uppercase tracking-[0.2em] text-muted-foreground font-medium">
+                      Hello, I'm
+                    </span>
+                  </div>
+                  
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-[0.9]">
+                    The human
+                    <br />
+                    <span className="font-medium bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                      behind the code
+                    </span>
+                  </h1>
+                </div>
+
+                <div className="space-y-8 text-lg leading-relaxed text-muted-foreground">
+                  <p className="text-xl">
+                    I used to believe that perfect code was enough. That clean functions and elegant algorithms would speak for themselves.
+                  </p>
+                  
+                  <p>
+                    I was wrong.
+                  </p>
+                  
+                  <p>
+                    The most beautiful code in the world means nothing if it doesn't solve real problems for real people. If it doesn't make someone's day a little easier, their work a little more joyful, their dreams a little more attainable.
+                  </p>
+                </div>
+
+                <div className="pt-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-[1px] bg-primary/40"></div>
+                    <span className="text-sm text-muted-foreground font-medium tracking-wide">My journey begins with a question</span>
+                  </div>
                 </div>
               </motion.div>
-              
-              <motion.div variants={fadeInUp} className="relative order-1 lg:order-2">
-                <div className="relative w-80 h-80 mx-auto">
-                  <img 
-                    src={aviPhoto} 
-                    alt="אבי פריד - מומחה בינה מלאכותית"
-                    className="w-full h-full object-cover rounded-full shadow-2xl border-4 border-primary/20"
-                  />
-                  <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-3 rounded-full shadow-lg">
-                    <Lightbulb className="w-6 h-6" />
+
+              {/* Photo - Right Side */}
+              <motion.div 
+                variants={fadeInUp}
+                className="lg:col-span-5 flex justify-center lg:justify-end"
+              >
+                <div className="relative">
+                  <div className="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl ring-4 ring-primary/10">
+                    <img 
+                      src={aviPhoto} 
+                      alt="The founder of loveabel.dev"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Floating elements */}
+                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-accent/30 rounded-full blur-sm animate-pulse"></div>
+                  <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-primary/20 rounded-full blur-md animate-pulse delay-1000"></div>
+                  
+                  {/* Handwritten-style signature */}
+                  <div className="absolute -bottom-8 -right-8 transform rotate-12">
+                    <div className="bg-background/90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-lg border border-border/50">
+                      <span className="text-sm font-handwriting text-primary">with love ♡</span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -137,8 +115,8 @@ const About = () => {
           </motion.div>
         </section>
 
-        {/* Personal Story Section */}
-        <section className="py-16 px-4 bg-muted/30">
+        {/* Story Section */}
+        <section className="py-20 px-6 bg-muted/20">
           <motion.div 
             className="max-w-4xl mx-auto"
             initial="hidden"
@@ -146,26 +124,38 @@ const About = () => {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">הסיפור שלי</h2>
-              <p className="text-lg text-muted-foreground">מהמשבר האישי לחזון שמשנה חיים</p>
-            </motion.div>
+            <motion.div variants={fadeInUp} className="space-y-12">
+              <div className="text-center space-y-4">
+                <h2 className="text-4xl md:text-5xl font-light">
+                  How <em className="text-primary not-italic">failure</em> taught me everything
+                </h2>
+                <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto"></div>
+              </div>
 
-            <motion.div variants={fadeInUp}>
-              <Card className="p-8 shadow-lg border-2 border-primary/10">
-                <Quote className="w-8 h-8 text-primary mb-4" />
-                <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
+              <Card className="p-10 md:p-16 shadow-xl border-0 bg-background/80 backdrop-blur-sm">
+                <div className="space-y-8 text-lg leading-relaxed">
                   <p>
-                    הדרך שלי לעולם הבינה המלאכותית התחילה ממקום לא צפוי. לפני כמה שנים, כשהעסק שלי 
-                    עמד להיסגר והרגשתי שאני מפסיד כיוון, גיליתי את הכוח של הטכנולוגיות החדשות.
+                    Three years ago, I launched what I thought would be my breakthrough project. I spent months perfecting every detail, every animation, every line of code. It was technically flawless.
                   </p>
+                  
                   <p>
-                    במקום להיכנע, החלטתי ללמוד. לא רק ללמוד - אלא לטבול לעומק, להבין איך AI 
-                    יכול לשנות לא רק עסקים, אלא חיים שלמים.
+                    It failed spectacularly.
                   </p>
+                  
                   <p>
-                    היום, אחרי שעזרתי לאלפי אנשים לגלות את הכוח הזה, אני מבין שהמשימה שלי היא 
-                    לא רק ללמד טכנולוגיה - אלא לחבר בין אנשים לעתיד שלהם.
+                    Not because the code was bad—it was beautiful. Not because the design was poor—it was stunning. It failed because I had built something for myself, not for the people who needed it.
+                  </p>
+                  
+                  <p className="text-primary font-medium">
+                    That failure broke me. And then, slowly, it rebuilt me into someone better.
+                  </p>
+                  
+                  <p>
+                    I learned to listen. Really listen. To the quiet frustrations in a client's voice. To the unspoken needs behind their requests. To the story they're trying to tell through their business, their art, their passion.
+                  </p>
+                  
+                  <p>
+                    Now, when I write code, I'm not just solving technical problems. I'm crafting experiences that honor the dreams and struggles of the people who trust me with their vision.
                   </p>
                 </div>
               </Card>
@@ -173,89 +163,69 @@ const About = () => {
           </motion.div>
         </section>
 
-        {/* Timeline Section */}
-        <section className="py-16 px-4">
-          <motion.div 
-            className="max-w-4xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">אבני הדרך</h2>
-              <p className="text-lg text-muted-foreground">המסע מהחלום לביצוע</p>
-            </motion.div>
-
-            <div className="relative">
-              {milestones.map((milestone, index) => (
-                <motion.div 
-                  key={milestone.year}
-                  variants={fadeInUp}
-                  className="flex gap-6 mb-8 last:mb-0"
-                >
-                  <div className="flex flex-col items-center">
-                    <div className="bg-primary text-primary-foreground p-3 rounded-full mb-2">
-                      {milestone.icon}
-                    </div>
-                    <Badge variant="secondary" className="text-xs">
-                      {milestone.year}
-                    </Badge>
-                    {index < milestones.length - 1 && (
-                      <div className="w-px h-16 bg-border mt-4" />
-                    )}
-                  </div>
-                  <Card className="flex-1 p-6 shadow-md">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">
-                      {milestone.title}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {milestone.description}
-                    </p>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
         {/* Philosophy Section */}
-        <section className="py-16 px-4 bg-muted/30">
+        <section className="py-20 px-6">
           <motion.div 
-            className="max-w-4xl mx-auto"
+            className="max-w-6xl mx-auto"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">הפילוסופיה שלי</h2>
-              <p className="text-lg text-muted-foreground">איך אני רואה את עתיד החינוך והטכנולוגיה</p>
+            <motion.div variants={fadeInUp} className="text-center space-y-4 mb-16">
+              <h2 className="text-4xl md:text-5xl font-light">
+                My <em className="text-primary not-italic">approach</em> to creating
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Every project is a conversation between what you need and what's possible. Here's how I listen.
+              </p>
             </motion.div>
 
             <div className="grid md:grid-cols-2 gap-8">
               <motion.div variants={fadeInUp}>
-                <Card className="p-6 h-full shadow-lg border-2 border-primary/10">
-                  <Target className="w-10 h-10 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold text-foreground mb-3">
-                    למידה מעשית וחוויתית
+                <Card className="p-8 h-full shadow-lg border-2 border-primary/10 hover:border-primary/30 transition-all duration-300">
+                  <Heart className="w-12 h-12 text-primary mb-6" />
+                  <h3 className="text-2xl font-medium text-foreground mb-4">
+                    Empathy-Driven Design
                   </h3>
-                  <p className="text-muted-foreground">
-                    אני מאמין שלמידה אמיתית קורית כשאנשים יכולים לגעת, להתנסות ולראות תוצאות מיידיות. 
-                    לכן כל הקורסים שלי בנויים סביב פרויקטים אמיתיים שמביאים ערך מיידי.
+                  <p className="text-muted-foreground leading-relaxed">
+                    Before I write a single line of code, I need to understand your world. Who are you serving? What keeps them up at night? What would make them smile when they use your product? Every design decision starts with genuine care for the human experience.
                   </p>
                 </Card>
               </motion.div>
 
               <motion.div variants={fadeInUp}>
-                <Card className="p-6 h-full shadow-lg border-2 border-primary/10">
-                  <Heart className="w-10 h-10 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold text-foreground mb-3">
-                    טכנולוגיה עם לב
+                <Card className="p-8 h-full shadow-lg border-2 border-accent/10 hover:border-accent/30 transition-all duration-300">
+                  <Code className="w-12 h-12 text-accent mb-6" />
+                  <h3 className="text-2xl font-medium text-foreground mb-4">
+                    Craftsmanship Over Speed
                   </h3>
-                  <p className="text-muted-foreground">
-                    בינה מלאכותית היא לא רק אלגוריתמים וקוד - היא כלי לשיפור איכות החיים. 
-                    אני מלמד איך להשתמש בטכנולוגיה כדי לפתור בעיות אמיתיות ולהקל על בני אדם.
+                  <p className="text-muted-foreground leading-relaxed">
+                    In a world obsessed with "moving fast and breaking things," I choose deliberate craft. Every component is built to last, every interaction is thoughtfully considered. Because your reputation—and your users' experience—deserves nothing less.
+                  </p>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Card className="p-8 h-full shadow-lg border-2 border-secondary/10 hover:border-secondary/30 transition-all duration-300">
+                  <Palette className="w-12 h-12 text-secondary mb-6" />
+                  <h3 className="text-2xl font-medium text-foreground mb-4">
+                    Beauty with Purpose
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Aesthetics aren't decoration—they're communication. Every color, every spacing, every animation tells part of your story. I believe beautiful design isn't a luxury; it's how we show respect for the people using what we create.
+                  </p>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Card className="p-8 h-full shadow-lg border-2 border-primary/10 hover:border-primary/30 transition-all duration-300">
+                  <Target className="w-12 h-12 text-primary mb-6" />
+                  <h3 className="text-2xl font-medium text-foreground mb-4">
+                    Sustainable Growth
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    I don't build for today—I build for the next five years. Scalable architecture, maintainable code, and designs that evolve with your business. Because the best solutions are the ones that grow alongside your dreams.
                   </p>
                 </Card>
               </motion.div>
@@ -263,8 +233,8 @@ const About = () => {
           </motion.div>
         </section>
 
-        {/* Achievements Section */}
-        <section className="py-16 px-4">
+        {/* Personal Section */}
+        <section className="py-20 px-6 bg-muted/20">
           <motion.div 
             className="max-w-4xl mx-auto"
             initial="hidden"
@@ -272,140 +242,124 @@ const About = () => {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">הישגים ומספרים</h2>
-              <p className="text-lg text-muted-foreground">הקהילה שבנינו יחד</p>
+            <motion.div variants={fadeInUp} className="text-center space-y-4 mb-16">
+              <h2 className="text-4xl md:text-5xl font-light">
+                When the <em className="text-primary not-italic">laptop closes</em>
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                The person behind the pixels
+              </p>
             </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-              {[
-                { number: "5,000+", label: "תלמידים" },
-                { number: "50+", label: "קורסים" },
-                { number: "98%", label: "שביעות רצון" },
-                { number: "200+", label: "חברות שהכשרנו" }
-              ].map((stat, index) => (
-                <motion.div 
-                  key={index}
-                  variants={fadeInUp}
-                  className="text-center"
-                >
-                  <Card className="p-6 shadow-lg border-2 border-primary/10">
-                    <div className="text-3xl font-bold text-primary mb-2">{stat.number}</div>
-                    <div className="text-sm text-muted-foreground">{stat.label}</div>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
+            <motion.div variants={fadeInUp}>
+              <Card className="p-10 md:p-16 shadow-xl border-0 bg-background/80 backdrop-blur-sm">
+                <div className="space-y-8 text-lg leading-relaxed">
+                  <p>
+                    I'm writing this at 5:47 AM with my second cup of coffee, watching the sunrise paint my studio walls gold. These quiet morning hours, before the world wakes up and demands start flooding in, are when I do my best thinking.
+                  </p>
+                  
+                  <p>
+                    You'll often find me here, lost in thought or sketching ideas on the back of receipts. I'm that person who gets genuinely excited about a perfectly crafted user flow, who notices the subtle animations in apps that make everything feel just right.
+                  </p>
+                  
+                  <p>
+                    When I'm not coding, I'm probably reading design philosophy books, experimenting with new brewing methods for coffee, or taking long walks where I solve my most complex problems without a computer in sight.
+                  </p>
+                  
+                  <p className="text-primary font-medium">
+                    I believe the best work comes from the intersection of technical skill and human understanding. And that the most important question we can ask isn't "Can we build this?" but "Should we build this, and will it make someone's life better?"
+                  </p>
+                </div>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-6 mt-12">
+              <Card className="p-6 text-center shadow-lg border-2 border-primary/10 hover:border-primary/30 transition-all duration-300">
+                <Coffee className="w-10 h-10 text-primary mx-auto mb-4" />
+                <h4 className="font-medium text-foreground mb-2">Coffee Ritual</h4>
+                <p className="text-sm text-muted-foreground">Every great idea starts with the perfect cup</p>
+              </Card>
+              
+              <Card className="p-6 text-center shadow-lg border-2 border-accent/10 hover:border-accent/30 transition-all duration-300">
+                <Moon className="w-10 h-10 text-accent mx-auto mb-4" />
+                <h4 className="font-medium text-foreground mb-2">Night Owl</h4>
+                <p className="text-sm text-muted-foreground">My best code happens after midnight</p>
+              </Card>
+              
+              <Card className="p-6 text-center shadow-lg border-2 border-secondary/10 hover:border-secondary/30 transition-all duration-300">
+                <Heart className="w-10 h-10 text-secondary mx-auto mb-4" />
+                <h4 className="font-medium text-foreground mb-2">Purpose Driven</h4>
+                <p className="text-sm text-muted-foreground">Every project needs to matter</p>
+              </Card>
+            </motion.div>
           </motion.div>
         </section>
 
-        {/* Testimonials Section */}
-        <section className="py-16 px-4 bg-muted/30">
-          <motion.div 
-            className="max-w-4xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">מה אומרים עליי</h2>
-              <p className="text-lg text-muted-foreground">עדויות מהקהילה שלנו</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial, index) => (
-                <motion.div key={index} variants={fadeInUp}>
-                  <Card className="p-6 h-full shadow-lg border-2 border-primary/10">
-                    <Quote className="w-6 h-6 text-primary mb-4" />
-                    <p className="text-muted-foreground mb-4 italic">
-                      "{testimonial.quote}"
-                    </p>
-                    <Separator className="my-4" />
-                    <div>
-                      <div className="font-semibold text-foreground">
-                        {testimonial.author}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {testimonial.role}
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* Personal Interests Section */}
-        <section className="py-16 px-4">
-          <motion.div 
-            className="max-w-4xl mx-auto"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">מעבר לטכנולוגיה</h2>
-              <p className="text-lg text-muted-foreground">מי שאני כשהמחשב כבוי</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {personalInterests.map((interest, index) => (
-                <motion.div key={index} variants={fadeInUp}>
-                  <Card className="p-6 shadow-lg border-2 border-primary/10 hover:border-primary/30 transition-colors">
-                    <div className="flex items-start gap-4">
-                      <div className="text-primary">
-                        {interest.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">
-                          {interest.title}
-                        </h3>
-                        <p className="text-muted-foreground">
-                          {interest.description}
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 px-4 bg-primary/5">
+        {/* Vision Section */}
+        <section className="py-20 px-6">
           <motion.div 
             className="max-w-4xl mx-auto text-center"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeInUp}
+            variants={staggerContainer}
           >
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              מוכנים להצטרף למסע?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              בואו נגלה יחד איך בינה מלאכותית יכולה לשנות את העתיד שלכם
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90"
-                onClick={() => window.location.href = '/consulting'}
-              >
-                בואו נדבר
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                onClick={() => window.location.href = '/products'}
-              >
-                הקורסים שלי
-              </Button>
-            </div>
+            <motion.div variants={fadeInUp} className="space-y-8">
+              <h2 className="text-4xl md:text-5xl font-light">
+                Why I do <em className="text-primary not-italic">this work</em>
+              </h2>
+              
+              <Card className="p-10 md:p-16 shadow-xl border-0 bg-gradient-to-br from-background via-background/95 to-primary/5">
+                <div className="space-y-8 text-lg leading-relaxed">
+                  <p>
+                    I've seen too many businesses struggle with digital experiences that don't serve them or their customers. Too many passionate creators held back by websites that don't capture their vision. Too many great ideas buried under poor execution.
+                  </p>
+                  
+                  <p className="text-2xl font-light text-primary leading-relaxed">
+                    I believe that thoughtful design and careful development can change that. Can amplify voices that deserve to be heard. Can turn visitors into believers, and believers into champions.
+                  </p>
+                  
+                  <p>
+                    This isn't just about building websites—it's about building bridges between you and the people who need what you offer. It's about creating digital spaces that feel as warm and welcoming as a conversation between friends.
+                  </p>
+                </div>
+              </Card>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* Contact CTA */}
+        <section className="py-20 px-6 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+          <motion.div 
+            className="max-w-4xl mx-auto text-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.div variants={fadeInUp} className="space-y-8">
+              <h2 className="text-4xl md:text-5xl font-light">
+                Let's create something <em className="text-primary not-italic">meaningful</em> together
+              </h2>
+              
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                If my approach resonates with you, I'd love to hear about your project. Let's start with a conversation about your vision and see where it takes us.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6">
+                  <Mail className="w-5 h-5 mr-2" />
+                  Start a Conversation
+                </Button>
+                
+                <div className="flex items-center gap-6 text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4" />
+                    <span className="text-sm">hello@loveabel.dev</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </section>
       </div>
