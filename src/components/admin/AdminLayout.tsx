@@ -91,7 +91,7 @@ export const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const { roles, loading: rolesLoading } = useUserRoles();
+  const { roles, loading: rolesLoading } = useUserRoles(user?.id);
 
   const isActive = (path: string) => {
     if (path === '/admin') {
