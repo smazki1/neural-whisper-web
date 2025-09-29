@@ -8,21 +8,14 @@ export function useUserRoles(userId?: string | null) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Set loading immediately when userId changes
-  useEffect(() => {
-    if (userId) {
-      setLoading(true);
-    } else {
-      setRoles([]);
-      setLoading(false);
-    }
-  }, [userId]);
-
   const fetchRoles = useCallback(async () => {
     if (!userId) {
+      setRoles([]);
+      setLoading(false);
       return;
     }
     
+    setLoading(true);
     setError(null);
     
     try {
