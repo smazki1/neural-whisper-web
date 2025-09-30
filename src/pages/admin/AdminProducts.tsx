@@ -48,6 +48,8 @@ const AdminProducts = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -108,6 +110,77 @@ const AdminProducts = () => {
     });
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "שגיאה",
+        description: "יש לבחור קובץ תמונה בלבד",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5242880) {
+      toast({
+        title: "שגיאה",
+        description: "גודל הקובץ חייב להיות קטן מ-5MB",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setUploadingImage(true);
+    
+    try {
+      // Create unique filename
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      // Upload to Supabase Storage
+      const { data, error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(filePath);
+
+      // Update form with the new URL
+      setFormData({
+        ...formData,
+        thumbnail_url: publicUrl
+      });
+      
+      setImagePreview(publicUrl);
+
+      toast({
+        title: "הצלחה!",
+        description: "התמונה הועלתה בהצלחה"
+      });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast({
+        title: "שגיאה",
+        description: "שגיאה בהעלאת התמונה",
+        variant: "destructive"
+      });
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       title: '',
@@ -128,6 +201,7 @@ const AdminProducts = () => {
     });
     setCurrentProduct(null);
     setIsEditing(false);
+    setImagePreview(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -218,6 +292,7 @@ const AdminProducts = () => {
       meta_title: '',
       meta_description: '',
     });
+    setImagePreview(product.thumbnail_url || null);
     setIsEditing(true);
     setDialogOpen(true);
   };
@@ -404,16 +479,74 @@ const AdminProducts = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-4">
                   <div>
-                    <Label htmlFor="thumbnail_url">תמונה ראשית (URL)</Label>
-                    <Input
-                      id="thumbnail_url"
-                      value={formData.thumbnail_url}
-                      onChange={(e) => setFormData({...formData, thumbnail_url: e.target.value})}
-                      placeholder="https://..."
-                    />
+                    <Label>תמונה ראשית</Label>
+                    <div className="space-y-3">
+                      <div className="flex gap-3">
+                        <div className="flex-1">
+                          <Label htmlFor="image_file" className="cursor-pointer">
+                            <div className="border-2 border-dashed rounded-lg p-4 hover:border-primary transition-colors text-center">
+                              {uploadingImage ? (
+                                <div className="flex items-center justify-center gap-2">
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+                                  <span className="text-sm">מעלה תמונה...</span>
+                                </div>
+                              ) : (
+                                <div className="space-y-2">
+                                  <Package className="h-8 w-8 mx-auto text-muted-foreground" />
+                                  <p className="text-sm font-medium">העלה תמונה מהמחשב</p>
+                                  <p className="text-xs text-muted-foreground">JPG, PNG, WEBP (עד 5MB)</p>
+                                </div>
+                              )}
+                            </div>
+                          </Label>
+                          <input
+                            id="image_file"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                            disabled={uploadingImage}
+                          />
+                        </div>
+                        
+                        {imagePreview && (
+                          <div className="flex-1">
+                            <img 
+                              src={imagePreview} 
+                              alt="תצוגה מקדימה" 
+                              className="w-full h-32 object-cover rounded-lg border"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-background px-2 text-muted-foreground">או</span>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="thumbnail_url" className="text-sm">קישור לתמונה (URL)</Label>
+                        <Input
+                          id="thumbnail_url"
+                          value={formData.thumbnail_url}
+                          onChange={(e) => {
+                            setFormData({...formData, thumbnail_url: e.target.value});
+                            setImagePreview(e.target.value);
+                          }}
+                          placeholder="https://..."
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
                   </div>
+                  
                   <div>
                     <Label htmlFor="video_preview_url">וידאו תצוגה מקדימה (URL)</Label>
                     <Input
