@@ -68,12 +68,12 @@ const HeroContent = () => {
               <span 
                 className="inline-block"
                 style={{
-                  background: 'linear-gradient(135deg, hsl(45, 100%, 65%) 0%, hsl(43, 100%, 55%) 100%)',
+                  background: 'linear-gradient(135deg, hsl(45, 100%, 75%) 0%, hsl(43, 100%, 65%) 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  fontWeight: 800,
-                  filter: 'drop-shadow(0 0 15px rgba(255, 215, 0, 0.5))',
+                  fontWeight: 900,
+                  filter: 'drop-shadow(0 0 25px rgba(255, 223, 0, 0.8))',
                 }}
               >
                 AI
