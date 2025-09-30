@@ -59,12 +59,25 @@ const HeroContent = () => {
               ויכולת להפוך רעיונות למציאות במהירות שלא הכרת.
             </motion.span>
             <motion.span 
-              className="block premium-accent-gradient font-semibold"
+              className="block font-semibold"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.4, duration: 0.6 }}
             >
-              אני לא מלמד אותך איך לתפעל את התוכנה; אני מלמד אותך לחשוב, ליצור ולהוביל בעידן ה-AI.
+              אני לא מלמד אותך איך לתפעל את התוכנה; אני מלמד אותך לחשוב, ליצור ולהוביל בעידן ה-
+              <span 
+                className="inline-block"
+                style={{
+                  background: 'linear-gradient(135deg, hsl(45, 100%, 65%) 0%, hsl(43, 100%, 55%) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  fontWeight: 800,
+                  filter: 'drop-shadow(0 0 15px rgba(255, 215, 0, 0.5))',
+                }}
+              >
+                AI
+              </span>.
             </motion.span>
           </h2>
         </div>
