@@ -7,15 +7,18 @@ export function useUserRoles(userId?: string | null) {
   const [roles, setRoles] = useState<AppRole[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [hasAttemptedFetch, setHasAttemptedFetch] = useState<boolean>(false);
 
   const fetchRoles = useCallback(async () => {
     if (!userId) {
       setRoles([]);
       setLoading(false);
+      setHasAttemptedFetch(true);
       return;
     }
     
     setLoading(true);
+    setHasAttemptedFetch(false);
     setError(null);
     
     try {
@@ -28,16 +31,20 @@ export function useUserRoles(userId?: string | null) {
         console.error('Error fetching user roles:', fetchError);
         setError(fetchError.message);
         setRoles([]);
+        setHasAttemptedFetch(true);
+        setLoading(false);
       } else {
         const userRoles = (data || []).map(r => r.role as AppRole);
         console.log('Fetched user roles:', userRoles);
         setRoles(userRoles);
+        setHasAttemptedFetch(true);
+        setLoading(false);
       }
     } catch (err) {
       console.error('Exception fetching roles:', err);
       setError(err instanceof Error ? err.message : 'Unknown error');
       setRoles([]);
-    } finally {
+      setHasAttemptedFetch(true);
       setLoading(false);
     }
   }, [userId]);
@@ -46,5 +53,5 @@ export function useUserRoles(userId?: string | null) {
     fetchRoles();
   }, [fetchRoles]);
 
-  return { roles, loading, error, refresh: fetchRoles };
+  return { roles, loading: loading || !hasAttemptedFetch, error, refresh: fetchRoles };
 }
