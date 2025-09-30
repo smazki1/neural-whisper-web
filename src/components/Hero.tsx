@@ -118,15 +118,15 @@ const Hero = () => {
             <motion.span 
               className="inline-block"
               style={{
-                background: 'var(--gradient-accent)',
+                background: 'linear-gradient(135deg, hsl(45, 100%, 65%) 0%, hsl(43, 100%, 55%) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                fontWeight: 700,
-                filter: 'drop-shadow(0 0 10px rgba(238, 198, 67, 0.3))',
+                fontWeight: 800,
+                filter: 'drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.3))',
               }}
               whileHover={{
-                filter: 'drop-shadow(0 0 20px rgba(238, 198, 67, 0.6))',
+                filter: 'drop-shadow(0 0 30px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 50px rgba(255, 215, 0, 0.5))',
                 scale: 1.05,
               }}
               transition={{ duration: 0.3 }}
