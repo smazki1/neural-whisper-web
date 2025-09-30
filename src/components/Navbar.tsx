@@ -148,7 +148,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/admin101" className="flex items-center px-4 py-3 hover:bg-muted">
+                      <Link to="/admin" className="flex items-center px-4 py-3 hover:bg-muted">
                         <Settings className="ml-3 h-4 w-4 text-accent" />
                         <span className="professional-text-body">ניהול מערכת</span>
                       </Link>

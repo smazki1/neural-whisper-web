@@ -13,8 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
-import AdminResponseTemplates from '../../pages/Admin/AdminResponseTemplates';
-import { 
+import {
   MessageSquare, 
   Phone, 
   Mail, 
@@ -777,7 +776,9 @@ export const LeadPipeline = ({ onLeadUpdated }: LeadPipelineProps) => {
           <DialogHeader>
             <DialogTitle>תבניות תגובה</DialogTitle>
           </DialogHeader>
-          <AdminResponseTemplates />
+          <div className="p-6 text-center text-muted-foreground">
+            תבניות תגובה יבואו בקרוב
+          </div>
         </DialogContent>
       </Dialog>
     </div>
