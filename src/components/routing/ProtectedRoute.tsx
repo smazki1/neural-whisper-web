@@ -12,7 +12,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
   const location = useLocation();
   const { user, session, loading } = useAuth();
-  const { roles, loading: rolesLoading } = useUserRoles(user?.id); // Always load roles for authenticated users
+  const { roles, loading: rolesLoading } = useUserRoles(user?.id);
 
   console.log('[ProtectedRoute] Render:', { 
     userEmail: user?.email, 
@@ -27,9 +27,22 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     timestamp: new Date().toISOString()
   });
 
-  // Show loading state while auth or roles are loading
-  if (loading || (allowedRoles && allowedRoles.length > 0 && rolesLoading)) {
-    console.log('[ProtectedRoute] Showing loading state:', { loading, rolesLoading, hasAllowedRoles: !!allowedRoles });
+  // CRITICAL: Wait for auth to complete first
+  if (loading) {
+    console.log('[ProtectedRoute] Showing loading state: auth loading');
+    return (
+      <div className="container mx-auto px-6 lg:px-8 pt-28 pb-16">
+        <div className="space-y-3">
+          <Skeleton className="h-8 w-64" />
+          <Skeleton className="h-6 w-40" />
+        </div>
+      </div>
+    );
+  }
+
+  // CRITICAL: If roles are required, wait for roles to load completely
+  if (allowedRoles && allowedRoles.length > 0 && rolesLoading) {
+    console.log('[ProtectedRoute] Showing loading state: roles loading');
     return (
       <div className="container mx-auto px-6 lg:px-8 pt-28 pb-16">
         <div className="space-y-3">
