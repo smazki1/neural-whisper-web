@@ -1,34 +1,35 @@
 import { motion } from "framer-motion";
-import aviPhoto from "@/assets/avi-fried-photo.jpg";
+import aviProfile from "@/assets/avi-fried-profile.jpg";
 import { Helmet } from "react-helmet-async";
-import { Sparkles, Target, User } from "lucide-react";
+import { Zap, Compass } from "lucide-react";
 
 const About = () => {
   return (
     <>
       <Helmet>
-        <title>אודות יאיר יונה | AI Master</title>
-        <meta name="description" content="הכירו את יאיר יונה - מדריך ומנטור יצירתי בעידן ה-AI, יזם ומומחה להעצמת אנשים להגשמה עצמית" />
-        <meta name="keywords" content="יאיר יונה, AI, בינה מלאכותית, הדרכות AI, מנטורינג" />
-        <meta property="og:title" content="אודות יאיר יונה | AI Master" />
-        <meta property="og:description" content="הכירו את יאיר יונה - מדריך ומנטור יצירתי בעידן ה-AI" />
-        <meta property="og:image" content={aviPhoto} />
+        <title>אודות אבי פריד | AI Master</title>
+        <meta name="description" content="הכירו את אבי פריד - מדריך ומנטור יצירתי בעידן ה-AI, יזם ומומחה להעצמת אנשים להגשמה עצמית" />
+        <meta name="keywords" content="אבי פריד, AI, בינה מלאכותית, הדרכות AI, מנטורינג" />
+        <meta property="og:title" content="אודות אבי פריד | AI Master" />
+        <meta property="og:description" content="הכירו את אבי פריד - מדריך ומנטור יצירתי בעידן ה-AI" />
+        <meta property="og:image" content={aviProfile} />
       </Helmet>
 
       <div className="min-h-screen bg-background" dir="rtl">
         {/* Section 1: החזון */}
-        <section className="py-20 lg:py-32 px-6 lg:px-20 xl:px-32">
+        <section className="pt-20 pb-16 lg:pt-32 lg:pb-24 px-6 lg:px-20 xl:px-32">
           <div className="max-w-5xl mx-auto">
             {/* Header with Icon */}
             <motion.div 
-              className="flex items-center justify-end gap-6 mb-16"
+              className="flex items-center justify-center gap-6 mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              dir="rtl"
             >
               <h2 className="text-5xl lg:text-6xl font-bold text-foreground">החזון</h2>
-              <Sparkles className="w-12 h-12 lg:w-16 lg:h-16 text-primary" strokeWidth={1.5} />
+              <Zap className="w-14 h-14 lg:w-16 lg:h-16 text-[hsl(45,100%,51%)] flex-shrink-0" strokeWidth={2.5} />
             </motion.div>
 
             {/* Content */}
@@ -166,18 +167,19 @@ const About = () => {
         </section>
 
         {/* Section 2: המשימה */}
-        <section className="py-20 lg:py-32 px-6 lg:px-20 xl:px-32 bg-muted/30">
+        <section className="pt-20 pb-16 lg:pt-32 lg:pb-24 px-6 lg:px-20 xl:px-32 bg-muted/30">
           <div className="max-w-5xl mx-auto">
             {/* Header with Icon */}
             <motion.div 
-              className="flex items-center justify-end gap-6 mb-16"
+              className="flex items-center justify-center gap-6 mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              dir="rtl"
             >
               <h2 className="text-5xl lg:text-6xl font-bold text-foreground">המשימה</h2>
-              <Target className="w-12 h-12 lg:w-16 lg:h-16 text-primary" strokeWidth={1.5} />
+              <Compass className="w-14 h-14 lg:w-16 lg:h-16 text-[hsl(45,100%,51%)] flex-shrink-0" strokeWidth={2.5} />
             </motion.div>
 
             {/* Content */}
@@ -340,24 +342,25 @@ const About = () => {
         </section>
 
         {/* Section 3: הסיפור שלי */}
-        <section className="py-20 lg:py-32 px-6 lg:px-20 xl:px-32">
+        <section className="pt-20 pb-16 lg:pt-32 lg:pb-24 px-6 lg:px-20 xl:px-32">
           <div className="max-w-5xl mx-auto">
             {/* Header with Photo */}
             <motion.div 
-              className="flex items-center justify-end gap-8 mb-16"
+              className="flex flex-col items-center gap-6 mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              dir="rtl"
             >
-              <h2 className="text-5xl lg:text-6xl font-bold text-foreground">הסיפור שלי</h2>
-              <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden border-4 border-primary shadow-lg flex-shrink-0">
+              <div className="w-56 h-56 rounded-full overflow-hidden shadow-2xl flex-shrink-0">
                 <img 
-                  src={aviPhoto} 
-                  alt="יאיר יונה"
+                  src={aviProfile} 
+                  alt="אבי פריד"
                   className="w-full h-full object-cover"
                 />
               </div>
+              <h2 className="text-5xl lg:text-6xl font-bold text-foreground">אבי פריד</h2>
             </motion.div>
 
             {/* Content */}
@@ -368,8 +371,6 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className="text-2xl font-bold">יאיר יונה</p>
-
               <p>אז הנה הסיפור.</p>
 
               <p>אני יזם, מדריך, מנטור יצירתי בעידן ה-AI.<br />
