@@ -123,9 +123,12 @@ const Hero = () => {
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: 900,
+                textShadow: 'none',
+                filter: 'none',
               }}
               whileHover={{
                 scale: 1.08,
+                filter: 'none',
               }}
               transition={{ duration: 0.3 }}
             >
