@@ -123,10 +123,8 @@ const Hero = () => {
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
                 fontWeight: 900,
-                filter: 'drop-shadow(0 0 30px rgba(255, 223, 0, 0.9)) drop-shadow(0 0 60px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 90px rgba(255, 215, 0, 0.3))',
               }}
               whileHover={{
-                filter: 'drop-shadow(0 0 40px rgba(255, 223, 0, 1)) drop-shadow(0 0 70px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 100px rgba(255, 215, 0, 0.5))',
                 scale: 1.08,
               }}
               transition={{ duration: 0.3 }}

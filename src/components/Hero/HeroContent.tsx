@@ -73,7 +73,6 @@ const HeroContent = () => {
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
                   fontWeight: 900,
-                  filter: 'drop-shadow(0 0 25px rgba(255, 223, 0, 0.8))',
                 }}
               >
                 AI
