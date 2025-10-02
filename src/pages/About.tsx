@@ -28,7 +28,7 @@ const About = () => {
               transition={{ duration: 0.6 }}
               dir="rtl"
             >
-              <h2 className="text-5xl lg:text-6xl font-bold text-foreground">החזון</h2>
+              <h2 className="text-5xl lg:text-6xl font-bold text-foreground">העתיד</h2>
               <Zap className="w-14 h-14 lg:w-16 lg:h-16 text-[hsl(45,100%,51%)] flex-shrink-0" strokeWidth={2.5} />
             </motion.div>
 
