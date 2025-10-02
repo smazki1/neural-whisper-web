@@ -50,7 +50,7 @@ const About = () => {
               <p>בואו נהיה כנים - זה מכניס את כולנו לחוסר וודאות מוחלט.<br />
               "תסתגלו מהר, או שתישארו מאחור."</p>
 
-              <p className="text-xl font-semibold">אבל אני חושב משהו לגמרי אחר.</p>
+              <p className="text-xl font-semibold">מה אם היית אומר לכם שיש עוד דרך להתסכל על זה?</p>
 
               <p className="text-2xl font-bold text-primary">זו הברכה הכי גדולה שקרתה לנו.</p>
 
