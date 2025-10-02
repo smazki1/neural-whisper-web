@@ -25,8 +25,8 @@ function Index() {
   return (
     <div className="bg-background text-foreground font-heebo animate-fade-in">
       <SEOHead 
-        title="AI Master - מומחה בינה מלאכותית לעסקים"
-        description="הפוך את הרעיונות שלך למציאות עם בינה מלאכותית. סדנאות, קורסים וייעוץ אישי לבעלי עסקים"
+        title="AI Master - מומחה בינה מלאכותית לעסקים צוותים וארגנים"
+        description="הפוך את הרעיונות שלך למציאות עם בינה מלאכותית. סדנאות, קורסים וייעוץ אישי לבעלי עסקים צוותים וארגנים"
       />
       <Navbar onContactClick={handleContactClick} />
       <main id="main-content" className="animate-fade-in">
