@@ -1,7 +1,33 @@
 import { motion } from "framer-motion";
 import aviProfile from "@/assets/avi-fried-profile.jpg";
 import { Helmet } from "react-helmet-async";
-import { Zap, Compass } from "lucide-react";
+import { Compass } from "lucide-react";
+
+// Custom Expanding Horizon Icon
+const ExpandingHorizonIcon = ({ className = "", size = 64 }: { className?: string; size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 64 64"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    {/* Horizon line */}
+    <line x1="4" y1="40" x2="60" y2="40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+    
+    {/* Radiating rays from center */}
+    <line x1="32" y1="40" x2="32" y2="16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+    <line x1="32" y1="40" x2="24" y2="20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+    <line x1="32" y1="40" x2="40" y2="20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+    <line x1="32" y1="40" x2="18" y2="26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+    <line x1="32" y1="40" x2="46" y2="26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+    
+    {/* Subtle outer rays */}
+    <line x1="32" y1="40" x2="12" y2="30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+    <line x1="32" y1="40" x2="52" y2="30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+  </svg>
+);
 
 const About = () => {
   return (
@@ -29,7 +55,7 @@ const About = () => {
               dir="rtl"
             >
               <h2 className="text-5xl lg:text-6xl font-bold text-foreground">העתיד כבר כאן</h2>
-              <Zap className="w-14 h-14 lg:w-16 lg:h-16 text-[hsl(45,100%,51%)] flex-shrink-0" strokeWidth={2.5} />
+              <ExpandingHorizonIcon className="text-[hsl(45,100%,51%)] flex-shrink-0" size={64} />
             </motion.div>
 
             {/* Content */}
