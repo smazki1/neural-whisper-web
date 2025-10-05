@@ -9,6 +9,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowRight, Clock, Tag, Play, Star, Check, BookOpen } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import ContactModal from '@/components/ContactModal';
+import { Toaster } from '@/components/ui/toaster';
 
 interface Product {
   id: string;
@@ -33,6 +37,15 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
   const [linkedCourses, setLinkedCourses] = useState<any[]>([]);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const handleContactClick = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const handleContactClose = () => {
+    setIsContactModalOpen(false);
+  };
 
   useEffect(() => {
     if (slug) {
@@ -110,45 +123,57 @@ const ProductDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background pt-20">
-        <div className="container mx-auto px-6 lg:px-8 py-16">
-          <Skeleton className="h-8 w-64 mb-8" />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <Skeleton className="h-64 w-full" />
-              <Skeleton className="h-6 w-full" />
-              <Skeleton className="h-4 w-3/4" />
-            </div>
-            <div className="space-y-6">
-              <Skeleton className="h-12 w-full" />
-              <Skeleton className="h-32 w-full" />
-              <Skeleton className="h-12 w-full" />
+      <>
+        <Navbar onContactClick={handleContactClick} />
+        <div className="min-h-screen bg-background pt-20">
+          <div className="container mx-auto px-6 lg:px-8 py-16">
+            <Skeleton className="h-8 w-64 mb-8" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <div className="space-y-6">
+                <Skeleton className="h-64 w-full" />
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-4 w-3/4" />
+              </div>
+              <div className="space-y-6">
+                <Skeleton className="h-12 w-full" />
+                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-12 w-full" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <Footer />
+        <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+        <Toaster />
+      </>
     );
   }
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-background pt-20">
-        <div className="container mx-auto px-6 lg:px-8 py-16 text-center">
-          <div className="text-6xl mb-4">❌</div>
-          <h1 className="text-3xl font-bold text-foreground mb-4">
-            המוצר לא נמצא
-          </h1>
-          <p className="text-muted-foreground mb-8">
-            המוצר שחיפשת לא קיים או הוסר מהמערכת
-          </p>
-          <Link to="/products">
-            <Button>
-              <ArrowRight className="h-4 w-4 ml-2" />
-              חזרה למוצרים
-            </Button>
-          </Link>
+      <>
+        <Navbar onContactClick={handleContactClick} />
+        <div className="min-h-screen bg-background pt-20">
+          <div className="container mx-auto px-6 lg:px-8 py-16 text-center">
+            <div className="text-6xl mb-4">❌</div>
+            <h1 className="text-3xl font-bold text-foreground mb-4">
+              המוצר לא נמצא
+            </h1>
+            <p className="text-muted-foreground mb-8">
+              המוצר שחיפשת לא קיים או הוסר מהמערכת
+            </p>
+            <Link to="/products">
+              <Button>
+                <ArrowRight className="h-4 w-4 ml-2" />
+                חזרה למוצרים
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
+        <Footer />
+        <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+        <Toaster />
+      </>
     );
   }
 
@@ -164,6 +189,7 @@ const ProductDetail = () => {
         <meta property="og:type" content="product" />
       </Helmet>
 
+      <Navbar onContactClick={handleContactClick} />
       <div className="min-h-screen bg-background pt-20" dir="rtl">
         <div className="container mx-auto px-6 lg:px-8 py-16">
           {/* Breadcrumb */}
@@ -501,6 +527,9 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      <Footer />
+      <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+      <Toaster />
     </>
   );
 };

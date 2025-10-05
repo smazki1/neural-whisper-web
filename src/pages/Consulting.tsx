@@ -27,6 +27,10 @@ import {
   Zap,
   Shield
 } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import ContactModal from '@/components/ContactModal';
+import { Toaster } from '@/components/ui/toaster';
 
 const Consulting = () => {
   const { toast } = useToast();
@@ -42,6 +46,15 @@ const Consulting = () => {
     budget: '',
     message: ''
   });
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const handleContactClick = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const handleContactClose = () => {
+    setIsContactModalOpen(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -673,6 +686,9 @@ const Consulting = () => {
           </div>
         </section>
       </div>
+      <Footer />
+      <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+      <Toaster />
     </>
   );
 };

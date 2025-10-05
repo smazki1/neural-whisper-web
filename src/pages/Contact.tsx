@@ -13,6 +13,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { MessageCircle, Mail, Phone, MapPin, Clock, Send, ExternalLink } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { z } from "zod";
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import ContactModal from '@/components/ContactModal';
+import { Toaster } from '@/components/ui/toaster';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "השם הוא שדה חובה").max(100, "השם לא יכול להיות ארוך מ-100 תווים"),
@@ -37,6 +41,15 @@ const Contact = () => {
     message: ""
   });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const handleContactClick = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const handleContactClose = () => {
+    setIsContactModalOpen(false);
+  };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -137,6 +150,7 @@ const Contact = () => {
         <meta property="og:description" content="צור קשר עם אבי פריד למומחיות בבינה מלאכותית" />
       </Helmet>
 
+      <Navbar onContactClick={handleContactClick} />
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 pt-20">
         <motion.div 
           className="container mx-auto px-4 py-16"
@@ -440,6 +454,9 @@ const Contact = () => {
           </motion.div>
         </motion.div>
       </div>
+      <Footer />
+      <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+      <Toaster />
     </>
   );
 };

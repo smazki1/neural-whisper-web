@@ -9,6 +9,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Filter, Search, Clock, Tag } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import ContactModal from '@/components/ContactModal';
+import { Toaster } from '@/components/ui/toaster';
 
 interface Product {
   id: string;
@@ -32,6 +36,15 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const handleContactClick = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const handleContactClose = () => {
+    setIsContactModalOpen(false);
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -101,33 +114,39 @@ const Products = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background pt-20">
-        <div className="container mx-auto px-6 lg:px-8 py-16">
-          <div className="text-center mb-12">
-            <Skeleton className="h-12 w-64 mx-auto mb-4" />
-            <Skeleton className="h-6 w-96 mx-auto" />
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <Skeleton className="h-48 w-full" />
-                <CardHeader>
-                  <Skeleton className="h-6 w-full" />
-                  <Skeleton className="h-4 w-3/4" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-2/3" />
-                </CardContent>
-                <CardFooter>
-                  <Skeleton className="h-10 w-full" />
-                </CardFooter>
-              </Card>
-            ))}
+      <>
+        <Navbar onContactClick={handleContactClick} />
+        <div className="min-h-screen bg-background pt-20">
+          <div className="container mx-auto px-6 lg:px-8 py-16">
+            <div className="text-center mb-12">
+              <Skeleton className="h-12 w-64 mx-auto mb-4" />
+              <Skeleton className="h-6 w-96 mx-auto" />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[...Array(6)].map((_, i) => (
+                <Card key={i} className="overflow-hidden">
+                  <Skeleton className="h-48 w-full" />
+                  <CardHeader>
+                    <Skeleton className="h-6 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </CardContent>
+                  <CardFooter>
+                    <Skeleton className="h-10 w-full" />
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+        <Footer />
+        <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+        <Toaster />
+      </>
     );
   }
 
@@ -139,6 +158,7 @@ const Products = () => {
         <meta name="keywords" content="AI, בינה מלאכותית, קורסים, סדנאות, למידה" />
       </Helmet>
 
+      <Navbar onContactClick={handleContactClick} />
       <div className="min-h-screen bg-background pt-20" dir="rtl">
         <div className="container mx-auto px-6 lg:px-8 py-16">
           {/* Header */}
@@ -276,6 +296,9 @@ const Products = () => {
           )}
         </div>
       </div>
+      <Footer />
+      <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+      <Toaster />
     </>
   );
 };
