@@ -1,7 +1,12 @@
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import aviProfile from "@/assets/avi-fried-profile.jpg";
 import { Helmet } from "react-helmet-async";
 import { Compass } from "lucide-react";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import ContactModal from '../components/ContactModal';
+import { Toaster } from '@/components/ui/toaster';
 
 // Custom Expanding Horizon Icon
 const ExpandingHorizonIcon = ({ className = "", size = 64 }: { className?: string; size?: number }) => (
@@ -30,6 +35,16 @@ const ExpandingHorizonIcon = ({ className = "", size = 64 }: { className?: strin
 );
 
 const About = () => {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const handleContactClick = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const handleContactClose = () => {
+    setIsContactModalOpen(false);
+  };
+
   return (
     <>
       <Helmet>
@@ -42,6 +57,7 @@ const About = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background" dir="rtl">
+        <Navbar onContactClick={handleContactClick} />
         {/* Section 1: החזון */}
         <section className="pt-20 pb-16 lg:pt-32 lg:pb-24 px-6 lg:px-20 xl:px-32">
           <div className="max-w-5xl mx-auto">
@@ -609,7 +625,11 @@ const About = () => {
             </motion.div>
           </div>
         </section>
+
+        <Footer />
       </div>
+      <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
+      <Toaster />
     </>
   );
 };
