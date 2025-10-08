@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { Card, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
+import { Clock } from 'lucide-react';
 
 interface Product {
   id: string;
   title: string;
+  slug: string;
   description: string | null;
   short_description: string | null;
   price: number;
@@ -44,42 +49,23 @@ const ProductsSection = () => {
     }
   };
 
-  const getProductMessage = (productType: string) => {
-    const messages = {
-      workshop: "בואו לחוות על בשרכם איך AI יכול לתת לכם תוצאה מוחשית בזמן אפסי. זו לא עוד הרצאה, זו חוויה שמשנה תפיסת עולם.",
-      course: "התוכנית המלאה, צעד אחר צעד, שתיתן לכם את כל הידע, הכלים והביטחון להשתמש ב-AI בכל תחום בחיים המקצועיים והאישיים.",
-      consultation: "כאן צוללים לעומק. נבנה יחד את האסטרטגיה האישית שלכם ונוודא שאתם לא רק לומדים, אלא מיישמים ומצליחים."
+  const getCategoryLabel = (category: string) => {
+    const labels = {
+      basic: 'בסיסי',
+      advanced: 'מתקדם',
+      business: 'עסקי'
     };
-    return messages[productType as keyof typeof messages] || "גלו איך AI יכול לשנות את המשחק עבורכם.";
+    return labels[category as keyof typeof labels] || category;
   };
 
-  const getProductIcon = (productType: string) => {
-    switch (productType) {
-      case 'workshop':
-        return (
-            <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-          </svg>
-        );
-      case 'course':
-        return (
-          <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        );
-      case 'consultation':
-        return (
-          <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-        );
-      default:
-        return (
-          <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        );
-    }
+  const getTypeLabel = (productType: string) => {
+    const labels = {
+      course: 'קורס',
+      workshop: 'סדנה',
+      consultation: 'ייעוץ',
+      lecture: 'הרצאה'
+    };
+    return labels[productType as keyof typeof labels] || productType;
   };
 
   if (loading) {
@@ -122,7 +108,7 @@ const ProductsSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {products.map((product, index) => (
             <motion.div
               key={product.id}
@@ -130,39 +116,73 @@ const ProductsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="professional-card-featured p-6 cursor-pointer"
             >
-              <div className="text-center">
-                <div className="mb-4 flex justify-center">
-                  <div className="p-3 bg-accent/10 rounded-full border border-accent/20">
-                    {getProductIcon(product.product_type)}
-                  </div>
-                </div>
-                
-                <h3 className="text-lg md:text-xl font-bold professional-text-primary mb-3 leading-snug hebrew-mobile-wrap">
-                  {product.title}
-                </h3>
-                
-                <p className="professional-text-body mb-6 leading-relaxed hebrew-mobile-wrap text-sm md:text-base">
-                  {getProductMessage(product.product_type)}
-                </p>
-
-                {product.price > 0 && (
-                  <div className="mb-4 professional-text-accent font-semibold text-lg">
-                    ₪{product.price.toLocaleString()}
+              <Card className="modern-card overflow-hidden hover:shadow-xl transition-all duration-500 group h-full">
+                {product.thumbnail_url && (
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={product.thumbnail_url}
+                      alt={product.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    {product.is_featured && (
+                      <Badge className="absolute top-4 right-4 bg-brand-accent text-brand-text font-medium px-3 py-1">
+                        מומלץ
+                      </Badge>
+                    )}
+                    <div className="absolute bottom-4 right-4 left-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                          {getCategoryLabel(product.category)}
+                        </Badge>
+                        <Badge variant="outline" className="bg-white/20 text-white border-white/30">
+                          {getTypeLabel(product.product_type)}
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
                 )}
                 
-                <Link
-                  to={product.external_url || `/products/${product.id}`}
-                  className="inline-flex items-center gap-2 professional-text-accent hover:text-accent transition-colors duration-200 font-semibold"
-                >
-                  למד עוד
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                  </svg>
-                </Link>
-              </div>
+                <div className="p-6">
+                  <CardTitle className="text-2xl font-bold text-brand-text mb-3 group-hover:text-brand-accent transition-colors duration-300">
+                    {product.title}
+                  </CardTitle>
+                  
+                  {product.short_description && (
+                    <p className="text-brand-text-secondary mb-4 leading-relaxed">
+                      {product.short_description}
+                    </p>
+                  )}
+
+                  <div className="flex items-center justify-between mb-6">
+                    {product.duration && (
+                      <div className="flex items-center gap-2 text-brand-text-secondary">
+                        <Clock className="h-4 w-4" />
+                        <span className="text-sm">{product.duration}</span>
+                      </div>
+                    )}
+                    
+                    <div className="text-3xl font-bold text-brand-accent">
+                      {product.price > 0 ? `₪${product.price.toLocaleString()}` : 'חינם'}
+                    </div>
+                  </div>
+
+                  {product.external_url ? (
+                    <a href={product.external_url} target="_blank" rel="noopener noreferrer" className="block">
+                      <Button className="premium-button-primary w-full" size="lg">
+                        למד עוד
+                      </Button>
+                    </a>
+                  ) : (
+                    <Link to={`/products/${product.slug}`} className="block">
+                      <Button className="premium-button-primary w-full" size="lg">
+                        למד עוד
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </Card>
             </motion.div>
           ))}
         </div>
