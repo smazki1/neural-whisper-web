@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import VideoAboutSection from '../components/VideoAboutSection';
 import HowICanHelpSection from '../components/HowICanHelpSection';
+import ProductsSection from '../components/ProductsSection';
 import FreeResourcesSection from '../components/FreeResourcesSection';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
@@ -33,6 +34,7 @@ function Index() {
         <Hero />
         <VideoAboutSection />
         <HowICanHelpSection />
+        <ProductsSection />
         <FreeResourcesSection />
       </main>
       <Footer />
