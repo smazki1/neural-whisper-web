@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import VideoAboutSection from '../components/VideoAboutSection';
+import ArtistsMindsetSection from '../components/ArtistsMindsetSection';
 import HowICanHelpSection from '../components/HowICanHelpSection';
 import ProductsSection from '../components/ProductsSection';
 import FreeResourcesSection from '../components/FreeResourcesSection';
@@ -33,6 +34,7 @@ function Index() {
       <main id="main-content" className="animate-fade-in">
         <Hero />
         <VideoAboutSection />
+        <ArtistsMindsetSection />
         <HowICanHelpSection />
         <ProductsSection />
         <FreeResourcesSection />

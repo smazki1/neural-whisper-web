@@ -31,10 +31,10 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
 
   const navigationItems = [
     { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
-    { name: 'על אבי', href: '/about' },
+    { name: 'אודות', href: '/about' },
     { name: 'תהליכים וקורסים', href: '/products' },
     { name: 'יעוץ אישי', href: '/consulting' },
-    { name: 'הרצאות לארגונים', href: '#', action: () => setIsComingSoonOpen(true) },
+    { name: 'סדנאות לארגונים', href: '#', action: () => setIsComingSoonOpen(true) },
     { 
       name: 'השראה', 
       href: '#', 

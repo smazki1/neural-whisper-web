@@ -74,7 +74,7 @@ const ProductsSection = () => {
         <div className="container mx-auto px-4 md:px-6 max-w-6xl">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold professional-text-primary mb-6 leading-tight hebrew-mobile-wrap">
-              <span className="professional-text-accent font-bold">האירועים הקרובים:</span>
+              <span className="professional-text-accent font-bold">אירועים ומוצרים</span>
             </h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -104,7 +104,7 @@ const ProductsSection = () => {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold professional-text-primary mb-6 leading-tight hebrew-mobile-wrap">
-            <span className="professional-text-accent font-bold">האירועים הקרובים:</span>
+            <span className="professional-text-accent font-bold">אירועים ומוצרים</span>
           </h2>
         </motion.div>
 
@@ -190,7 +190,7 @@ const ProductsSection = () => {
         {products.length === 0 && !loading && (
           <div className="text-center py-12">
             <p className="professional-text-muted text-lg hebrew-mobile-wrap">
-              אין אירועים מתוכננים כרגע. בקרו בקרוב לעדכונים!
+              אין אירועים או מוצרים זמינים כרגע. בקרו בקרוב לעדכונים!
             </p>
           </div>
         )}
