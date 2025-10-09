@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     { name: 'אודות', href: '/about' },
     { name: 'תהליכים וקורסים', href: '/products' },
     { name: 'יעוץ אישי', href: '/consulting' },
-    { name: 'סדנאות לארגונים', href: '#', action: () => setIsComingSoonOpen(true) },
+    { name: 'סדנאות לארגונים', href: '/corporate-workshops' },
     { 
       name: 'השראה', 
       href: '#', 

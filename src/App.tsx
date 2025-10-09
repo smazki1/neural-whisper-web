@@ -38,6 +38,7 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import Consulting from "./pages/Consulting";
+import CorporateWorkshops from "./pages/CorporateWorkshops";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCanceled from "./pages/PaymentCanceled";
@@ -80,6 +81,7 @@ const App = () => {
             <Route path="/products/:slug" element={<ProductDetail />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/consulting" element={<Consulting />} />
+              <Route path="/corporate-workshops" element={<CorporateWorkshops />} />
             <Route path="/checkout/:productId" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-canceled" element={<PaymentCanceled />} />
