@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from "framer-motion";
-import aviProfile from "@/assets/avi-fried-profile.jpg";
+import aviProfile from "@/assets/avi-fried-photo.jpg";
 import { Helmet } from "react-helmet-async";
 import { Compass } from "lucide-react";
 import Navbar from '../components/Navbar';
@@ -8,31 +8,7 @@ import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
 import { Toaster } from '@/components/ui/toaster';
 
-// Custom Expanding Horizon Icon
-const ExpandingHorizonIcon = ({ className = "", size = 64 }: { className?: string; size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 64 64"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    {/* Horizon line */}
-    <line x1="4" y1="40" x2="60" y2="40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-    
-    {/* Radiating rays from center */}
-    <line x1="32" y1="40" x2="32" y2="16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-    <line x1="32" y1="40" x2="24" y2="20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-    <line x1="32" y1="40" x2="40" y2="20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-    <line x1="32" y1="40" x2="18" y2="26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
-    <line x1="32" y1="40" x2="46" y2="26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
-    
-    {/* Subtle outer rays */}
-    <line x1="32" y1="40" x2="12" y2="30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-    <line x1="32" y1="40" x2="52" y2="30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-  </svg>
-);
+//
 
 const About = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -58,130 +34,7 @@ const About = () => {
 
       <div className="min-h-screen bg-background" dir="rtl">
         <Navbar onContactClick={handleContactClick} />
-        {/* Section 1: החזון */}
-        <section className="pt-20 pb-16 lg:pt-32 lg:pb-24 px-6 lg:px-20 xl:px-32">
-          <div className="max-w-5xl mx-auto">
-            {/* Header with Icon */}
-            <motion.div 
-              className="flex items-center justify-center gap-6 mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              dir="rtl"
-            >
-              <h2 className="text-5xl lg:text-6xl font-bold text-foreground">העתיד כבר כאן</h2>
-              <ExpandingHorizonIcon className="text-[hsl(45,100%,51%)] flex-shrink-0" size={64} />
-            </motion.div>
-
-            {/* Content */}
-            <motion.div 
-              className="space-y-6 text-lg leading-relaxed text-foreground/90"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <p className="text-xl font-medium">האם מהפכת ה-AI הולכת לייתר את כולנו?</p>
-              
-              <p>אני בטוח שהשאלה הזאת עברה לכם בראש.<br />
-              כל ערוצי החדשות והרשתות החברתיות בפאניקה.<br />
-              כולם מדברים על איך ה-AI הולך לגנוב לנו את העבודה,<br />
-              ושעלינו ללמוד ולהסתגל מהר יותר רק כדי להישאר רלוונטיים.</p>
-
-              <p>בואו נהיה כנים - זה מכניס את כולנו לחוסר וודאות מוחלט.<br />
-              "תסתגלו מהר, או שתישארו מאחור."</p>
-
-              <p className="text-xl font-semibold">מה אם היית אומר לכם שיש עוד דרך להתסכל על זה?</p>
-
-              <p className="text-2xl font-bold text-primary">האנושות עוברת קפיצת מדרגה</p>
-
-              <p>תחשבו על זה רגע.<br />
-              כל מהפכה טכנולוגית אמיתית לא סתם משנה איך אנחנו עושים דברים - 
-              היא משנה מה אנחנו מסוגלים להיות.</p>
-
-              <p>והמהפכה הזאת?<br />
-              זו לא מהפכה טכנולוגית.</p>
-
-              <p className="text-xl font-semibold">זו מהפכת נגישות - אולי הגדולה בהיסטוריה.</p>
-
-              <p>כמו שהמצאת הכתב אפשרה לנו לחלץ את הידע האנושי וליצור ציוויליזציות,<br />
-              כמו שהחשמל הניע את התעשייה ובנה את העולם המודרני,<br />
-              וכמו שהאינטרנט נתן לנו גישה לכל המידע בעולם <br />
-              ה-AI נותן לנו משהו הרבה יותר אישי:<br />
-              גישה לגרסה הכי טובה של עצמנו.</p>
-
-              <p className="italic">(תזכרו את המשפט הזה - הוא חשוב)</p>
-
-              <p>הכלים האלה לא בנויים כדי להחליף אותנו.<br />
-              הם בנויים כדי להוריד את האבנים הכבדות מהדרך.<br />
-              את כל העבודה הגנרית, הקשה, המייגעת.</p>
-
-              <p>והם משאירים לנו את האנרגיה ליצור<br />
-              את מה שרק אנחנו יכולים לתת.</p>
-
-              <p>את הדברים שתמיד רצינו לעשות<br />
-              אבל חשבנו שהם גדולים מדי, מורכבים מדי, רחוקים מדי.</p>
-
-              <div className="pt-8 space-y-6">
-                <p className="text-xl font-semibold">טכנולוגיה מול אנושיות</p>
-                
-                <p>אנשים חושבים שצריך להיות טכנולוגי כדי להצליח.<br />
-                שצריך להבין קוד, להיות "אנשי הייטק", לדבר בשפה הטכנית.</p>
-
-                <p className="text-xl font-semibold">אבל זה בדיוק להיפך.</p>
-
-                <p>ככל שאתם יותר אנושיים,<br />
-                ככל שאתם יותר יצירתיים,<br />
-                ככל שאתם פחות "טכניים" -<br />
-                כך אתם יותר מתאימים לעידן הזה.</p>
-
-                <p className="text-xl font-semibold">למה?</p>
-
-                <p>כי המכונה יודעת ליצור. היא יודעת לכתוב, לעצב, לבנות.<br />
-                אבל היא לא יודעת מה ליצור.<br />
-                רק אתם יודעים את זה.</p>
-
-                <p>המכונה יכולה לתת לכם משהו ממוקד, מפורט, מדויק.<br />
-                אבל רק אתם יכולים:</p>
-
-                <p>לחבר את זה לתמונה הגדולה<br />
-                לתת לזה את כל השכבות של הקונטקסט<br />
-                להחליט אם זה באמת משרת את החזון<br />
-                לקחת אחריות על היצירה</p>
-
-                <p className="text-xl font-semibold">בלי אתם - המכונה עיוורת.</p>
-
-                <p>היא יכולה לרוץ מהר, אבל לא לדעת לאן.</p>
-
-                <p>המיומנות החשובה היום זו לא טכנית -<br />
-                היא להיות המוח האסטרטגי.<br />
-                להכיר את עצמכם.<br />
-                לדעת מה אתם רוצים ליצור.<br />
-                לראות את התמונה המלאה.<br />
-                ולהיות אלו שלוקחים אחריות על התוצאה הסופית.</p>
-
-                <p>הכלים האלה לוקחים את החלק הטכני,<br />
-                ומשאירים לכם את החלק החשוב -<br />
-                החשיבה, החזון, והאחריות.</p>
-              </div>
-
-              <p className="text-xl font-semibold pt-8">אתם האומן. יש לכם חזון.</p>
-
-              <p>משהו שאתם רואים, משהו שרק אתם יכולים לראות.</p>
-
-              <p>ה-AI הוא הכלי שלכם - המכחול, האזמל, הפטיש.<br />
-              הוא לא יוצר את החזון.<br />
-              אתם רואים את החזון.<br />
-              אתם מחליטים.<br />
-              אתם נותנים את הנשמה.</p>
-
-              <p>והכלי? הוא מוריד את האבנים הכבדות מהדרך.</p>
-
-              <p className="text-3xl font-bold text-primary pt-8">אין יותר מקום לחלומות קטנים.</p>
-            </motion.div>
-          </div>
-        </section>
+        {/* Section 1 content removed to match Lovable sync point */}
 
         {/* Section 2: המשימה */}
         <section className="pt-20 pb-16 lg:pt-32 lg:pb-24 px-6 lg:px-20 xl:px-32 bg-muted/30">
@@ -207,153 +60,25 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p className="text-xl font-medium">אז מה אני בעצם עושה פה?</p>
+              <p className="max-w-3xl ml-auto">להעצים אנשים להגשים את עצמם בעידן ה-AI.<br />
+              לא דרך עוד מידע, פרומפטים מוכנים או טריקים מהירים. אלא דרך בהירות - על מי את/ה, מה את/ה רוצה ליצור, ואיך הכלים משרתים את המטרות והחזון שלך.</p>
 
-              <p>אנחנו חיים בעידן מבלבל.<br />
-              ואני לא אומר את זה סתם.</p>
+              <p className="text-2xl font-bold">מה תמצאו כאן?</p>
+              <p>להפוך את ה-AI לעוזר האישי שלך, לשותף לחשיבה וסיעור מוחות.</p>
+              <p>בהירות לגביי הכלים הנכונים בשבילך</p>
+              <p>להכשיר צוותים לחשוב ביצירתיות בעידן החדש</p>
 
-              <p>מצד אחד - אנשים רצים מהר מתוך פחד.<br />
-              FOMO והיסטריה מוחלטת.<br />
-              "כולם כבר יודעים לעבוד עם AI ואני מפספס"<br />
-              "אני צריך ללמוד את כל הכלים, עכשיו"<br />
-              תחושה שהרכבת דוהרת והם לא מספיקים לקפוץ.</p>
+              <p>זה לא קורס תכנות. זה לא מדריך "לחצו כאן". זה לא פתרון קסם - זאת גישה חדשה.</p>
 
-              <p>ומצד שני - אותם אנשים בדיוק<br />
-              גם עומדים במקום. קפואים.<br />
-              "מה אם זה יחליף אותי?"<br />
-              "אני לא מספיק טכני בשביל זה"<br />
-              "לא יודע מאיפה להתחיל"<br />
-              אז פשוט לא עושים כלום.</p>
+              <p className="text-2xl font-bold">הבעיה האמיתית</p>
+              <p>כולם מדברים על הכלים - איזה גרסה יותר טובה, איזו טכניקה יעילה יותר.<br />
+              אף אחד לא מדבר על מה שבאמת חוסם אנשים: הם לא יודעים לתאר מה הם רוצים.<br />
+              לא יודעים להגדיר. לא יודעים לנסח את המחשבה. והכלים האלה דורשים בדיוק את זה.</p>
 
-              <p>שני הרגשות האלה ביחד, באותו זמן -<br />
-              הם הורסים אנשים.</p>
-
-              <p className="text-2xl font-bold text-primary pt-6">והמשימה שלי?<br />
-              להעצים אנשים להגשים את עצמם בעידן ה-AI.</p>
-
-              <p>לא דרך עוד מידע (יש לכם מספיק מידע).<br />
-              לא דרך עוד פרומפטים מוכנים (זה לא פותר את הבעיה).<br />
-              לא דרך טריקים מהירים (אתם לא צריכים טריקים).</p>
-
-              <p className="text-xl font-semibold">אלא דרך משהו אחר לגמרי:<br />
-              בהירות.</p>
-
-              <p>בהירות על מי אתם.<br />
-              בהירות על מה אתם רוצים ליצור.<br />
-              בהירות על איך הכלים האלה משרתים את החזון שלכם,<br />
-              לא להיפך.</p>
-
-              <div className="pt-8 space-y-6">
-                <p className="text-2xl font-bold">מה עושה אותי שונה</p>
-
-                <p>כן, אני מלמד אתכם על הכלים והטכנולוגיה.<br />
-                איזה כלים קיימים, איך הם עובדים, מה כל אחד יכול לתת לכם.</p>
-
-                <p className="text-xl font-semibold">אבל - אני לא מתחיל שם.</p>
-
-                <p>רוב האנשים מתחילים מהכפתורים והטכניקות.<br />
-                אני מתחיל ממי אתם.</p>
-
-                <p>מה אתם רוצים ליצור. מה החזון שלכם.<br />
-                ואז הטכנולוגיה נכנסת בשירות החזון.</p>
-
-                <p className="text-xl font-semibold">כי הנה מה שאף אחד לא מדבר עליו:</p>
-
-                <p>כולם מדברים על הכלים.<br />
-                איזה מודל יותר טוב, איזו טכניקה יותר יעילה,<br />
-                מה הפרומפט המושלם.</p>
-
-                <p className="text-2xl font-bold text-primary">אבל אף אחד לא מדבר על הבעיה האמיתית:</p>
-
-                <p className="text-xl font-semibold">רוב האנשים לא יודעים לתאר מה הם רוצים.</p>
-
-                <p>הם לא יודעים להגדיר.<br />
-                לא יודעים לנסח את המחשבה.<br />
-                לא יודעים מה באמת בראש שלהם.</p>
-
-                <p>והכלים האלה? הם דורשים בדיוק את זה מאיתנו.</p>
-
-                <p>אז מה קורה?<br />
-                אנשים מאשימים את הכלים:<br />
-                "זה לא עובד"<br />
-                "זה נותן לי תשובות גנריות"<br />
-                "זה לא מבין אותי"</p>
-
-                <p className="text-xl font-semibold">אבל האמת היא משהו אחר:<br />
-                הכלים מחזירים לנו מראה<br />
-                של עד כמה אנחנו לא ברורים.</p>
-
-                <p>וזאת בעצם הברכה.</p>
-
-                <p className="text-xl font-semibold">אני מלמד את המיומנות שחסרה:<br />
-                לחשוב בבהירות.<br />
-                לתאר בדיוק.<br />
-                לדעת מה אתם רוצים.</p>
-
-                <p>ואז - כשאתם ברורים -<br />
-                כל הכלים פתאום עובדים.</p>
-              </div>
-
-              <div className="pt-8 space-y-6">
-                <p className="text-2xl font-bold">מה זה לא (בוא נהיה כנים):</p>
-
-                <p>זה לא קורס תכנות.<br />
-                אתם לא הולכים ללמוד לקודד.<br />
-                אם אתם מחפשים הכשרה טכנית - יש מקומות אחרים לזה.</p>
-
-                <p>זה לא מדריך "לחצו כאן ואז כאן".<br />
-                אם אתם רק רוצים רשימה של פרומפטים מוכנים -<br />
-                יש אינספור מקומות כאלה ברשת.<br />
-                זה לא אחד מהם.</p>
-
-                <p>זה לא פתרון קסם.<br />
-                אתם לא הולכים ללחוץ על כפתור ולהפוך למיליונרים.<br />
-                (מי שמוכר לכם את זה - תרוצו)</p>
-
-                <p className="text-xl font-semibold">זה דורש מחשבה.<br />
-                זה דורש עבודה.<br />
-                זה דורש בהירות.</p>
-
-                <p>אבל תשמעו - זה גם לא רק תיאוריה.<br />
-                אתם כן הולכים ללמוד כלים.<br />
-                אתם כן הולכים לקבל דברים מעשיים.<br />
-                אבל לא בלי להבין למה ואיך.</p>
-              </div>
-
-              <div className="pt-8 space-y-6">
-                <p className="text-2xl font-bold">מה זה כן:</p>
-
-                <p className="text-xl font-semibold">אני מלמד אתכם איך לחשוב עם הכלים,<br />
-                לא רק איך להשתמש בהם.</p>
-
-                <p>איך להפוך את ה-AI להרחבה של המחשבה שלכם.<br />
-                איך לבחור את הכלים הנכונים בשבילכם.<br />
-                איך להכשיר את העובדים שלכם לחשוב ביצירתיות בעידן החדש.</p>
-              </div>
-
-              <div className="pt-8 space-y-6">
-                <p className="text-2xl font-bold">למה אנשים באים אליי?</p>
-
-                <p>כי אני נותן להם ארבעה דברים שחסרים להם:</p>
-
-                <p><span className="font-semibold">השראה</span> - להראות להם שזו ברכה, לא איום</p>
-
-                <p><span className="font-semibold">בהירות</span> - להסביר בפשטות, בלי כל הסיבוכים</p>
-
-                <p><span className="font-semibold">בטחון</span> - להדריך, לא לזרוק אותם למים</p>
-
-                <p><span className="font-semibold">תשוקה</span> - לעזור להם לגלות מחדש את החופש לחלום בגדול</p>
-
-                <p className="text-xl font-semibold pt-6">אני לא מלמד אתכם AI.<br />
-                אני מחזיר לכם את הביטחון<br />
-                לעשות את מה שתמיד רציתם.</p>
-
-                <p>כי בסוף - הטכנולוגיה תמשיך להשתנות.<br />
-                תמיד יהיה כלי חדש. מודל חדש. טכניקה חדשה.</p>
-
-                <p className="text-2xl font-bold text-primary">אבל אם אתם ברורים -<br />
-                אתם תמיד תדעו מה לעשות איתה.</p>
-              </div>
+              <p className="text-2xl font-bold">השורה התחתונה</p>
+              <p>הטכנולוגיה תמשיך להשתנות. תמיד יהיה כלי חדש.<br />
+              אבל אם את/ה ברורה - את/ה תמיד תדע/י מה לעשות איתה.</p>
+              <p>אני לא מלמד אותך AI. אני מלמד אותך להיות בגרסה הכי טובה שלך בעידן הדיגיטלי החדש.</p>
             </motion.div>
           </div>
         </section>
@@ -361,25 +86,6 @@ const About = () => {
         {/* Section 3: הסיפור שלי */}
         <section className="pt-20 pb-16 lg:pt-32 lg:pb-24 px-6 lg:px-20 xl:px-32">
           <div className="max-w-5xl mx-auto">
-            {/* Header with Photo */}
-            <motion.div 
-              className="flex flex-col items-center gap-6 mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              dir="rtl"
-            >
-              <div className="w-56 h-56 rounded-full overflow-hidden shadow-2xl flex-shrink-0">
-                <img 
-                  src={aviProfile} 
-                  alt="אבי פריד"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h2 className="text-5xl lg:text-6xl font-bold text-foreground">אבי פריד</h2>
-            </motion.div>
-
             {/* Content */}
             <motion.div 
               className="space-y-6 text-lg leading-relaxed text-foreground/90"
@@ -388,115 +94,10 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <p>אז הנה הסיפור.</p>
-
-              <p>אני יזם, מדריך, מנטור יצירתי בעידן ה-AI.<br />
-              אבל ככה זה לא התחיל.</p>
-
-              <p>התחיל כנווד דיגיטלי - עוד לפני שזה היה דבר.</p>
-
-              <p>יש לי רקע במוזיקה. הייתי מתופף.<br />
-              ואז פציעה סיימה לי את הקריירה ברגע אחד.</p>
-
-              <p>זה היה משבר. עמוק.<br />
-              כל מה שהכרתי - הזהות שלי, העולם שלי -<br />
-              השתנה ברגע.</p>
-
-              <p className="text-xl font-semibold">אבל זה לימד אותי משהו שאני נושא איתי עד היום:<br />
-              כל סגירה היא התחלה חדשה.</p>
-
-              <p>מה שנראה כמו סוף - זה בעצם נקודת זינוק.</p>
-
-              <p>והמסע שאחרי הוביל אותי לעולם אחר לגמרי.</p>
-
-              <p>פתחתי מיזמים ב-eCommerce.<br />
-              הייתי שותף בסטארטאפ.<br />
-              בניתי דברים מאפס.</p>
-
-              <p>אבל הקושי האמיתי לא היה הטכנולוגיה או המוצרים.<br />
-              הקושי היה משהו אחר לגמרי:</p>
-
-              <p className="text-xl font-semibold">איך לוקחים חזון ורעיון שיש לך בראש -<br />
-              ומגשימים אותו דרך אנשים אחרים?</p>
-
-              <p>כי הייתי לבד.<br />
-              לא היה לי מי שילמד אותי.<br />
-              לא היה לי מי שיבין אותי.<br />
-              לא היה לי מנטור.</p>
-
-              <p>אז למדתי בכוחות עצמי.</p>
-
-              <p>איך לנהל עובדים מרוחקים - Virtual Assistants ברחבי העולם.<br />
-              איך להכשיר אנשים בהודו, פקיסטן, מקומות שמעולם לא הייתי בהם.<br />
-              איך לעבוד עם עוזרים אדמיניסטרטיביים, שיווק, ניהול.</p>
-
-              <p className="text-xl font-semibold">והאתגר הכי גדול:<br />
-              איך ללמד מישהו לעשות את מה שרק אני ראיתי בראש?</p>
-
-              <p>איך לוקחים את החזון, הכיוון, הידע שיש לך -<br />
-              ומעבירים אותו למישהו אחר בצורה כל כך ברורה<br />
-              שהוא יוכל לבצע?</p>
-
-              <p>זה לקח לי שנים.<br />
-              וזה היה קשה.</p>
-
-              <p className="text-2xl font-bold text-primary pt-6">ואז, כשהכרתי את ChatGPT -<br />
-              זה היה רגע של הכרה.</p>
-
-              <p className="text-xl font-semibold">למדתי לעשות את זה שנים לפני.</p>
-
-              <p>הכשרתי אנשים מרחוק.<br />
-              לימדתי אותם לקחת את החזון שלי<br />
-              ולהפוך אותו לפעולות.<br />
-              הסברתי, ניסחתי, פירקתי לשלבים.</p>
-
-              <p className="text-xl font-semibold">בדיוק כמו לעבוד עם AI.</p>
-
-              <p>הבנתי משהו שרוב האנשים לא מבינים:</p>
-
-              <p className="text-xl font-semibold">הכלים האלה הם בדיוק כמו לעבוד עם VA -<br />
-              רק יותר חכם, יותר מהיר, ויותר זמין.</p>
-
-              <p>והכי חשוב? הם לא שופטים.<br />
-              הם לא עייפים.<br />
-              הם פשוט שם.</p>
+              
 
               <div className="pt-8 space-y-6">
-                <p className="text-xl font-semibold">אבל יש משהו שאני צריך להגיד לכם:</p>
-
-                <p className="text-xl font-semibold">אני לא מושלם.</p>
-
-                <p>יש לי ADHD.<br />
-                הפרעות קשב.<br />
-                התפזרות יתרה.</p>
-
-                <p>זה אומר שאני מבין מבפנים מה זה:<br />
-                להיות מוצף במידע.<br />
-                לא לדעת מאיפה להתחיל.<br />
-                ללכת לאיבוד בין כל האפשרויות.<br />
-                להיות עם אלף רעיונות אבל לא להצליח להתמקד.</p>
-
-                <p className="text-xl font-semibold">בדיוק כמוכם.</p>
-
-                <p>אני לא איזה גאון טכני שהכל קל לו.<br />
-                אני אדם עם אותם הקשיים שיש לכם.<br />
-                עם אותם הפחדים.<br />
-                עם אותו הבלבול.</p>
-
-                <p>אבל בגלל זה בדיוק -<br />
-                למדתי להשתמש בכלים האלה<br />
-                כדי לפצות על החולשות שלי.</p>
-
-                <p>והם עזרו לי להפוך את מה שנראה כמו חולשה -<br />
-                ליכולת להבין אחרים שנמצאים בדיוק באותו מקום.</p>
-
-                <p>אני לא מושלם.<br />
-                אני לא "הגעתי".<br />
-                אני בדרך, בדיוק כמוכם.</p>
-              </div>
-
-              <div className="pt-8 space-y-6">
-                <p className="text-2xl font-bold">והתובנה שגיליתי בדרך:</p>
+                <p className="text-2xl font-bold">אני רוצה לשתף איתך תובנה שגיליתי בדרך:</p>
 
                 <p className="text-xl font-semibold">כולנו אמנים - בין אם אנחנו רוצים את זה או לא.</p>
 
@@ -522,105 +123,70 @@ const About = () => {
                 לא כמו מבצעים.</p>
               </div>
 
+            {/* Header with Photo moved to start of 'מה אני עושה היום' */}
+            <motion.div 
+              className="flex flex-col items-center gap-6 mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              dir="rtl"
+            >
+              <div className="w-56 h-56 rounded-full overflow-hidden shadow-2xl flex-shrink-0">
+                <img 
+                  src={aviProfile} 
+                  alt="אבי פריד"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h2 className="text-5xl lg:text-6xl font-bold text-foreground">אבי פריד</h2>
+            </motion.div>
+
               <div className="pt-8 space-y-6">
-                <p className="text-xl font-semibold">והנה משהו שאולי ישמע לכם מוזר:</p>
-
-                <p className="text-2xl font-bold text-primary">הטכנולוגיה הזו היא הדרך הלוגית שלנו<br />
-                להגיע למהפכה רוחנית.</p>
-
-                <p>כן, קראתם נכון.<br />
-                "מהפכה רוחנית" ו-"טכנולוגיה" באותו משפט.</p>
-
-                <p>אבל חשבו על זה רגע:</p>
-
-                <p>במשך כל ההיסטוריה, האנושות חיפשה דרכים<br />
-                להכיר את עצמה טוב יותר.<br />
-                לגלות מי אנחנו באמת.<br />
-                להבין את המחשבות שלנו.<br />
-                לגדול, להתפתח, להתקרב לגרסה הטובה יותר של עצמנו.</p>
-
-                <p>וזה תמיד היה קשה, איטי, מוגבל.</p>
-
-                <p className="text-xl font-semibold">עכשיו, לראשונה - יש לנו מראה אינטליגנטית.</p>
-
-                <p>כלי שעוזר לנו:<br />
-                לראות את עצמנו בצורה חדשה.<br />
-                להבין את דפוסי החשיבה שלנו.<br />
-                לגלות מה אנחנו לא יודעים שלא יודעים.<br />
-                להתקרב למי שאנחנו באמת יכולים להיות.</p>
-
-                <p className="text-xl font-semibold">זו לא רק מהפכה טכנולוגית.<br />
-                זו מהפכה של הכרה עצמית.</p>
+                <p className="text-2xl font-bold">מה אני עושה היום</p>
+                <p>אני מעביר הדרכות וסדנאות לקהלים מגוונים. מלמד איך לעבוד עם הכלים בסביבה עסקית ומקצועית. איך להכשיר צוותים לחשוב ביצירתיות בעידן החדש.</p>
+                <p>איך לנצל את הטכנולוגיה לא רק כדי לעשות דברים מהר יותר - אלא כדי לחשוב בצורה אחרת לגמרי.</p>
               </div>
 
               <div className="pt-8 space-y-6">
-                <p className="text-2xl font-bold">והפתרון שמצאתי?</p>
-
-                <p className="text-xl font-semibold">אנחנו צריכים לחזור להיות ילדים.</p>
-
-                <p>ילדים יודעים לשחק.<br />
-                הם לא פוחדים לנסות.<br />
-                הם סקרנים.<br />
-                הם לא דואגים מה אחרים יחשבו.<br />
-                הם פשוט יוצרים.</p>
-
-                <p>כשאנחנו מתבגרים, אנחנו מפסיקים לשחק.<br />
-                אנחנו נהיים רציניים. זהירים. מפחדים.<br />
-                אנחנו דואגים: "מה אם אני נכשל?", "מה אם זה לא מושלם?"</p>
-
-                <p>אבל הכלים האלה?<br />
-                הם בנויים בשביל שתשחק איתם.</p>
-
-                <p className="text-xl font-semibold">אם אתם רוצים באמת להרגיש בנוח לעבוד איתם -<br />
-                אתם צריכים ללמוד מחדש לשחק.</p>
-
-                <p>להנות מהתהליך.<br />
-                לנסות דברים.<br />
-                להיות ילד שמגלה צעצוע חדש.</p>
-
-                <p>לא מתוך חובה או פחד -<br />
-                מתוך סקרנות ושמחה.</p>
+                <p className="text-2xl font-bold">הרקע שלי</p>
+                <p>הניסיון שלי כיזם - פיתוח מיזמים בתחומים שונים, ניהול מערך כוח אדם ברחבי העולם, שותפות בסטארטאפ - נתן לי הבנה עמוקה של האתגרים האמיתיים שעסקים מתמודדים איתם.</p>
+                <p>אני לא מדבר מהתיאוריה. אני מדבר מהשטח.</p>
               </div>
 
               <div className="pt-8 space-y-6">
-                <p className="text-2xl font-bold">מה אני עושה היום?</p>
+                <p className="text-2xl font-bold">למה אני כאן</p>
+                <p>כי ה-AI הזה? זה הכוח שלך. לא שלי.<br />
+                אני כאן להראות לך איך לנצל אותו. איך להפוך משהו שנראה טכני ומפחיד לכלי שמגשים את מה שאתה רוצה ליצור.<br />
+                לא להיות תלוי בי. להיות עצמאי.<br />
+                להפוך את הטכנולוגיה לשלך.</p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-                <p>כיום אני מעביר הדרכות וסדנאות לקהלים מגוונים.<br />
-                לחברות וארגונים.<br />
-                לבעלי עסקים ויזמים.<br />
-                בהכשרות פרטיות.</p>
-
-                <p>אני מלמד איך לעבוד עם הכלים האלה בסביבה עסקית ומקצועית.<br />
-                איך להכשיר צוותים לחשוב ביצירתיות בעידן החדש.<br />
-                איך לנצל את הטכנולוגיה לא רק כדי לעשות דברים מהר יותר -<br />
-                אלא כדי לחשוב בצורה אחרת לגמרי.</p>
-
-                <p>הניסיון שלי כיזם -<br />
-                פיתוח מיזמים בתחומים שונים,<br />
-                ניהול רשת חנויות eCommerce,<br />
-                שותפות בסטארטאפ שעזר למוזיקאים וארגונים<br />
-                להשיג מימון להקלטה והפצה של אלבומים -</p>
-
-                <p>כל זה נתן לי הבנה עמוקה של האתגרים האמיתיים<br />
-                שעסקים מתמודדים איתם.</p>
-
-                <p className="text-xl font-semibold">אני לא מדבר מהתיאוריה.<br />
-                אני מדבר מהשטח.</p>
-
-                <p>ואני כאן כדי לתת לכם את מה שלא היה לי -<br />
-                מישהו שמבין.<br />
-                מישהו שמדריך.<br />
-                מישהו שמראה את הדרך.</p>
-
-                <p>לא מתוך פחד.<br />
-                מתוך חופש.</p>
-
-                <p className="text-2xl font-bold text-primary pt-6">כי העשייה שלי היא לעזור לאנשים<br />
-                לחזור להיות אמנים של החיים שלהם.<br />
-                לחשוב. ליצור. לשחק.</p>
-
-                <p className="text-xl font-semibold">להפוך את מה שנראה כמו משימה טכנית מפחידה -<br />
-                לתהליך של גילוי עצמי, יצירה, וחופש.</p>
+        {/* Final Section: אתם האומן + CTA */}
+        <section className="pt-12 pb-24 px-6 lg:px-20 xl:px-32 bg-muted/20">
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              className="text-center space-y-6 text-lg leading-relaxed text-foreground/90"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h3 className="text-2xl lg:text-3xl font-bold text-foreground">אתם האומן. יש לכם חזון.</h3>
+              <p>משהו שאתם רואים, משהו שרק אתם יכולים לראות.</p>
+              <p>ה-AI הוא הכלי שלכם - המכחול, האזמל, הפטיש.<br />הוא לא יוצר את החזון.<br />אתם רואים את החזון.<br />אתם מחליטים.<br />אתם נותנים את הנשמה.</p>
+              <p>והכלי? הוא מוריד את האבנים הכבדות מהדרך.</p>
+              <p className="text-3xl font-bold text-primary pt-2">אין יותר מקום לחלומות קטנים.</p>
+              <div className="pt-8">
+                <a
+                  href="/products"
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity text-lg font-semibold"
+                >
+                  המסע מתחיל כאן
+                </a>
               </div>
             </motion.div>
           </div>

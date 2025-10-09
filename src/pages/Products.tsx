@@ -154,7 +154,7 @@ const Products = () => {
     <>
       <Helmet>
         <title>מוצרים וקורסים | AI Master</title>
-        <meta name="description" content="גלה את מגוון הקורסים והסדנאות שלנו בתחום הבינה המלאכותית - מבסיסי ועד מתקדם" />
+        <meta name="description" content="גלה את מגוון הקורסים והסדנאות שלנו" />
         <meta name="keywords" content="AI, בינה מלאכותית, קורסים, סדנאות, למידה" />
       </Helmet>
 
@@ -164,10 +164,10 @@ const Products = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl lg:text-5xl font-bold text-brand-text mb-4">
-              המוצרים והשירותים שלנו
+              השירותים שלנו
             </h1>
             <p className="text-xl text-brand-text-secondary max-w-3xl mx-auto">
-              גלה את מגוון הקורסים, הסדנאות והייעוצים שלנו בתחום הבינה המלאכותית - מבסיסי ועד מתקדם
+              גלה את מגוון הקורסים והסדנאות שלנו 
             </p>
           </div>
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
 import heroBackground from '../assets/hero-bg-ai-modern.jpg';
 
 const Hero = () => {
@@ -138,71 +137,7 @@ const Hero = () => {
         </motion.h1>
       </motion.div>
 
-      {/* Enhanced Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer group"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.8 }}
-        onClick={scrollToNext}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <motion.div 
-          className="relative flex flex-col items-center space-y-2 p-3 rounded-full transition-all duration-300"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ 
-            duration: 2, 
-            repeat: Infinity, 
-            ease: "easeInOut"
-          }}
-          style={{
-            background: 'hsl(var(--brand-surface) / 0.1)',
-            backdropFilter: 'blur(8px)',
-          }}
-        >
-          <motion.span 
-            className="text-sm font-medium text-white/80 transition-colors duration-300"
-            whileHover={{ color: 'hsl(var(--brand-accent))' }}
-          >
-            גלול למטה
-          </motion.span>
-          <motion.div
-            animate={{ 
-              y: [0, -2, 0],
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity, 
-              ease: "easeInOut"
-            }}
-            whileHover={{ 
-              color: 'hsl(var(--brand-accent))',
-              filter: 'drop-shadow(0 0 12px hsl(var(--brand-accent) / 0.8))',
-              scale: 1.1,
-            }}
-          >
-            <ChevronDown 
-              className="w-5 h-5 text-white/80 transition-all duration-300" 
-            />
-          </motion.div>
-          
-          {/* Subtle glow ring */}
-          <motion.div
-            className="absolute inset-0 rounded-full border border-brand-accent/30 opacity-0 transition-opacity duration-300"
-            whileHover={{ opacity: 1 }}
-            animate={{ 
-              scale: [1, 1.3, 1],
-              opacity: [0, 0.4, 0],
-            }}
-            transition={{ 
-              duration: 3, 
-              repeat: Infinity, 
-              ease: "easeOut"
-            }}
-          />
-        </motion.div>
-      </motion.div>
+      {/* Scroll indicator removed by request */}
     </motion.section>
   );
 };
