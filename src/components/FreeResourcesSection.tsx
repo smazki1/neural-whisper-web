@@ -109,7 +109,7 @@ const FreeResourcesSection = () => {
                     <div className="flex items-center justify-between pt-4 border-t border-brand-text/10">
                       <span className="professional-text-muted text-sm">{resource.readTime}</span>
                       <div className="flex items-center gap-2 professional-text-accent font-medium">
-                        <span className="text-sm">קרא עוד</span>
+                        <span className="text-sm">בקרוב</span>
                         <ArrowLeft className="w-4 h-4" />
                       </div>
                     </div>
