@@ -83,18 +83,24 @@ const CorporateWorkshops = () => {
       return;
     }
 
-  
-
     setIsSubmitting(true);
 
     try {
-      const response = await supabase.functions.invoke('send-contact-form', {
-        body: formData
-      });
+      // Save to leads table
+      const { error } = await supabase
+        .from('leads')
+        .insert({
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.message,
+          source: 'טופס סדנאות עסקיות',
+          service_interest: 'סדנאות AI לארגונים',
+          status: 'new'
+        });
 
-      if (response.error) {
-        throw response.error;
-      }
+      if (error) throw error;
 
       toast({
         title: "הטופס נשלח בהצלחה!",

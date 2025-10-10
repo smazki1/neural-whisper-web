@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { Checkbox } from './ui/checkbox';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -30,39 +31,30 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
     }
     
     try {
-      const response = await fetch('https://hook.eu2.make.com/mil6u6k80s78p8i0r2y4sjccia8kegwe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      // Save to leads table
+      const { error } = await supabase
+        .from('leads')
+        .insert({
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          timestamp: new Date().toISOString(),
-          source: 'AI Master Website'
-        }),
-      });
+          source: 'טופס יצירת קשר - דף הבית',
+          status: 'new'
+        });
 
-      if (response.ok) {
-        // Show success message
-        toast({
-          title: "תודה רבה!",
-          description: "ההודעה נשלחה בהצלחה. נחזור אליך תוך 24 שעות.",
-          duration: 5000,
-        });
-        
-        // Reset form and close modal
-        setFormData({ name: '', email: '', message: '', acceptPrivacy: false });
-        onClose();
-      } else {
-        toast({
-          title: "שגיאה",
-          description: "אירעה שגיאה בשליחת ההודעה. אנא נסה שוב.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
+      if (error) throw error;
+
+      // Show success message
+      toast({
+        title: "תודה רבה!",
+        description: "ההודעה נשלחה בהצלחה. נחזור אליך תוך 24 שעות.",
+        duration: 5000,
+      });
+      
+      // Reset form and close modal
+      setFormData({ name: '', email: '', message: '', acceptPrivacy: false });
+      onClose();
+    } catch (error: any) {
       console.error('Error submitting form:', error);
       toast({
         title: "שגיאה",
