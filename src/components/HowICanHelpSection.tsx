@@ -38,16 +38,16 @@ const HowICanHelpSection = () => {
             className="professional-button-primary text-xl lg:text-2xl px-8 py-6 w-full max-w-2xl text-center leading-relaxed"
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => {/* Link to individual services */}}
+            onClick={() => { window.location.href = '/products'; }}
           >
-            התחל כאן
+            התחילו כאן
           </motion.button>
           
           <motion.button 
             className="professional-button-secondary text-xl lg:text-2xl px-8 py-6 w-full max-w-2xl text-center"
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => {/* Link to corporate services */}}
+            onClick={() => { window.location.href = '/corporate-workshops'; }}
           >
             ארגונים? אתם פה
           </motion.button>

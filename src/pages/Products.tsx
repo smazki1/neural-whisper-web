@@ -154,7 +154,7 @@ const Products = () => {
     <>
       <Helmet>
         <title>מוצרים וקורסים | AI Master</title>
-        <meta name="description" content="גלה את מגוון הקורסים והסדנאות שלנו" />
+        <meta name="description" content="גלו את מגוון הקורסים והסדנאות שלנו" />
         <meta name="keywords" content="AI, בינה מלאכותית, קורסים, סדנאות, למידה" />
       </Helmet>
 
@@ -167,7 +167,7 @@ const Products = () => {
               השירותים שלנו
             </h1>
             <p className="text-xl text-brand-text-secondary max-w-3xl mx-auto">
-              גלה את מגוון הקורסים והסדנאות שלנו 
+              גלו את מגוון הקורסים והסדנאות שלנו 
             </p>
           </div>
 
@@ -279,13 +279,13 @@ const Products = () => {
                     {product.external_url ? (
                       <a href={product.external_url} target="_blank" rel="noopener noreferrer" className="block">
                         <Button className="premium-button-primary w-full" size="lg">
-                          למד עוד
+                          למידע נוסף
                         </Button>
                       </a>
                     ) : (
                       <Link to={`/products/${product.slug}`} className="block">
                         <Button className="premium-button-primary w-full" size="lg">
-                          למד עוד
+                          למידע נוסף
                         </Button>
                       </Link>
                     )}

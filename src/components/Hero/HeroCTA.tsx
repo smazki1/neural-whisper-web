@@ -54,7 +54,7 @@ const HeroCTA = ({ onScrollToOffers }: HeroCTAProps) => {
         animate={{ opacity: [0, 1, 0] }}
         transition={{ duration: 2, delay: 3, repeat: Infinity, repeatDelay: 4 }}
       >
-        ↓ גלה איך
+        ↓ גלו איך
       </motion.div>
     </motion.div>
   );

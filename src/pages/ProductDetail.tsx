@@ -250,7 +250,7 @@ const ProductDetail = () => {
               size="lg"
               disabled={purchasing}
             >
-              {purchasing ? 'מעבד...' : product.price > 0 ? 'רכישה עכשיו' : 'התחל עכשיו'}
+              {purchasing ? 'מעבד...' : product.price > 0 ? 'רכישה עכשיו' : 'התחילו עכשיו'}
             </Button>
 
             {!user && (
@@ -506,7 +506,7 @@ const ProductDetail = () => {
                     מוכן להתחיל את המסע?
                   </h3>
                   <p className="text-brand-text-secondary mb-6">
-                    הצטרף אלינו עוד היום והתחל לפתח את הכישורים שלך בבינה מלאכותית
+                    הצטרפו אלינו עוד היום והתחילו לפתח את הכישורים שלכם בבינה מלאכותית
                   </p>
                   <Button
                     onClick={handlePurchase}
@@ -514,7 +514,7 @@ const ProductDetail = () => {
                     size="lg"
                     disabled={purchasing}
                   >
-                    {purchasing ? 'מעבד...' : product.price > 0 ? `רכישה ב-₪${product.price.toLocaleString()}` : 'התחל עכשיו חינם'}
+                    {purchasing ? 'מעבד...' : product.price > 0 ? `רכישה ב-₪${product.price.toLocaleString()}` : 'התחילו עכשיו חינם'}
                   </Button>
                   {!user && (
                     <p className="text-brand-text-secondary mt-4">

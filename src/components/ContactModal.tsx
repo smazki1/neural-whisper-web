@@ -157,7 +157,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                       בואו נתחיל לעבוד יחד
                     </h2>
                     <p className="text-lg text-gray-300 hebrew-mobile-wrap">
-                      ספר לנו על הפרויקט שלך ונחזור אליך תוך 24 שעות
+                      ספרו לנו על הפרויקט שלכם ונחזור אליכם תוך 24 שעות
                     </p>
                   </motion.div>
 
@@ -175,8 +175,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.5 }}
                     >
-                      <label htmlFor="name" className="block text-brand-text mb-3 font-medium text-lg">
-                        שם מלא
+                        <label htmlFor="name" className="block text-brand-text mb-3 font-medium text-lg">
+                          שם מלא
                       </label>
                       <div className="relative">
                         <input
@@ -187,7 +187,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                           onChange={handleChange}
                           required
                           className="w-full px-6 py-4 bg-gradient-to-r from-[#0d1528]/60 to-[#101933]/60 border border-[#eec643]/20 rounded-xl focus:border-[#eec643] focus:outline-none focus:ring-2 focus:ring-[#eec643]/30 text-brand-text placeholder-brand-text/50 transition-all duration-300 hover:border-[#eec643]/40"
-                          placeholder="הכנס את שמך המלא"
+                          placeholder="הכניסו את שמכם המלא"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-[#eec643]/5 to-transparent rounded-xl pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
@@ -223,8 +223,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7 }}
                     >
-                      <label htmlFor="message" className="block text-brand-text mb-3 font-medium text-lg">
-                        ספר לנו על הפרויקט שלך
+                        <label htmlFor="message" className="block text-brand-text mb-3 font-medium text-lg">
+                          ספרו לנו על הפרויקט שלכם
                       </label>
                       <div className="relative">
                         <textarea
@@ -235,7 +235,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                           required
                           rows={5}
                           className="w-full px-6 py-4 bg-gradient-to-r from-[#0d1528]/60 to-[#101933]/60 border border-[#eec643]/20 rounded-xl focus:border-[#eec643] focus:outline-none focus:ring-2 focus:ring-[#eec643]/30 text-brand-text placeholder-brand-text/50 resize-none transition-all duration-300 hover:border-[#eec643]/40"
-                          placeholder="איך נוכל לעזור לך להגשים את המטרות שלך עם AI? ספר לנו על הרעיונות, האתגרים או הפרויקטים שלך..."
+                          placeholder="איך נוכל לעזור לכם להגשים את המטרות שלכם עם AI? ספרו לנו על הרעיונות, האתגרים או הפרויקטים שלכם..."
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-[#eec643]/5 to-transparent rounded-xl pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                       </div>

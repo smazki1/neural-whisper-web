@@ -26,8 +26,7 @@ const CorporateWorkshops = () => {
     company: '',
     email: '',
     phone: '',
-    message: '',
-    webhookUrl: ''
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -36,37 +35,37 @@ const CorporateWorkshops = () => {
     {
       title: 'סדנת AI בינה מלאכותית למתחילים',
       description: 'היכרות עם עולם ה-AI, כלים מדהימים זמינים לשימוש מיידי, ותרגול מעשי. מתאימה לצוותים ולמנהלים בכל המקצועות.',
-      url: 'https://www.mash.org.il/סדנאות/סדנת-ai-בינה-מלאכותית-למתחילים-השקעה-חכמה-לעובדים-למנהלים-ולארגון',
+      url: 'https://www.mash.org.il/%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA/%D7%A1%D7%93%D7%A0%D7%AA-%D7%91%D7%99%D7%A0%D7%94-%D7%9E%D7%9C%D7%90%D7%9B%D7%95%D7%AA%D7%99%D7%AA-%D7%9C%D7%90%D7%A0%D7%A9%D7%99-%D7%9E%D7%9B%D7%99%D7%A8%D7%95%D7%AA-%D7%9B%D7%99%D7%A6%D7%93-%D7%9C%D7%94%D7%A9%D7%AA%D7%9E%D7%A9-%D7%91-ai-%D7%9B%D7%93%D7%99-%D7%9C%D7%94%D7%92%D7%93%D7%99%D7%9C-%D7%90%D7%AA-%D7%94%D7%9E%D7%9B%D7%99%D7%A8%D7%95%D7%AA-%D7%A9%D7%9C%D7%9B%D7%9D-3-1-2-1-2-1-2-1-2-1-1-1-2-1-2?c=%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA-%D7%95%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D-ai',
       image: aiBeginnersImage
     },
     {
       title: 'קורס להוציא את המיטב מהצ\'טים',
       description: 'שליטה מתקדמת ב-ChatGPT, Claude, Copilot ו-Gemini ליצירת תוכן, תכנון פרויקטים ואוטומציה של תהליכים.',
-      url: 'https://www.mash.org.il/סדנאות/להוציא-את-המיטב-מהצטים-שליטה-מתקדמת-בטכנולוגיות-generative-ai',
+      url: 'https://www.mash.org.il/%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA/%D7%9C%D7%94%D7%95%D7%A6%D7%99%D7%90-%D7%90%D7%AA-%D7%94%D7%9E%D7%99%D7%98%D7%91-%D7%9E%D7%94%D7%A6-%D7%98%D7%99%D7%9D-%D7%A9%D7%9C%D7%99%D7%98%D7%94-%D7%9E%D7%AA%D7%A7%D7%93%D7%9E%D7%AA-%D7%91%D7%98%D7%9B%D7%A0%D7%95%D7%9C%D7%95%D7%92%D7%99%D7%95%D7%AA-generative-ai?c=%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA-%D7%95%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D-ai',
       image: chatMasteryImage
     },
     {
       title: 'סדנת AI למתקדמים',
       description: 'שליטה מתקדמת בטכנולוגיות Generative AI, יצירת תוכן, אוטומציה ושיפור תהליכי עבודה. יתרון תחרותי משמעותי.',
-      url: 'https://www.mash.org.il/סדנאות/סדנת-ai-בינה-מלאכותית-למתקדמים-החדשנות-שמניעה-את-הארגון-למצוינות',
+      url: 'https://www.mash.org.il/%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA/%D7%A1%D7%93%D7%A0%D7%AA-%D7%91%D7%99%D7%A0%D7%94-%D7%9E%D7%9C%D7%90%D7%9B%D7%95%D7%AA%D7%99%D7%AA-%D7%9C%D7%90%D7%A0%D7%A9%D7%99-%D7%9E%D7%9B%D7%99%D7%A8%D7%95%D7%AA-%D7%9B%D7%99%D7%A6%D7%93-%D7%9C%D7%94%D7%A9%D7%AA%D7%9E%D7%A9-%D7%91-ai-%D7%9B%D7%93%D7%99-%D7%9C%D7%94%D7%92%D7%93%D7%99%D7%9C-%D7%90%D7%AA-%D7%94%D7%9E%D7%9B%D7%99%D7%A8%D7%95%D7%AA-%D7%A9%D7%9C%D7%9B%D7%9D-3-1-2-1-2-1-2-1-2-1-1-1-3?c=%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA-%D7%95%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D-ai',
       image: aiAdvancedImage
     },
     {
       title: 'קורס אוטומציה ובינה מלאכותית',
       description: 'יישום פתרונות אוטומציה מבוססי AI למכירות, ניהול, שירות לקוחות, משאבי אנוש וניהול פרויקטים. ללא צורך בידע תכנותי.',
-      url: 'https://www.mash.org.il/סדנאות/קורס-אוטומציה-ובינה-מלאכותית-ai',
+      url: 'https://www.mash.org.il/%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA/%D7%9E%D7%9B%D7%A4%D7%99%D7%9C%D7%99-%D7%94%D7%9B%D7%95%D7%97-%D7%A7%D7%95%D7%A8%D7%A1-%D7%90%D7%95%D7%98%D7%95%D7%9E%D7%A6%D7%99%D7%94-%D7%9E%D7%91%D7%95%D7%A1%D7%A1%D7%AA-%D7%91%D7%99%D7%A0%D7%94-%D7%9E%D7%9C%D7%90%D7%9B%D7%95%D7%AA%D7%99%D7%AA-ai?c=%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA-%D7%95%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D-ai',
       image: automationImage
     },
     {
       title: 'סדנת AI למנהלים',
       description: 'כלים ומיומנויות לקבלת החלטות ניהוליות, ארגוניות ועסקיות טובות יותר באמצעות AI.',
-      url: 'https://www.mash.org.il/סדנאות/קורס-ai-בינה-מלאכותית-למנהלים-כלים-ומיומנויות-שמנהלים-חייבים-להכיר',
+      url: 'https://www.mash.org.il/%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA/%D7%A1%D7%93%D7%A0%D7%AA-%D7%91%D7%99%D7%A0%D7%94-%D7%9E%D7%9C%D7%90%D7%9B%D7%95%D7%AA%D7%99%D7%AA-ai-%D7%9C%D7%9E%D7%A0%D7%94%D7%9C%D7%99%D7%9D-%D7%9B%D7%9C%D7%99%D7%9D-%D7%95%D7%9E%D7%99%D7%95%D7%9E%D7%A0%D7%95%D7%99%D7%95%D7%AA-%D7%A9%D7%97%D7%99%D7%99%D7%91-%D7%9C%D7%94%D7%9B%D7%99%D7%A8?c=%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA-%D7%95%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D-ai',
       image: aiManagersImage
     },
     {
       title: 'סדנת AI לאנשי מכירות',
       description: 'כלים ומיומנויות חדשניות להגדלת מכירות באמצעות בינה מלאכותית.',
-      url: 'https://www.mash.org.il/סדנאות/סדנת-ai-בינה-מלאכותית-לאנשי-מכירות-כיצד-להשתמש-ב-ai-כדי-להגדיל-את-המכירות-שלכם',
+      url: 'https://www.mash.org.il/%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA/%D7%A1%D7%93%D7%A0%D7%AA-%D7%91%D7%99%D7%A0%D7%94-%D7%9E%D7%9C%D7%90%D7%9B%D7%95%D7%AA%D7%99%D7%AA-%D7%9C%D7%90%D7%A0%D7%A9%D7%99-%D7%9E%D7%9B%D7%99%D7%A8%D7%95%D7%AA-%D7%9B%D7%99%D7%A6%D7%93-%D7%9C%D7%94%D7%A9%D7%AA%D7%9E%D7%A9-%D7%91-ai-%D7%9B%D7%93%D7%99-%D7%9C%D7%94%D7%92%D7%93%D7%99%D7%9C-%D7%90%D7%AA-%D7%94%D7%9E%D7%9B%D7%99%D7%A8%D7%95%D7%AA-%D7%A9%D7%9C%D7%9B%D7%9D-3-1-2-1-2-1-2-1-2-1-1-1-2-1?c=%D7%A1%D7%93%D7%A0%D7%90%D7%95%D7%AA-%D7%95%D7%A7%D7%95%D7%A8%D7%A1%D7%99%D7%9D-ai',
       image: aiSalesImage
     }
   ];
@@ -84,14 +83,7 @@ const CorporateWorkshops = () => {
       return;
     }
 
-    if (!formData.webhookUrl) {
-      toast({
-        title: "שגיאה",
-        description: "אנא הזינו כתובת Webhook",
-        variant: "destructive"
-      });
-      return;
-    }
+  
 
     setIsSubmitting(true);
 
@@ -115,8 +107,7 @@ const CorporateWorkshops = () => {
         company: '',
         email: '',
         phone: '',
-        message: '',
-        webhookUrl: ''
+        message: ''
       });
     } catch (error: any) {
       console.error('Error submitting form:', error);
@@ -175,19 +166,22 @@ const CorporateWorkshops = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="professional-card p-8 md:p-12"
+                className="professional-card p-8 md:p-12 text-center"
               >
                 <p className="text-lg md:text-xl professional-text-body leading-relaxed mb-6">
-                  הדרכת AI מוצלחת צריכה שני דברים: הבנה עמוקה של הטכנולוגיה, והבנה עמוקה של ארגונים.
+                  כשאתם מזמינים סדנת AI לארגון, אתם לא רוצים רק יום מעניין.
+                </p>
+                <p className="text-lg md:text-xl professional-text-body leading-relaxed mb-6">
+                  אתם רוצים שמשהו באמת ישתנה.
                 </p>
                 <p className="text-lg md:text-xl professional-text-body leading-relaxed mb-6">
                   לכן חיברתי כוחות עם <strong>משכּוּכית</strong> - אחת מחברות הייעוץ וההדרכה הארגונית המובילות בישראל.
                 </p>
                 <p className="text-lg md:text-xl professional-text-body leading-relaxed mb-6">
-                  אני מתמקד במה שהכלים לא יכולים ללמד לבד - איך לחשוב בבהירות, איך לדעת מה רוצים באמת, ואיך להפוך את ה-AI לכוח משמעותי. משכּוּכית מתמחה במה שארגונים צריכים כדי שהדברים באמת יקרו - הטמעה, שינוי, ובניית תכניות שעובדות לאורך זמן.
+                  הסדנאות האלה לא מלמדות רק כלים. הן מלמדות איך לחשוב - איך לדעת מה אתם רוצים, איך להיות ברורים, ואיך להפוך את ה-AI לכוח שלכם. וזה קורה בתוך מסגרת שיודעת איך להטמיע שינויים בארגונים, לא רק להרצות.
                 </p>
                 <p className="text-lg md:text-xl professional-text-body leading-relaxed font-semibold">
-                  ביחד? סדנאות שלא רק מלמדות כלים, אלא משנות את הדרך שבה כולם עובדים.
+                  זה לא "עוד הדרכה". זה תהליך שמשנה את הדרך שבה אנשים עובדים.
                 </p>
               </motion.div>
             </div>
@@ -370,24 +364,7 @@ const CorporateWorkshops = () => {
                           />
                         </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="webhookUrl" className="professional-text-primary">
-                            כתובת Webhook <span className="text-destructive">*</span>
-                          </Label>
-                          <Input
-                            id="webhookUrl"
-                            name="webhookUrl"
-                            type="url"
-                            value={formData.webhookUrl}
-                            onChange={handleInputChange}
-                            placeholder="https://hooks.zapier.com/..."
-                            required
-                            className="professional-input"
-                          />
-                          <p className="text-sm text-muted-foreground">
-                            הזינו את כתובת ה-Webhook שלכם (Zapier, Make, וכו׳)
-                          </p>
-                        </div>
+                        
 
                         <Button 
                           type="submit" 
@@ -395,7 +372,7 @@ const CorporateWorkshops = () => {
                           size="lg"
                           disabled={isSubmitting}
                         >
-                          <span>{isSubmitting ? 'שולח...' : 'שלח'}</span>
+                          <span>{isSubmitting ? 'שולח...' : 'שלחו'}</span>
                           <Send className="mr-3 h-5 w-5" />
                         </Button>
                       </form>

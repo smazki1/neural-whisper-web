@@ -105,7 +105,7 @@ export default function Benefits() {
               מוכנים לראות איך זה עובד בפועל?
             </p>
             <div className="flex items-center justify-center gap-3 text-brand-accent font-bold text-lg">
-              <span>גלה למטה</span>
+              <span>גלו למטה</span>
               <svg className="w-6 h-6 animate-bounce" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
               </svg>

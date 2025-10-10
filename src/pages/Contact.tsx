@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -54,8 +54,8 @@ const Contact = () => {
               <span className="text-primary block mt-2">יחד</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              יש לך פרויקט מרתק? רעיון חדשני? או סתם רוצה לדבר על העתיד של הטכנולוגיה?
-              <br />אני כאן כדי לעזור ולהדריך אותך בדרך.
+              יש לכם פרויקט מרתק? רעיון חדשני? או סתם רוצים לדבר על העתיד של הטכנולוגיה?
+              <br />אני כאן כדי לעזור ולהדריך אתכם בדרך.
             </p>
           </motion.div>
 
@@ -82,34 +82,13 @@ const Contact = () => {
                     <Phone className="w-6 h-6 text-primary flex-shrink-0" />
                     <div>
                       <p className="font-medium text-lg">טלפון</p>
-                      <a href="tel:+972542000000" className="text-muted-foreground hover:text-primary text-lg">
-                        054-200-0000
+                      <a href="tel:+972527772807" className="text-muted-foreground hover:text-primary text-lg">
+                        052-777-2807
                       </a>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-4">
-                    <MessageCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-lg">וואטסאפ</p>
-                      <a 
-                        href="https://wa.me/972542000000" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-green-600 text-lg"
-                      >
-                        שלח הודעה
-                      </a>
-                    </div>
-                  </div>
                   
-                  <div className="flex items-center gap-4">
-                    <MapPin className="w-6 h-6 text-primary flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-lg">מיקום</p>
-                      <p className="text-muted-foreground text-lg">ישראל</p>
-                    </div>
-                  </div>
                 </div>
 
                 {/* WhatsApp Button */}
@@ -120,7 +99,7 @@ const Contact = () => {
                     size="lg"
                   >
                     <MessageCircle className="w-5 h-5 ml-2" />
-                    שלח הודעה בוואטסאפ
+                    שלחו הודעה בוואטסאפ
                   </Button>
                 </div>
               </Card>

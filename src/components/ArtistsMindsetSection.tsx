@@ -17,9 +17,7 @@ const ArtistsMindsetSection = () => {
               אתם האומן. יש לכם חזון.
             </h3>
             
-            <p className="text-xl lg:text-2xl text-muted-foreground">
-              משהו שאתם רואים, משהו שרק אתם יכולים לראות.
-            </p>
+            
             
             <div className="py-4">
               <div className="w-16 h-1 bg-primary/40 mx-auto rounded-full" />

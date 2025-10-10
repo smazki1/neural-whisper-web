@@ -33,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
     { name: 'אודות', href: '/about' },
     { name: 'תהליכים וקורסים', href: '/products' },
-    { name: 'יעוץ אישי', href: '/consulting' },
+    { name: 'יעוץ אישי', href: '/contact' },
     { name: 'סדנאות לארגונים', href: '/corporate-workshops' },
     { 
       name: 'השראה', 
@@ -55,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     },
     { 
       name: 'Instagram', 
-      href: 'https://www.instagram.com/avifrid_ai/', 
+      href: 'https://www.instagram.com/avi_ai_frid/', 
       icon: Instagram,
       color: 'hover:text-pink-600'
     }
@@ -77,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
               {/* Social Media & User Menu - Left Side */}
-              <div className="hidden lg:flex items-center gap-6">
+              <div className="hidden lg:flex items-center gap-6 order-last">
                 {/* Social Media Links */}
                 <div className="flex items-center gap-4">
                   {socialLinks.map((social) => {
@@ -250,7 +250,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
 
             {/* Brand Logo - Right Side */}
             <motion.div 
-              className="flex-shrink-0"
+              className="flex-shrink-0 order-first"
               whileHover={{ scale: 1.05 }}
             >
               <Link to="/" className="text-2xl font-bold professional-text-primary tracking-tight hover:text-accent transition-colors duration-300">

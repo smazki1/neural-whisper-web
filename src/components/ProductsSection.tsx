@@ -171,13 +171,13 @@ const ProductsSection = () => {
                   {product.external_url ? (
                     <a href={product.external_url} target="_blank" rel="noopener noreferrer" className="block">
                       <Button className="premium-button-primary w-full" size="lg">
-                        למד עוד
+                        למידע נוסף
                       </Button>
                     </a>
                   ) : (
                     <Link to={`/products/${product.slug}`} className="block">
                       <Button className="premium-button-primary w-full" size="lg">
-                        למד עוד
+                        למידע נוסף
                       </Button>
                     </Link>
                   )}

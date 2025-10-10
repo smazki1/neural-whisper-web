@@ -231,7 +231,7 @@ const BusinessWorkshop = () => {
               transition={{ duration: 2, repeat: Infinity }}
               className="flex flex-col items-center text-gray-400"
             >
-              <span className="text-sm mb-2">גלה עוד</span>
+              <span className="text-sm mb-2">גלו עוד</span>
               <ChevronDown className="h-6 w-6" />
             </motion.div>
           </motion.div>

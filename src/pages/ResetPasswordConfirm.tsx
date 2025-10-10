@@ -165,7 +165,7 @@ const ResetPasswordConfirm: React.FC = () => {
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     required 
-                    placeholder="הכנס סיסמה חדשה"
+                    placeholder="הכניסו סיסמה חדשה"
                   />
                   <p className="text-xs text-muted-foreground">
                     הסיסמה חייבת להכיל לפחות 8 תווים, אותיות גדולות, קטנות ומספרים
@@ -180,7 +180,7 @@ const ResetPasswordConfirm: React.FC = () => {
                     value={confirmPassword} 
                     onChange={(e) => setConfirmPassword(e.target.value)} 
                     required 
-                    placeholder="הכנס שוב את הסיסמה החדשה"
+                    placeholder="הכניסו שוב את הסיסמה החדשה"
                   />
                 </div>
                 

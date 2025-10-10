@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import { AdminLayout } from "./components/admin/AdminLayout";
+import { AdminLayout } from "./components/Admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminContent from "./pages/admin/AdminContent";
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -37,7 +37,6 @@ import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
-import Consulting from "./pages/Consulting";
 import CorporateWorkshops from "./pages/CorporateWorkshops";
 import Checkout from "./pages/Checkout";
 import PaymentSuccess from "./pages/PaymentSuccess";
@@ -80,7 +79,7 @@ const App = () => {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/consulting" element={<Consulting />} />
+              <Route path="/consulting" element={<Contact />} />
               <Route path="/corporate-workshops" element={<CorporateWorkshops />} />
             <Route path="/checkout/:productId" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />

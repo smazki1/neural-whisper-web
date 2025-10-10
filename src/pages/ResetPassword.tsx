@@ -72,7 +72,7 @@ const ResetPassword: React.FC = () => {
                       value={email} 
                       onChange={(e) => setEmail(e.target.value)} 
                       required 
-                      placeholder="הכנס את כתובת האימייל שלך"
+                      placeholder="הכניסו את כתובת האימייל שלכם"
                     />
                   </div>
                   <Button type="submit" disabled={loading} className="w-full">
