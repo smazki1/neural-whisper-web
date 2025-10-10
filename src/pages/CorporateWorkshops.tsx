@@ -11,6 +11,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
 import { SEOHead } from '@/components/SEO/SEOHead';
+import { supabase } from '@/integrations/supabase/client';
 import aiBeginnersImage from '@/assets/workshops/ai-beginners.jpg';
 import chatMasteryImage from '@/assets/workshops/chat-mastery.jpg';
 import aiAdvancedImage from '@/assets/workshops/ai-advanced.jpg';
@@ -25,14 +26,16 @@ const CorporateWorkshops = () => {
     company: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
+    webhookUrl: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const courses = [
     {
       title: 'סדנת AI בינה מלאכותית למתחילים',
-      description: 'היכרות עם עולם ה-AI, כלים מדהימים זמינים לשימוש מיידי, ותרגול מעשי. מתאימה לעובדים ולמנהלים בכל המקצועות.',
+      description: 'היכרות עם עולם ה-AI, כלים מדהימים זמינים לשימוש מיידי, ותרגול מעשי. מתאימה לצוותים ולמנהלים בכל המקצועות.',
       url: 'https://www.mash.org.il/סדנאות/סדנת-ai-בינה-מלאכותית-למתחילים-השקעה-חכמה-לעובדים-למנהלים-ולארגון',
       image: aiBeginnersImage
     },
@@ -75,28 +78,56 @@ const CorporateWorkshops = () => {
     if (!formData.fullName || !formData.company || !formData.email || !formData.phone) {
       toast({
         title: "שגיאה",
-        description: "אנא מלא את כל השדות הנדרשים",
+        description: "אנא מלאו את כל השדות הנדרשים",
         variant: "destructive"
       });
       return;
     }
 
-    // Here you would typically send the data to your backend
-    console.log('Form submitted:', formData);
-    
-    toast({
-      title: "הטופס נשלח בהצלחה!",
-      description: "נחזור אליך בהקדם האפשרי",
-    });
+    if (!formData.webhookUrl) {
+      toast({
+        title: "שגיאה",
+        description: "אנא הזינו כתובת Webhook",
+        variant: "destructive"
+      });
+      return;
+    }
 
-    // Reset form
-    setFormData({
-      fullName: '',
-      company: '',
-      email: '',
-      phone: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+
+    try {
+      const response = await supabase.functions.invoke('send-contact-form', {
+        body: formData
+      });
+
+      if (response.error) {
+        throw response.error;
+      }
+
+      toast({
+        title: "הטופס נשלח בהצלחה!",
+        description: "נחזור אליכם בהקדם האפשרי",
+      });
+
+      // Reset form
+      setFormData({
+        fullName: '',
+        company: '',
+        email: '',
+        phone: '',
+        message: '',
+        webhookUrl: ''
+      });
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "שגיאה בשליחת הטופס",
+        description: error.message || "אנא נסו שוב מאוחר יותר",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -153,10 +184,10 @@ const CorporateWorkshops = () => {
                   לכן חיברתי כוחות עם <strong>משכּוּכית</strong> - אחת מחברות הייעוץ וההדרכה הארגונית המובילות בישראל.
                 </p>
                 <p className="text-lg md:text-xl professional-text-body leading-relaxed mb-6">
-                  אני מתמקד במה שהכלים לא יכולים ללמד לבד - איך לחשוב בבהירות, איך לדעת מה אתה רוצה, ואיך להפוך את ה-AI לכוח שלך. משכּוּכית מתמחה במה שארגונים צריכים כדי שהדברים באמת יקרו - הטמעה, שינוי, ובניית תכניות שעובדות לאורך זמן.
+                  אני מתמקד במה שהכלים לא יכולים ללמד לבד - איך לחשוב בבהירות, איך לדעת מה רוצים באמת, ואיך להפוך את ה-AI לכוח משמעותי. משכּוּכית מתמחה במה שארגונים צריכים כדי שהדברים באמת יקרו - הטמעה, שינוי, ובניית תכניות שעובדות לאורך זמן.
                 </p>
                 <p className="text-lg md:text-xl professional-text-body leading-relaxed font-semibold">
-                  ביחד? סדנאות שלא רק מלמדות כלים, אלא משנות את הדרך שבה אנשים עובדים.
+                  ביחד? סדנאות שלא רק מלמדות כלים, אלא משנות את הדרך שבה כולם עובדים.
                 </p>
               </motion.div>
             </div>
@@ -253,7 +284,7 @@ const CorporateWorkshops = () => {
                   נשמח לשמוע מכם
                 </h2>
                 <p className="text-lg professional-text-body text-center mb-12">
-                  מעוניינים בסדנה או הדרכה לארגון שלכם? מלאו את הפרטים ונחזור אליכם בהקדם:
+                  מעוניינים בסדנה או הדרכה לארגון? מלאו את הפרטים ונחזור אליכם בהקדם:
                 </p>
 
                 <motion.div
@@ -275,7 +306,6 @@ const CorporateWorkshops = () => {
                             type="text"
                             value={formData.fullName}
                             onChange={handleInputChange}
-                            placeholder="שם מלא"
                             required
                             className="professional-input"
                           />
@@ -291,7 +321,6 @@ const CorporateWorkshops = () => {
                             type="text"
                             value={formData.company}
                             onChange={handleInputChange}
-                            placeholder="שם החברה או הארגון"
                             required
                             className="professional-input"
                           />
@@ -307,7 +336,6 @@ const CorporateWorkshops = () => {
                             type="email"
                             value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="your@email.com"
                             required
                             className="professional-input"
                           />
@@ -323,7 +351,6 @@ const CorporateWorkshops = () => {
                             type="tel"
                             value={formData.phone}
                             onChange={handleInputChange}
-                            placeholder="05X-XXXXXXX"
                             required
                             className="professional-input"
                           />
@@ -338,14 +365,37 @@ const CorporateWorkshops = () => {
                             name="message"
                             value={formData.message}
                             onChange={handleInputChange}
-                            placeholder="ספרו לנו על הארגון שלכם ומה אתם מחפשים..."
-                            rows={5}
+                            rows={4}
                             className="professional-input resize-none"
                           />
                         </div>
 
-                        <Button type="submit" className="w-full premium-button-primary text-lg py-6" size="lg">
-                          <span>שלח</span>
+                        <div className="space-y-2">
+                          <Label htmlFor="webhookUrl" className="professional-text-primary">
+                            כתובת Webhook <span className="text-destructive">*</span>
+                          </Label>
+                          <Input
+                            id="webhookUrl"
+                            name="webhookUrl"
+                            type="url"
+                            value={formData.webhookUrl}
+                            onChange={handleInputChange}
+                            placeholder="https://hooks.zapier.com/..."
+                            required
+                            className="professional-input"
+                          />
+                          <p className="text-sm text-muted-foreground">
+                            הזינו את כתובת ה-Webhook שלכם (Zapier, Make, וכו׳)
+                          </p>
+                        </div>
+
+                        <Button 
+                          type="submit" 
+                          className="w-full premium-button-primary text-lg py-6" 
+                          size="lg"
+                          disabled={isSubmitting}
+                        >
+                          <span>{isSubmitting ? 'שולח...' : 'שלח'}</span>
                           <Send className="mr-3 h-5 w-5" />
                         </Button>
                       </form>
