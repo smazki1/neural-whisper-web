@@ -4,9 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Badge } from './ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { useAuth } from '@/hooks/useAuth';
-import { User, Settings, LogOut, BookOpen, Menu, X, ChevronDown, Facebook, Instagram } from 'lucide-react';
+import { useUserRoles } from '@/hooks/useUserRoles';
+import { useNewLeadsCount } from '@/hooks/useNewLeadsCount';
+import { User, Settings, LogOut, BookOpen, Menu, X, ChevronDown, Facebook, Instagram, Bell } from 'lucide-react';
 
 interface NavbarProps {
   onContactClick: () => void;
@@ -14,6 +17,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const { user, signOut } = useAuth();
+  const { roles } = useUserRoles(user?.id);
+  const isAdmin = roles.includes('admin');
+  const { count: newLeadsCount } = useNewLeadsCount();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
@@ -100,19 +106,42 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
 
               {/* User Menu or Login */}
               {user ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button variant="ghost" className="relative h-12 w-12 rounded-full professional-backdrop border">
-                        <Avatar className="h-10 w-10">
-                          <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.display_name || 'Profile'} />
-                          <AvatarFallback className="bg-accent text-accent-foreground font-semibold">
-                            {user.email?.charAt(0).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                      </Button>
-                    </motion.div>
-                  </DropdownMenuTrigger>
+                <div className="flex items-center gap-3">
+                  {/* Notifications Bell for Admin */}
+                  {isAdmin && (
+                    <Link to="/admin/leads">
+                      <motion.div 
+                        whileHover={{ scale: 1.05 }} 
+                        whileTap={{ scale: 0.95 }}
+                        className="relative"
+                      >
+                        <Button variant="ghost" size="icon" className="relative rounded-full">
+                          <Bell className="h-5 w-5" />
+                          {newLeadsCount > 0 && (
+                            <Badge 
+                              className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-red-500 hover:bg-red-600"
+                            >
+                              {newLeadsCount > 9 ? '9+' : newLeadsCount}
+                            </Badge>
+                          )}
+                        </Button>
+                      </motion.div>
+                    </Link>
+                  )}
+                  
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button variant="ghost" className="relative h-12 w-12 rounded-full professional-backdrop border">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.display_name || 'Profile'} />
+                            <AvatarFallback className="bg-accent text-accent-foreground font-semibold">
+                              {user.email?.charAt(0).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                        </Button>
+                      </motion.div>
+                    </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-64 professional-backdrop border" align="start" forceMount>
                     <div className="flex items-center justify-start gap-3 p-4">
                       <Avatar className="h-10 w-10">
@@ -167,6 +196,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                </div>
               ) : (
                 <div className="flex items-center gap-3">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
