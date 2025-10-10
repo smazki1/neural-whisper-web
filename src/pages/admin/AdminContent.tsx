@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ContentManager } from '@/components/Admin/ContentManager';
+import { ContentServicesManager } from '@/components/Admin/ContentServicesManager';
 
 const AdminContent = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const AdminContent = () => {
   const getActiveTab = () => {
     const path = location.pathname;
     if (path.includes('/blog')) return 'blog';
+    if (path.includes('/resources')) return 'resources';
     if (path.includes('/pages')) return 'pages';
     if (path.includes('/media')) return 'media';
     return 'blog';
@@ -38,12 +40,17 @@ const AdminContent = () => {
         <Tabs value={getActiveTab()} onValueChange={handleTabChange} className="space-y-6">
           <TabsList>
             <TabsTrigger value="blog">מאמרים</TabsTrigger>
+            <TabsTrigger value="resources">תכנים חינמיים</TabsTrigger>
             <TabsTrigger value="pages">עמודים</TabsTrigger>
             <TabsTrigger value="media">מדיה</TabsTrigger>
           </TabsList>
 
           <TabsContent value="blog" className="space-y-6">
             <ContentManager />
+          </TabsContent>
+
+          <TabsContent value="resources" className="space-y-6">
+            <ContentServicesManager />
           </TabsContent>
 
           <TabsContent value="pages" className="space-y-6">
