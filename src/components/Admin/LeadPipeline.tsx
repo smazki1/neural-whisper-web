@@ -418,13 +418,9 @@ export const LeadPipeline = ({ onLeadUpdated }: LeadPipelineProps) => {
               </Select>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setShowTemplates(true)}>
-                <MessageSquare className="h-4 w-4 mr-2" />
-                תבניות תגובה
-              </Button>
               <Button variant="outline" onClick={exportLeads}>
                 <Download className="h-4 w-4 mr-2" />
-                ייצא לCSV
+                ייצא
               </Button>
               <Button onClick={fetchLeads}>
                 <RefreshCw className="h-4 w-4 mr-2" />
@@ -432,126 +428,179 @@ export const LeadPipeline = ({ onLeadUpdated }: LeadPipelineProps) => {
               </Button>
             </div>
           </div>
-
-          {/* Bulk Actions */}
-          {selectedLeads.length > 0 && (
-            <div className="mt-4 p-4 bg-muted rounded-lg">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">
-                  {selectedLeads.length} ליידים נבחרו
-                </span>
-                <div className="flex gap-2">
-                  {Object.entries(statusConfig).map(([status, config]) => (
-                    <Button
-                      key={status}
-                      variant="outline"
-                      size="sm"
-                      onClick={() => bulkUpdateStatus(status as Lead['status'])}
-                    >
-                      {config.label}
-                    </Button>
-                  ))}
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => setSelectedLeads([])}
-                  >
-                    בטל בחירה
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
         </CardContent>
       </Card>
 
-      {/* Pipeline View */}
-      <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
-        {Object.entries(statusConfig).map(([status, config]) => {
-          const statusLeads = leadsByStatus[status] || [];
-          const IconComponent = config.icon;
-          
-          return (
-            <Card key={status} className="min-h-[500px]">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-sm">
-                  <IconComponent className="h-4 w-4" />
-                  {config.label}
-                  <Badge variant="secondary" className="ml-auto">
-                    {statusLeads.length}
-                  </Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-2">
-                <ScrollArea className="h-[400px]">
-                  <div className="space-y-2">
-                    {statusLeads.map((lead) => (
-                      <Card 
-                        key={lead.id} 
-                        className="p-3 cursor-pointer hover:shadow-md transition-shadow"
-                        onClick={() => setSelectedLead(lead)}
-                      >
-                        <div className="space-y-2">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-center gap-2">
-                              <Checkbox
-                                checked={selectedLeads.includes(lead.id)}
-                                onCheckedChange={(checked) => {
-                                  if (checked) {
-                                    setSelectedLeads([...selectedLeads, lead.id]);
-                                  } else {
-                                    setSelectedLeads(selectedLeads.filter(id => id !== lead.id));
-                                  }
-                                }}
-                                onClick={(e) => e.stopPropagation()}
-                              />
-                              <div>
-                                <div className="font-medium text-sm">{lead.name}</div>
-                                <div className="text-xs text-muted-foreground">{lead.email}</div>
-                              </div>
-                            </div>
+      {/* Leads Table */}
+      <Card>
+        <CardHeader>
+          <CardTitle>רשימת פניות ({filteredLeads.length})</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {filteredLeads.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <AlertCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>לא נמצאו פניות</p>
+              </div>
+            ) : (
+              filteredLeads.map((lead) => (
+                <Card key={lead.id} className="hover:shadow-md transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      {/* Header Row */}
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-3">
+                            <h3 className="text-lg font-semibold">{lead.name}</h3>
+                            <Badge className={statusConfig[lead.status].color}>
+                              {statusConfig[lead.status].label}
+                            </Badge>
                           </div>
-                          
-                          {lead.company && (
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Building className="h-3 w-3" />
-                              {lead.company}
-                            </div>
-                          )}
-                          
-                          {lead.service_interest && (
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Tag className="h-3 w-3" />
-                              {lead.service_interest}
-                            </div>
-                          )}
-                          
-                          <div className="flex items-center justify-between text-xs text-muted-foreground">
-                            <span>{format(new Date(lead.created_at), 'dd/MM', { locale: he })}</span>
-                            {lead.follow_up_date && (
-                              <span className="text-orange-600">
-                                <Clock className="h-3 w-3 inline mr-1" />
-                                {format(new Date(lead.follow_up_date), 'dd/MM', { locale: he })}
-                              </span>
-                            )}
-                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {format(new Date(lead.created_at), 'dd/MM/yyyy HH:mm', { locale: he })}
+                          </p>
                         </div>
-                      </Card>
-                    ))}
-                    
-                    {statusLeads.length === 0 && (
-                      <div className="text-center py-8 text-muted-foreground">
-                        <IconComponent className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                        <div className="text-sm">אין ליידים</div>
+                        <div className="flex gap-2">
+                          <Select
+                            value={lead.status}
+                            onValueChange={(value) => updateLeadStatus(lead.id, value as Lead['status'])}
+                          >
+                            <SelectTrigger className="w-[150px]">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.entries(statusConfig).map(([status, config]) => (
+                                <SelectItem key={status} value={status}>
+                                  {config.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => deleteLead(lead.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+
+                      <Separator />
+
+                      {/* Contact Details */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-2 text-sm">
+                            <Mail className="h-4 w-4 text-muted-foreground" />
+                            <span className="font-medium">אימייל:</span>
+                            <a href={`mailto:${lead.email}`} className="text-primary hover:underline">
+                              {lead.email}
+                            </a>
+                          </div>
+                          {lead.phone && (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Phone className="h-4 w-4 text-muted-foreground" />
+                              <span className="font-medium">טלפון:</span>
+                              <a href={`tel:${lead.phone}`} className="text-primary hover:underline">
+                                {lead.phone}
+                              </a>
+                            </div>
+                          )}
+                          {lead.company && (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Building className="h-4 w-4 text-muted-foreground" />
+                              <span className="font-medium">חברה:</span>
+                              <span>{lead.company}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="space-y-3">
+                          {lead.source && (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Tag className="h-4 w-4 text-muted-foreground" />
+                              <span className="font-medium">מקור:</span>
+                              <Badge variant="outline">{lead.source}</Badge>
+                            </div>
+                          )}
+                          {lead.service_interest && (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Target className="h-4 w-4 text-muted-foreground" />
+                              <span className="font-medium">עניין:</span>
+                              <span>{lead.service_interest}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Message */}
+                      {lead.message && (
+                        <>
+                          <Separator />
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                              <span className="text-sm font-medium">הודעה:</span>
+                            </div>
+                            <div className="bg-muted/50 rounded-lg p-4">
+                              <p className="text-sm whitespace-pre-wrap">{lead.message}</p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Notes */}
+                      {lead.notes && (
+                        <>
+                          <Separator />
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <Edit className="h-4 w-4 text-muted-foreground" />
+                              <span className="text-sm font-medium">הערות:</span>
+                            </div>
+                            <div className="bg-muted/30 rounded-lg p-4">
+                              <p className="text-sm whitespace-pre-wrap">{lead.notes}</p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Add Notes Button */}
+                      <div className="flex gap-2 pt-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              <Edit className="h-4 w-4 mr-2" />
+                              {lead.notes ? 'ערוך הערות' : 'הוסף הערות'}
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>הערות עבור {lead.name}</DialogTitle>
+                            </DialogHeader>
+                            <Textarea
+                              defaultValue={lead.notes || ''}
+                              placeholder="הוסף הערות..."
+                              rows={6}
+                              onBlur={(e) => {
+                                if (e.target.value !== lead.notes) {
+                                  updateLead(lead.id, { notes: e.target.value });
+                                }
+                              }}
+                            />
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Lead Details Dialog */}
       <Dialog open={!!selectedLead} onOpenChange={() => setSelectedLead(null)}>
