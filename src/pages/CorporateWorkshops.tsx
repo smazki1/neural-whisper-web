@@ -11,6 +11,12 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
 import { SEOHead } from '@/components/SEO/SEOHead';
+import aiBeginnersImage from '@/assets/workshops/ai-beginners.jpg';
+import chatMasteryImage from '@/assets/workshops/chat-mastery.jpg';
+import aiAdvancedImage from '@/assets/workshops/ai-advanced.jpg';
+import automationImage from '@/assets/workshops/automation.jpg';
+import aiManagersImage from '@/assets/workshops/ai-managers.jpg';
+import aiSalesImage from '@/assets/workshops/ai-sales.jpg';
 
 const CorporateWorkshops = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -28,37 +34,37 @@ const CorporateWorkshops = () => {
       title: 'סדנת AI בינה מלאכותית למתחילים',
       description: 'היכרות עם עולם ה-AI, כלים מדהימים זמינים לשימוש מיידי, ותרגול מעשי. מתאימה לעובדים ולמנהלים בכל המקצועות.',
       url: 'https://www.mash.org.il/סדנאות/סדנת-ai-בינה-מלאכותית-למתחילים-השקעה-חכמה-לעובדים-למנהלים-ולארגון',
-      category: 'למתחילים'
+      image: aiBeginnersImage
     },
     {
       title: 'קורס להוציא את המיטב מהצ\'טים',
       description: 'שליטה מתקדמת ב-ChatGPT, Claude, Copilot ו-Gemini ליצירת תוכן, תכנון פרויקטים ואוטומציה של תהליכים.',
       url: 'https://www.mash.org.il/סדנאות/להוציא-את-המיטב-מהצטים-שליטה-מתקדמת-בטכנולוגיות-generative-ai',
-      category: 'למתחילים'
+      image: chatMasteryImage
     },
     {
       title: 'סדנת AI למתקדמים',
       description: 'שליטה מתקדמת בטכנולוגיות Generative AI, יצירת תוכן, אוטומציה ושיפור תהליכי עבודה. יתרון תחרותי משמעותי.',
       url: 'https://www.mash.org.il/סדנאות/סדנת-ai-בינה-מלאכותית-למתקדמים-החדשנות-שמניעה-את-הארגון-למצוינות',
-      category: 'למתקדמים'
+      image: aiAdvancedImage
     },
     {
       title: 'קורס אוטומציה ובינה מלאכותית',
       description: 'יישום פתרונות אוטומציה מבוססי AI למכירות, ניהול, שירות לקוחות, משאבי אנוש וניהול פרויקטים. ללא צורך בידע תכנותי.',
       url: 'https://www.mash.org.il/סדנאות/קורס-אוטומציה-ובינה-מלאכותית-ai',
-      category: 'למתקדמים'
+      image: automationImage
     },
     {
       title: 'סדנת AI למנהלים',
       description: 'כלים ומיומנויות לקבלת החלטות ניהוליות, ארגוניות ועסקיות טובות יותר באמצעות AI.',
       url: 'https://www.mash.org.il/סדנאות/קורס-ai-בינה-מלאכותית-למנהלים-כלים-ומיומנויות-שמנהלים-חייבים-להכיר',
-      category: 'לפי תפקידים'
+      image: aiManagersImage
     },
     {
       title: 'סדנת AI לאנשי מכירות',
       description: 'כלים ומיומנויות חדשניות להגדלת מכירות באמצעות בינה מלאכותית.',
       url: 'https://www.mash.org.il/סדנאות/סדנת-ai-בינה-מלאכותית-לאנשי-מכירות-כיצד-להשתמש-ב-ai-כדי-להגדיל-את-המכירות-שלכם',
-      category: 'לפי תפקידים'
+      image: aiSalesImage
     }
   ];
 
@@ -178,26 +184,28 @@ const CorporateWorkshops = () => {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
                   >
-                    <Card className="professional-card h-full hover:shadow-xl transition-all duration-500 group">
+                    <Card className="professional-card h-full hover:shadow-xl transition-all duration-500 group overflow-hidden">
+                      <div className="relative h-48 overflow-hidden">
+                        <img 
+                          src={course.image} 
+                          alt={course.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
                       <CardHeader>
-                        <div className="mb-3">
-                          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full professional-badge">
-                            {course.category}
-                          </span>
-                        </div>
                         <CardTitle className="text-xl md:text-2xl professional-text-primary group-hover:text-accent transition-colors duration-300">
                           {course.title}
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="flex flex-col h-full">
-                        <CardDescription className="text-base professional-text-body leading-relaxed mb-6 flex-grow">
+                      <CardContent className="flex flex-col">
+                        <CardDescription className="text-base professional-text-body leading-relaxed mb-6">
                           {course.description}
                         </CardDescription>
                         <a
                           href={course.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block"
+                          className="block mt-auto"
                         >
                           <Button className="w-full premium-button-primary group/btn" size="lg">
                             <span>לפרטים נוספים</span>
