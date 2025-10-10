@@ -76,8 +76,13 @@ const FreeResourcesSection = () => {
         </motion.div>
 
         {/* Resources Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-          {resources.map((resource, index) => {
+        {resources.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-2xl professional-text-muted">בקרוב...</p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {resources.map((resource, index) => {
             const IconComponent = iconMap[resource.content_type as keyof typeof iconMap] || FileText;
             const tags = resource.search_tags?.split(',').map(t => t.trim()) || [];
             const mainTag = tags[0] || 'חדש';
@@ -136,7 +141,8 @@ const FreeResourcesSection = () => {
               </motion.div>
             );
           })}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
