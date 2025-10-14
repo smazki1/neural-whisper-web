@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import heroMain from "@/assets/backgrounds/hero/hero-background-16.png";
-import heroAlt from "@/assets/backgrounds/hero/hero-background-18.png";
+import aiAdvisor from "@/assets/backgrounds/hero/ai-advisor-hologram.png";
 
 interface Props { onPrimary: () => void; onSecondary: () => void; }
 
@@ -103,7 +103,7 @@ export default function Hero({ onPrimary, onSecondary }: Props) {
               className="absolute inset-0 rounded-3xl overflow-hidden premium-card shadow-2xl"
             >
               <img 
-                src={heroAlt} 
+                src={heroMain} 
                 alt="תצוגה יצירתית של שיווק מבוסס AI" 
                 className="h-full w-full object-cover hover:scale-105 transition-transform duration-700" 
                 loading="eager" 
@@ -111,7 +111,7 @@ export default function Hero({ onPrimary, onSecondary }: Props) {
               <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/60 via-transparent to-transparent" />
             </motion.div>
 
-            {/* Floating Card */}
+            {/* AI Advisor Card */}
             <motion.div 
               initial={{ scale: 0.8, opacity: 0, y: 20 }} 
               animate={{ scale: 1, opacity: 1, y: 0 }} 
@@ -120,12 +120,12 @@ export default function Hero({ onPrimary, onSecondary }: Props) {
               style={{ animationDelay: '2s' }}
             >
               <img 
-                src={heroMain} 
-                alt="זרימות עבודה שיווקיות עם AI" 
+                src={aiAdvisor} 
+                alt="AI כיועץ אישי - ממשק הולוגרפי חכם" 
                 className="h-full w-full object-cover" 
                 loading="lazy" 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent" />
             </motion.div>
 
             {/* Glow Effect */}

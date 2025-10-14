@@ -126,47 +126,85 @@
 
 /* Professional UI Components */
 @layer components {
-  .professional-card {
-    @apply rounded-xl border transition-all duration-300;
+  /* Premium Cards - Enhanced with better shadows and hover states */
+  .premium-card {
+    @apply rounded-2xl border transition-all duration-500;
     background: hsl(var(--brand-surface));
-    border: 1px solid hsl(var(--border));
-    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: 0 4px 20px hsl(0, 0%, 0% / 0.06), 0 2px 8px hsl(0, 0%, 0% / 0.04);
   }
 
-  .professional-card-featured {
-    @apply rounded-xl border-l-4;
-    background: hsl(var(--brand-surface));
-    border: 1px solid hsl(var(--border));
-    border-left: 4px solid hsl(var(--brand-accent));
-    box-shadow: var(--shadow-card);
+  .premium-card:hover {
+    border-color: hsl(var(--brand-accent) / 0.3);
+    box-shadow: 0 8px 32px hsl(0, 0%, 0% / 0.1), 0 4px 16px hsl(48, 78%, 60% / 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Premium Buttons - Very visible and clickable */
+  .premium-button-primary {
+    @apply relative px-8 py-4 font-bold text-lg rounded-xl transition-all duration-300 cursor-pointer;
+    background: linear-gradient(135deg, hsl(48, 78%, 60%) 0%, hsl(48, 78%, 55%) 100%);
+    color: hsl(218, 48%, 12%);
+    box-shadow: 0 4px 12px hsl(48, 78%, 60% / 0.3), 0 2px 6px hsl(0, 0%, 0% / 0.1);
+    border: 2px solid hsl(48, 78%, 60%);
+    text-shadow: 0 1px 2px hsl(0, 0%, 100% / 0.3);
+  }
+
+  .premium-button-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 24px hsl(48, 78%, 60% / 0.5), 0 4px 12px hsl(0, 0%, 0% / 0.15);
+    background: linear-gradient(135deg, hsl(48, 78%, 65%) 0%, hsl(48, 78%, 60%) 100%);
+  }
+
+  .premium-button-primary:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+
+  .premium-button-secondary {
+    @apply relative px-8 py-4 font-bold text-lg rounded-xl transition-all duration-300 cursor-pointer;
+    border: 3px solid hsl(218, 48%, 12%);
+    color: hsl(218, 48%, 12%);
+    background: hsl(0, 0%, 100%);
+    box-shadow: 0 2px 8px hsl(0, 0%, 0% / 0.08);
+  }
+
+  .premium-button-secondary:hover {
+    background: hsl(218, 48%, 12%);
+    color: hsl(0, 0%, 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px hsl(218, 48%, 12% / 0.3);
+  }
+
+  .premium-button-secondary:active {
+    transform: translateY(0);
+  }
+
+  /* Professional variants kept for compatibility */
+  .professional-card {
+    @apply premium-card;
   }
 
   .professional-button-primary {
-    @apply relative px-6 py-3 font-semibold text-base rounded-lg transition-all duration-300;
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
-    box-shadow: var(--shadow-button);
-    border: 1px solid hsl(var(--primary));
-  }
-
-  .professional-button-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-button-hover);
-    background: hsl(var(--primary) / 0.9);
+    @apply premium-button-primary;
   }
 
   .professional-button-secondary {
-    @apply relative px-6 py-3 font-semibold text-base rounded-lg border transition-all duration-300;
-    border: 2px solid hsl(var(--brand-text-primary));
-    color: hsl(var(--brand-text-primary));
-    background: transparent;
+    @apply premium-button-secondary;
   }
 
-  .professional-button-secondary:hover {
-    background: hsl(var(--brand-text-primary));
-    color: hsl(var(--brand-surface));
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+  /* Premium Text Gradients */
+  .premium-text-gradient {
+    background: linear-gradient(135deg, hsl(218, 48%, 12%) 0%, hsl(222, 53%, 28%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .premium-accent-gradient {
+    background: linear-gradient(135deg, hsl(48, 78%, 60%) 0%, hsl(48, 78%, 50%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .professional-text-accent {
