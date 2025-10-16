@@ -349,7 +349,21 @@ const BlogPost = () => {
 
           {/* Article Content */}
           <div 
-            className="prose prose-lg max-w-none mb-12 text-brand-text [&>h1]:text-brand-text [&>h2]:text-brand-text [&>h3]:text-brand-text [&>h4]:text-brand-text [&>h5]:text-brand-text [&>h6]:text-brand-text [&>p]:text-brand-text [&>li]:text-brand-text [&>blockquote]:text-brand-text-secondary [&>blockquote]:border-r-accent [&>a]:text-accent [&>a:hover]:text-accent/80"
+            className="prose prose-lg max-w-none mb-12 
+              [&>h1]:text-4xl [&>h1]:font-bold [&>h1]:mb-6 [&>h1]:mt-8 [&>h1]:text-brand-text [&>h1]:leading-tight
+              [&>h2]:text-3xl [&>h2]:font-bold [&>h2]:mb-5 [&>h2]:mt-7 [&>h2]:text-brand-text [&>h2]:leading-snug
+              [&>h3]:text-2xl [&>h3]:font-semibold [&>h3]:mb-4 [&>h3]:mt-6 [&>h3]:text-brand-text
+              [&>h4]:text-xl [&>h4]:font-semibold [&>h4]:mb-3 [&>h4]:mt-5 [&>h4]:text-brand-text
+              [&>p]:text-lg [&>p]:leading-relaxed [&>p]:mb-4 [&>p]:text-brand-text
+              [&>strong]:font-bold [&>strong]:text-brand-text
+              [&>em]:italic
+              [&>ul]:list-disc [&>ul]:mr-6 [&>ul]:mb-4 [&>ul]:text-brand-text
+              [&>ol]:list-decimal [&>ol]:mr-6 [&>ol]:mb-4 [&>ol]:text-brand-text
+              [&>li]:text-lg [&>li]:mb-2 [&>li]:text-brand-text
+              [&>blockquote]:border-r-4 [&>blockquote]:border-accent [&>blockquote]:pr-4 [&>blockquote]:py-2 [&>blockquote]:mb-4 [&>blockquote]:italic [&>blockquote]:text-brand-text-secondary
+              [&>a]:text-accent [&>a]:font-medium [&>a]:underline [&>a:hover]:text-accent/80
+              [&>code]:bg-muted [&>code]:px-2 [&>code]:py-1 [&>code]:rounded [&>code]:text-sm
+              [&>pre]:bg-muted [&>pre]:p-4 [&>pre]:rounded-lg [&>pre]:mb-4 [&>pre]:overflow-x-auto"
             dangerouslySetInnerHTML={{ __html: post.content }}
             dir="rtl"
           />
