@@ -36,6 +36,12 @@ interface BlogPost {
     name: string;
     slug: string;
   } | null;
+  profiles?: {
+    display_name: string | null;
+    job_title: string | null;
+    avatar_url: string | null;
+    author_bio: string | null;
+  } | null;
 }
 
 interface RelatedPost {
@@ -275,11 +281,19 @@ const BlogPost = () => {
             <div className="flex items-center justify-between flex-wrap gap-4 py-4 border-t border-b border-border">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
-                    <User className="h-4 w-4 text-background" />
-                  </div>
+                  {post.profiles?.avatar_url ? (
+                    <img 
+                      src={post.profiles.avatar_url} 
+                      alt={post.profiles.display_name || 'Author'} 
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+                      <User className="h-4 w-4 text-background" />
+                    </div>
+                  )}
                   <span className="text-sm font-medium text-brand-text">
-                    אבי פריד
+                    {post.profiles?.display_name || 'AI Master'}
                   </span>
                 </div>
                 
@@ -378,21 +392,38 @@ const BlogPost = () => {
           </div>
 
           {/* Author Bio Section */}
-          <div className="premium-card p-8 mb-12">
-            <div className="flex items-start gap-6">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-r from-accent to-accent/80 flex items-center justify-center flex-shrink-0">
-                <User className="w-10 h-10 text-background" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold text-brand-text mb-2">אבי פריד</h3>
-                <p className="text-brand-accent font-medium mb-3">יזם טכנולוגי ומומחה AI</p>
-                <p className="text-brand-text-secondary leading-relaxed">
-                  יזם מנוסה ומומחה בתחום הבינה המלאכותית עם מעל 15 שנות ניסיון בעולמות השיווק הדיגיטלי ופיתוח עסקי. 
-                  מלמד ומדריך אנשי עסקים ויזמים כיצד להטמיע בינה מלאכותית בעסק שלהם ולהשיג תוצאות מרשימות.
-                </p>
+          {post.profiles && (post.profiles.author_bio || post.profiles.display_name) && (
+            <div className="premium-card p-8 mb-12">
+              <div className="flex items-start gap-6">
+                {post.profiles.avatar_url ? (
+                  <img 
+                    src={post.profiles.avatar_url} 
+                    alt={post.profiles.display_name || 'Author'} 
+                    className="w-20 h-20 rounded-full object-cover flex-shrink-0"
+                  />
+                ) : (
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-r from-accent to-accent/80 flex items-center justify-center flex-shrink-0">
+                    <User className="w-10 h-10 text-background" />
+                  </div>
+                )}
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-brand-text mb-2">
+                    {post.profiles.display_name || 'AI Master'}
+                  </h3>
+                  {post.profiles.job_title && (
+                    <p className="text-brand-accent font-medium mb-3">
+                      {post.profiles.job_title}
+                    </p>
+                  )}
+                  {post.profiles.author_bio && (
+                    <p className="text-brand-text-secondary leading-relaxed">
+                      {post.profiles.author_bio}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </article>
 
         <Footer />

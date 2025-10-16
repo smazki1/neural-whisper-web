@@ -211,12 +211,25 @@ const BlogEditor = () => {
 
         if (deleteError) console.error('Error deleting tags:', deleteError);
       } else {
-        // Create new post
+        // Create new post - get default author or use current user
+        let authorId = user?.id;
+        
+        // Try to get default author from site settings
+        const { data: defaultAuthor } = await supabase
+          .from('site_settings')
+          .select('setting_value')
+          .eq('setting_key', 'default_author_id')
+          .single();
+        
+        if (defaultAuthor?.setting_value) {
+          authorId = defaultAuthor.setting_value;
+        }
+
         const { data: newPost, error } = await supabase
           .from('blog_posts')
           .insert([{
             ...postData,
-            author_id: user?.id
+            author_id: authorId
           }])
           .select('id')
           .single();

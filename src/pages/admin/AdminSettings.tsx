@@ -1,6 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SettingsPanel } from '@/components/Admin/SettingsPanel';
+import { AuthorProfileSettings } from '@/components/Admin/AuthorProfileSettings';
+import { Settings, User } from 'lucide-react';
 
 const AdminSettings = () => {
   return (
@@ -14,11 +17,30 @@ const AdminSettings = () => {
         <div>
           <h1 className="text-3xl font-bold text-foreground">הגדרות מערכת</h1>
           <p className="text-lg text-muted-foreground mt-1">
-            הגדרות כלליות, SEO וקישורים חברתיים
+            הגדרות כלליות, פרופיל מחבר ו-SEO
           </p>
         </div>
 
-        <SettingsPanel />
+        <Tabs defaultValue="general" dir="rtl" className="w-full">
+          <TabsList className="mb-6">
+            <TabsTrigger value="general" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              הגדרות כלליות
+            </TabsTrigger>
+            <TabsTrigger value="author" className="flex items-center gap-2">
+              <User className="h-4 w-4" />
+              פרופיל מחבר
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="general">
+            <SettingsPanel />
+          </TabsContent>
+
+          <TabsContent value="author">
+            <AuthorProfileSettings />
+          </TabsContent>
+        </Tabs>
       </div>
     </>
   );

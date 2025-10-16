@@ -695,27 +695,33 @@ export type Database = {
       }
       profiles: {
         Row: {
+          author_bio: string | null
           avatar_url: string | null
           bio: string | null
           created_at: string
           display_name: string | null
           id: string
+          job_title: string | null
           updated_at: string
         }
         Insert: {
+          author_bio?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string
           display_name?: string | null
           id: string
+          job_title?: string | null
           updated_at?: string
         }
         Update: {
+          author_bio?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
+          job_title?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -803,6 +809,30 @@ export type Database = {
           price?: number | null
           short_description?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          created_at: string | null
+          id: string
+          setting_key: string
+          setting_value: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          setting_key: string
+          setting_value?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          setting_key?: string
+          setting_value?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }

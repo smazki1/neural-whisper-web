@@ -32,6 +32,7 @@ interface BlogPost {
   } | null;
   profiles?: {
     display_name: string | null;
+    job_title: string | null;
   } | null;
 }
 
@@ -73,6 +74,10 @@ const Blog = () => {
             id,
             name,
             slug
+          ),
+          profiles (
+            display_name,
+            job_title
           )
         `)
         .eq('is_published', true)
@@ -346,7 +351,7 @@ const Blog = () => {
                           <div className="flex items-center gap-4">
                             <div className="flex items-center gap-1">
                               <User className="h-3 w-3" />
-                              <span>אבי פריד</span>
+                              <span>{post.profiles?.display_name || 'AI Master'}</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
