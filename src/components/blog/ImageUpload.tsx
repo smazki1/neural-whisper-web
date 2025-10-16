@@ -15,11 +15,14 @@ interface ImageUploadProps {
 export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }: ImageUploadProps) => {
   const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const file = event.target.files?.[0];
       if (!file) return;
+
+      console.log('Starting file upload:', file.name, file.type, file.size);
 
       // Validate file type
       if (!file.type.startsWith('image/')) {
@@ -48,6 +51,8 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
       const filePath = `${fileName}`;
 
+      console.log('Uploading to path:', filePath);
+
       // Upload to Supabase Storage
       const { error: uploadError, data } = await supabase.storage
         .from('blog-images')
@@ -56,12 +61,19 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
           upsert: false
         });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw uploadError;
+      }
+
+      console.log('Upload successful:', data);
 
       // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('blog-images')
         .getPublicUrl(filePath);
+
+      console.log('Public URL:', publicUrl);
 
       onChange(publicUrl);
 
@@ -69,6 +81,11 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
         title: "הצלחה!",
         description: "התמונה הועלתה בהצלחה"
       });
+
+      // Reset input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     } catch (error: any) {
       console.error('Error uploading image:', error);
       toast({
@@ -83,10 +100,17 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
 
   const handleRemoveImage = () => {
     onChange('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
     toast({
       title: "התמונה הוסרה",
       description: "התמונה הוסרה בהצלחה"
     });
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -113,6 +137,7 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
       ) : (
         <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-accent/50 transition-colors">
           <Input
+            ref={fileInputRef}
             id="image-upload"
             type="file"
             accept="image/*"
@@ -120,8 +145,8 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
             disabled={uploading}
             className="hidden"
           />
-          <label 
-            htmlFor="image-upload" 
+          <div
+            onClick={handleButtonClick}
             className="cursor-pointer flex flex-col items-center gap-2"
           >
             {uploading ? (
@@ -140,7 +165,7 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
                 </>
               )}
             </div>
-          </label>
+          </div>
         </div>
       )}
 
