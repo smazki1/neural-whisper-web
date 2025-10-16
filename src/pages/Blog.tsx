@@ -66,11 +66,21 @@ const Blog = () => {
 
   const fetchPosts = async () => {
     try {
-      // Fetch blog posts
+      // Fetch blog posts without profile join
       const { data: postsData, error: postsError } = await supabase
         .from('blog_posts')
         .select(`
-          *,
+          id,
+          title,
+          content,
+          excerpt,
+          author_id,
+          created_at,
+          published_at,
+          is_published,
+          slug,
+          featured_image_url,
+          category_id,
           categories (
             id,
             name,
@@ -84,19 +94,24 @@ const Blog = () => {
 
       // Fetch profiles separately
       if (postsData && postsData.length > 0) {
-        const authorIds = [...new Set(postsData.map(post => post.author_id))];
-        const { data: profilesData } = await supabase
-          .from('profiles')
-          .select('id, display_name, job_title')
-          .in('id', authorIds);
+        const authorIds = [...new Set(postsData.map(post => post.author_id).filter(Boolean))];
+        
+        if (authorIds.length > 0) {
+          const { data: profilesData } = await supabase
+            .from('profiles')
+            .select('id, display_name, job_title')
+            .in('id', authorIds);
 
-        // Merge profiles with posts
-        const postsWithProfiles = postsData.map(post => ({
-          ...post,
-          profiles: profilesData?.find(p => p.id === post.author_id) || null
-        }));
+          // Merge profiles with posts - explicitly type as BlogPost[]
+          const postsWithProfiles: BlogPost[] = postsData.map(post => ({
+            ...post,
+            profiles: profilesData?.find(p => p.id === post.author_id) || null
+          }));
 
-        setPosts(postsWithProfiles);
+          setPosts(postsWithProfiles);
+        } else {
+          setPosts(postsData as BlogPost[]);
+        }
       } else {
         setPosts([]);
       }
