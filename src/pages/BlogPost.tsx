@@ -68,8 +68,12 @@ const BlogPost = () => {
   }, [slug]);
 
   const fetchPost = async () => {
+    if (!slug) return;
+
+    setLoading(true);
     try {
-      const { data, error } = await supabase
+      // Fetch blog post
+      const { data: postData, error: postError } = await supabase
         .from('blog_posts')
         .select(`
           *,
@@ -82,19 +86,36 @@ const BlogPost = () => {
         .eq('is_published', true)
         .single();
 
-      if (error) {
-        if (error.code === 'PGRST116') {
+      if (postError) {
+        if (postError.code === 'PGRST116') {
           navigate('/404');
           return;
         }
-        throw error;
+        throw postError;
       }
 
-      setPost(data as any);
+      // Fetch author profile separately
+      if (postData.author_id) {
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('display_name, job_title, avatar_url, author_bio')
+          .eq('id', postData.author_id)
+          .single();
+
+        setPost({
+          ...postData,
+          profiles: profileData
+        });
+      } else {
+        setPost({
+          ...postData,
+          profiles: null
+        });
+      }
       
       // Fetch related posts
-      if (data.category_id) {
-        fetchRelatedPosts(data.category_id, data.id);
+      if (postData.category_id) {
+        fetchRelatedPosts(postData.category_id, postData.id);
       }
     } catch (error) {
       console.error('Error fetching post:', error);

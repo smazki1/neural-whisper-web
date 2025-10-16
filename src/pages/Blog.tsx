@@ -66,7 +66,8 @@ const Blog = () => {
 
   const fetchPosts = async () => {
     try {
-      const { data, error } = await supabase
+      // Fetch blog posts
+      const { data: postsData, error: postsError } = await supabase
         .from('blog_posts')
         .select(`
           *,
@@ -74,17 +75,31 @@ const Blog = () => {
             id,
             name,
             slug
-          ),
-          profiles (
-            display_name,
-            job_title
           )
         `)
         .eq('is_published', true)
         .order('published_at', { ascending: false });
 
-      if (error) throw error;
-      setPosts(data || []);
+      if (postsError) throw postsError;
+
+      // Fetch profiles separately
+      if (postsData && postsData.length > 0) {
+        const authorIds = [...new Set(postsData.map(post => post.author_id))];
+        const { data: profilesData } = await supabase
+          .from('profiles')
+          .select('id, display_name, job_title')
+          .in('id', authorIds);
+
+        // Merge profiles with posts
+        const postsWithProfiles = postsData.map(post => ({
+          ...post,
+          profiles: profilesData?.find(p => p.id === post.author_id) || null
+        }));
+
+        setPosts(postsWithProfiles);
+      } else {
+        setPosts([]);
+      }
     } catch (error) {
       console.error('Error fetching blog posts:', error);
       toast({
