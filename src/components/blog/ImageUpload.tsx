@@ -160,7 +160,7 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
             <Upload className="h-4 w-4" />
           </Button>
           {/* Native input overlay to ensure mobile Safari opens picker */}
-          <Input
+          <input
             ref={fileInputRef}
             id={inputId}
             type="file"
@@ -202,7 +202,7 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
               )}
             </div>
           {/* Full overlay input to capture clicks reliably */}
-          <Input
+          <input
             ref={fileInputRef}
             id={inputId}
             type="file"
