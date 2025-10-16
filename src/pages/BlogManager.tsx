@@ -13,6 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { TagManager } from '@/components/blog/TagManager';
 import { 
   Plus, 
   Edit, 
@@ -299,14 +300,18 @@ const BlogManager = () => {
           </div>
 
           <Tabs defaultValue="posts" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 max-w-md">
+            <TabsList className="grid w-full grid-cols-3 max-w-2xl">
               <TabsTrigger value="posts" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 מאמרים
               </TabsTrigger>
               <TabsTrigger value="categories" className="flex items-center gap-2">
-                <Tag className="h-4 w-4" />
+                <Settings className="h-4 w-4" />
                 קטגוריות
+              </TabsTrigger>
+              <TabsTrigger value="tags" className="flex items-center gap-2">
+                <Tag className="h-4 w-4" />
+                תגיות
               </TabsTrigger>
             </TabsList>
 
@@ -536,6 +541,10 @@ const BlogManager = () => {
                   </div>
                 )}
               </div>
+            </TabsContent>
+
+            <TabsContent value="tags">
+              <TagManager />
             </TabsContent>
           </Tabs>
         </div>

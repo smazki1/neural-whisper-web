@@ -17,6 +17,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import RichTextEditor from '@/components/blog/RichTextEditor';
 import { ImageUpload } from '@/components/blog/ImageUpload';
+import { TagSelector } from '@/components/blog/TagSelector';
 import { 
   Save, 
   Eye, 
@@ -60,6 +61,7 @@ const BlogEditor = () => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [scheduledDate, setScheduledDate] = useState<Date>();
   const [formData, setFormData] = useState({
     title: '',
@@ -126,6 +128,16 @@ const BlogEditor = () => {
       if (data.published_at) {
         setScheduledDate(new Date(data.published_at));
       }
+
+      // Fetch post tags
+      const { data: postTags, error: tagsError } = await supabase
+        .from('blog_post_tags')
+        .select('tag_id')
+        .eq('post_id', postId);
+
+      if (!tagsError && postTags) {
+        setSelectedTags(postTags.map(pt => pt.tag_id));
+      }
     } catch (error) {
       console.error('Error fetching post:', error);
       toast({
@@ -180,6 +192,8 @@ const BlogEditor = () => {
         ...(publish && postId && !formData.is_published && { published_at: scheduled && scheduledDate ? scheduledDate.toISOString() : now })
       };
 
+      let savedPostId = postId;
+
       if (postId) {
         const { error } = await supabase
           .from('blog_posts')
@@ -188,14 +202,40 @@ const BlogEditor = () => {
 
         if (error) throw error;
       } else {
-        const { error } = await supabase
+        const { data: newPost, error } = await supabase
           .from('blog_posts')
           .insert([{
             ...postData,
             author_id: user?.id
-          }]);
+          }])
+          .select()
+          .single();
 
         if (error) throw error;
+        savedPostId = newPost.id;
+      }
+
+      // Handle tags
+      if (savedPostId) {
+        // Delete existing tags
+        await supabase
+          .from('blog_post_tags')
+          .delete()
+          .eq('post_id', savedPostId);
+
+        // Insert new tags
+        if (selectedTags.length > 0) {
+          const tagInserts = selectedTags.map(tagId => ({
+            post_id: savedPostId,
+            tag_id: tagId
+          }));
+
+          const { error: tagsError } = await supabase
+            .from('blog_post_tags')
+            .insert(tagInserts);
+
+          if (tagsError) throw tagsError;
+        }
       }
 
       toast({
@@ -400,6 +440,13 @@ const BlogEditor = () => {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+
+                  <div>
+                    <TagSelector
+                      selectedTags={selectedTags}
+                      onChange={setSelectedTags}
+                    />
                   </div>
 
                   <div>

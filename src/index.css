@@ -179,6 +179,34 @@
     transform: translateY(0);
   }
 
+  .premium-button-link {
+    @apply inline-flex items-center gap-2 font-semibold transition-all duration-300;
+    color: hsl(var(--accent));
+    position: relative;
+  }
+
+  .premium-button-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: hsl(var(--accent));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  .premium-button-link:hover {
+    color: hsl(var(--accent) / 0.8);
+  }
+
+  .premium-button-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
   /* Professional variants kept for compatibility */
   .professional-card {
     @apply premium-card;
