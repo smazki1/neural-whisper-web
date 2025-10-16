@@ -192,50 +192,53 @@ const BlogEditor = () => {
         ...(publish && postId && !formData.is_published && { published_at: scheduled && scheduledDate ? scheduledDate.toISOString() : now })
       };
 
-      let savedPostId = postId;
+      let savedPostId: string | undefined = postId;
 
       if (postId) {
+        // Update existing post
         const { error } = await supabase
           .from('blog_posts')
           .update(postData)
           .eq('id', postId);
 
         if (error) throw error;
+
+        // Delete existing tags for update
+        const { error: deleteError } = await supabase
+          .from('blog_post_tags')
+          .delete()
+          .eq('post_id', postId);
+
+        if (deleteError) console.error('Error deleting tags:', deleteError);
       } else {
+        // Create new post
         const { data: newPost, error } = await supabase
           .from('blog_posts')
           .insert([{
             ...postData,
             author_id: user?.id
           }])
-          .select()
+          .select('id')
           .single();
 
         if (error) throw error;
+        if (!newPost?.id) throw new Error('Failed to create post');
+        
         savedPostId = newPost.id;
       }
 
-      // Handle tags
-      if (savedPostId) {
-        // Delete existing tags
-        await supabase
+      // Insert tags
+      if (savedPostId && selectedTags.length > 0) {
+        const tagInserts = selectedTags.map(tagId => ({
+          post_id: savedPostId!,
+          tag_id: tagId
+        }));
+
+        const { error: tagsError } = await supabase
           .from('blog_post_tags')
-          .delete()
-          .eq('post_id', savedPostId);
+          .insert(tagInserts);
 
-        // Insert new tags
-        if (selectedTags.length > 0) {
-          const tagInserts = selectedTags.map(tagId => ({
-            post_id: savedPostId,
-            tag_id: tagId
-          }));
-
-          const { error: tagsError } = await supabase
-            .from('blog_post_tags')
-            .insert(tagInserts);
-
-          if (tagsError) throw tagsError;
-        }
+        if (tagsError) console.error('Error inserting tags:', tagsError);
       }
 
       toast({
@@ -244,11 +247,11 @@ const BlogEditor = () => {
       });
 
       navigate('/blog/manager');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving post:', error);
       toast({
         title: "שגיאה",
-        description: "שגיאה בשמירת המאמר",
+        description: error.message || "שגיאה בשמירת המאמר",
         variant: "destructive"
       });
     } finally {
