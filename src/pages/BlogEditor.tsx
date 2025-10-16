@@ -186,8 +186,10 @@ const BlogEditor = () => {
         content: formData.content,
         excerpt: formData.excerpt || null,
         featured_image_url: formData.featured_image_url || null,
-        category_id: formData.category_id || null,
+        category_id: formData.category_id && formData.category_id.trim() !== '' ? formData.category_id : null,
         is_published: publish || formData.is_published,
+        meta_title: formData.meta_description || null,
+        meta_description: formData.meta_description || null,
         ...(publish && !postId && { published_at: scheduled && scheduledDate ? scheduledDate.toISOString() : now }),
         ...(publish && postId && !formData.is_published && { published_at: scheduled && scheduledDate ? scheduledDate.toISOString() : now })
       };
