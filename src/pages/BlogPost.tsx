@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { ArticleSchema } from '@/components/SEO/ArticleSchema';
 import { 
   Calendar,
   User,
@@ -216,6 +217,20 @@ const BlogPost = () => {
           <meta property="article:section" content={post.categories.name} />
         )}
       </Helmet>
+      
+      <ArticleSchema 
+        article={{
+          id: post.id,
+          title: post.title,
+          content: post.content,
+          excerpt: post.excerpt || undefined,
+          slug: post.slug,
+          published_at: post.published_at || post.created_at,
+          created_at: post.created_at,
+          featured_image_url: post.featured_image_url || undefined,
+          category: post.categories?.name
+        }}
+      />
 
       <div className="min-h-screen bg-background">
         <Navbar onContactClick={() => {}} />
@@ -361,7 +376,7 @@ const BlogPost = () => {
           </div>
 
           {/* Author Bio Section */}
-          <div className="modern-card p-8 mb-12">
+          <div className="premium-card p-8 mb-12">
             <div className="flex items-start gap-6">
               <div className="w-20 h-20 rounded-full bg-gradient-to-r from-accent to-accent/80 flex items-center justify-center flex-shrink-0">
                 <User className="w-10 h-10 text-background" />

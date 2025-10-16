@@ -16,6 +16,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import RichTextEditor from '@/components/blog/RichTextEditor';
+import { ImageUpload } from '@/components/blog/ImageUpload';
 import { 
   Save, 
   Eye, 
@@ -218,7 +219,7 @@ const BlogEditor = () => {
   if (!user) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="modern-card">
+        <Card className="premium-card">
           <CardContent className="p-8 text-center">
             <h2 className="text-xl font-semibold mb-4 text-brand-text">נדרשת התחברות</h2>
             <p className="text-brand-text-secondary mb-4">
@@ -271,7 +272,7 @@ const BlogEditor = () => {
             {/* Main Editor */}
             <div className="lg:col-span-2 space-y-6">
               {/* Post Details Card */}
-              <Card className="modern-card">
+              <Card className="premium-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-brand-text">
                     <FileText className="h-5 w-5" />
@@ -319,7 +320,7 @@ const BlogEditor = () => {
               </Card>
 
               {/* Content Editor */}
-              <Card className="modern-card">
+              <Card className="premium-card">
                 <CardHeader>
                   <CardTitle className="text-brand-text">תוכן המאמר</CardTitle>
                 </CardHeader>
@@ -333,7 +334,7 @@ const BlogEditor = () => {
               </Card>
 
               {/* SEO Settings */}
-              <Card className="modern-card">
+              <Card className="premium-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-brand-text">
                     <Globe className="h-5 w-5" />
@@ -374,7 +375,7 @@ const BlogEditor = () => {
             {/* Sidebar */}
             <div className="space-y-6">
               {/* Publishing Settings */}
-              <Card className="modern-card">
+              <Card className="premium-card">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-brand-text">
                     <Settings className="h-5 w-5" />
@@ -402,26 +403,11 @@ const BlogEditor = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="featured_image" className="text-brand-text">תמונה ראשית (URL)</Label>
-                    <Input
-                      id="featured_image"
+                    <ImageUpload
                       value={formData.featured_image_url}
-                      onChange={(e) => setFormData({...formData, featured_image_url: e.target.value})}
-                      placeholder="https://example.com/image.jpg"
-                      className="mt-2"
+                      onChange={(url) => setFormData({...formData, featured_image_url: url})}
+                      label="תמונה ראשית"
                     />
-                    {formData.featured_image_url && (
-                      <div className="mt-3">
-                        <img 
-                          src={formData.featured_image_url} 
-                          alt="תצוגה מקדימה" 
-                          className="w-full h-32 object-cover rounded-lg"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                          }}
-                        />
-                      </div>
-                    )}
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -461,7 +447,7 @@ const BlogEditor = () => {
               </Card>
 
               {/* Actions */}
-              <Card className="modern-card">
+              <Card className="premium-card">
                 <CardHeader>
                   <CardTitle className="text-brand-text">פעולות</CardTitle>
                 </CardHeader>
@@ -512,7 +498,7 @@ const BlogEditor = () => {
 
               {/* Post Statistics */}
               {postId && (
-                <Card className="modern-card">
+                <Card className="premium-card">
                   <CardHeader>
                     <CardTitle className="text-brand-text">סטטיסטיקות</CardTitle>
                   </CardHeader>

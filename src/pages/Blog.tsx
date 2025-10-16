@@ -211,7 +211,7 @@ const Blog = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="modern-card p-6">
+            <div className="premium-card p-6">
               <div className="flex flex-col md:flex-row gap-4 items-center">
                 <div className="relative flex-1">
                   <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-brand-text-secondary" />
@@ -268,7 +268,7 @@ const Blog = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="modern-card p-12 max-w-md mx-auto">
+              <div className="premium-card p-12 max-w-md mx-auto">
                 <BookOpen className="h-16 w-16 mx-auto text-brand-accent mb-4" />
                 <h3 className="text-2xl font-semibold text-brand-text mb-4">
                   {searchTerm || selectedCategory !== 'all' ? 'לא נמצאו מאמרים' : 'בקרוב...'}
@@ -302,7 +302,7 @@ const Blog = () => {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                   >
                     <Card 
-                      className="group cursor-pointer overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                      className="premium-card group cursor-pointer overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02]"
                       onClick={() => navigate(`/blog/${post.slug}`)}
                     >
                       {/* Featured Image */}
