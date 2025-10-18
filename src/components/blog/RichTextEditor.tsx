@@ -71,14 +71,28 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           border: 1px solid hsl(var(--border));
         }
         .rich-text-editor .ql-snow .ql-stroke {
-          stroke: hsl(var(--brand-text));
+          stroke: hsl(var(--foreground));
         }
         .rich-text-editor .ql-snow .ql-fill {
-          fill: hsl(var(--brand-text));
+          fill: hsl(var(--foreground));
         }
         .rich-text-editor .ql-snow .ql-picker-label:hover,
         .rich-text-editor .ql-snow .ql-picker-item:hover {
           background: hsl(var(--accent) / 0.1);
+        }
+        .rich-text-editor .ql-snow .ql-picker-label:hover .ql-stroke,
+        .rich-text-editor .ql-snow button:hover .ql-stroke {
+          stroke: hsl(var(--primary));
+        }
+        .rich-text-editor .ql-snow .ql-picker-label:hover .ql-fill,
+        .rich-text-editor .ql-snow button:hover .ql-fill {
+          fill: hsl(var(--primary));
+        }
+        .rich-text-editor .ql-snow button.ql-active .ql-stroke {
+          stroke: hsl(var(--primary));
+        }
+        .rich-text-editor .ql-snow button.ql-active .ql-fill {
+          fill: hsl(var(--primary));
         }
       `}</style>
       
