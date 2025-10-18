@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Upload, Loader2, X, ImageIcon } from 'lucide-react';
+import { Upload, Loader2, X } from 'lucide-react';
 
 interface ImageUploadProps {
   value: string;
@@ -15,67 +15,62 @@ interface ImageUploadProps {
 export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }: ImageUploadProps) => {
   const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const inputId = React.useId();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const uploadFile = async (file: File) => {
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "שגיאה",
+        description: "יש להעלות קובץ תמונה בלבד",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "שגיאה",
+        description: "גודל הקובץ חייב להיות פחות מ-5MB",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setUploading(true);
+
     try {
-      console.log('Starting file upload:', file.name, file.type, file.size);
-
-      if (!file.type.startsWith('image/')) {
-        toast({
-          title: "שגיאה",
-          description: "יש להעלות קובץ תמונה בלבד",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          title: "שגיאה",
-          description: "גודל הקובץ חייב להיות פחות מ-5MB",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      setUploading(true);
-
+      // Generate unique filename
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = `${fileName}`;
 
-      console.log('Uploading to path:', filePath);
-
-      const { error: uploadError, data } = await supabase.storage
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
         .from('blog-images')
-        .upload(filePath, file, {
+        .upload(fileName, file, {
           cacheControl: '3600',
-          upsert: false,
-          contentType: file.type
+          upsert: false
         });
 
-      if (uploadError) {
-        console.error('Upload error:', uploadError);
-        throw uploadError;
-      }
+      if (uploadError) throw uploadError;
 
-      console.log('Upload successful:', data);
-
+      // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('blog-images')
-        .getPublicUrl(filePath);
-
-      console.log('Public URL:', publicUrl);
+        .getPublicUrl(fileName);
 
       onChange(publicUrl);
 
       toast({
-        title: "הצלחה!",
+        title: "הצלחה",
         description: "התמונה הועלתה בהצלחה"
       });
 
+      // Clear input
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -91,143 +86,74 @@ export const ImageUpload = ({ value, onChange, label = 'תמונה ראשית' }
     }
   };
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      await uploadFile(file);
-    } catch (error: any) {
-      console.error('Error uploading image:', error);
-      toast({
-        title: "שגיאה",
-        description: error.message || "שגיאה בהעלאת התמונה",
-        variant: "destructive"
-      });
-    } finally {
-      // handled in uploadFile
-    }
-  };
-
-  const handleDrop: React.DragEventHandler<HTMLDivElement> = async (e) => {
-    e.preventDefault();
-    if (uploading) return;
-    const file = e.dataTransfer.files?.[0];
-    if (file) {
-      await uploadFile(file);
-    }
-  };
-
-  const handleRemoveImage = () => {
+  const handleRemove = () => {
     onChange('');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    toast({
-      title: "התמונה הוסרה",
-      description: "התמונה הוסרה בהצלחה"
-    });
-  };
-
-  const handleButtonClick = () => {
-    const input = fileInputRef.current;
-    if (!input) return;
-    const withPicker = input as HTMLInputElement & { showPicker?: () => void };
-    try {
-      withPicker.showPicker?.();
-    } catch {
-      // Fallback below
-    }
-    input.click();
   };
 
   return (
-    <div className="space-y-4">
-      <Label htmlFor={inputId} className="text-brand-text">{label}</Label>
+    <div className="space-y-3">
+      <Label>{label}</Label>
+      
       {value ? (
         <div className="relative">
           <img 
             src={value} 
             alt="תצוגה מקדימה" 
-            className="w-full h-48 object-cover rounded-lg"
-          />
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="absolute top-2 right-2"
-            aria-label="החלף תמונה"
-          >
-            <Upload className="h-4 w-4" />
-          </Button>
-          {/* Native input overlay to ensure mobile Safari opens picker */}
-          <input
-            ref={fileInputRef}
-            id={inputId}
-            type="file"
-            accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
-            onChange={handleFileUpload}
-            disabled={uploading}
-            className="absolute top-2 right-2 h-9 w-9 opacity-0 cursor-pointer z-20"
+            className="w-full h-48 object-cover rounded-lg border"
           />
           <Button
             type="button"
             variant="destructive"
             size="icon"
             className="absolute top-2 left-2"
-            onClick={handleRemoveImage}
+            onClick={handleRemove}
           >
             <X className="h-4 w-4" />
           </Button>
         </div>
       ) : (
-        <div 
-          className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-accent/50 transition-colors relative"
-          onDragOver={(e) => { e.preventDefault(); }}
-          onDrop={handleDrop}
-        >
+        <div className="border-2 border-dashed rounded-lg p-8 text-center">
+          <div className="flex flex-col items-center gap-2">
             {uploading ? (
-              <Loader2 className="h-12 w-12 text-accent animate-spin" />
+              <Loader2 className="h-10 w-10 text-primary animate-spin" />
             ) : (
-              <ImageIcon className="h-12 w-12 text-muted-foreground" />
+              <Upload className="h-10 w-10 text-muted-foreground" />
             )}
             <div className="text-sm text-muted-foreground">
-              {uploading ? (
-                <span>מעלה תמונה...</span>
-              ) : (
-                <>
-                  <span className="font-semibold text-accent">לחץ להעלאת תמונה</span>
-                  <span className="block mt-1">או גרור תמונה לכאן</span>
-                  <span className="block mt-1 text-xs">PNG, JPG, GIF עד 5MB</span>
-                </>
-              )}
+              {uploading ? 'מעלה...' : 'בחר תמונה להעלאה'}
             </div>
-          {/* Full overlay input to capture clicks reliably */}
-          <input
-            ref={fileInputRef}
-            id={inputId}
-            type="file"
-            accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
-            onChange={handleFileUpload}
-            disabled={uploading}
-            className="absolute inset-0 opacity-0 cursor-pointer z-20"
-          />
-          <div className="mt-4">
-            <Button type="button" onClick={handleButtonClick} disabled={uploading} variant="outline">
+            <Button
+              type="button"
+              variant="outline"
+              disabled={uploading}
+              onClick={() => fileInputRef.current?.click()}
+            >
               בחר קובץ
             </Button>
           </div>
         </div>
       )}
 
-      <div className="text-xs text-muted-foreground">
-        או הכנס URL ידנית:
-      </div>
-      <Input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="https://example.com/image.jpg"
-        disabled={uploading}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileSelect}
+        className="hidden"
       />
+
+      <div>
+        <Label className="text-xs text-muted-foreground">או הכנס URL ידנית:</Label>
+        <Input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="https://example.com/image.jpg"
+          disabled={uploading}
+        />
+      </div>
     </div>
   );
 };

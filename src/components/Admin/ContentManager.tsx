@@ -7,7 +7,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -18,6 +17,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import RichTextEditor from '@/components/blog/RichTextEditor';
+import { ImageUpload } from '@/components/blog/ImageUpload';
 import { SEOHead } from '@/components/SEO/SEOHead';
 import { 
   FileText, 
@@ -71,15 +71,6 @@ interface Category {
   description?: string;
 }
 
-interface MediaFile {
-  id: string;
-  name: string;
-  url: string;
-  type: string;
-  size: number;
-  created_at: string;
-}
-
 interface ContentManagerProps {
   onPostCreated?: () => void;
   onPostUpdated?: () => void;
@@ -95,8 +86,6 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<'all' | 'published' | 'draft'>('all');
   const [selectedDate, setSelectedDate] = useState<Date>();
-  const [showMediaLibrary, setShowMediaLibrary] = useState(false);
-  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
   const [seoPreview, setSeoPreview] = useState(false);
   const [autosaveTimer, setAutosaveTimer] = useState<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
@@ -120,7 +109,6 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
   useEffect(() => {
     fetchPosts();
     fetchCategories();
-    fetchMediaFiles();
   }, []);
 
   // Auto-save functionality
@@ -176,16 +164,6 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
       setCategories(data || []);
     } catch (error) {
       console.error('Error fetching categories:', error);
-    }
-  };
-
-  const fetchMediaFiles = async () => {
-    try {
-      // This would be replaced with actual storage query
-      // For now, using placeholder data
-      setMediaFiles([]);
-    } catch (error) {
-      console.error('Error fetching media files:', error);
     }
   };
 
@@ -602,28 +580,11 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
                 <CardHeader>
                   <CardTitle className="text-lg">תמונה ראשית</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {formData.featured_image_url && (
-                    <img 
-                      src={formData.featured_image_url} 
-                      alt="Featured" 
-                      className="w-full h-32 object-cover rounded"
-                    />
-                  )}
-                  <div className="flex gap-2">
-                    <Input
-                      value={formData.featured_image_url}
-                      onChange={(e) => setFormData(prev => ({ ...prev, featured_image_url: e.target.value }))}
-                      placeholder="URL תמונה"
-                    />
-                    <Button 
-                      variant="outline" 
-                      size="icon"
-                      onClick={() => setShowMediaLibrary(true)}
-                    >
-                      <Image className="h-4 w-4" />
-                    </Button>
-                  </div>
+                <CardContent>
+                  <ImageUpload
+                    value={formData.featured_image_url}
+                    onChange={(url) => setFormData(prev => ({ ...prev, featured_image_url: url }))}
+                  />
                 </CardContent>
               </Card>
 
@@ -832,34 +793,6 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
           </div>
         </div>
       )}
-
-      {/* Media Library Dialog */}
-      <Dialog open={showMediaLibrary} onOpenChange={setShowMediaLibrary}>
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>ספריית מדיה</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <Button>
-                <Upload className="h-4 w-4 mr-2" />
-                העלה קבצים
-              </Button>
-              <Input placeholder="חפש קבצים..." />
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-h-96 overflow-y-auto">
-              {mediaFiles.map((file) => (
-                <div key={file.id} className="border rounded-lg p-2 cursor-pointer hover:bg-muted">
-                  <div className="aspect-square bg-muted rounded mb-2 flex items-center justify-center">
-                    <Image className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                  <p className="text-xs truncate">{file.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
