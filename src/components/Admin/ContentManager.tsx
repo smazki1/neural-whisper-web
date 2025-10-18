@@ -250,8 +250,10 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
         category_id: formData.category_id || null,
         meta_title: formData.meta_title || null,
         meta_description: formData.meta_description || null,
+        published_at: publish && !formData.published_at 
+          ? new Date().toISOString() 
+          : (formData.published_at || null),
         is_published: publish || formData.is_published,
-        published_at: publish && !formData.published_at ? new Date().toISOString() : formData.published_at,
         updated_at: new Date().toISOString()
       };
 
