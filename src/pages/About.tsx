@@ -171,14 +171,15 @@ const About = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl max-w-md mx-auto">
-                <div className="relative aspect-[4/3]">
-                  <img
-                    src={aviPortrait}
-                    alt="אבי פריד - מדריך AI ויזם טכנולוגי"
-                    className="w-full h-full object-cover object-center"
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl max-w-2xl mx-auto">
+                <div className="relative aspect-video">
+                  <iframe
+                    className="w-full h-full rounded-3xl"
+                    src="https://www.youtube.com/embed/14bZqkWs5ng"
+                    title="אבי פריד - מדריך AI ויזם טכנולוגי"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
                 </div>
               </div>
               <div className="text-center mt-8">
