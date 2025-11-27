@@ -76,15 +76,11 @@ const BlogEditor = () => {
   });
 
   useEffect(() => {
-    if (!user) {
-      navigate('/auth');
-      return;
-    }
     fetchCategories();
     if (postId) {
       fetchPost();
     }
-  }, [postId, user]);
+  }, [postId]);
 
   const fetchCategories = async () => {
     try {
