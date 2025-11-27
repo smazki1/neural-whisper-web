@@ -1079,10 +1079,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      make_user_admin: {
-        Args: { user_email: string }
-        Returns: undefined
-      }
+      make_user_admin: { Args: { user_email: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "instructor" | "student"

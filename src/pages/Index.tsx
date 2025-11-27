@@ -34,7 +34,6 @@ function Index() {
       <main id="main-content" className="animate-fade-in">
         <Hero />
         <VideoAboutSection />
-        <ArtistsMindsetSection />
         <HowICanHelpSection />
         <ProductsSection />
         <FreeResourcesSection />
