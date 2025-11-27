@@ -73,9 +73,9 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/blog/manager" element={<ProtectedRoute><BlogManager /></ProtectedRoute>} />
-            <Route path="/blog/editor" element={<ProtectedRoute><BlogEditor /></ProtectedRoute>} />
-            <Route path="/blog/editor/:postId" element={<ProtectedRoute><BlogEditor /></ProtectedRoute>} />
+            <Route path="/blog/manager" element={<ProtectedRoute allowedRoles={['admin']}><BlogManager /></ProtectedRoute>} />
+            <Route path="/blog/editor" element={<ProtectedRoute allowedRoles={['admin']}><BlogEditor /></ProtectedRoute>} />
+            <Route path="/blog/editor/:postId" element={<ProtectedRoute allowedRoles={['admin']}><BlogEditor /></ProtectedRoute>} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/:slug" element={<ProductDetail />} />
               <Route path="/contact" element={<Contact />} />
