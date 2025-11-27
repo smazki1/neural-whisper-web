@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Download, Wrench, ArrowLeft, FileText } from 'lucide-react';
+import { BookOpen, ArrowLeft } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-
-const iconMap = {
-  'מאמר': BookOpen,
-  'מדריך': FileText,
-  'כלי': Wrench,
-  'הורדה': Download,
-};
 
 const tagColors = {
   'חדש': 'bg-blue-500/20 text-blue-300',
@@ -16,34 +9,34 @@ const tagColors = {
   'בלעדי': 'bg-purple-500/20 text-purple-300',
 };
 
-interface Resource {
+interface BlogPost {
   id: string;
-  name: string;
-  content_type: string;
-  short_description: string | null;
-  duration: string | null;
-  action_link: string | null;
-  search_tags: string | null;
+  title: string;
+  excerpt: string | null;
+  slug: string;
+  published_at: string | null;
+  featured_image_url: string | null;
+  tags: string[] | null;
 }
 
 const FreeResourcesSection = () => {
-  const [resources, setResources] = useState<Resource[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
-    const fetchResources = async () => {
+    const fetchBlogPosts = async () => {
       const { data } = await supabase
-        .from('content_services')
-        .select('id, name, content_type, short_description, duration, action_link, search_tags')
-        .eq('status', 'פעיל')
-        .order('display_order', { ascending: true })
-        .limit(3);
+        .from('blog_posts')
+        .select('id, title, excerpt, slug, published_at, featured_image_url, tags')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false })
+        .limit(6);
 
       if (data) {
-        setResources(data);
+        setBlogPosts(data);
       }
     };
 
-    fetchResources();
+    fetchBlogPosts();
   }, []);
 
   return (
@@ -75,22 +68,23 @@ const FreeResourcesSection = () => {
           </motion.h2>
         </motion.div>
 
-        {/* Resources Grid */}
-        {resources.length === 0 ? (
+        {/* Blog Posts Grid */}
+        {blogPosts.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-2xl professional-text-muted">בקרוב...</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-            {resources.map((resource, index) => {
-            const IconComponent = iconMap[resource.content_type as keyof typeof iconMap] || FileText;
-            const tags = resource.search_tags?.split(',').map(t => t.trim()) || [];
-            const mainTag = tags[0] || 'חדש';
+            {blogPosts.map((post, index) => {
+            const mainTag = post.tags?.[0] || 'חדש';
             const tagColor = tagColors[mainTag as keyof typeof tagColors] || tagColors['חדש'];
+            const publishedDate = post.published_at 
+              ? new Date(post.published_at).toLocaleDateString('he-IL', { year: 'numeric', month: 'long', day: 'numeric' })
+              : 'זמין כעת';
             
             return (
               <motion.div
-                key={resource.id}
+                key={post.id}
                 className="relative"
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -98,20 +92,35 @@ const FreeResourcesSection = () => {
                 viewport={{ once: true }}
               >
                 <a 
-                  href={resource.action_link || '#'}
+                  href={`/blog/${post.slug}`}
                   className="block professional-card p-8 lg:p-10 h-full relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform"
                 >
+                  {/* Featured Image */}
+                  {post.featured_image_url && (
+                    <div className="relative mb-6 -mx-8 -mt-8 lg:-mx-10 lg:-mt-10">
+                      <div className="aspect-video w-full overflow-hidden">
+                        <img 
+                          src={post.featured_image_url} 
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   {/* Header */}
                   <div className="relative mb-6 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 bg-gradient-to-br from-accent/20 to-accent/5 rounded-xl flex items-center justify-center">
-                        <IconComponent className="w-7 h-7 text-accent" />
+                        <BookOpen className="w-7 h-7 text-accent" />
                       </div>
                       <div>
-                        <p className="professional-text-muted text-sm font-medium">{resource.content_type}</p>
-                        <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mt-1 ${tagColor}`}>
-                          {mainTag}
-                        </div>
+                        <p className="professional-text-muted text-sm font-medium">מאמר</p>
+                        {post.tags && post.tags.length > 0 && (
+                          <div className={`inline-block px-3 py-1 rounded-full text-xs font-medium mt-1 ${tagColor}`}>
+                            {mainTag}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -119,22 +128,22 @@ const FreeResourcesSection = () => {
                   {/* Content */}
                   <div className="relative space-y-6">
                     <h3 className="text-2xl lg:text-2xl font-bold professional-text-primary leading-tight">
-                      {resource.name}
+                      {post.title}
                     </h3>
                     
-                    <p className="professional-text-body text-base leading-relaxed">
-                      {resource.short_description}
-                    </p>
+                    {post.excerpt && (
+                      <p className="professional-text-body text-base leading-relaxed line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                    )}
 
                     {/* Meta Info */}
                     <div className="flex items-center justify-between pt-4 border-t border-brand-text/10">
-                      <span className="professional-text-muted text-sm">{resource.duration || 'זמין כעת'}</span>
-                      {resource.action_link && (
-                        <div className="flex items-center gap-2 professional-text-accent font-medium">
-                          <span className="text-sm">לצפייה</span>
-                          <ArrowLeft className="w-4 h-4" />
-                        </div>
-                      )}
+                      <span className="professional-text-muted text-sm">{publishedDate}</span>
+                      <div className="flex items-center gap-2 professional-text-accent font-medium">
+                        <span className="text-sm">קרא עוד</span>
+                        <ArrowLeft className="w-4 h-4" />
+                      </div>
                     </div>
                   </div>
                 </a>
