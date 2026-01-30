@@ -35,8 +35,8 @@ function Index() {
         <Hero />
         <VideoAboutSection />
         <HowICanHelpSection />
-        <ProductsSection />
         <FreeResourcesSection />
+        <ProductsSection />
       </main>
       <Footer />
       <ContactModal isOpen={isContactModalOpen} onClose={handleContactClose} />
