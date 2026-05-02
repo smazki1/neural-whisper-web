@@ -495,12 +495,12 @@
 }
 
 .shiny-cta {
-  /* Uses the project's accent color from the design system (HSL tokens) */
-  --shiny-cta-bg: hsl(var(--background));
-  --shiny-cta-bg-subtle: hsl(var(--muted));
-  --shiny-cta-fg: hsl(var(--foreground));
-  --shiny-cta-highlight: hsl(var(--accent));
-  --shiny-cta-highlight-subtle: hsl(var(--accent) / 0.6);
+  /* Brand colors: yellow brand-accent on white surface, deep brand-text-primary text */
+  --shiny-cta-bg: hsl(var(--brand-surface));
+  --shiny-cta-bg-subtle: hsl(var(--brand-accent) / 0.25);
+  --shiny-cta-fg: hsl(var(--brand-text-primary));
+  --shiny-cta-highlight: hsl(var(--brand-accent));
+  --shiny-cta-highlight-subtle: hsl(var(--brand-accent) / 0.55);
   --animation: gradient-angle linear infinite;
   --duration: 3s;
   --shadow-size: 2px;
