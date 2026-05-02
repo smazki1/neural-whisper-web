@@ -219,18 +219,14 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             {/* Navigation Links - Center */}
             <div className="hidden lg:flex items-center space-x-6 space-x-reverse">
               {/* Vault CTA - Highlighted */}
-              <motion.a
+              <ShinyButton
                 href={VAULT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-accent text-accent-foreground font-semibold px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                aria-label="הכספת - פלטפורמת AI Master"
+                ariaLabel="הכספת - פלטפורמת AI Master"
               >
-                <Vault className="h-4 w-4" />
-                <span>הכספת</span>
-              </motion.a>
+                הכספת
+              </ShinyButton>
 
               {navigationItems.map((item, index) => (
                 <div key={item.name} className="relative">
