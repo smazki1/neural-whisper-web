@@ -37,7 +37,15 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigationItems = [
+  type NavItem = {
+    name: string;
+    href: string;
+    action?: () => void;
+    hasDropdown?: boolean;
+    dropdownItems?: { name: string; href: string }[];
+  };
+
+  const navigationItems: NavItem[] = [
     { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
     { name: 'אודות', href: '/about' },
     { name: 'תהליכים וקורסים', href: '/products' },
