@@ -301,8 +301,16 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               </Link>
             </motion.div>
 
-            {/* Mobile Menu Button */}
-            <div className="lg:hidden">
+            {/* Vault CTA - always visible (mobile + tablet) */}
+            <div className="lg:hidden flex items-center gap-3">
+              <ShinyButton
+                href={VAULT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                ariaLabel="הכספת - פלטפורמת AI Master"
+              >
+                הכספת
+              </ShinyButton>
               <motion.button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="professional-text-primary hover:text-accent transition-colors duration-300 p-2"
