@@ -485,7 +485,7 @@
 }
 @property --gradient-percent {
   syntax: "<percentage>";
-  initial-value: 5%;
+  initial-value: 12%;
   inherits: false;
 }
 @property --gradient-shine {
@@ -495,12 +495,12 @@
 }
 
 .shiny-cta {
-  /* Brand colors: yellow brand-accent on white surface, deep brand-text-primary text */
-  --shiny-cta-bg: hsl(var(--brand-surface));
-  --shiny-cta-bg-subtle: hsl(var(--brand-accent) / 0.25);
+  /* Brand: solid yellow background, white shimmer effect, deep brand text */
+  --shiny-cta-bg: hsl(var(--brand-accent));
+  --shiny-cta-bg-subtle: hsl(var(--brand-accent));
   --shiny-cta-fg: hsl(var(--brand-text-primary));
-  --shiny-cta-highlight: hsl(var(--brand-accent));
-  --shiny-cta-highlight-subtle: hsl(var(--brand-accent) / 0.55);
+  --shiny-cta-highlight: hsl(0 0% 100%);
+  --shiny-cta-highlight-subtle: hsl(0 0% 100% / 0.7);
   --animation: gradient-angle linear infinite;
   --duration: 3s;
   --shadow-size: 2px;
@@ -517,7 +517,7 @@
   padding: 0.65rem 1.5rem;
   font-size: 0.95rem;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 700;
   border: 1px solid transparent;
   border-radius: 360px;
   color: var(--shiny-cta-fg);
@@ -531,10 +531,18 @@
       var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
       transparent calc(var(--gradient-percent) * 4)
     ) border-box;
-  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+  box-shadow:
+    inset 0 0 0 1px hsl(0 0% 100% / 0.4),
+    0 6px 20px -6px hsl(var(--brand-accent) / 0.55);
   transition: var(--transition);
-  transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine;
+  transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine, box-shadow;
   text-decoration: none;
+}
+
+.shiny-cta:is(:hover, :focus-visible) {
+  box-shadow:
+    inset 0 0 0 1px hsl(0 0% 100% / 0.6),
+    0 10px 28px -6px hsl(var(--brand-accent) / 0.75);
 }
 
 .shiny-cta::before,
@@ -577,11 +585,11 @@
 
 .shiny-cta::after {
   --animation: shimmer linear infinite;
-  width: 100%;
+  width: 140%;
   aspect-ratio: 1;
-  background: linear-gradient(-50deg, transparent, var(--shiny-cta-highlight), transparent);
-  mask-image: radial-gradient(circle at bottom, transparent 40%, black);
-  opacity: 0.55;
+  background: linear-gradient(-50deg, transparent 35%, var(--shiny-cta-highlight) 50%, transparent 65%);
+  mask-image: radial-gradient(circle at center, black 30%, transparent 75%);
+  opacity: 0.5;
 }
 
 .shiny-cta span { z-index: 1; position: relative; }
