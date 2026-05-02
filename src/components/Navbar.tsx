@@ -9,7 +9,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { useAuth } from '@/hooks/useAuth';
 import { useUserRoles } from '@/hooks/useUserRoles';
 import { useNewLeadsCount } from '@/hooks/useNewLeadsCount';
-import { User, Settings, LogOut, BookOpen, Menu, X, ChevronDown, Facebook, Instagram, Bell } from 'lucide-react';
+import { User, Settings, LogOut, BookOpen, Menu, X, ChevronDown, Facebook, Instagram, Bell, Vault } from 'lucide-react';
+
+const VAULT_URL = 'https://vault.ai-master.co.il/';
 
 interface NavbarProps {
   onContactClick: () => void;
@@ -35,20 +37,20 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigationItems = [
+  type NavItem = {
+    name: string;
+    href: string;
+    action?: () => void;
+    hasDropdown?: boolean;
+    dropdownItems?: { name: string; href: string }[];
+  };
+
+  const navigationItems: NavItem[] = [
     { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
     { name: 'אודות', href: '/about' },
     { name: 'תהליכים וקורסים', href: '/products' },
     { name: 'יעוץ אישי', href: '/contact' },
     { name: 'סדנאות לארגונים', href: '/corporate-workshops' },
-    { 
-      name: 'השראה', 
-      href: '#', 
-      hasDropdown: true,
-      dropdownItems: [
-        { name: 'בלוג', href: '/blog' }
-      ]
-    },
     { name: 'יצירת קשר', href: '/contact' }
   ];
 
@@ -214,7 +216,21 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             </div>
 
             {/* Navigation Links - Center */}
-            <div className="hidden lg:flex items-center space-x-8 space-x-reverse">
+            <div className="hidden lg:flex items-center space-x-6 space-x-reverse">
+              {/* Vault CTA - Highlighted */}
+              <motion.a
+                href={VAULT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-accent text-accent-foreground font-semibold px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                aria-label="הכספת - פלטפורמת AI Master"
+              >
+                <Vault className="h-4 w-4" />
+                <span>הכספת</span>
+              </motion.a>
+
               {navigationItems.map((item, index) => (
                 <div key={item.name} className="relative">
                   {item.hasDropdown ? (
@@ -317,6 +333,22 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
             >
               <div className="container mx-auto px-6 py-6">
                 <div className="flex flex-col space-y-4">
+                  {/* Vault CTA - Mobile */}
+                  <motion.a
+                    href={VAULT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 bg-accent text-accent-foreground font-semibold py-3 rounded-full shadow-md w-full"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    aria-label="הכספת - פלטפורמת AI Master"
+                  >
+                    <Vault className="h-5 w-5" />
+                    <span>הכספת</span>
+                  </motion.a>
+
                   {navigationItems.map((item) => (
                     <motion.div
                       key={item.name}
