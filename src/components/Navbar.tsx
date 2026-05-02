@@ -43,14 +43,6 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     { name: 'תהליכים וקורסים', href: '/products' },
     { name: 'יעוץ אישי', href: '/contact' },
     { name: 'סדנאות לארגונים', href: '/corporate-workshops' },
-    { 
-      name: 'השראה', 
-      href: '#', 
-      hasDropdown: true,
-      dropdownItems: [
-        { name: 'בלוג', href: '/blog' }
-      ]
-    },
     { name: 'יצירת קשר', href: '/contact' }
   ];
 
