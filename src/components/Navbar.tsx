@@ -9,7 +9,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { useAuth } from '@/hooks/useAuth';
 import { useUserRoles } from '@/hooks/useUserRoles';
 import { useNewLeadsCount } from '@/hooks/useNewLeadsCount';
-import { User, Settings, LogOut, BookOpen, Menu, X, ChevronDown, Facebook, Instagram, Bell } from 'lucide-react';
+import { User, Settings, LogOut, BookOpen, Menu, X, ChevronDown, Facebook, Instagram, Bell, Vault } from 'lucide-react';
+
+const VAULT_URL = 'https://vault.ai-master.co.il/';
 
 interface NavbarProps {
   onContactClick: () => void;
