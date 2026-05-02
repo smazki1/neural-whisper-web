@@ -191,6 +191,57 @@ export type Database = {
         }
         Relationships: []
       }
+      content_items: {
+        Row: {
+          content_json: Json | null
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          duration_minutes: number | null
+          id: string
+          is_featured: boolean | null
+          is_published: boolean | null
+          published_at: string | null
+          thumbnail_url: string | null
+          title: string
+          type: string
+          updated_at: string | null
+          video_url: string | null
+        }
+        Insert: {
+          content_json?: Json | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration_minutes?: number | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          published_at?: string | null
+          thumbnail_url?: string | null
+          title: string
+          type: string
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          content_json?: Json | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration_minutes?: number | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          published_at?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          type?: string
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       content_services: {
         Row: {
           action_link: string | null
@@ -262,40 +313,210 @@ export type Database = {
       }
       courses: {
         Row: {
+          access_type: string
           category: Database["public"]["Enums"]["course_category"]
           created_at: string
+          currency: string
           description: string | null
+          discount_price: number | null
+          display_order: number | null
           duration: string | null
+          enrollment_deadline: string | null
+          enrollment_status: string
+          has_certificate: boolean
+          icount_page_url: string | null
           id: string
+          instructor_name: string | null
+          is_featured: boolean | null
+          is_free: boolean
+          language: string
           level: Database["public"]["Enums"]["course_level"]
+          max_students: number | null
+          price: number | null
           published: boolean
+          requirements: string | null
+          slug: string | null
+          tags: string[] | null
+          thumbnail_url: string | null
           title: string
+          trailer_url: string | null
           updated_at: string
+          user_id: string
+          what_you_learn: string | null
+        }
+        Insert: {
+          access_type?: string
+          category: Database["public"]["Enums"]["course_category"]
+          created_at?: string
+          currency?: string
+          description?: string | null
+          discount_price?: number | null
+          display_order?: number | null
+          duration?: string | null
+          enrollment_deadline?: string | null
+          enrollment_status?: string
+          has_certificate?: boolean
+          icount_page_url?: string | null
+          id?: string
+          instructor_name?: string | null
+          is_featured?: boolean | null
+          is_free?: boolean
+          language?: string
+          level: Database["public"]["Enums"]["course_level"]
+          max_students?: number | null
+          price?: number | null
+          published?: boolean
+          requirements?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title: string
+          trailer_url?: string | null
+          updated_at?: string
+          user_id: string
+          what_you_learn?: string | null
+        }
+        Update: {
+          access_type?: string
+          category?: Database["public"]["Enums"]["course_category"]
+          created_at?: string
+          currency?: string
+          description?: string | null
+          discount_price?: number | null
+          display_order?: number | null
+          duration?: string | null
+          enrollment_deadline?: string | null
+          enrollment_status?: string
+          has_certificate?: boolean
+          icount_page_url?: string | null
+          id?: string
+          instructor_name?: string | null
+          is_featured?: boolean | null
+          is_free?: boolean
+          language?: string
+          level?: Database["public"]["Enums"]["course_level"]
+          max_students?: number | null
+          price?: number | null
+          published?: boolean
+          requirements?: string | null
+          slug?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title?: string
+          trailer_url?: string | null
+          updated_at?: string
+          user_id?: string
+          what_you_learn?: string | null
+        }
+        Relationships: []
+      }
+      enrollments: {
+        Row: {
+          amount_paid: number | null
+          course_id: string
+          created_at: string | null
+          enrolled_at: string | null
+          icount_confirmation_code: string | null
+          icount_doc_number: string | null
+          icount_doc_url: string | null
+          id: string
+          status: string | null
           user_id: string
         }
         Insert: {
-          category: Database["public"]["Enums"]["course_category"]
-          created_at?: string
-          description?: string | null
-          duration?: string | null
+          amount_paid?: number | null
+          course_id: string
+          created_at?: string | null
+          enrolled_at?: string | null
+          icount_confirmation_code?: string | null
+          icount_doc_number?: string | null
+          icount_doc_url?: string | null
           id?: string
-          level: Database["public"]["Enums"]["course_level"]
-          published?: boolean
-          title: string
-          updated_at?: string
+          status?: string | null
           user_id: string
         }
         Update: {
-          category?: Database["public"]["Enums"]["course_category"]
-          created_at?: string
-          description?: string | null
-          duration?: string | null
+          amount_paid?: number | null
+          course_id?: string
+          created_at?: string | null
+          enrolled_at?: string | null
+          icount_confirmation_code?: string | null
+          icount_doc_number?: string | null
+          icount_doc_url?: string | null
           id?: string
-          level?: Database["public"]["Enums"]["course_level"]
-          published?: boolean
-          title?: string
-          updated_at?: string
+          status?: string | null
           user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guides: {
+        Row: {
+          category: string | null
+          content: string | null
+          cover_url: string | null
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          duration_minutes: number | null
+          id: string
+          is_free: boolean
+          language: string
+          level: string | null
+          published: boolean | null
+          slug: string | null
+          tags: string[] | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+          video_url: string | null
+        }
+        Insert: {
+          category?: string | null
+          content?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration_minutes?: number | null
+          id?: string
+          is_free?: boolean
+          language?: string
+          level?: string | null
+          published?: boolean | null
+          slug?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          category?: string | null
+          content?: string | null
+          cover_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration_minutes?: number | null
+          id?: string
+          is_free?: boolean
+          language?: string
+          level?: string | null
+          published?: boolean | null
+          slug?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+          video_url?: string | null
         }
         Relationships: []
       }
@@ -350,33 +571,51 @@ export type Database = {
       lessons: {
         Row: {
           content: string | null
+          content_json: Json | null
           created_at: string
           duration: string | null
+          duration_minutes: number | null
           id: string
+          is_preview: boolean | null
           module_id: string
           position: number
+          resources_json: Json | null
           title: string
           updated_at: string
+          video_provider: string | null
+          video_url: string | null
         }
         Insert: {
           content?: string | null
+          content_json?: Json | null
           created_at?: string
           duration?: string | null
+          duration_minutes?: number | null
           id?: string
+          is_preview?: boolean | null
           module_id: string
           position?: number
+          resources_json?: Json | null
           title: string
           updated_at?: string
+          video_provider?: string | null
+          video_url?: string | null
         }
         Update: {
           content?: string | null
+          content_json?: Json | null
           created_at?: string
           duration?: string | null
+          duration_minutes?: number | null
           id?: string
+          is_preview?: boolean | null
           module_id?: string
           position?: number
+          resources_json?: Json | null
           title?: string
           updated_at?: string
+          video_provider?: string | null
+          video_url?: string | null
         }
         Relationships: [
           {
@@ -387,6 +626,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      live_events: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duration_minutes: number | null
+          id: string
+          is_recorded: boolean | null
+          meeting_url: string | null
+          published: boolean | null
+          recording_url: string | null
+          scheduled_at: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_recorded?: boolean | null
+          meeting_url?: string | null
+          published?: boolean | null
+          recording_url?: string | null
+          scheduled_at: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          is_recorded?: boolean | null
+          meeting_url?: string | null
+          published?: boolean | null
+          recording_url?: string | null
+          scheduled_at?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       modules: {
         Row: {
@@ -726,6 +1007,42 @@ export type Database = {
         }
         Relationships: []
       }
+      prompts: {
+        Row: {
+          category: string | null
+          content: string
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          id: string
+          published: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category?: string | null
+          content: string
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          published?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string | null
+          content?: string
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          published?: boolean | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       resources: {
         Row: {
           created_at: string
@@ -836,6 +1153,77 @@ export type Database = {
         }
         Relationships: []
       }
+      tools: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          icon_url: string | null
+          id: string
+          is_free: boolean | null
+          published: boolean | null
+          title: string
+          updated_at: string | null
+          url: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          icon_url?: string | null
+          id?: string
+          is_free?: boolean | null
+          published?: boolean | null
+          title: string
+          updated_at?: string | null
+          url?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          icon_url?: string | null
+          id?: string
+          is_free?: boolean | null
+          published?: boolean | null
+          title?: string
+          updated_at?: string | null
+          url?: string | null
+        }
+        Relationships: []
+      }
+      user_bookmarks: {
+        Row: {
+          created_at: string | null
+          id: string
+          lesson_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          lesson_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          lesson_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_bookmarks_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_course_access: {
         Row: {
           course_id: string
@@ -894,6 +1282,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_favorites: {
+        Row: {
+          created_at: string | null
+          id: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          item_id: string
+          item_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          item_id?: string
+          item_type?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       user_progress: {
         Row: {
@@ -961,6 +1373,51 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      webinars: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          duration_minutes: number | null
+          id: string
+          is_live: boolean | null
+          published: boolean | null
+          scheduled_at: string | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+          video_url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration_minutes?: number | null
+          id?: string
+          is_live?: boolean | null
+          published?: boolean | null
+          scheduled_at?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          duration_minutes?: number | null
+          id?: string
+          is_live?: boolean | null
+          published?: boolean | null
+          scheduled_at?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+          video_url?: string | null
         }
         Relationships: []
       }
