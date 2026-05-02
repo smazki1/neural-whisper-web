@@ -331,20 +331,16 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
               <div className="container mx-auto px-6 py-6">
                 <div className="flex flex-col space-y-4">
                   {/* Vault CTA - Mobile */}
-                  <motion.a
+                  <ShinyButton
                     href={VAULT_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 bg-accent text-accent-foreground font-semibold py-3 rounded-full shadow-md w-full"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    aria-label="הכספת - פלטפורמת AI Master"
+                    ariaLabel="הכספת - פלטפורמת AI Master"
+                    className="shiny-cta--block"
                   >
-                    <Vault className="h-5 w-5" />
-                    <span>הכספת</span>
-                  </motion.a>
+                    הכספת
+                  </ShinyButton>
 
                   {navigationItems.map((item) => (
                     <motion.div
