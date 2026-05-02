@@ -1423,6 +1423,45 @@ export type Database = {
       }
     }
     Views: {
+      live_events_public: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duration_minutes: number | null
+          id: string | null
+          is_recorded: boolean | null
+          published: boolean | null
+          recording_url: string | null
+          scheduled_at: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string | null
+          is_recorded?: boolean | null
+          published?: boolean | null
+          recording_url?: string | null
+          scheduled_at?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string | null
+          is_recorded?: boolean | null
+          published?: boolean | null
+          recording_url?: string | null
+          scheduled_at?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       published_posts: {
         Row: {
           category_id: string | null
