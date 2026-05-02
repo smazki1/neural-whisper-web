@@ -87,7 +87,7 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
   const [filterStatus, setFilterStatus] = useState<'all' | 'published' | 'draft'>('all');
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [seoPreview, setSeoPreview] = useState(false);
-  const [autosaveTimer, setAutosaveTimer] = useState<NodeJS.Timeout | null>(null);
+  const [autosaveTimer, setAutosaveTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
   const { toast } = useToast();
   const analytics = useAnalytics();
 
