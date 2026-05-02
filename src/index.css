@@ -485,7 +485,7 @@
 }
 @property --gradient-percent {
   syntax: "<percentage>";
-  initial-value: 5%;
+  initial-value: 12%;
   inherits: false;
 }
 @property --gradient-shine {
