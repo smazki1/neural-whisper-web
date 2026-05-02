@@ -585,11 +585,11 @@
 
 .shiny-cta::after {
   --animation: shimmer linear infinite;
-  width: 100%;
+  width: 140%;
   aspect-ratio: 1;
-  background: linear-gradient(-50deg, transparent, var(--shiny-cta-highlight), transparent);
-  mask-image: radial-gradient(circle at bottom, transparent 40%, black);
-  opacity: 0.55;
+  background: linear-gradient(-50deg, transparent 35%, var(--shiny-cta-highlight) 50%, transparent 65%);
+  mask-image: radial-gradient(circle at center, black 30%, transparent 75%);
+  opacity: 0.5;
 }
 
 .shiny-cta span { z-index: 1; position: relative; }
