@@ -57,7 +57,7 @@ export const SEOProvider = ({ children }: SEOProviderProps) => {
 
   // Add scroll tracking for analytics
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
+    let scrollTimeout: ReturnType<typeof setTimeout>;
     const handleScroll = () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
