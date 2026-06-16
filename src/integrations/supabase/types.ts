@@ -14,6 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_sources: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          last_fetched_at: string | null
+          name: string
+          type: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_fetched_at?: string | null
+          name: string
+          type?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_fetched_at?: string | null
+          name?: string
+          type?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      ai_updates: {
+        Row: {
+          approval_token: string
+          category: string | null
+          created_at: string
+          dedup_hash: string | null
+          expanded_html: string | null
+          id: string
+          published_at: string | null
+          raw_excerpt: string | null
+          relevance_score: number | null
+          source: string | null
+          source_url: string | null
+          status: string
+          summary_html: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          approval_token?: string
+          category?: string | null
+          created_at?: string
+          dedup_hash?: string | null
+          expanded_html?: string | null
+          id?: string
+          published_at?: string | null
+          raw_excerpt?: string | null
+          relevance_score?: number | null
+          source?: string | null
+          source_url?: string | null
+          status?: string
+          summary_html?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          approval_token?: string
+          category?: string | null
+          created_at?: string
+          dedup_hash?: string | null
+          expanded_html?: string | null
+          id?: string
+          published_at?: string | null
+          raw_excerpt?: string | null
+          relevance_score?: number | null
+          source?: string | null
+          source_url?: string | null
+          status?: string
+          summary_html?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_post_tags: {
         Row: {
           created_at: string
@@ -311,6 +395,69 @@ export type Database = {
         }
         Relationships: []
       }
+      course_pages: {
+        Row: {
+          content: string | null
+          course_id: string
+          cover_url: string | null
+          created_at: string | null
+          display_order: number | null
+          icon: string | null
+          id: string
+          is_home: boolean | null
+          parent_id: string | null
+          published: boolean | null
+          slug: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          content?: string | null
+          course_id: string
+          cover_url?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          icon?: string | null
+          id?: string
+          is_home?: boolean | null
+          parent_id?: string | null
+          published?: boolean | null
+          slug?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string | null
+          course_id?: string
+          cover_url?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          icon?: string | null
+          id?: string
+          is_home?: boolean | null
+          parent_id?: string | null
+          published?: boolean | null
+          slug?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_pages_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "course_pages_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "course_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       courses: {
         Row: {
           access_type: string
@@ -457,6 +604,60 @@ export type Database = {
           },
         ]
       }
+      entitlements: {
+        Row: {
+          amount_paid: number | null
+          created_at: string
+          granted_at: string | null
+          icount_confirmation_code: string | null
+          icount_doc_number: string | null
+          icount_doc_url: string | null
+          id: string
+          product_id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount_paid?: number | null
+          created_at?: string
+          granted_at?: string | null
+          icount_confirmation_code?: string | null
+          icount_doc_number?: string | null
+          icount_doc_url?: string | null
+          id?: string
+          product_id: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount_paid?: number | null
+          created_at?: string
+          granted_at?: string | null
+          icount_confirmation_code?: string | null
+          icount_doc_number?: string | null
+          icount_doc_url?: string | null
+          id?: string
+          product_id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entitlements_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "entitlements_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "published_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       guides: {
         Row: {
           category: string | null
@@ -517,6 +718,27 @@ export type Database = {
           title?: string
           updated_at?: string | null
           video_url?: string | null
+        }
+        Relationships: []
+      }
+      icount_webhook_log: {
+        Row: {
+          created_at: string | null
+          id: string
+          raw: Json | null
+          result: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          raw?: Json | null
+          result?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          raw?: Json | null
+          result?: string | null
         }
         Relationships: []
       }
@@ -867,69 +1089,98 @@ export type Database = {
       }
       products: {
         Row: {
-          category: Database["public"]["Enums"]["product_category"]
+          category: Database["public"]["Enums"]["product_category"] | null
+          course_id: string | null
           created_at: string
           description: string | null
+          discount_price: number | null
+          display_order: number
           duration: string | null
           external_url: string | null
+          icount_page_url: string | null
           icount_paypage_id: string | null
           id: string
           is_featured: boolean
+          is_free: boolean
           is_published: boolean
           meta_description: string | null
           meta_title: string | null
+          persona: string | null
           price: number
           product_type: Database["public"]["Enums"]["product_type"]
           short_description: string | null
           slug: string
+          thank_you_message: string | null
           thumbnail_url: string | null
           title: string
           updated_at: string
           video_preview_url: string | null
         }
         Insert: {
-          category: Database["public"]["Enums"]["product_category"]
+          category?: Database["public"]["Enums"]["product_category"] | null
+          course_id?: string | null
           created_at?: string
           description?: string | null
+          discount_price?: number | null
+          display_order?: number
           duration?: string | null
           external_url?: string | null
+          icount_page_url?: string | null
           icount_paypage_id?: string | null
           id?: string
           is_featured?: boolean
+          is_free?: boolean
           is_published?: boolean
           meta_description?: string | null
           meta_title?: string | null
+          persona?: string | null
           price?: number
           product_type?: Database["public"]["Enums"]["product_type"]
           short_description?: string | null
           slug: string
+          thank_you_message?: string | null
           thumbnail_url?: string | null
           title: string
           updated_at?: string
           video_preview_url?: string | null
         }
         Update: {
-          category?: Database["public"]["Enums"]["product_category"]
+          category?: Database["public"]["Enums"]["product_category"] | null
+          course_id?: string | null
           created_at?: string
           description?: string | null
+          discount_price?: number | null
+          display_order?: number
           duration?: string | null
           external_url?: string | null
+          icount_page_url?: string | null
           icount_paypage_id?: string | null
           id?: string
           is_featured?: boolean
+          is_free?: boolean
           is_published?: boolean
           meta_description?: string | null
           meta_title?: string | null
+          persona?: string | null
           price?: number
           product_type?: Database["public"]["Enums"]["product_type"]
           short_description?: string | null
           slug?: string
+          thank_you_message?: string | null
           thumbnail_url?: string | null
           title?: string
           updated_at?: string
           video_preview_url?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "products_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       products_courses: {
         Row: {
@@ -1014,8 +1265,12 @@ export type Database = {
           created_at: string | null
           description: string | null
           display_order: number | null
+          guide_id: string | null
           id: string
+          is_sample: boolean
+          product_id: string | null
           published: boolean | null
+          tags: string[]
           title: string
           updated_at: string | null
         }
@@ -1025,8 +1280,12 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           display_order?: number | null
+          guide_id?: string | null
           id?: string
+          is_sample?: boolean
+          product_id?: string | null
           published?: boolean | null
+          tags?: string[]
           title: string
           updated_at?: string | null
         }
@@ -1036,12 +1295,38 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           display_order?: number | null
+          guide_id?: string | null
           id?: string
+          is_sample?: boolean
+          product_id?: string | null
           published?: boolean | null
+          tags?: string[]
           title?: string
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "prompts_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompts_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompts_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "published_products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       resources: {
         Row: {
@@ -1576,6 +1861,7 @@ export type Database = {
         Returns: boolean
       }
       make_user_admin: { Args: { user_email: string }; Returns: undefined }
+      prompt_content: { Args: { p_id: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "instructor" | "student"
@@ -1584,7 +1870,7 @@ export type Database = {
       order_status: "pending" | "completed" | "failed" | "refunded"
       payment_status: "pending" | "completed" | "failed" | "refunded"
       product_category: "basic" | "advanced" | "business"
-      product_type: "course" | "workshop" | "consultation"
+      product_type: "course" | "workshop" | "consultation" | "prompt_pack"
       resource_type: "video" | "pdf" | "slides" | "link"
     }
     CompositeTypes: {
@@ -1719,7 +2005,7 @@ export const Constants = {
       order_status: ["pending", "completed", "failed", "refunded"],
       payment_status: ["pending", "completed", "failed", "refunded"],
       product_category: ["basic", "advanced", "business"],
-      product_type: ["course", "workshop", "consultation"],
+      product_type: ["course", "workshop", "consultation", "prompt_pack"],
       resource_type: ["video", "pdf", "slides", "link"],
     },
   },

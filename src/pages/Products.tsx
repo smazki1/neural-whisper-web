@@ -22,7 +22,7 @@ interface Product {
   short_description: string;
   price: number;
   category: 'basic' | 'advanced' | 'business';
-  product_type: 'course' | 'workshop' | 'consultation';
+  product_type: 'course' | 'workshop' | 'consultation' | 'prompt_pack';
   duration: string;
   thumbnail_url: string;
   external_url: string;
