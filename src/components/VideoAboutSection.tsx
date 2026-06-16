@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import aviPortrait from '@/assets/avi-fried-portrait.png';
+import aviPortraitAsset from '@/assets/avi-fried-speaking.jpg.asset.json';
+const aviPortrait = aviPortraitAsset.url;
 
 const VideoAboutSection = () => {
   return (
