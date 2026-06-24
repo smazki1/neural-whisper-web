@@ -797,6 +797,7 @@ export type Database = {
           created_at: string
           duration: string | null
           duration_minutes: number | null
+          extra_videos: Json
           id: string
           is_preview: boolean | null
           module_id: string
@@ -813,6 +814,7 @@ export type Database = {
           created_at?: string
           duration?: string | null
           duration_minutes?: number | null
+          extra_videos?: Json
           id?: string
           is_preview?: boolean | null
           module_id: string
@@ -829,6 +831,7 @@ export type Database = {
           created_at?: string
           duration?: string | null
           duration_minutes?: number | null
+          extra_videos?: Json
           id?: string
           is_preview?: boolean | null
           module_id?: string
@@ -1258,6 +1261,75 @@ export type Database = {
         }
         Relationships: []
       }
+      prompt_pack_sections: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          product_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          product_id: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          product_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prompt_pack_sections_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompt_pack_sections_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "published_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prompt_topics: {
+        Row: {
+          color: string | null
+          created_at: string
+          display_order: number
+          icon: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          display_order?: number
+          icon?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          display_order?: number
+          icon?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       prompts: {
         Row: {
           category: string | null
@@ -1265,13 +1337,20 @@ export type Database = {
           created_at: string | null
           description: string | null
           display_order: number | null
+          featured: boolean
           guide_id: string | null
+          how_to_use: string | null
           id: string
+          image_url: string | null
           is_sample: boolean
+          pack_display_order: number
+          pack_section_id: string | null
+          parts: Json
           product_id: string | null
           published: boolean | null
           tags: string[]
           title: string
+          topic_id: string | null
           updated_at: string | null
         }
         Insert: {
@@ -1280,13 +1359,20 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           display_order?: number | null
+          featured?: boolean
           guide_id?: string | null
+          how_to_use?: string | null
           id?: string
+          image_url?: string | null
           is_sample?: boolean
+          pack_display_order?: number
+          pack_section_id?: string | null
+          parts?: Json
           product_id?: string | null
           published?: boolean | null
           tags?: string[]
           title: string
+          topic_id?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -1295,13 +1381,20 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           display_order?: number | null
+          featured?: boolean
           guide_id?: string | null
+          how_to_use?: string | null
           id?: string
+          image_url?: string | null
           is_sample?: boolean
+          pack_display_order?: number
+          pack_section_id?: string | null
+          parts?: Json
           product_id?: string | null
           published?: boolean | null
           tags?: string[]
           title?: string
+          topic_id?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -1310,6 +1403,13 @@ export type Database = {
             columns: ["guide_id"]
             isOneToOne: false
             referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompts_pack_section_id_fkey"
+            columns: ["pack_section_id"]
+            isOneToOne: false
+            referencedRelation: "prompt_pack_sections"
             referencedColumns: ["id"]
           },
           {
@@ -1324,6 +1424,13 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "published_products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompts_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "prompt_topics"
             referencedColumns: ["id"]
           },
         ]
@@ -1861,7 +1968,42 @@ export type Database = {
         Returns: boolean
       }
       make_user_admin: { Args: { user_email: string }; Returns: undefined }
+      pack_prompts: {
+        Args: { p_pack_id: string }
+        Returns: {
+          description: string
+          display_order: number
+          guide_id: string
+          id: string
+          is_sample: boolean
+          locked: boolean
+          pack_display_order: number
+          pack_section_id: string
+          tags: string[]
+          title: string
+        }[]
+      }
       prompt_content: { Args: { p_id: string }; Returns: string }
+      prompt_full: { Args: { p_id: string }; Returns: Json }
+      prompt_packs: {
+        Args: { p_preview?: boolean }
+        Returns: {
+          description: string
+          discount_price: number
+          display_order: number
+          icount_page_url: string
+          id: string
+          is_free: boolean
+          is_published: boolean
+          price: number
+          prompt_count: number
+          section_count: number
+          short_description: string
+          slug: string
+          thumbnail_url: string
+          title: string
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "instructor" | "student"
