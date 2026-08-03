@@ -7,28 +7,10 @@ import aviPortraitAsset from '@/assets/avi-fried-new.jpg.asset.json';
 
 const aviPortrait = aviPortraitAsset.url;
 
-const EMAIL = 'avi@ai-master.co.il';
-const PHONE_DISPLAY = '052-777-2807';
-const PHONE_INTL = '+972527772807';
 const WHATSAPP_URL =
   'https://wa.me/972527772807?text=' +
   encodeURIComponent('היי אבי, נפגשנו ורציתי לדבר איתך בנושא:');
 
-const buildVCard = () => {
-  const site = window.location.origin;
-  return [
-    'BEGIN:VCARD',
-    'VERSION:3.0',
-    'N:פריד;אבי;;;',
-    'FN:אבי פריד',
-    'ORG:AI Master',
-    'TITLE:מרצה ויועץ לבינה מלאכותית מעשית',
-    `TEL;TYPE=CELL:${PHONE_INTL}`,
-    `EMAIL;TYPE=INTERNET:${EMAIL}`,
-    `URL:${site}`,
-    'END:VCARD',
-  ].join('\r\n');
-};
 
 const DigitalCard = () => {
   const { trackCTAClick, trackDownload } = useAnalytics();
