@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { UserPlus, MessageCircle, CalendarCheck, Globe, Building2 } from 'lucide-react';
+import { MessageCircle, CalendarCheck, Globe, Building2 } from 'lucide-react';
 import { SEOHead } from '@/components/SEO/SEOHead';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import aviPortraitAsset from '@/assets/avi-fried-new.jpg.asset.json';
@@ -11,28 +11,14 @@ const WHATSAPP_URL =
   'https://wa.me/972527772807?text=' +
   encodeURIComponent('היי אבי, נפגשנו ורציתי לדבר איתך בנושא:');
 
-
 const DigitalCard = () => {
-  const { trackCTAClick, trackDownload } = useAnalytics();
-
-  const handleSaveContact = () => {
-    trackDownload('avi-frid.vcf', 'vcard');
-    const blob = new Blob([buildVCard()], { type: 'text/vcard;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'avi-frid.vcf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  };
+  const { trackCTAClick } = useAnalytics();
 
   return (
     <div dir="rtl" className="avi-card font-heebo">
       <SEOHead
         title="אבי פריד – כרטיס ביקור דיגיטלי | AI Master"
-        description="אבי פריד, מרצה ויועץ לבינה מלאכותית מעשית. שמירת פרטי קשר, שליחת הודעה בוואטסאפ, הזמנת הרצאה או סדנה לארגון, או מעבר לאתר."
+        description="אבי פריד, מרצה ויועץ לבינה מלאכותית מעשית. שליחת הודעה בוואטסאפ, הזמנת הרצאה או סדנה לארגון, או מעבר לאתר."
         noIndex
       />
 
@@ -65,20 +51,6 @@ const DigitalCard = () => {
         </header>
 
         <nav aria-label="פעולות מרכזיות" className="avi-card__actions">
-          <button
-            type="button"
-            onClick={handleSaveContact}
-            className="avi-action avi-action--primary"
-          >
-            <span className="avi-action__icon">
-              <UserPlus size={22} strokeWidth={1.9} />
-            </span>
-            <span className="avi-action__text">
-              <span className="avi-action__label">שמירת אבי באנשי הקשר</span>
-              <span className="avi-action__hint">הורדת כרטיס איש קשר</span>
-            </span>
-          </button>
-
           <a
             href={WHATSAPP_URL}
             target="_blank"
@@ -91,7 +63,6 @@ const DigitalCard = () => {
             </span>
             <span className="avi-action__text">
               <span className="avi-action__label">שליחת הודעה ב-WhatsApp</span>
-              <span className="avi-action__hint">{PHONE_DISPLAY}</span>
             </span>
           </a>
 
@@ -105,7 +76,6 @@ const DigitalCard = () => {
             </span>
             <span className="avi-action__text">
               <span className="avi-action__label">הזמנת הרצאה או סדנה</span>
-              <span className="avi-action__hint">מעבר לטופס יצירת קשר</span>
             </span>
           </Link>
 
@@ -119,12 +89,11 @@ const DigitalCard = () => {
             </span>
             <span className="avi-action__text">
               <span className="avi-action__label">מעבר לאתר AI Master</span>
-              <span className="avi-action__hint">ai-master.co.il</span>
             </span>
           </Link>
 
           <a
-            href="https://www.mash.org.il/ai"
+            href="https://www.iiai.co.il/"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackCTAClick('הזמנת הרצאה או סדנה לארגון', 'digital-card')}
@@ -135,14 +104,9 @@ const DigitalCard = () => {
             </span>
             <span className="avi-action__text">
               <span className="avi-action__label">הזמנת הרצאה או סדנה לארגון</span>
-              <span className="avi-action__hint">mash.org.il/ai</span>
             </span>
           </a>
         </nav>
-
-        <footer className="avi-card__footer">
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        </footer>
       </main>
     </div>
   );
