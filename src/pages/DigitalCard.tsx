@@ -140,6 +140,22 @@ const DigitalCard = () => {
               <span className="avi-action__hint">ai-master.co.il</span>
             </span>
           </Link>
+
+          <a
+            href="https://www.mash.org.il/ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackCTAClick('הזמנת הרצאה או סדנה לארגון', 'digital-card')}
+            className="avi-action"
+          >
+            <span className="avi-action__icon">
+              <Building2 size={22} strokeWidth={1.9} />
+            </span>
+            <span className="avi-action__text">
+              <span className="avi-action__label">הזמנת הרצאה או סדנה לארגון</span>
+              <span className="avi-action__hint">mash.org.il/ai</span>
+            </span>
+          </a>
         </nav>
 
         <footer className="avi-card__footer">
