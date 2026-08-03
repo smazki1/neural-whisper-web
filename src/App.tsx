@@ -71,6 +71,7 @@ const App = () => {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/reset-password/:token" element={<ResetPasswordConfirm />} />
             <Route path="/about" element={<About />} />
+            <Route path="/avi" element={<DigitalCard />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/blog/manager" element={<ProtectedRoute allowedRoles={['admin']}><BlogManager /></ProtectedRoute>} />
