@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import About from "./pages/About";
+import DigitalCard from "./pages/DigitalCard";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminContent from "./pages/admin/AdminContent";
@@ -71,6 +72,7 @@ const App = () => {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/reset-password/:token" element={<ResetPasswordConfirm />} />
             <Route path="/about" element={<About />} />
+            <Route path="/avi" element={<DigitalCard />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/blog/manager" element={<ProtectedRoute allowedRoles={['admin']}><BlogManager /></ProtectedRoute>} />

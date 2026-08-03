@@ -1351,6 +1351,7 @@ export type Database = {
           tags: string[]
           title: string
           topic_id: string | null
+          topic_ids: string[]
           updated_at: string | null
         }
         Insert: {
@@ -1373,6 +1374,7 @@ export type Database = {
           tags?: string[]
           title: string
           topic_id?: string | null
+          topic_ids?: string[]
           updated_at?: string | null
         }
         Update: {
@@ -1395,6 +1397,7 @@ export type Database = {
           tags?: string[]
           title?: string
           topic_id?: string | null
+          topic_ids?: string[]
           updated_at?: string | null
         }
         Relationships: [
@@ -1551,6 +1554,7 @@ export type Database = {
           created_at: string | null
           description: string | null
           display_order: number | null
+          featured: boolean
           icon_url: string | null
           id: string
           is_free: boolean | null
@@ -1564,6 +1568,7 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           display_order?: number | null
+          featured?: boolean
           icon_url?: string | null
           id?: string
           is_free?: boolean | null
@@ -1577,6 +1582,7 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           display_order?: number | null
+          featured?: boolean
           icon_url?: string | null
           id?: string
           is_free?: boolean | null
@@ -1765,6 +1771,45 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      vibe_apps: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          emoji: string | null
+          id: string
+          published: boolean | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+          url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          emoji?: string | null
+          id?: string
+          published?: boolean | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+          url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          emoji?: string | null
+          id?: string
+          published?: boolean | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+          url?: string | null
         }
         Relationships: []
       }
