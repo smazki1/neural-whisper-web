@@ -638,3 +638,225 @@
   padding: 0.85rem 1.5rem;
   font-size: 1rem;
 }
+
+/* ==========================================================================
+   /avi — Digital business card (scoped design system)
+   ========================================================================== */
+.avi-card {
+  --avi-bg: 220 52% 13%;          /* #101933 */
+  --avi-bg-deep: 224 53% 18%;     /* #162347 */
+  --avi-bg-lift: 220 55% 29%;     /* #213670 */
+  --avi-gold: 46 82% 60%;         /* #eec643 */
+  --avi-text: 267 6% 84%;         /* #d8d5db */
+
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 80% at 50% 0%, hsl(var(--avi-bg-deep)) 0%, transparent 60%),
+    linear-gradient(180deg, hsl(var(--avi-bg)) 0%, hsl(220 55% 9%) 100%);
+  color: hsl(var(--avi-text));
+}
+
+.avi-card__aura {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+.avi-card__aura--one {
+  top: -18%;
+  left: 50%;
+  width: 42rem;
+  height: 42rem;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, hsl(var(--avi-bg-lift) / 0.55) 0%, transparent 70%);
+}
+.avi-card__aura--two {
+  bottom: -22%;
+  right: -12%;
+  width: 32rem;
+  height: 32rem;
+  background: radial-gradient(circle, hsl(var(--avi-gold) / 0.08) 0%, transparent 70%);
+}
+.avi-card__aura--three {
+  bottom: -10%;
+  left: -18%;
+  width: 30rem;
+  height: 30rem;
+  background: radial-gradient(circle, hsl(var(--avi-bg-lift) / 0.35) 0%, transparent 70%);
+}
+
+.avi-card__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(hsl(var(--avi-text) / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--avi-text) / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(70% 55% at 50% 20%, black 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(70% 55% at 50% 20%, black 0%, transparent 100%);
+}
+
+.avi-card__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 6vw, 3rem) 1.25rem 2.5rem;
+}
+
+.avi-card__kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: hsl(var(--avi-gold) / 0.9);
+}
+
+.avi-card__portrait {
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  margin: 1.75rem auto 0;
+  border-radius: 9999px;
+  padding: 3px;
+  background: linear-gradient(145deg, hsl(var(--avi-gold) / 0.9), hsl(var(--avi-gold) / 0.15) 55%, hsl(var(--avi-bg-lift) / 0.6));
+  box-shadow:
+    0 18px 45px -18px hsl(var(--avi-gold) / 0.45),
+    0 0 0 1px hsl(var(--avi-text) / 0.06);
+}
+.avi-card__portrait img {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.avi-card__title {
+  margin-top: 1.5rem;
+  font-size: clamp(2.75rem, 12vw, 4.75rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, #ffffff 0%, hsl(var(--avi-text)) 55%, hsl(var(--avi-text) / 0.55) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 26px hsl(var(--avi-gold) / 0.22));
+}
+
+.avi-card__rule {
+  width: min(11rem, 60%);
+  height: 1px;
+  margin: 1.15rem auto 0;
+  background: linear-gradient(90deg, transparent, hsl(var(--avi-gold) / 0.8), transparent);
+  box-shadow: 0 0 14px hsl(var(--avi-gold) / 0.35);
+}
+
+.avi-card__role {
+  margin-top: 1.15rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: hsl(var(--avi-gold) / 0.95);
+}
+
+.avi-card__lede {
+  margin: 0.75rem auto 0;
+  max-width: 24rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: hsl(var(--avi-text) / 0.7);
+}
+
+.avi-card__actions {
+  margin-top: clamp(1.75rem, 6vw, 2.5rem);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.avi-action {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  min-height: 64px;
+  padding: 0.9rem 1.15rem;
+  text-align: right;
+  border-radius: 1rem;
+  border: 1px solid hsl(var(--avi-text) / 0.1);
+  background: linear-gradient(150deg, hsl(var(--avi-bg-deep) / 0.85), hsl(var(--avi-bg) / 0.6));
+  backdrop-filter: blur(10px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, background 0.25s ease;
+}
+.avi-action:is(:hover, :focus-visible) {
+  border-color: hsl(var(--avi-gold) / 0.55);
+  box-shadow: 0 16px 40px -22px hsl(var(--avi-gold) / 0.5);
+  transform: translateY(-2px);
+  outline: none;
+}
+.avi-action:focus-visible {
+  border-color: hsl(var(--avi-gold));
+  box-shadow: 0 0 0 2px hsl(var(--avi-gold) / 0.5);
+}
+
+.avi-action--primary {
+  border-color: hsl(var(--avi-gold) / 0.45);
+  background: linear-gradient(150deg, hsl(var(--avi-gold) / 0.16), hsl(var(--avi-bg-deep) / 0.85));
+  box-shadow: 0 18px 45px -26px hsl(var(--avi-gold) / 0.6);
+}
+
+.avi-action__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.85rem;
+  border: 1px solid hsl(var(--avi-gold) / 0.25);
+  background: hsl(var(--avi-gold) / 0.12);
+  color: hsl(var(--avi-gold));
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.avi-action:is(:hover, :focus-visible) .avi-action__icon {
+  background: hsl(var(--avi-gold) / 0.9);
+  color: hsl(var(--avi-bg));
+}
+
+.avi-action__text { flex: 1 1 auto; min-width: 0; }
+.avi-action__label {
+  display: block;
+  font-weight: 600;
+  color: #fff;
+}
+.avi-action__hint {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: hsl(var(--avi-text) / 0.6);
+}
+
+.avi-card__footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: hsl(var(--avi-text) / 0.55);
+}
+.avi-card__footer a:hover {
+  color: hsl(var(--avi-gold));
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avi-action { transition: none; }
+  .avi-action:is(:hover, :focus-visible) { transform: none; }
+}
