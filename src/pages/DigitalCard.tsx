@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { UserPlus, MessageCircle, CalendarCheck, Globe } from 'lucide-react';
+import { UserPlus, MessageCircle, CalendarCheck, Globe, Building2 } from 'lucide-react';
 import { SEOHead } from '@/components/SEO/SEOHead';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import aviPortraitAsset from '@/assets/avi-fried-new.jpg.asset.json';
@@ -50,7 +50,7 @@ const DigitalCard = () => {
     <div dir="rtl" className="avi-card font-heebo">
       <SEOHead
         title="אבי פריד – כרטיס ביקור דיגיטלי | AI Master"
-        description="אבי פריד, מרצה ויועץ לבינה מלאכותית מעשית. שמירת פרטי קשר, שליחת הודעה בוואטסאפ או הזמנת הרצאה וסדנה."
+        description="אבי פריד, מרצה ויועץ לבינה מלאכותית מעשית. שמירת פרטי קשר, שליחת הודעה בוואטסאפ, הזמנת הרצאה או סדנה לארגון, או מעבר לאתר."
         noIndex
       />
 
@@ -140,6 +140,22 @@ const DigitalCard = () => {
               <span className="avi-action__hint">ai-master.co.il</span>
             </span>
           </Link>
+
+          <a
+            href="https://www.mash.org.il/ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackCTAClick('הזמנת הרצאה או סדנה לארגון', 'digital-card')}
+            className="avi-action"
+          >
+            <span className="avi-action__icon">
+              <Building2 size={22} strokeWidth={1.9} />
+            </span>
+            <span className="avi-action__text">
+              <span className="avi-action__label">הזמנת הרצאה או סדנה לארגון</span>
+              <span className="avi-action__hint">mash.org.il/ai</span>
+            </span>
+          </a>
         </nav>
 
         <footer className="avi-card__footer">
