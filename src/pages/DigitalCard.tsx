@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { UserPlus, MessageCircle, CalendarCheck, Globe } from 'lucide-react';
+import { UserPlus, MessageCircle, CalendarCheck, Globe, Building2 } from 'lucide-react';
 import { SEOHead } from '@/components/SEO/SEOHead';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import aviPortraitAsset from '@/assets/avi-fried-new.jpg.asset.json';
