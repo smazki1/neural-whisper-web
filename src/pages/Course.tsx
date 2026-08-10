@@ -89,27 +89,35 @@ const Course: React.FC = () => {
       if (courseError) throw courseError;
       setCourse(courseData);
 
-      // Fetch modules and lessons
-      const { data: modulesData, error: modulesError } = await supabase
-        .from('modules')
-        .select('*')
-        .eq('course_id', id)
-        .order('position');
+      // Fetch curriculum (titles only — paid content stays server-side)
+      const { data: curriculum, error: curriculumError } = await supabase
+        .rpc('course_curriculum', { p_course_id: id });
 
-      if (modulesError) throw modulesError;
-      setModules(modulesData || []);
+      if (curriculumError) throw curriculumError;
 
-      const moduleIds = modulesData?.map(m => m.id) || [];
-      if (moduleIds.length > 0) {
-        const { data: lessonsData, error: lessonsError } = await supabase
-          .from('lessons')
-          .select('*')
-          .in('module_id', moduleIds)
-          .order('position');
-
-        if (lessonsError) throw lessonsError;
-        setLessons(lessonsData || []);
-      }
+      const modulesMap = new Map<string, Module>();
+      const lessonsList: Lesson[] = [];
+      (curriculum || []).forEach((row) => {
+        if (!modulesMap.has(row.module_id)) {
+          modulesMap.set(row.module_id, {
+            id: row.module_id,
+            title: row.module_title,
+            description: row.module_description ?? '',
+            position: row.module_position ?? 0,
+          });
+        }
+        if (row.lesson_id) {
+          lessonsList.push({
+            id: row.lesson_id,
+            module_id: row.module_id,
+            title: row.lesson_title ?? '',
+            duration: row.duration ?? '',
+            position: row.lesson_position ?? 0,
+          });
+        }
+      });
+      setModules(Array.from(modulesMap.values()));
+      setLessons(lessonsList);
 
       // Check user access and fetch progress if user is logged in
       if (user) {

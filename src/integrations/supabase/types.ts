@@ -2005,6 +2005,21 @@ export type Database = {
       }
     }
     Functions: {
+      course_curriculum: {
+        Args: { p_course_id: string }
+        Returns: {
+          duration: string
+          duration_minutes: number
+          is_preview: boolean
+          lesson_id: string
+          lesson_position: number
+          lesson_title: string
+          module_description: string
+          module_id: string
+          module_position: number
+          module_title: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
