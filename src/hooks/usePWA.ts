@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Workbox } from 'workbox-window';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -11,20 +10,9 @@ export const usePWA = () => {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [swUpdate, setSWUpdate] = useState<boolean>(false);
+  const swUpdate = false;
 
   useEffect(() => {
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      const wb = new Workbox('/sw.js');
-      
-      wb.addEventListener('waiting', () => {
-        setSWUpdate(true);
-      });
-
-      wb.register();
-    }
-
     // Listen for online/offline status
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
@@ -79,16 +67,7 @@ export const usePWA = () => {
     }
   };
 
-  const updateSW = () => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistration().then((registration) => {
-        if (registration?.waiting) {
-          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-          window.location.reload();
-        }
-      });
-    }
-  };
+  const updateSW = () => window.location.reload();
 
   return {
     isOnline,

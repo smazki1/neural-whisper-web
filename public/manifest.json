@@ -13,13 +13,13 @@
   "icons": [
     {
       "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
-      "sizes": "192x192",
+      "sizes": "100x100",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
       "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
-      "sizes": "512x512",
+      "sizes": "100x100",
       "type": "image/png",
       "purpose": "any maskable"
     }
@@ -28,7 +28,7 @@
   "screenshots": [
     {
       "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
-      "sizes": "1280x720",
+      "sizes": "100x100",
       "type": "image/png",
       "form_factor": "wide",
       "label": "דף הבית של AI Master"
@@ -43,7 +43,7 @@
       "icons": [
         {
           "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
-          "sizes": "96x96"
+          "sizes": "100x100"
         }
       ]
     },
@@ -55,7 +55,7 @@
       "icons": [
         {
           "src": "/lovable-uploads/ce5b5687-c89c-4546-83ae-f72e291dc216.png",
-          "sizes": "96x96"
+          "sizes": "100x100"
         }
       ]
     }
