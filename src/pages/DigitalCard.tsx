@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { MessageCircle, CalendarCheck, Globe, Building2 } from 'lucide-react';
 import { SEOHead } from '@/components/SEO/SEOHead';
 import { useAnalytics } from '@/hooks/useAnalytics';
-import aviPortraitAsset from '@/assets/avi-fried-new.jpg.asset.json';
-
-const aviPortrait = aviPortraitAsset.url;
+import aviPortrait from '@/assets/avi-fried-speaking-local.jpg';
 
 const WHATSAPP_URL =
   'https://wa.me/972527772807?text=' +
