@@ -13,12 +13,13 @@ export function useUserRoles(userId?: string | null) {
     console.log('[useUserRoles] Starting fetchRoles for userId:', userId);
     
     if (!userId) {
-      console.log('[useUserRoles] No userId provided, keeping loading state');
+      console.log('[useUserRoles] No userId provided, resolving with no roles');
       setRoles([]);
-      setLoading(true); // Keep loading true until we have a valid userId
-      setHasAttemptedFetch(false);
+      setLoading(false);
+      setHasAttemptedFetch(true);
       return;
     }
+
     
     console.log('[useUserRoles] Setting loading to true');
     setLoading(true);
