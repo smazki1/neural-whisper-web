@@ -40,6 +40,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     );
   }
 
+  if (!user) {
+    console.log('[ProtectedRoute] No user found, redirecting to /auth');
+    return <Navigate to="/auth" replace state={{ from: location }} />;
+  }
+
   // CRITICAL: If roles are required, wait for roles to load completely
   if (allowedRoles && allowedRoles.length > 0 && rolesLoading) {
     console.log('[ProtectedRoute] Showing loading state: roles loading');
@@ -53,10 +58,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     );
   }
 
-  if (!user) {
-    console.log('[ProtectedRoute] No user found, redirecting to /auth');
-    return <Navigate to="/auth" replace state={{ from: location }} />;
-  }
 
   // Check roles if required
   if (allowedRoles && allowedRoles.length > 0) {
