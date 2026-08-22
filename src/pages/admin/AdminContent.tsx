@@ -2,8 +2,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ContentManager } from '@/components/Admin/ContentManager';
-import { ContentServicesManager } from '@/components/Admin/ContentServicesManager';
+import { ContentManager } from '@/components/admin/ContentManager';
+import { ContentServicesManager } from '@/components/admin/ContentServicesManager';
 
 const AdminContent = () => {
   const navigate = useNavigate();
