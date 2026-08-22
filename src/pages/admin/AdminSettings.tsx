@@ -1,8 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { SettingsPanel } from '@/components/Admin/SettingsPanel';
-import { AuthorProfileSettings } from '@/components/Admin/AuthorProfileSettings';
+import { SettingsPanel } from '@/components/admin/SettingsPanel';
+import { AuthorProfileSettings } from '@/components/admin/AuthorProfileSettings';
 import { Settings, User } from 'lucide-react';
 
 const AdminSettings = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { LeadPipeline } from '@/components/Admin/LeadPipeline';
+import { LeadPipeline } from '@/components/admin/LeadPipeline';
 
 const AdminLeads = () => {
   return (
