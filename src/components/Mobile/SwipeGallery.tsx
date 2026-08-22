@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -57,18 +57,19 @@ export const SwipeGallery: React.FC<SwipeGalleryProps> = ({
     return Math.abs(offset) * velocity;
   };
 
-  const paginate = (newDirection: number) => {
-    const newIndex = currentIndex + newDirection;
-    if (newIndex >= 0 && newIndex < items.length) {
-      setCurrentIndex(newIndex);
-    } else if (newIndex >= items.length) {
-      setCurrentIndex(0); // Loop back to first
-    } else {
-      setCurrentIndex(items.length - 1); // Loop back to last
-    }
-  };
+  const paginate = useCallback((newDirection: number) => {
+    setCurrentIndex((index) => {
+      const newIndex = index + newDirection;
+      if (newIndex >= 0 && newIndex < items.length) return newIndex;
+      if (newIndex >= items.length) return 0;
+      return items.length - 1;
+    });
+  }, [items.length]);
 
-  const handleDragEnd = (event: any, { offset, velocity }: PanInfo) => {
+  const handleDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    { offset, velocity }: PanInfo,
+  ) => {
     const swipe = swipePower(offset.x, velocity.x);
 
     if (swipe < -swipeConfidenceThreshold) {
@@ -87,7 +88,7 @@ export const SwipeGallery: React.FC<SwipeGalleryProps> = ({
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, currentIndex, items.length]);
+  }, [autoPlay, autoPlayInterval, items.length, paginate]);
 
   // Touch gesture handling
   useEffect(() => {
@@ -125,7 +126,7 @@ export const SwipeGallery: React.FC<SwipeGalleryProps> = ({
         element.removeEventListener('touchend', handleTouchEnd);
       }
     };
-  }, [dragStartX]);
+  }, [dragStartX, paginate]);
 
   if (items.length === 0) return null;
 

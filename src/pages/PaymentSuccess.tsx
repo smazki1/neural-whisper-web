@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase } from '@/integrations/supabase/client';
@@ -25,15 +25,9 @@ const PaymentSuccess = () => {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (orderId) {
-      fetchOrder();
-      // Grant course access after successful payment
-      grantCourseAccess();
-    }
-  }, [orderId]);
+  const grantCourseAccess = useCallback(async () => {
+    if (!orderId) return;
 
-  const grantCourseAccess = async () => {
     try {
       const { data, error } = await supabase.functions.invoke('grant-course-access', {
         body: { orderId }
@@ -48,9 +42,11 @@ const PaymentSuccess = () => {
     } catch (error) {
       console.error("Error calling grant-course-access function:", error);
     }
-  };
+  }, [orderId]);
 
-  const fetchOrder = async () => {
+  const fetchOrder = useCallback(async () => {
+    if (!orderId) return;
+
     try {
       const { data, error } = await supabase
         .from('orders')
@@ -65,7 +61,17 @@ const PaymentSuccess = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [orderId]);
+
+  useEffect(() => {
+    if (!orderId) {
+      setLoading(false);
+      return;
+    }
+
+    void fetchOrder();
+    void grantCourseAccess();
+  }, [fetchOrder, grantCourseAccess, orderId]);
 
   const getCategoryLabel = (category: string) => {
     const labels = {
