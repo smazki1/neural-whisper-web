@@ -6,6 +6,8 @@ import { Card, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Clock } from 'lucide-react';
+import productImageFallback from '@/assets/hero-bg-ai-modern.jpg';
+import { resolveProductImageUrl } from '@/lib/productImage.js';
 
 interface Product {
   id: string;
@@ -121,7 +123,7 @@ const ProductsSection = () => {
                 {product.thumbnail_url && (
                   <div className="relative h-64 overflow-hidden">
                     <img
-                      src={product.thumbnail_url}
+                      src={resolveProductImageUrl(product.thumbnail_url, productImageFallback)}
                       alt={product.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />

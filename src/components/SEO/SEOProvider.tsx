@@ -26,7 +26,7 @@ interface SEOProviderProps {
 
 export const SEOProvider = ({ children }: SEOProviderProps) => {
   const location = useLocation();
-  const analytics = useAnalytics();
+  const analytics = useAnalytics({ trackPageViews: true });
 
   const updatePageTitle = (title: string) => {
     document.title = title.includes('AI Master') ? title : `${title} | AI Master`;

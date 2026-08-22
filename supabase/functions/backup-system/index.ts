@@ -21,18 +21,19 @@ serve(async (req) => {
     const backupType = new URL(req.url).searchParams.get('type') || 'full';
     const timestamp = new Date().toISOString();
 
-    let backupData: any = {};
+    const backupData: Record<string, unknown> = {};
 
     // Full backup or specific table backup
     switch (backupType) {
-      case 'posts':
+      case 'posts': {
         const { data: posts } = await supabaseClient
           .from('posts')
           .select('*');
         backupData.posts = posts;
         break;
+      }
 
-      case 'courses':
+      case 'courses': {
         const { data: courses } = await supabaseClient
           .from('courses')
           .select('*');
@@ -42,8 +43,9 @@ serve(async (req) => {
         backupData.courses = courses;
         backupData.lessons = lessons;
         break;
+      }
 
-      case 'users':
+      case 'users': {
         const { data: profiles } = await supabaseClient
           .from('profiles')
           .select('*');
@@ -53,8 +55,9 @@ serve(async (req) => {
         backupData.profiles = profiles;
         backupData.user_courses = userCourses;
         break;
+      }
 
-      case 'products':
+      case 'products': {
         const { data: products } = await supabaseClient
           .from('products')
           .select('*');
@@ -68,8 +71,9 @@ serve(async (req) => {
         backupData.orders = orders;
         backupData.product_courses = productCourses;
         break;
+      }
 
-      default: // full backup
+      default: { // full backup
         const tables = ['posts', 'courses', 'lessons', 'profiles', 'user_courses', 
                       'products', 'orders', 'product_courses', 'user_progress'];
         
@@ -84,6 +88,7 @@ serve(async (req) => {
             backupData[table] = null;
           }
         }
+      }
     }
 
     // Save backup to storage bucket

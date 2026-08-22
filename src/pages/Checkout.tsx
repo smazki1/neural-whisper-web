@@ -11,6 +11,8 @@ import { Label } from '@/components/ui/label';
 import { ArrowRight, CreditCard, Shield, CheckCircle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import productImageFallback from '@/assets/hero-bg-ai-modern.jpg';
+import { resolveProductImageUrl } from '@/lib/productImage.js';
 
 interface Product {
   id: string;
@@ -166,6 +168,8 @@ const Checkout = () => {
     );
   }
 
+  const productImageUrl = resolveProductImageUrl(product.thumbnail_url, productImageFallback);
+
   return (
     <>
       <Helmet>
@@ -205,9 +209,9 @@ const Checkout = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-center gap-4">
-                      {product.thumbnail_url && (
+                      {productImageUrl && (
                         <img
-                          src={product.thumbnail_url}
+                          src={productImageUrl}
                           alt={product.title}
                           className="w-16 h-16 rounded-lg object-cover"
                         />

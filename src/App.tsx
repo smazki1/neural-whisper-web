@@ -4,44 +4,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { lazy, Suspense } from "react";
 import Index from "./pages/Index";
-import About from "./pages/About";
-import DigitalCard from "./pages/DigitalCard";
 import { AdminLayout } from "./components/admin/AdminLayout";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminContent from "./pages/admin/AdminContent";
-import AdminProducts from "./pages/admin/AdminProducts";
-import AdminLeads from "./pages/admin/AdminLeads";
-import AdminOrders from "./pages/admin/AdminOrders";
-import AdminUsers from "./pages/admin/AdminUsers";
-import AdminSettings from "./pages/admin/AdminSettings";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import BlogManager from "./pages/BlogManager";
-import BlogEditor from "./pages/BlogEditor";
-import BusinessWorkshop from "./pages/BusinessWorkshop";
-import AIStrategyCourse from "./pages/AIStrategyCourse";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
-import NotFound from "./pages/NotFound";
-import LearningPlatform from "./pages/LearningPlatform";
-import CourseManager from "./pages/CourseManager";
-import Course from "./pages/Course";
-import Lesson from "./pages/Lesson";
-import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
-import Auth from "./pages/Auth";
-import ResetPassword from "./pages/ResetPassword";
-import ResetPasswordConfirm from "./pages/ResetPasswordConfirm";
-import AIMarketingAccelerator from "./pages/AIMarketingAccelerator";
-import Products from "./pages/Products";
-import ProductDetail from "./pages/ProductDetail";
-import Contact from "./pages/Contact";
-import CorporateWorkshops from "./pages/CorporateWorkshops";
-import Checkout from "./pages/Checkout";
-import PaymentSuccess from "./pages/PaymentSuccess";
-import PaymentCanceled from "./pages/PaymentCanceled";
 import { InstallPrompt } from "./components/PWA/InstallPrompt";
 import { UpdatePrompt } from "./components/PWA/UpdatePrompt";
 import { usePerformance } from "./hooks/usePerformance";
@@ -49,6 +15,42 @@ import { createOptimizedQueryClient } from "./hooks/useOptimizedQuery";
 import { SEOProvider } from "./components/SEO/SEOProvider";
 import { SkipLink } from "./components/Accessibility/SkipLink";
 import { useAccessibility } from "./hooks/useAccessibility";
+
+const About = lazy(() => import("./pages/About"));
+const DigitalCard = lazy(() => import("./pages/DigitalCard"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminContent = lazy(() => import("./pages/admin/AdminContent"));
+const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
+const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
+const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
+const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
+const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const BlogManager = lazy(() => import("./pages/BlogManager"));
+const BlogEditor = lazy(() => import("./pages/BlogEditor"));
+const BusinessWorkshop = lazy(() => import("./pages/BusinessWorkshop"));
+const AIStrategyCourse = lazy(() => import("./pages/AIStrategyCourse"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const LearningPlatform = lazy(() => import("./pages/LearningPlatform"));
+const CourseManager = lazy(() => import("./pages/CourseManager"));
+const Course = lazy(() => import("./pages/Course"));
+const Lesson = lazy(() => import("./pages/Lesson"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Auth = lazy(() => import("./pages/Auth"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const ResetPasswordConfirm = lazy(() => import("./pages/ResetPasswordConfirm"));
+const AIMarketingAccelerator = lazy(() => import("./pages/AIMarketingAccelerator"));
+const Products = lazy(() => import("./pages/Products"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Contact = lazy(() => import("./pages/Contact"));
+const CorporateWorkshops = lazy(() => import("./pages/CorporateWorkshops"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
+const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
 
 const queryClient = createOptimizedQueryClient();
 
@@ -66,6 +68,7 @@ const App = () => {
             <SEOProvider>
               <SkipLink href="#main-content">דלג לתוכן הראשי</SkipLink>
               <SkipLink href="#main-navigation">דלג לניווט</SkipLink>
+              <Suspense fallback={<div role="status" className="min-h-screen grid place-items-center">טוען...</div>}>
               <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
@@ -119,6 +122,7 @@ const App = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
               </Routes>
+              </Suspense>
               <InstallPrompt />
               <UpdatePrompt />
             </SEOProvider>
