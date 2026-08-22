@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const { user, signOut } = useAuth();
   const { roles } = useUserRoles(user?.id);
   const isAdmin = roles.includes('admin');
-  const { count: newLeadsCount } = useNewLeadsCount();
+  const { count: newLeadsCount } = useNewLeadsCount(isAdmin);
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
