@@ -247,11 +247,14 @@ export const ContentManager = ({ onPostCreated, onPostUpdated }: ContentManagerP
           .single();
       } else {
         // Create new post
+        const { data: authData } = await supabase.auth.getUser();
+        if (!authData.user) throw new Error('User must be authenticated');
+
         result = await supabase
           .from('blog_posts')
           .insert([{
             ...postData,
-            author_id: (await supabase.auth.getUser()).data.user?.id!
+            author_id: authData.user.id
           }])
           .select()
           .single();

@@ -1,10 +1,11 @@
 import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+import { normalizeGoogleAnalyticsId } from '@/lib/analyticsConfig.js';
 
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
+    gtag: (...args: unknown[]) => void;
+    dataLayer: unknown[][];
   }
 }
 
@@ -13,7 +14,7 @@ interface AnalyticsEvent {
   category: string;
   label?: string;
   value?: number;
-  custom_parameters?: Record<string, any>;
+  custom_parameters?: Record<string, unknown>;
 }
 
 interface ConversionEvent {
@@ -29,14 +30,23 @@ interface ConversionEvent {
   }>;
 }
 
-const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // Replace with actual GA4 measurement ID
+interface AnalyticsOptions {
+  trackPageViews?: boolean;
+}
 
-export const useAnalytics = () => {
+const GA_MEASUREMENT_ID = normalizeGoogleAnalyticsId(
+  import.meta.env.VITE_GA_MEASUREMENT_ID,
+);
+let analyticsInitialized = false;
+
+export const useAnalytics = ({ trackPageViews = false }: AnalyticsOptions = {}) => {
   const location = useLocation();
 
   // Initialize Google Analytics
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !GA_MEASUREMENT_ID || analyticsInitialized) return;
+
+    analyticsInitialized = true;
 
     // Load GA4 script
     const script = document.createElement('script');
@@ -46,8 +56,8 @@ export const useAnalytics = () => {
 
     // Initialize gtag
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function gtag() {
-      window.dataLayer.push(arguments);
+    window.gtag = (...args: unknown[]) => {
+      window.dataLayer.push(args);
     };
     window.gtag('js', new Date());
     window.gtag('config', GA_MEASUREMENT_ID, {
@@ -60,29 +70,22 @@ export const useAnalytics = () => {
       allow_ad_personalization_signals: true
     });
 
-    return () => {
-      // Cleanup script if needed
-      const existingScript = document.querySelector(`script[src*="${GA_MEASUREMENT_ID}"]`);
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
   }, []);
 
   // Track page views
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.gtag) return;
+    if (!trackPageViews || !GA_MEASUREMENT_ID || typeof window === 'undefined' || !window.gtag) return;
 
     window.gtag('config', GA_MEASUREMENT_ID, {
       page_path: location.pathname + location.search,
       page_title: document.title,
       page_location: window.location.href
     });
-  }, [location]);
+  }, [location, trackPageViews]);
 
   // Track custom events
   const trackEvent = useCallback((event: AnalyticsEvent) => {
-    if (typeof window === 'undefined' || !window.gtag) return;
+    if (!GA_MEASUREMENT_ID || typeof window === 'undefined' || !window.gtag) return;
 
     window.gtag('event', event.action, {
       event_category: event.category,
@@ -94,7 +97,7 @@ export const useAnalytics = () => {
 
   // Track conversions
   const trackConversion = useCallback((conversion: ConversionEvent) => {
-    if (typeof window === 'undefined' || !window.gtag) return;
+    if (!GA_MEASUREMENT_ID || typeof window === 'undefined' || !window.gtag) return;
 
     window.gtag('event', conversion.event_name, {
       currency: conversion.currency || 'ILS',

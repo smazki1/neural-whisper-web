@@ -13,6 +13,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
 import { Toaster } from '@/components/ui/toaster';
+import productImageFallback from '@/assets/hero-bg-ai-modern.jpg';
+import { resolveProductImageUrl } from '@/lib/productImage.js';
 
 interface Product {
   id: string;
@@ -229,7 +231,7 @@ const Products = () => {
                   {product.thumbnail_url && (
                     <div className="relative h-64 overflow-hidden">
                       <img
-                        src={product.thumbnail_url}
+                        src={resolveProductImageUrl(product.thumbnail_url, productImageFallback)}
                         alt={product.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       />

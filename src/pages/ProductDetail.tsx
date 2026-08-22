@@ -13,6 +13,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
 import { Toaster } from '@/components/ui/toaster';
+import productImageFallback from '@/assets/hero-bg-ai-modern.jpg';
+import { resolveProductImageUrl } from '@/lib/productImage.js';
 
 interface Product {
   id: string;
@@ -177,6 +179,8 @@ const ProductDetail = () => {
     );
   }
 
+  const productImageUrl = resolveProductImageUrl(product.thumbnail_url, productImageFallback);
+
   return (
     <>
       <Helmet>
@@ -185,7 +189,7 @@ const ProductDetail = () => {
         <meta name="keywords" content={`AI, בינה מלאכותית, ${product.title}, ${getCategoryLabel(product.category)}`} />
         <meta property="og:title" content={product.title} />
         <meta property="og:description" content={product.short_description || product.description} />
-        <meta property="og:image" content={product.thumbnail_url || ''} />
+        <meta property="og:image" content={productImageUrl} />
         <meta property="og:type" content="product" />
       </Helmet>
 
@@ -267,17 +271,17 @@ const ProductDetail = () => {
                 <div className="relative aspect-video bg-muted rounded-xl overflow-hidden shadow-2xl">
                   <video
                     src={product.video_preview_url}
-                    poster={product.thumbnail_url}
+                    poster={productImageUrl}
                     controls
                     className="w-full h-full object-cover"
                   >
                     דפדפן זה אינו תומך בוידאו
                   </video>
                 </div>
-              ) : product.thumbnail_url ? (
+              ) : productImageUrl ? (
                 <div className="relative aspect-video bg-muted rounded-xl overflow-hidden shadow-2xl">
                   <img
-                    src={product.thumbnail_url}
+                    src={productImageUrl}
                     alt={product.title}
                     className="w-full h-full object-cover"
                   />
