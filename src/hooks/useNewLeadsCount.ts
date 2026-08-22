@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
-export const useNewLeadsCount = () => {
+export const useNewLeadsCount = (enabled: boolean) => {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const fetchNewLeadsCount = async () => {
+  const fetchNewLeadsCount = useCallback(async () => {
+    if (!enabled) return;
+
     try {
       const { count: newCount, error } = await supabase
         .from('leads')
@@ -20,10 +22,17 @@ export const useNewLeadsCount = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [enabled]);
 
   useEffect(() => {
-    fetchNewLeadsCount();
+    if (!enabled) {
+      setCount(0);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    void fetchNewLeadsCount();
 
     // Subscribe to real-time updates
     const channel = supabase
@@ -36,7 +45,7 @@ export const useNewLeadsCount = () => {
           table: 'leads'
         },
         () => {
-          fetchNewLeadsCount();
+          void fetchNewLeadsCount();
         }
       )
       .subscribe();
@@ -44,7 +53,7 @@ export const useNewLeadsCount = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [enabled, fetchNewLeadsCount]);
 
   return { count, loading, refresh: fetchNewLeadsCount };
 };
