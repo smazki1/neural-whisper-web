@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { supabase } from '@/integrations/supabase/client';
@@ -33,7 +33,6 @@ interface Product {
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
@@ -51,10 +50,6 @@ const Products = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
-
-  useEffect(() => {
-    filterProducts();
-  }, [products, searchTerm, categoryFilter, typeFilter]);
 
   const fetchProducts = async () => {
     try {
@@ -74,7 +69,7 @@ const Products = () => {
     }
   };
 
-  const filterProducts = () => {
+  const filteredProducts = useMemo(() => {
     let filtered = products;
 
     if (searchTerm) {
@@ -92,8 +87,8 @@ const Products = () => {
       filtered = filtered.filter(product => product.product_type === typeFilter);
     }
 
-    setFilteredProducts(filtered);
-  };
+    return filtered;
+  }, [products, searchTerm, categoryFilter, typeFilter]);
 
   const getCategoryLabel = (category: string) => {
     const labels = {
