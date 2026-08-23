@@ -1,179 +1,213 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-icount-secret',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "content-type, x-icount-secret",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const ICOUNT_SECRET = '882F87C04676B449'; // Your unique iCount secret
+type ICountDocument = {
+  doctype?: string;
+  docnum?: string;
+  totalwithvat?: string | number;
+  custom_field?: string;
+  client?: { email?: string };
+  [key: string]: unknown;
+};
 
-interface ICountWebhookData {
-  doctype: string;
-  docnum: string;
-  timeissued: string;
-  clientname: string;
-  totalwithvat: string;
-  totalsum: string;
-  totalvat: string;
-  client_id: string;
-  client: {
-    email: string;
-    phone?: string;
-    mobile?: string;
-  };
-  custom_field?: string; // This should contain our order ID
-  items: Array<{
-    description: string;
-    unitprice: string;
-    quantity: string;
-  }>;
-}
+const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), {
+  status,
+  headers: { ...corsHeaders, "Content-Type": "application/json" },
+});
 
-serve(async (req) => {
-  // Handle CORS preflight requests
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+const cents = (value: unknown) => Math.round(Number(value) * 100);
+const firstString = (doc: ICountDocument, keys: string[]) => {
+  for (const key of keys) {
+    const value = doc[key];
+    if (typeof value === "string" && value.trim()) return value.trim();
+  }
+  return null;
+};
+
+Deno.serve(async (req: Request) => {
+  if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+
+  const configuredSecret = Deno.env.get("ICOUNT_WEBHOOK_SECRET");
+  const suppliedSecret = req.headers.get("X-iCount-Secret");
+  if (!configuredSecret || suppliedSecret !== configuredSecret) {
+    console.error("iCount webhook authentication failed");
+    return json({ error: "unauthorized" }, 401);
   }
 
+  const service = createClient(
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+    { auth: { persistSession: false, autoRefreshToken: false } },
+  );
+
+  const log = async (raw: ICountDocument, result: string) => {
+    const { error } = await service.from("icount_webhook_log").insert({ raw, result });
+    if (error) console.error("Failed to write webhook log", error);
+  };
+
   try {
-    // Verify iCount webhook security header
-    const icountSecret = req.headers.get('X-iCount-Secret');
-    if (icountSecret !== ICOUNT_SECRET) {
-      console.error('Invalid iCount secret header:', icountSecret);
-      return new Response('Unauthorized', { status: 401 });
-    }
+    const payload = await req.json();
+    const documents: ICountDocument[] = Array.isArray(payload) ? payload : [payload];
+    let processed = 0;
+    let failed = 0;
 
-    const supabaseService = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-      { auth: { persistSession: false } }
-    );
+    for (const doc of documents) {
+      if (doc.doctype !== "invrec") {
+        await log(doc, "ignored_document_type");
+        continue;
+      }
 
-    // Parse webhook data
-    const webhookData: ICountWebhookData[] = await req.json();
-    console.log('iCount webhook received:', JSON.stringify(webhookData, null, 2));
-
-    // Process each document in the webhook
-    for (const doc of webhookData) {
-      // Only process invoice/receipt documents
-      if (doc.doctype !== 'invrec') {
-        console.log('Skipping non-invoice document:', doc.doctype);
+      const reference = doc.custom_field?.trim();
+      const amount = Number(doc.totalwithvat);
+      if (!reference || !Number.isFinite(amount)) {
+        await log(doc, "invalid_payload");
+        failed++;
         continue;
       }
 
       try {
-        // Find the order using custom_field or by matching client info and amount
-        let order = null;
-        
-        if (doc.custom_field) {
-          // Try to find order by ID stored in custom_field
-          const { data: orderData } = await supabaseService
-            .from('orders')
-            .select('*, products(*)')
-            .eq('id', doc.custom_field)
-            .single();
-          order = orderData;
-        }
+        const docUrl = firstString(doc, ["doc_url", "docurl", "document_url", "pdf_url"]);
+        const confirmationCode = firstString(doc, ["confirmation_code", "confirmationcode", "confirmation"]);
 
-        if (!order) {
-          // Fallback: try to match by amount and find pending order
-          const { data: orderData } = await supabaseService
-            .from('orders')
-            .select('*, products(*)')
-            .eq('total_amount', parseFloat(doc.totalwithvat))
-            .eq('status', 'pending')
-            .order('created_at', { ascending: false })
-            .limit(1)
-            .single();
-          order = orderData;
-        }
+        const { data: intent, error: intentLookupError } = await service
+          .from("payment_intents")
+          .select("id, status, expected_amount, icount_doc_number")
+          .eq("id", reference)
+          .maybeSingle();
+        if (intentLookupError) throw intentLookupError;
 
-        if (!order) {
-          console.error('No matching order found for iCount document:', doc.docnum);
-          continue;
-        }
-
-        // Update order status to completed
-        const { error: updateError } = await supabaseService
-          .from('orders')
-          .update({
-            status: 'completed',
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', order.id);
-
-        if (updateError) {
-          console.error('Failed to update order:', updateError);
-          continue;
-        }
-
-        // Create payment record
-        const { error: paymentError } = await supabaseService
-          .from('payments')
-          .insert({
-            order_id: order.id,
-            amount: parseFloat(doc.totalwithvat),
-            currency: 'ILS',
-            payment_method: 'icount',
-            transaction_id: doc.docnum,
-            status: 'completed',
-            processed_at: new Date().toISOString()
-          });
-
-        if (paymentError) {
-          console.error('Failed to create payment record:', paymentError);
-        }
-
-        // If this is a course purchase, grant access
-        if (order.products && order.user_id) {
-          // Find if this product has an associated course
-          const { data: course } = await supabaseService
-            .from('courses')
-            .select('id')
-            .eq('title', order.products.title)
-            .single();
-
-          if (course) {
-            // Create user progress entry to grant access
-            await supabaseService
-              .from('user_progress')
-              .upsert({
-                user_id: order.user_id,
-                course_id: course.id,
-                progress_percentage: 0
-              });
+        if (intent) {
+          if (cents(intent.expected_amount) !== cents(amount)) {
+            const { error } = await service
+              .from("payment_intents")
+              .update({ status: "failed", failure_reason: "amount_mismatch", amount_paid: amount })
+              .eq("id", intent.id)
+              .eq("status", "pending");
+            if (error) throw error;
+            await log(doc, "amount_mismatch");
+            failed++;
+            continue;
           }
+
+          if (intent.status === "paid" || intent.status === "claimed") {
+            await log(doc, "payment_intent_already_processed");
+            processed++;
+            continue;
+          }
+
+          const { error } = await service
+            .from("payment_intents")
+            .update({
+              status: "paid",
+              amount_paid: amount,
+              buyer_email: doc.client?.email?.trim().toLowerCase() || null,
+              icount_doc_number: doc.docnum || null,
+              icount_confirmation_code: confirmationCode,
+              icount_doc_url: docUrl,
+              paid_at: new Date().toISOString(),
+              failure_reason: null,
+            })
+            .eq("id", intent.id)
+            .eq("status", "pending");
+          if (error) throw error;
+
+          await log(doc, "payment_intent_paid");
+          processed++;
+          continue;
         }
 
-        console.log('Successfully processed iCount payment:', {
-          orderId: order.id,
-          icountDocnum: doc.docnum,
-          amount: doc.totalwithvat,
-          clientEmail: doc.client.email
-        });
+        // Compatibility for the existing logged-in purchase flow used by other products.
+        const { data: entitlement, error: entitlementLookupError } = await service
+          .from("entitlements")
+          .select("id, status, products(price, discount_price)")
+          .eq("id", reference)
+          .maybeSingle();
+        if (entitlementLookupError) throw entitlementLookupError;
 
-      } catch (docError) {
-        console.error('Error processing document:', doc.docnum, docError);
+        if (entitlement) {
+          const product = Array.isArray(entitlement.products) ? entitlement.products[0] : entitlement.products;
+          const expected = Number(Number(product?.discount_price) > 0 ? product?.discount_price : product?.price);
+          if (!Number.isFinite(expected) || cents(expected) !== cents(amount)) {
+            await log(doc, "entitlement_amount_mismatch");
+            failed++;
+            continue;
+          }
+
+          const { error } = await service.from("entitlements").update({
+            status: "paid",
+            amount_paid: amount,
+            icount_doc_number: doc.docnum || null,
+            icount_confirmation_code: confirmationCode,
+            icount_doc_url: docUrl,
+            granted_at: new Date().toISOString(),
+          }).eq("id", entitlement.id);
+          if (error) throw error;
+
+          await log(doc, entitlement.status === "paid" ? "entitlement_already_paid" : "entitlement_paid");
+          processed++;
+          continue;
+        }
+
+        // Compatibility for the original order-based checkout.
+        const { data: order, error: orderLookupError } = await service
+          .from("orders")
+          .select("id, user_id, product_id, total_amount")
+          .eq("id", reference)
+          .maybeSingle();
+        if (orderLookupError) throw orderLookupError;
+        if (!order) {
+          await log(doc, "reference_not_found");
+          failed++;
+          continue;
+        }
+        if (cents(order.total_amount) !== cents(amount)) {
+          await log(doc, "order_amount_mismatch");
+          failed++;
+          continue;
+        }
+
+        const { error: orderUpdateError } = await service
+          .from("orders")
+          .update({ status: "completed", updated_at: new Date().toISOString() })
+          .eq("id", order.id);
+        if (orderUpdateError) throw orderUpdateError;
+
+        const { data: existingPayment } = await service
+          .from("payments")
+          .select("id")
+          .eq("transaction_id", doc.docnum || "")
+          .maybeSingle();
+        if (!existingPayment) {
+          const { error: paymentError } = await service.from("payments").insert({
+            order_id: order.id,
+            amount,
+            currency: "ILS",
+            payment_method: "icount",
+            transaction_id: doc.docnum || null,
+            status: "completed",
+            processed_at: new Date().toISOString(),
+          });
+          if (paymentError) throw paymentError;
+        }
+
+        await log(doc, "order_paid");
+        processed++;
+      } catch (error) {
+        console.error("Failed to process iCount document", doc.docnum, error);
+        await log(doc, "processing_error");
+        failed++;
       }
     }
 
-    return new Response(
-      JSON.stringify({ success: true, processed: webhookData.length }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200,
-      }
-    );
-
-  } catch (error: unknown) {
-    console.error('Error processing iCount webhook:', error);
-    return new Response(
-      JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Internal server error' }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500,
-      }
-    );
+    return json({ success: failed === 0, processed, failed }, failed > 0 ? 500 : 200);
+  } catch (error) {
+    console.error("iCount webhook failed", error);
+    return json({ error: "internal_error" }, 500);
   }
 });
