@@ -14,36 +14,26 @@ const ResetPassword: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
+  const genericSuccessMessage =
+    "אם כתובת המייל קיימת במערכת, נשלח אליה קישור לאיפוס הסיסמה.";
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const { error } = await supabase.functions.invoke('password-reset', {
-        body: { email, action: 'request' }
+      await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/update-password`
       });
-
-      if (error) {
-        toast({ 
-          title: "שגיאה", 
-          description: error.message || "שגיאה בשליחת לינק איפוס", 
-          variant: "destructive" 
-        });
-      } else {
-        setSent(true);
-        toast({ 
-          title: "נשלח בהצלחה", 
-          description: "אם כתובת האימייל קיימת, נשלח לך לינק לאיפוס סיסמה" 
-        });
-      }
-    } catch (error) {
-      toast({ 
-        title: "שגיאה", 
-        description: "שגיאה בשליחת לינק איפוס", 
-        variant: "destructive" 
-      });
+    } catch {
+      // Keep the response identical so this form cannot be used to enumerate accounts.
     }
 
+    setSent(true);
+    toast({
+      title: "בקשת האיפוס התקבלה",
+      description: genericSuccessMessage
+    });
     setLoading(false);
   };
 
@@ -85,10 +75,10 @@ const ResetPassword: React.FC = () => {
                     <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <p>נשלח לינק לאיפוס סיסמה!</p>
+                    <p>{genericSuccessMessage}</p>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    בדוק את תיבת האימייל שלך ולחץ על הלינק לאיפוס הסיסמה. הלינק תקף למשך שעה אחת.
+                    בדקו את תיבת האימייל ואת תיקיית הספאם.
                   </p>
                   <Button 
                     variant="outline" 

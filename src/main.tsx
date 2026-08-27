@@ -1,8 +1,11 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import { startPasswordRecoveryTracking } from './lib/passwordRecoveryContext.ts'
 
 const PWA_CLEANUP_VERSION = '2026-08-15';
+
+startPasswordRecoveryTracking();
 
 if ('serviceWorker' in navigator && localStorage.getItem('pwa-cleanup-version') !== PWA_CLEANUP_VERSION) {
   window.addEventListener('load', () => {
