@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
-import type { Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,6 +11,12 @@ import {
   hasValidPasswordRecoveryContext,
   markPasswordRecoverySession,
 } from "@/lib/passwordRecoveryContext";
+import { consumeInitialPasswordRecoveryRedirect } from "@/lib/authRedirectIntent.js";
+import {
+  completePasswordRecovery,
+  resolveInitialRecoveryStatus,
+  resolveRecoveryEventStatus,
+} from "@/lib/passwordRecoveryFlow.js";
 import { validatePasswordChange } from "@/lib/passwordValidation.js";
 
 type PageStatus = "checking" | "ready" | "invalid";
@@ -35,24 +40,17 @@ const UpdatePassword = () => {
   const [confirmation, setConfirmation] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const recoveryEventSeen = useRef(false);
 
   useEffect(() => {
     let mounted = true;
-    let validationTimer: number | undefined;
-
-    const acceptRecoverySession = (session: Session) => {
-      recoveryEventSeen.current = true;
-      markPasswordRecoverySession(session);
-
-      if (mounted) {
-        setStatus("ready");
-      }
-    };
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" && session) {
-        acceptRecoverySession(session);
+      if (resolveRecoveryEventStatus(event, session) === "ready" && session) {
+        markPasswordRecoverySession(session);
+
+        if (mounted) {
+          setStatus("ready");
+        }
       }
     });
 
@@ -64,21 +62,16 @@ const UpdatePassword = () => {
         return;
       }
 
-      if (error || !data.session) {
-        setStatus("invalid");
-        return;
-      }
+      const initialStatus = resolveInitialRecoveryStatus({
+        session: data.session,
+        sessionError: error,
+        hasRecoveryContext: hasValidPasswordRecoveryContext(data.session),
+        hasRecoveryRedirect: consumeInitialPasswordRecoveryRedirect(),
+      });
 
-      if (recoveryEventSeen.current || hasValidPasswordRecoveryContext(data.session)) {
-        setStatus("ready");
-        return;
-      }
-
-      validationTimer = window.setTimeout(() => {
-        if (!recoveryEventSeen.current && !hasValidPasswordRecoveryContext(data.session)) {
-          setStatus("invalid");
-        }
-      }, 250);
+      setStatus((currentStatus) =>
+        currentStatus === "ready" ? "ready" : initialStatus,
+      );
     };
 
     void checkExistingSession();
@@ -86,10 +79,6 @@ const UpdatePassword = () => {
     return () => {
       mounted = false;
       subscription.unsubscribe();
-
-      if (validationTimer !== undefined) {
-        window.clearTimeout(validationTimer);
-      }
     };
   }, []);
 
@@ -110,16 +99,15 @@ const UpdatePassword = () => {
     }
 
     setSubmitting(true);
-    const { error: updateError } = await supabase.auth.updateUser({ password });
+    const recoveryResult = await completePasswordRecovery(supabase.auth, password);
 
-    if (updateError) {
+    if (recoveryResult === "update_error") {
       setSubmitting(false);
       setFormError("לא ניתן לעדכן את הסיסמה. ייתכן שקישור האיפוס פג תוקף.");
       return;
     }
 
-    const { error: signOutError } = await supabase.auth.signOut({ scope: "local" });
-    if (signOutError) {
+    if (recoveryResult === "sign_out_error") {
       setSubmitting(false);
       setFormError("הסיסמה עודכנה, אך לא ניתן היה לסיים את Session האיפוס בבטחה.");
       return;

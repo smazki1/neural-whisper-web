@@ -29,8 +29,13 @@ test("password reset requests use Supabase Auth and a non-enumerating response",
   const source = await readOrEmpty(
     new URL("../src/pages/ResetPassword.tsx", import.meta.url),
   );
+  const requestHelper = await readOrEmpty(
+    new URL("../src/lib/passwordResetRequest.js", import.meta.url),
+  );
 
-  assert.match(source, /supabase\.auth\.resetPasswordForEmail\(email,/);
+  assert.match(source, /const\s+\{\s*error\s*\}\s*=\s*await\s+requestPasswordReset/);
+  assert.match(source, /if\s*\(error\)/);
+  assert.match(requestHelper, /auth\.resetPasswordForEmail\(email,/);
   assert.match(
     source,
     /redirectTo:\s*`\$\{window\.location\.origin\}\/update-password`/,
@@ -53,10 +58,14 @@ test("the update-password route uses a valid recovery session", async () => {
   const page = await readOrEmpty(
     new URL("../src/pages/UpdatePassword.tsx", import.meta.url),
   );
+  const flow = await readOrEmpty(
+    new URL("../src/lib/passwordRecoveryFlow.js", import.meta.url),
+  );
 
   assert.match(app, /path=["']\/update-password["']/);
   assert.match(page, /onAuthStateChange/);
-  assert.match(page, /event\s*===\s*["']PASSWORD_RECOVERY["']/);
+  assert.match(page, /resolveRecoveryEventStatus\(event, session\)/);
+  assert.match(flow, /event\s*===\s*["']PASSWORD_RECOVERY["']/);
   assert.match(page, /auth\.getSession\(\)/);
   assert.match(page, /hasValidPasswordRecoveryContext/);
   assert.match(page, /קישור האיפוס חסר, פג תוקף או אינו תקין/);
@@ -82,9 +91,13 @@ test("a valid password is updated and the recovery session is ended locally", as
   const source = await readOrEmpty(
     new URL("../src/pages/UpdatePassword.tsx", import.meta.url),
   );
+  const flow = await readOrEmpty(
+    new URL("../src/lib/passwordRecoveryFlow.js", import.meta.url),
+  );
 
-  assert.match(source, /supabase\.auth\.updateUser\(\{\s*password\s*\}\)/);
-  assert.match(source, /supabase\.auth\.signOut\(\{\s*scope:\s*["']local["']\s*\}\)/);
+  assert.match(source, /completePasswordRecovery\(supabase\.auth, password\)/);
+  assert.match(flow, /auth\.updateUser\(\{\s*password\s*\}\)/);
+  assert.match(flow, /auth\.signOut\(\{\s*scope:\s*["']local["']\s*\}\)/);
   assert.match(source, /navigate\(["']\/auth["'],\s*\{\s*replace:\s*true\s*\}\)/);
 });
 

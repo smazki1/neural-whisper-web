@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { requestPasswordReset } from "@/lib/passwordResetRequest.js";
 
 const ResetPassword: React.FC = () => {
   const { toast } = useToast();
@@ -22,11 +23,15 @@ const ResetPassword: React.FC = () => {
     setLoading(true);
 
     try {
-      await supabase.auth.resetPasswordForEmail(email, {
+      const { error } = await requestPasswordReset(supabase.auth, email, {
         redirectTo: `${window.location.origin}/update-password`
       });
+
+      if (error) {
+        console.error("Supabase Auth password reset request failed");
+      }
     } catch {
-      // Keep the response identical so this form cannot be used to enumerate accounts.
+      console.error("Supabase Auth password reset request failed");
     }
 
     setSent(true);

@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client'
+import './lib/authRedirectIntent.js'
 import App from './App.tsx'
 import './index.css'
 import { startPasswordRecoveryTracking } from './lib/passwordRecoveryContext.ts'
