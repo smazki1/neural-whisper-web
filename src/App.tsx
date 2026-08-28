@@ -43,6 +43,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const Auth = lazy(() => import("./pages/Auth"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const ResetPasswordConfirm = lazy(() => import("./pages/ResetPasswordConfirm"));
+const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
 const AIMarketingAccelerator = lazy(() => import("./pages/AIMarketingAccelerator"));
 const Products = lazy(() => import("./pages/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
@@ -74,6 +75,7 @@ const App = () => {
             <Route path="/auth" element={<Auth />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/reset-password/:token" element={<ResetPasswordConfirm />} />
+            <Route path="/update-password" element={<UpdatePassword />} />
             <Route path="/about" element={<About />} />
             <Route path="/avi" element={<DigitalCard />} />
             <Route path="/blog" element={<Blog />} />
