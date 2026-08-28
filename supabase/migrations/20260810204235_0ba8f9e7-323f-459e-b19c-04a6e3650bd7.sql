@@ -1,16 +1,3 @@
--- The column predates the tracked migration history in Production.
-ALTER TABLE public.courses
-  ADD COLUMN IF NOT EXISTS is_free boolean NOT NULL DEFAULT false;
-
-ALTER TABLE public.lessons
-  ADD COLUMN IF NOT EXISTS video_url text,
-  ADD COLUMN IF NOT EXISTS video_provider text,
-  ADD COLUMN IF NOT EXISTS duration_minutes integer,
-  ADD COLUMN IF NOT EXISTS is_preview boolean DEFAULT false,
-  ADD COLUMN IF NOT EXISTS content_json jsonb,
-  ADD COLUMN IF NOT EXISTS resources_json jsonb,
-  ADD COLUMN IF NOT EXISTS extra_videos jsonb NOT NULL DEFAULT '[]'::jsonb;
-
 -- 1) Lessons: restrict public read to free courses / preview lessons
 DROP POLICY IF EXISTS "Public can view lessons of published courses" ON public.lessons;
 CREATE POLICY "Public can view free or preview lessons"

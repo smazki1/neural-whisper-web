@@ -1,6 +1,6 @@
--- Reconcile commerce-to-course access objects that predate the tracked
--- migration history. This migration is safe on the existing Production
--- schema and also supports a clean database build.
+-- Reconcile only the commerce-to-course access objects that predate the
+-- tracked migration history. Broader migration-history drift is handled
+-- separately.
 
 alter table public.products
   add column if not exists course_id uuid;
@@ -22,7 +22,7 @@ begin
 end
 $$;
 
-create index if not exists products_course_id_idx
+create index if not exists products_course_idx
   on public.products(course_id);
 
 create table if not exists public.entitlements (

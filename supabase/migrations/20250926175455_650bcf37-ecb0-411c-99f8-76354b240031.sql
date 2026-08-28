@@ -1,19 +1,3 @@
--- The original leads table was created outside the tracked migration history.
--- Reconcile it here so a clean checkout can replay every migration.
-CREATE TABLE IF NOT EXISTS public.leads (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  phone TEXT,
-  company TEXT,
-  message TEXT,
-  service_interest TEXT,
-  source TEXT,
-  status TEXT DEFAULT 'new',
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
 -- Add missing fields to leads table
 ALTER TABLE public.leads 
 ADD COLUMN IF NOT EXISTS follow_up_date DATE,
