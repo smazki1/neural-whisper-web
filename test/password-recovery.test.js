@@ -50,7 +50,10 @@ test("password reset requests use Supabase Auth and a non-enumerating response",
 test("the frontend no longer invokes the custom password-reset Edge Function", async () => {
   const frontend = await readFrontendSources(new URL("../src/", import.meta.url));
 
-  assert.doesNotMatch(frontend, /functions\.invoke\(["']password-reset["']/);
+  assert.doesNotMatch(
+    frontend,
+    /functions\s*\.\s*invoke\s*\(\s*["']password-reset["']/,
+  );
 });
 
 test("the update-password route uses a valid recovery session", async () => {
