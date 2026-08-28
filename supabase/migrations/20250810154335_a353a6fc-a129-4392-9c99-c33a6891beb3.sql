@@ -1,7 +1,18 @@
 -- Enums
-create type if not exists public.course_category as enum ('strategy','marketing','tech');
-create type if not exists public.course_level as enum ('beginner','intermediate','advanced');
-create type if not exists public.resource_type as enum ('video','pdf','slides','link');
+do $$ begin
+  create type public.course_category as enum ('strategy','marketing','tech');
+exception when duplicate_object then null;
+end $$;
+
+do $$ begin
+  create type public.course_level as enum ('beginner','intermediate','advanced');
+exception when duplicate_object then null;
+end $$;
+
+do $$ begin
+  create type public.resource_type as enum ('video','pdf','slides','link');
+exception when duplicate_object then null;
+end $$;
 
 -- Tables
 create table if not exists public.courses (
@@ -81,35 +92,35 @@ alter table public.lessons enable row level security;
 alter table public.resources enable row level security;
 
 -- Policies for courses
-create policy if not exists "Public can view published courses"
+create policy "Public can view published courses"
   on public.courses for select
   using (published = true);
 
-create policy if not exists "Users can view their own courses"
+create policy "Users can view their own courses"
   on public.courses for select to authenticated
   using (auth.uid() = user_id);
 
-create policy if not exists "Users can insert their own courses"
+create policy "Users can insert their own courses"
   on public.courses for insert to authenticated
   with check (auth.uid() = user_id);
 
-create policy if not exists "Users can update their own courses"
+create policy "Users can update their own courses"
   on public.courses for update to authenticated
   using (auth.uid() = user_id);
 
-create policy if not exists "Users can delete their own courses"
+create policy "Users can delete their own courses"
   on public.courses for delete to authenticated
   using (auth.uid() = user_id);
 
 -- Policies for modules
-create policy if not exists "Public can view modules of published courses"
+create policy "Public can view modules of published courses"
   on public.modules for select
   using (exists (
     select 1 from public.courses c
     where c.id = modules.course_id and (c.published = true or c.user_id = auth.uid())
   ));
 
-create policy if not exists "Owners can modify modules"
+create policy "Owners can modify modules"
   on public.modules for all to authenticated
   using (exists (
     select 1 from public.courses c
@@ -121,7 +132,7 @@ create policy if not exists "Owners can modify modules"
   ));
 
 -- Policies for lessons
-create policy if not exists "Public can view lessons of published courses"
+create policy "Public can view lessons of published courses"
   on public.lessons for select
   using (exists (
     select 1 from public.courses c
@@ -129,7 +140,7 @@ create policy if not exists "Public can view lessons of published courses"
     where m.id = lessons.module_id and (c.published = true or c.user_id = auth.uid())
   ));
 
-create policy if not exists "Owners can modify lessons"
+create policy "Owners can modify lessons"
   on public.lessons for all to authenticated
   using (exists (
     select 1 from public.courses c
@@ -143,7 +154,7 @@ create policy if not exists "Owners can modify lessons"
   ));
 
 -- Policies for resources
-create policy if not exists "Public can view resources of published courses"
+create policy "Public can view resources of published courses"
   on public.resources for select
   using (exists (
     select 1 from public.courses c
@@ -152,7 +163,7 @@ create policy if not exists "Public can view resources of published courses"
     where l.id = resources.lesson_id and (c.published = true or c.user_id = auth.uid())
   ));
 
-create policy if not exists "Owners can modify resources"
+create policy "Owners can modify resources"
   on public.resources for all to authenticated
   using (exists (
     select 1 from public.courses c

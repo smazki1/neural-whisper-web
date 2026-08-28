@@ -1,4 +1,101 @@
 
+-- These content tables existed in Production before migration history was
+-- committed. Reconcile them here so a clean checkout can build the schema.
+CREATE TABLE IF NOT EXISTS public.webinars (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  thumbnail_url text,
+  video_url text,
+  scheduled_at timestamptz,
+  duration_minutes integer DEFAULT 60,
+  is_live boolean DEFAULT false,
+  published boolean DEFAULT false,
+  display_order integer DEFAULT 0,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS public.live_events (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  scheduled_at timestamptz NOT NULL,
+  duration_minutes integer DEFAULT 60,
+  meeting_url text,
+  is_recorded boolean DEFAULT false,
+  recording_url text,
+  published boolean DEFAULT true,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS public.tools (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  url text,
+  icon_url text,
+  category text DEFAULT 'general',
+  is_free boolean DEFAULT true,
+  published boolean DEFAULT false,
+  display_order integer DEFAULT 0,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now(),
+  featured boolean NOT NULL DEFAULT false
+);
+
+CREATE TABLE IF NOT EXISTS public.guides (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  thumbnail_url text,
+  video_url text,
+  duration_minutes integer,
+  category text DEFAULT 'general',
+  level text DEFAULT 'beginner',
+  published boolean DEFAULT false,
+  display_order integer DEFAULT 0,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now(),
+  content text DEFAULT '',
+  slug text,
+  tags text[] DEFAULT '{}',
+  is_free boolean NOT NULL DEFAULT true,
+  language text NOT NULL DEFAULT 'he',
+  cover_url text
+);
+
+CREATE TABLE IF NOT EXISTS public.prompts (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  content text NOT NULL,
+  category text DEFAULT 'general',
+  published boolean DEFAULT false,
+  display_order integer DEFAULT 0,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now(),
+  guide_id uuid REFERENCES public.guides(id) ON DELETE SET NULL,
+  tags text[] NOT NULL DEFAULT '{}',
+  product_id uuid REFERENCES public.products(id) ON DELETE SET NULL,
+  is_sample boolean NOT NULL DEFAULT false,
+  parts jsonb NOT NULL DEFAULT '[]'::jsonb,
+  how_to_use text,
+  featured boolean NOT NULL DEFAULT false,
+  pack_section_id uuid,
+  pack_display_order integer NOT NULL DEFAULT 0,
+  image_url text,
+  topic_id uuid,
+  topic_ids uuid[] NOT NULL DEFAULT '{}'
+);
+
+ALTER TABLE public.webinars ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.live_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.tools ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.guides ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.prompts ENABLE ROW LEVEL SECURITY;
+
 DROP POLICY IF EXISTS "admin all webinars" ON public.webinars;
 CREATE POLICY "admin all webinars" ON public.webinars
   FOR ALL TO authenticated

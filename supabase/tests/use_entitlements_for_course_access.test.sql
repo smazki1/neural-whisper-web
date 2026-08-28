@@ -1,6 +1,6 @@
 begin;
 
-select plan(23);
+select plan(39);
 
 insert into auth.users (id) values
   ('00000000-0000-0000-0000-000000000001'),
@@ -10,16 +10,17 @@ insert into auth.users (id) values
   ('00000000-0000-0000-0000-000000000005'),
   ('00000000-0000-0000-0000-000000000006'),
   ('00000000-0000-0000-0000-000000000007'),
-  ('00000000-0000-0000-0000-000000000008');
+  ('00000000-0000-0000-0000-000000000008'),
+  ('00000000-0000-0000-0000-000000000009');
 
 insert into public.user_roles (user_id, role) values
   ('00000000-0000-0000-0000-000000000001', 'admin');
 
 insert into public.courses (id, user_id, title, category, level, published, is_free) values
-  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'Paid course A', 'strategy', 'beginner', false, false),
-  ('10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001', 'Paid course B', 'strategy', 'beginner', false, false),
-  ('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000001', 'Public free course', 'strategy', 'beginner', true, true),
-  ('10000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000001', 'Published paid preview course', 'strategy', 'beginner', true, false);
+  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', 'Paid course A', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', 'Paid course B', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', 'Public free course', 'strategy', 'beginner', true, true),
+  ('10000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', 'Published paid preview course', 'strategy', 'beginner', true, false);
 
 insert into public.modules (id, course_id, title) values
   ('20000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', 'Module A'),
@@ -34,10 +35,17 @@ insert into public.lessons (id, module_id, title, is_preview) values
   ('30000000-0000-0000-0000-000000000004', '20000000-0000-0000-0000-000000000004', 'Preview lesson', true),
   ('30000000-0000-0000-0000-000000000005', '20000000-0000-0000-0000-000000000004', 'Locked paid lesson', false);
 
-insert into public.products (id, title, slug, is_published, course_id) values
-  ('40000000-0000-0000-0000-000000000001', 'Product A', 'product-a', true, '10000000-0000-0000-0000-000000000001'),
-  ('40000000-0000-0000-0000-000000000002', 'Product B', 'product-b', true, '10000000-0000-0000-0000-000000000002'),
-  ('40000000-0000-0000-0000-000000000003', 'Product without course', 'product-without-course', true, null);
+insert into public.resources (id, lesson_id, type, label, url) values
+  ('35000000-0000-0000-0000-000000000001', '30000000-0000-0000-0000-000000000001', 'pdf', 'Resource A', 'https://example.test/course-a.pdf'),
+  ('35000000-0000-0000-0000-000000000002', '30000000-0000-0000-0000-000000000002', 'pdf', 'Resource B', 'https://example.test/course-b.pdf'),
+  ('35000000-0000-0000-0000-000000000003', '30000000-0000-0000-0000-000000000003', 'pdf', 'Free resource', 'https://example.test/free.pdf'),
+  ('35000000-0000-0000-0000-000000000004', '30000000-0000-0000-0000-000000000004', 'pdf', 'Preview resource', 'https://example.test/preview.pdf'),
+  ('35000000-0000-0000-0000-000000000005', '30000000-0000-0000-0000-000000000005', 'pdf', 'Locked resource', 'https://example.test/locked.pdf');
+
+insert into public.products (id, title, slug, category, is_published, course_id) values
+  ('40000000-0000-0000-0000-000000000001', 'Product A', 'product-a', 'basic', false, '10000000-0000-0000-0000-000000000001'),
+  ('40000000-0000-0000-0000-000000000002', 'Product B', 'product-b', 'basic', false, '10000000-0000-0000-0000-000000000002'),
+  ('40000000-0000-0000-0000-000000000003', 'Product without course', 'product-without-course', 'basic', false, null);
 
 insert into public.entitlements (user_id, product_id, status) values
   ('00000000-0000-0000-0000-000000000002', '40000000-0000-0000-0000-000000000001', 'paid'),
@@ -56,20 +64,26 @@ set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000002', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000002","role":"authenticated"}', true);
 
+select is((select count(*) from public.products where id = '40000000-0000-0000-0000-000000000001'), 1::bigint, 'paid entitlement reads its unpublished product');
+select is((select count(*) from public.products where id = '40000000-0000-0000-0000-000000000002'), 0::bigint, 'paid entitlement does not read another unpublished product');
 select is((select count(*) from public.courses where id = '10000000-0000-0000-0000-000000000001'), 1::bigint, 'paid entitlement reads course A');
 select is((select count(*) from public.modules where course_id = '10000000-0000-0000-0000-000000000001'), 1::bigint, 'paid entitlement reads modules of course A');
 select is((select count(*) from public.lessons where module_id = '20000000-0000-0000-0000-000000000001'), 1::bigint, 'paid entitlement reads lessons of course A');
+select is((select count(*) from public.resources where lesson_id = '30000000-0000-0000-0000-000000000001'), 1::bigint, 'paid entitlement reads resources of course A');
 select is((select count(*) from public.courses where id = '10000000-0000-0000-0000-000000000002'), 0::bigint, 'entitlement for A does not read private course B');
 select is((select count(*) from public.modules where course_id = '10000000-0000-0000-0000-000000000002'), 0::bigint, 'entitlement for A does not read modules of B');
 select is((select count(*) from public.lessons where module_id = '20000000-0000-0000-0000-000000000002'), 0::bigint, 'entitlement for A does not read lessons of B');
+select is((select count(*) from public.resources where lesson_id = '30000000-0000-0000-0000-000000000002'), 0::bigint, 'entitlement for A does not read resources of B');
 
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000003', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000003","role":"authenticated"}', true);
 select is((select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000001'), 0::bigint, 'user without entitlement cannot read a paid lesson');
+select is((select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000001'), 0::bigint, 'user without entitlement cannot read a paid resource');
 
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000004', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000004","role":"authenticated"}', true);
 select is((select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000001'), 0::bigint, 'pending entitlement does not grant access');
+select is((select count(*) from public.products where id = '40000000-0000-0000-0000-000000000001'), 0::bigint, 'pending entitlement does not reveal an unpublished product');
 
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000005', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000005","role":"authenticated"}', true);
@@ -88,14 +102,16 @@ select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000
 select is((select count(*) from public.courses where id = '10000000-0000-0000-0000-000000000002'), 1::bigint, 'legacy user_course_access reads course B');
 select is((select count(*) from public.modules where course_id = '10000000-0000-0000-0000-000000000002'), 1::bigint, 'legacy user_course_access reads modules of B');
 select is((select count(*) from public.lessons where module_id = '20000000-0000-0000-0000-000000000002'), 1::bigint, 'legacy user_course_access reads lessons of B');
+select is((select count(*) from public.resources where lesson_id = '30000000-0000-0000-0000-000000000002'), 1::bigint, 'legacy user_course_access reads resources of B');
 
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000001', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000001","role":"authenticated"}', true);
 select is(
   (select count(*) from public.courses where id = '10000000-0000-0000-0000-000000000002')
   + (select count(*) from public.modules where id = '20000000-0000-0000-0000-000000000002')
-  + (select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000002'),
-  3::bigint,
+  + (select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000002')
+  + (select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000002'),
+  4::bigint,
   'admin reads private course content'
 );
 select lives_ok(
@@ -111,20 +127,19 @@ select set_config('request.jwt.claims', '{"role":"anon"}', true);
 select is((select count(*) from public.courses where id = '10000000-0000-0000-0000-000000000003'), 1::bigint, 'public free course remains readable');
 select is((select count(*) from public.modules where id = '20000000-0000-0000-0000-000000000003'), 1::bigint, 'public free module remains readable');
 select is((select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000003'), 1::bigint, 'public free lesson remains readable');
+select is((select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000003'), 1::bigint, 'public free resource remains readable');
+select is((select count(*) from public.modules where id = '20000000-0000-0000-0000-000000000004'), 1::bigint, 'anonymous user reads module metadata required for preview');
+select is((select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000004'), 1::bigint, 'anonymous user reads preview lesson in a published paid course');
+select is((select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000004'), 1::bigint, 'anonymous user reads resources attached to the preview lesson');
 select is((select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000005'), 0::bigint, 'non-preview paid lesson remains private');
+select is((select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000005'), 0::bigint, 'resource attached to a locked paid lesson remains private');
 
 reset role;
-select ok(
-  exists (
-    select 1
-    from pg_policies
-    where schemaname = 'public'
-      and tablename = 'lessons'
-      and policyname = 'Public can view free or preview lessons'
-      and qual ilike '%is_preview = true%'
-  ),
-  'preview SELECT rule remains present'
-);
+select has_table('public', 'entitlements', 'entitlements exists in clean schema');
+select has_column('public', 'products', 'course_id', 'products.course_id exists in clean schema');
+select col_is_fk('public', 'products', 'course_id', 'products.course_id has a foreign key');
+select col_is_fk('public', 'entitlements', 'user_id', 'entitlements.user_id has a foreign key');
+select col_is_fk('public', 'entitlements', 'product_id', 'entitlements.product_id has a foreign key');
 select is(
   (
     select count(*)

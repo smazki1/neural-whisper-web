@@ -100,4 +100,7 @@ FROM (
 ) AS t(title, slug, content, excerpt, featured_image_url)
 WHERE NOT EXISTS (
   SELECT 1 FROM blog_posts WHERE slug = t.slug
+)
+AND EXISTS (
+  SELECT 1 FROM auth.users WHERE email = 'avifrid121@gmail.com'
 );

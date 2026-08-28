@@ -27,8 +27,14 @@ create unique index payment_intents_icount_doc_number_idx
 
 -- A user should have one durable access record per product. This also makes
 -- the post-login claim idempotent under retries and concurrent browser tabs.
-create unique index if not exists entitlements_user_product_idx
-  on public.entitlements(user_id, product_id);
+do $$
+begin
+  if to_regclass('public.entitlements') is not null then
+    create unique index if not exists entitlements_user_product_idx
+      on public.entitlements(user_id, product_id);
+  end if;
+end
+$$;
 
 alter table public.payment_intents enable row level security;
 
