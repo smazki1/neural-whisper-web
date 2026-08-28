@@ -1,5 +1,7 @@
 # Supabase Auth password recovery
 
+Password reset is implemented exclusively through the official Supabase Auth recovery flow. The frontend requests recovery emails with `auth.resetPasswordForEmail`, and completes recovery with `auth.updateUser`. The legacy custom `password-reset` Edge Function is no longer part of this repository.
+
 ## Redirect URLs required before deployment
 
 Add these exact URLs in Supabase Dashboard, Authentication, URL Configuration, Redirect URLs:
@@ -34,4 +36,4 @@ No Preview URL is configured by this change. If Preview testing is required, add
 
 ## Rollback
 
-Revert the implementation commit and redeploy the previous frontend release. Leave the existing `password-reset` Edge Function and `password_resets` table unchanged. The two exact Supabase Redirect URLs may remain allowlisted, or they may be removed after the previous frontend is restored and verified. No database rollback is required.
+Revert the legacy-function removal commit to restore its source and local configuration. The production `password-reset` Edge Function and the `password_resets` table are not changed by this removal, so no database rollback is required. The official Supabase Auth recovery flow remains the active frontend implementation.
