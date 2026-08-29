@@ -140,6 +140,8 @@ export const createHandler =
           .select("id")
           .eq("user_id", user.id)
           .eq("course_id", courseId)
+          .eq("product_id", order.product_id)
+          .eq("order_id", order.id)
           .maybeSingle();
 
       if (existingAccessError || !existingAccess) {

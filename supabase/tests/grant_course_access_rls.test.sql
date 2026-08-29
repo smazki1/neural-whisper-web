@@ -86,21 +86,12 @@ select is(
   'exact grant creates one row'
 );
 
-select is(
-  (
-    select count(*)
-    from pg_constraint
-    where conrelid = 'public.user_course_access'::regclass
-      and contype = 'u'
-      and pg_get_constraintdef(oid) = 'UNIQUE (user_id, course_id)'
-  ),
-  1::bigint,
-  'database uniqueness prevents duplicate concurrent grants'
+select throws_ok(
+  $$insert into public.user_course_access (user_id, course_id, product_id, order_id, granted_at) values ('00000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000011', '40000000-0000-0000-0000-000000000011', '50000000-0000-0000-0000-000000000011', now())$$::text,
+  '23505'::char(5),
+  null::text,
+  'database uniqueness rejects a duplicate concurrent grant'::text
 );
-
-insert into public.user_course_access (user_id, course_id, product_id, order_id, granted_at)
-values ('00000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000011', '40000000-0000-0000-0000-000000000011', '50000000-0000-0000-0000-000000000011', now())
-on conflict (user_id, course_id) do nothing;
 select is(
   (select granted_at from public.user_course_access where user_id = '00000000-0000-0000-0000-000000000012' and course_id = '10000000-0000-0000-0000-000000000011'),
   '2026-02-01 00:00:00+00'::timestamptz,

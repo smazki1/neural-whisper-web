@@ -205,6 +205,26 @@ Deno.test("returns the same denial for missing, cross-user, pending, failed, and
   assert(responses.every((response) => response.body === responses[0].body));
 });
 
+Deno.test("returns generic failures for Supabase lookup errors", async () => {
+  const orderFailure = mockFactory({
+    order: { data: null, error: { code: "orders_unavailable" } },
+  });
+  const orderResponse = await createHandler(orderFailure.factory)(request());
+  assertEquals(orderResponse.status, 500);
+  assertEquals(await orderResponse.json(), { error: "Internal server error" });
+
+  const mappingFailure = mockFactory({
+    courses: { data: null, error: { code: "mappings_unavailable" } },
+  });
+  const mappingResponse = await createHandler(mappingFailure.factory)(
+    request(),
+  );
+  assertEquals(mappingResponse.status, 500);
+  assertEquals(await mappingResponse.json(), {
+    error: "Internal server error",
+  });
+});
+
 Deno.test("does not return success when a database write fails", async () => {
   const mock = mockFactory({
     inserts: [{ data: null, error: { code: "42501" } }],
@@ -225,7 +245,19 @@ Deno.test("treats a verified unique conflict as replay without updating audit fi
   assertEquals(mock.filters.user_course_access, [
     ["user_id", userId],
     ["course_id", courseId],
+    ["product_id", productId],
+    ["order_id", orderId],
   ]);
+});
+
+Deno.test("does not accept an unverified unique conflict as replay", async () => {
+  const mock = mockFactory({
+    inserts: [{ data: null, error: { code: "23505" } }],
+    existing: { data: null, error: null },
+  });
+  const response = await createHandler(mock.factory)(request());
+  assertEquals(response.status, 500);
+  assertEquals(await response.json(), { error: "Internal server error" });
 });
 
 Deno.test("two concurrent calls rely on uniqueness and produce one logical grant", async () => {
