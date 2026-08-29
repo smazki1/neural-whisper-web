@@ -5,6 +5,7 @@ const userId = "00000000-0000-0000-0000-000000000002";
 const productId = "40000000-0000-0000-0000-000000000001";
 const courseId = "10000000-0000-0000-0000-000000000001";
 const courseId2 = "10000000-0000-0000-0000-000000000002";
+const courseId3 = "10000000-0000-0000-0000-000000000003";
 
 type QueryResult = { data: unknown; error: null | { code?: string } };
 
@@ -12,7 +13,7 @@ type Scenario = {
   auth?: QueryResult;
   order?: QueryResult;
   courses?: QueryResult;
-  insert?: QueryResult;
+  insertResults?: QueryResult[];
   existingReads?: QueryResult[];
 };
 
@@ -84,6 +85,9 @@ const mockFactory = (scenario: Scenario = {}) => {
   const inserts: unknown[] = [];
   const existingQueries: unknown[][][] = [];
   const factoryCalls: unknown[][] = [];
+  const insertResults = [
+    ...(scenario.insertResults ?? [{ data: null, error: null }]),
+  ];
   const existingReads = [
     ...(scenario.existingReads ?? [{ data: [], error: null }]),
   ];
@@ -122,7 +126,7 @@ const mockFactory = (scenario: Scenario = {}) => {
           insert: (payload: unknown) => {
             inserts.push(payload);
             return Promise.resolve(
-              scenario.insert ?? { data: null, error: null },
+              insertResults.shift() ?? { data: null, error: null },
             );
           },
           select: () => {
@@ -260,7 +264,7 @@ Deno.test("a failed bulk write is not retried as separate course inserts", async
       data: [{ course_id: courseId }, { course_id: courseId2 }],
       error: null,
     },
-    insert: { data: null, error: { code: "42501" } },
+    insertResults: [{ data: null, error: { code: "42501" } }],
   });
   const response = await createHandler(mock.factory)(request());
   assertEquals(response.status, 500);
@@ -275,7 +279,7 @@ Deno.test("accepts a concurrent unique conflict only after every course matches"
       data: [{ course_id: courseId }, { course_id: courseId2 }],
       error: null,
     },
-    insert: { data: null, error: { code: "23505" } },
+    insertResults: [{ data: null, error: { code: "23505" } }],
     existingReads: [
       { data: [], error: null },
       { data: [access(courseId), access(courseId2)], error: null },
@@ -287,28 +291,108 @@ Deno.test("accepts a concurrent unique conflict only after every course matches"
   assertEquals(mock.existingQueries.length, 2);
 });
 
-for (
-  const postConflictRows of [
-    [access(courseId)],
-    [access(courseId), access(courseId2, { order_id: "wrong-order" })],
-  ]
-) {
-  Deno.test("rejects a partial or mismatched concurrent unique conflict", async () => {
-    const mock = mockFactory({
-      courses: {
-        data: [{ course_id: courseId }, { course_id: courseId2 }],
-        error: null,
-      },
-      insert: { data: null, error: { code: "23505" } },
-      existingReads: [
-        { data: [], error: null },
-        { data: postConflictRows, error: null },
-      ],
-    });
-    const response = await createHandler(mock.factory)(request());
-    assertEquals(response.status, 500);
+Deno.test("retries one bulk insert for courses still missing after a conflict", async () => {
+  const priorAccess = access(courseId, {
+    product_id: "40000000-0000-0000-0000-000000000099",
+    order_id: "50000000-0000-0000-0000-000000000099",
   });
-}
+  const concurrentlyGranted = access(courseId2, {
+    product_id: "40000000-0000-0000-0000-000000000098",
+    order_id: "50000000-0000-0000-0000-000000000098",
+  });
+  const mock = mockFactory({
+    courses: {
+      data: [
+        { course_id: courseId },
+        { course_id: courseId2 },
+        { course_id: courseId3 },
+      ],
+      error: null,
+    },
+    insertResults: [
+      { data: null, error: { code: "23505" } },
+      { data: null, error: null },
+    ],
+    existingReads: [
+      { data: [priorAccess], error: null },
+      { data: [priorAccess, concurrentlyGranted], error: null },
+    ],
+  });
+
+  const response = await createHandler(mock.factory)(request());
+
+  assertEquals(response.status, 200);
+  assertEquals(mock.inserts, [
+    [
+      {
+        user_id: userId,
+        course_id: courseId2,
+        product_id: productId,
+        order_id: orderId,
+      },
+      {
+        user_id: userId,
+        course_id: courseId3,
+        product_id: productId,
+        order_id: orderId,
+      },
+    ],
+    [{
+      user_id: userId,
+      course_id: courseId3,
+      product_id: productId,
+      order_id: orderId,
+    }],
+  ]);
+});
+
+Deno.test("verifies all courses after a second concurrent unique conflict", async () => {
+  const mock = mockFactory({
+    courses: {
+      data: [{ course_id: courseId }, { course_id: courseId2 }],
+      error: null,
+    },
+    insertResults: [
+      { data: null, error: { code: "23505" } },
+      { data: null, error: { code: "23505" } },
+    ],
+    existingReads: [
+      { data: [], error: null },
+      { data: [access(courseId)], error: null },
+      { data: [access(courseId), access(courseId2)], error: null },
+    ],
+  });
+
+  const response = await createHandler(mock.factory)(request());
+
+  assertEquals(response.status, 200);
+  assertEquals(mock.inserts.length, 2);
+  assertEquals(mock.existingQueries.length, 3);
+});
+
+Deno.test("rejects a second unique conflict when a course is still missing", async () => {
+  const mock = mockFactory({
+    courses: {
+      data: [{ course_id: courseId }, { course_id: courseId2 }],
+      error: null,
+    },
+    insertResults: [
+      { data: null, error: { code: "23505" } },
+      { data: null, error: { code: "23505" } },
+    ],
+    existingReads: [
+      { data: [], error: null },
+      { data: [access(courseId)], error: null },
+      { data: [access(courseId)], error: null },
+    ],
+  });
+
+  const response = await createHandler(mock.factory)(request());
+
+  assertEquals(response.status, 500);
+  assertEquals(mock.inserts.length, 2);
+  assertEquals(mock.existingQueries.length, 3);
+});
 
 Deno.test("bulk inserts two unique mapped courses in one operation", async () => {
   const mock = mockFactory({
@@ -339,47 +423,42 @@ Deno.test("bulk inserts two unique mapped courses in one operation", async () =>
   ]]);
 });
 
-Deno.test("inserts only a missing course when another course is an exact replay", async () => {
-  const existing = access(courseId);
+Deno.test("preserves prior audit while granting an overlapping product", async () => {
+  const existing = access(courseId, {
+    product_id: "40000000-0000-0000-0000-000000000099",
+    order_id: "50000000-0000-0000-0000-000000000099",
+  });
+  const existingSnapshot = JSON.stringify(existing);
+  const newlyGranted = access(courseId2, {
+    granted_at: "2026-02-01T00:00:00.000Z",
+  });
   const mock = mockFactory({
     courses: {
       data: [{ course_id: courseId }, { course_id: courseId2 }],
       error: null,
     },
-    existingReads: [{ data: [existing], error: null }],
+    existingReads: [
+      { data: [existing], error: null },
+      { data: [existing, newlyGranted], error: null },
+    ],
   });
-  const response = await createHandler(mock.factory)(request());
-  assertEquals(response.status, 200);
+
+  const firstResponse = await createHandler(mock.factory)(request());
+  assertEquals(firstResponse.status, 200);
   assertEquals(mock.inserts, [[{
     user_id: userId,
     course_id: courseId2,
     product_id: productId,
     order_id: orderId,
   }]]);
-  assertEquals(existing.granted_at, "2026-01-01T00:00:00.000Z");
-});
+  assertEquals(JSON.stringify(existing), existingSnapshot);
 
-for (
-  const mismatch of [
-    { field: "order_id", value: "50000000-0000-0000-0000-000000000099" },
-    { field: "product_id", value: "40000000-0000-0000-0000-000000000099" },
-  ]
-) {
-  Deno.test(`does not replace access with a different ${mismatch.field}`, async () => {
-    const existing = access(courseId, { [mismatch.field]: mismatch.value });
-    const mock = mockFactory({
-      existingReads: [{ data: [existing], error: null }],
-    });
-    const response = await createHandler(mock.factory)(request());
-    assertEquals(response.status, 500);
-    assertEquals(mock.inserts.length, 0);
-    assertEquals(
-      (existing as Record<string, unknown>)[mismatch.field],
-      mismatch.value,
-    );
-    assertEquals(existing.granted_at, "2026-01-01T00:00:00.000Z");
-  });
-}
+  const replayResponse = await createHandler(mock.factory)(request());
+  assertEquals(replayResponse.status, 200);
+  assertEquals(mock.inserts.length, 1);
+  assertEquals(JSON.stringify(existing), existingSnapshot);
+  assertEquals(newlyGranted.granted_at, "2026-02-01T00:00:00.000Z");
+});
 
 Deno.test("a full replay performs no write and preserves granted_at", async () => {
   const existing = [access(courseId), access(courseId2)];
