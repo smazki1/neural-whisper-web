@@ -111,41 +111,98 @@ export const createHandler =
       return jsonResponse(500, { error: "Internal server error" });
     }
 
-    if (productCourses.length === 0) {
+    const courseIds = [
+      ...new Set(productCourses.map(({ course_id: courseId }) => courseId)),
+    ];
+
+    if (courseIds.length === 0) {
       return jsonResponse(403, { error: "Access denied" });
     }
 
-    for (const { course_id: courseId } of productCourses) {
-      const { error: insertError } = await supabase
+    const readExistingAccess = () =>
+      supabase
         .from("user_course_access")
-        .insert({
-          user_id: user.id,
-          course_id: courseId,
-          product_id: order.product_id,
-          order_id: order.id,
-        });
+        .select("user_id, course_id, product_id, order_id")
+        .eq("user_id", user.id)
+        .in("course_id", courseIds);
 
-      if (!insertError) {
-        continue;
-      }
+    const isExactAccess = (
+      access: {
+        user_id: string;
+        course_id: string;
+        product_id: string | null;
+        order_id: string | null;
+      },
+    ) =>
+      access.user_id === user.id &&
+      access.product_id === order.product_id &&
+      access.order_id === order.id;
 
-      if (insertError.code !== "23505") {
-        console.error("Course access write failed");
-        return jsonResponse(500, { error: "Internal server error" });
-      }
+    const { data: existingAccess, error: existingAccessError } =
+      await readExistingAccess();
 
-      const { data: existingAccess, error: existingAccessError } =
-        await supabase
-          .from("user_course_access")
-          .select("id")
-          .eq("user_id", user.id)
-          .eq("course_id", courseId)
-          .maybeSingle();
+    if (existingAccessError || !Array.isArray(existingAccess)) {
+      console.error("Course access lookup failed");
+      return jsonResponse(500, { error: "Internal server error" });
+    }
 
-      if (existingAccessError || !existingAccess) {
-        console.error("Course access replay verification failed");
-        return jsonResponse(500, { error: "Internal server error" });
-      }
+    if (existingAccess.some((access) => !isExactAccess(access))) {
+      console.error("Course access conflicts with existing audit data");
+      return jsonResponse(500, { error: "Internal server error" });
+    }
+
+    const existingCourseIds = new Set(
+      existingAccess.map(({ course_id: courseId }) => courseId),
+    );
+    const missingAccess = courseIds
+      .filter((courseId) => !existingCourseIds.has(courseId))
+      .map((courseId) => ({
+        user_id: user.id,
+        course_id: courseId,
+        product_id: order.product_id,
+        order_id: order.id,
+      }));
+
+    if (missingAccess.length === 0) {
+      return jsonResponse(200, { success: true });
+    }
+
+    const { error: insertError } = await supabase
+      .from("user_course_access")
+      .insert(missingAccess);
+
+    if (!insertError) {
+      return jsonResponse(200, { success: true });
+    }
+
+    if (insertError.code !== "23505") {
+      console.error("Course access write failed");
+      return jsonResponse(500, { error: "Internal server error" });
+    }
+
+    const { data: replayAccess, error: replayAccessError } =
+      await readExistingAccess();
+
+    if (
+      replayAccessError ||
+      !Array.isArray(replayAccess) ||
+      replayAccess.length !== courseIds.length
+    ) {
+      console.error("Course access replay verification failed");
+      return jsonResponse(500, { error: "Internal server error" });
+    }
+
+    const replayByCourse = new Map(
+      replayAccess.map((access) => [access.course_id, access]),
+    );
+    const replayIsExact = courseIds.every((courseId) => {
+      const access = replayByCourse.get(courseId);
+      return access && isExactAccess(access);
+    });
+
+    if (!replayIsExact) {
+      console.error("Course access replay verification failed");
+      return jsonResponse(500, { error: "Internal server error" });
     }
 
     return jsonResponse(200, { success: true });

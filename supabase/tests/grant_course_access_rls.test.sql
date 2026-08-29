@@ -1,7 +1,7 @@
 begin;
 set local search_path = public, extensions;
 
-select plan(21);
+select plan(23);
 
 insert into auth.users (id) values
   ('00000000-0000-0000-0000-000000000011'),
@@ -110,6 +110,28 @@ select throws_ok(
 select throws_ok(
   $$insert into public.user_course_access (user_id, course_id, product_id, order_id) values ('00000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000012', '40000000-0000-0000-0000-000000000011', '50000000-0000-0000-0000-000000000011')$$::text,
   '42501'::char(5), null::text, 'unmapped course is blocked'::text
+);
+
+select throws_ok(
+  $$insert into public.user_course_access (user_id, course_id, product_id, order_id) values
+      ('00000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000011', '40000000-0000-0000-0000-000000000011', '50000000-0000-0000-0000-000000000011'),
+      ('00000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000013', '40000000-0000-0000-0000-000000000011', '50000000-0000-0000-0000-000000000011')$$::text,
+  '42501'::char(5),
+  null::text,
+  'mixed-validity multi-row insert is rejected atomically'::text
+);
+select is(
+  (
+    select count(*)
+    from public.user_course_access
+    where user_id = '00000000-0000-0000-0000-000000000012'
+      and course_id in (
+        '10000000-0000-0000-0000-000000000011',
+        '10000000-0000-0000-0000-000000000013'
+      )
+  ),
+  0::bigint,
+  'failed multi-row insert leaves no partial course access'
 );
 
 select lives_ok(

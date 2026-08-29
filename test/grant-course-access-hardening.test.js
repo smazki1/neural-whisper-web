@@ -46,8 +46,16 @@ test("grant-course-access enforces its request and order contract", () => {
 test("grant-course-access preserves replay audit and checks write failures", () => {
   assert.doesNotMatch(functionSource, /\.upsert\(/);
   assert.doesNotMatch(functionSource, /granted_at\s*:/);
+  assert.equal(
+    functionSource.match(/\.insert\(/g)?.length,
+    1,
+    "course access must use one bulk insert call",
+  );
+  assert.match(functionSource, /new Set\(productCourses\.map/);
+  assert.match(functionSource, /\.in\("course_id", courseIds\)/);
+  assert.match(functionSource, /\.insert\(missingAccess\)/);
   assert.match(functionSource, /insertError\.code !== "23505"/);
-  assert.match(functionSource, /existingAccessError \|\| !existingAccess/);
+  assert.match(functionSource, /replayAccessError/);
   assert.match(functionSource, /return jsonResponse\(500, \{ error: "Internal server error" \}\)/);
 });
 
