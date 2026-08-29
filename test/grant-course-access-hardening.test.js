@@ -52,6 +52,7 @@ test("grant-course-access preserves replay audit and checks write failures", () 
 });
 
 test("the replacement policy binds user, order, status, product, and mapped course", () => {
+  assert.match(migration, /drop policy if exists "Users can create their own orders"\s+on public\.orders/i);
   assert.match(migration, /drop policy if exists "Users can insert own course access via paid order"/i);
   assert.match(migration, /for insert\s+to authenticated\s+with check/i);
   assert.match(migration, /auth\.uid\(\)\) = user_course_access\.user_id/);
@@ -67,6 +68,8 @@ test("the replacement policy binds user, order, status, product, and mapped cour
 test("the isolated RLS fixture contains no destructive schema operation", () => {
   assert.doesNotMatch(fixture, /drop\s+(schema|database)/i);
   assert.match(fixture, /disposable local database only/i);
+  assert.match(fixture, /create policy "Users can create their own orders"/i);
+  assert.match(fixture, /grant insert on public\.orders to authenticated/i);
 });
 
 test("payment functions remain byte-for-byte unchanged", () => {

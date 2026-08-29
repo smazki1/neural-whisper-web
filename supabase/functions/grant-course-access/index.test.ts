@@ -11,8 +11,8 @@ type Scenario = {
   auth?: QueryResult;
   order?: QueryResult;
   courses?: QueryResult;
-  inserts?: QueryResult[];
-  existing?: QueryResult;
+  insert?: QueryResult;
+  existingReads?: QueryResult[];
 };
 
 const assert = (condition: unknown, message = "Assertion failed") => {
@@ -38,18 +38,26 @@ const request = (init: RequestInit = {}) =>
     ...init,
   });
 
-const query = (result: QueryResult, filters: unknown[][]) => {
+const query = (
+  result: QueryResult | (() => QueryResult | Promise<QueryResult>),
+  filters: unknown[][],
+) => {
+  const getResult = () => typeof result === "function" ? result() : result;
   const builder = {
     select: () => builder,
     eq: (...args: unknown[]) => {
       filters.push(args);
       return builder;
     },
-    maybeSingle: () => Promise.resolve(result),
+    in: (...args: unknown[]) => {
+      filters.push(args);
+      return builder;
+    },
+    maybeSingle: () => Promise.resolve(getResult()),
     then: (
       resolve: (value: QueryResult) => unknown,
       reject: (reason: unknown) => unknown,
-    ) => Promise.resolve(result).then(resolve, reject),
+    ) => Promise.resolve(getResult()).then(resolve, reject),
   };
   return builder;
 };
@@ -61,9 +69,10 @@ const mockFactory = (scenario: Scenario = {}) => {
     user_course_access: [],
   };
   const inserts: unknown[] = [];
+  const existingQueries: unknown[][][] = [];
   const factoryCalls: unknown[][] = [];
-  const insertResults = [
-    ...(scenario.inserts ?? [{ data: null, error: null }]),
+  const existingReads = [
+    ...(scenario.existingReads ?? [{ data: [], error: null }]),
   ];
 
   const client = {
@@ -100,17 +109,17 @@ const mockFactory = (scenario: Scenario = {}) => {
           insert: (payload: unknown) => {
             inserts.push(payload);
             return Promise.resolve(
-              insertResults.shift() ?? { data: null, error: null },
+              scenario.insert ?? { data: null, error: null },
             );
           },
-          select: () =>
-            query(
-              scenario.existing ?? {
-                data: { id: "60000000-0000-0000-0000-000000000001" },
-                error: null,
-              },
-              filters.user_course_access,
-            ),
+          select: () => {
+            const queryFilters: unknown[][] = [];
+            existingQueries.push(queryFilters);
+            return query(
+              () => existingReads.shift() ?? { data: [], error: null },
+              queryFilters,
+            );
+          },
         };
       }
       throw new Error(`Unexpected table: ${table}`);
@@ -127,6 +136,7 @@ const mockFactory = (scenario: Scenario = {}) => {
     factoryCalls,
     filters,
     inserts,
+    existingQueries,
   };
 };
 
@@ -190,6 +200,7 @@ Deno.test("uses the user JWT and hard-filters completed orders owned by that use
     product_id: productId,
     order_id: orderId,
   }]);
+  assertEquals(mock.existingQueries, []);
   assert(!("granted_at" in (mock.inserts[0] as Record<string, unknown>)));
 });
 
@@ -227,7 +238,7 @@ Deno.test("returns generic failures for Supabase lookup errors", async () => {
 
 Deno.test("does not return success when a database write fails", async () => {
   const mock = mockFactory({
-    inserts: [{ data: null, error: { code: "42501" } }],
+    insert: { data: null, error: { code: "42501" } },
   });
   const response = await createHandler(mock.factory)(request());
   assertEquals(response.status, 500);
@@ -236,28 +247,146 @@ Deno.test("does not return success when a database write fails", async () => {
 
 Deno.test("treats a verified unique conflict as replay without updating audit fields", async () => {
   const mock = mockFactory({
-    inserts: [{ data: null, error: { code: "23505" } }],
+    insert: { data: null, error: { code: "23505" } },
+    existingReads: [{
+      data: { id: "60000000-0000-0000-0000-000000000001" },
+      error: null,
+    }],
   });
   const response = await createHandler(mock.factory)(request());
   assertEquals(response.status, 200);
   assertEquals(mock.inserts.length, 1);
   assert(!("granted_at" in (mock.inserts[0] as Record<string, unknown>)));
-  assertEquals(mock.filters.user_course_access, [
+  assertEquals(mock.existingQueries, [[
     ["user_id", userId],
     ["course_id", courseId],
-    ["product_id", productId],
-    ["order_id", orderId],
-  ]);
+  ]]);
 });
 
 Deno.test("does not accept an unverified unique conflict as replay", async () => {
   const mock = mockFactory({
-    inserts: [{ data: null, error: { code: "23505" } }],
-    existing: { data: null, error: null },
+    insert: { data: null, error: { code: "23505" } },
+    existingReads: [{ data: null, error: null }],
   });
   const response = await createHandler(mock.factory)(request());
   assertEquals(response.status, 500);
   assertEquals(await response.json(), { error: "Internal server error" });
+});
+
+Deno.test("keeps prior course audit when a new product grants another course", async () => {
+  const secondCourseId = "10000000-0000-0000-0000-000000000002";
+  const newOrderId = "50000000-0000-0000-0000-000000000002";
+  const newProductId = "40000000-0000-0000-0000-000000000002";
+  type AccessRow = {
+    id: string;
+    user_id: string;
+    course_id: string;
+    product_id: string;
+    order_id: string;
+    granted_at: string;
+  };
+  const priorAccess: AccessRow = {
+    id: "60000000-0000-0000-0000-000000000001",
+    user_id: userId,
+    course_id: courseId,
+    product_id: "40000000-0000-0000-0000-000000000099",
+    order_id: "50000000-0000-0000-0000-000000000099",
+    granted_at: "2026-01-01T00:00:00.000Z",
+  };
+  const accessRows = new Map<string, AccessRow>([
+    [`${userId}:${courseId}`, { ...priorAccess }],
+  ]);
+
+  const accessQuery = () => {
+    const filters = new Map<string, unknown>();
+    const builder = {
+      select: () => builder,
+      eq: (column: string, value: unknown) => {
+        filters.set(column, value);
+        return builder;
+      },
+      maybeSingle: () => {
+        const row = accessRows.get(
+          `${filters.get("user_id")}:${filters.get("course_id")}`,
+        );
+        return Promise.resolve({ data: row ?? null, error: null });
+      },
+    };
+    return builder;
+  };
+
+  const factory = (() => ({
+    auth: {
+      getUser: () =>
+        Promise.resolve({ data: { user: { id: userId } }, error: null }),
+    },
+    from: (table: string) => {
+      if (table === "orders") {
+        return query({
+          data: { id: newOrderId, product_id: newProductId },
+          error: null,
+        }, []);
+      }
+      if (table === "products_courses") {
+        return query({
+          data: [{ course_id: courseId }, { course_id: secondCourseId }],
+          error: null,
+        }, []);
+      }
+      return {
+        insert: (payload: Record<string, string>) => {
+          const key = `${payload.user_id}:${payload.course_id}`;
+          if (accessRows.has(key)) {
+            return Promise.resolve({ data: null, error: { code: "23505" } });
+          }
+          accessRows.set(key, {
+            id: "60000000-0000-0000-0000-000000000002",
+            user_id: payload.user_id,
+            course_id: payload.course_id,
+            product_id: payload.product_id,
+            order_id: payload.order_id,
+            granted_at: "2026-02-01T00:00:00.000Z",
+          });
+          return Promise.resolve({ data: null, error: null });
+        },
+        select: accessQuery,
+      };
+    },
+  })) as unknown as Parameters<typeof createHandler>[0];
+
+  const handler = createHandler(factory);
+  const newOrderRequest = () =>
+    request({ body: JSON.stringify({ orderId: newOrderId }) });
+  const priorSnapshot = JSON.stringify(priorAccess);
+
+  const firstResponse = await handler(newOrderRequest());
+  assertEquals(firstResponse.status, 200);
+  assertEquals(
+    JSON.stringify(accessRows.get(`${userId}:${courseId}`)),
+    priorSnapshot,
+  );
+  assertEquals(accessRows.get(`${userId}:${secondCourseId}`), {
+    id: "60000000-0000-0000-0000-000000000002",
+    user_id: userId,
+    course_id: secondCourseId,
+    product_id: newProductId,
+    order_id: newOrderId,
+    granted_at: "2026-02-01T00:00:00.000Z",
+  });
+
+  const secondGrantedAt = accessRows.get(`${userId}:${secondCourseId}`)
+    ?.granted_at;
+  const replayResponse = await handler(newOrderRequest());
+  assertEquals(replayResponse.status, 200);
+  assertEquals(
+    JSON.stringify(accessRows.get(`${userId}:${courseId}`)),
+    priorSnapshot,
+  );
+  assertEquals(
+    accessRows.get(`${userId}:${secondCourseId}`)?.granted_at,
+    secondGrantedAt,
+  );
+  assertEquals(accessRows.size, 2);
 });
 
 Deno.test("two concurrent calls rely on uniqueness and produce one logical grant", async () => {

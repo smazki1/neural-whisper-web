@@ -113,6 +113,10 @@ create policy "Users can view their own orders"
 on public.orders for select to authenticated
 using ((select auth.uid()) = user_id);
 
+create policy "Users can create their own orders"
+on public.orders for insert to authenticated
+with check ((select auth.uid()) = user_id);
+
 create policy "user reads own entitlements"
 on public.entitlements for select to authenticated
 using ((select auth.uid()) = user_id);
@@ -162,4 +166,5 @@ grant execute on function auth.uid() to anon, authenticated;
 grant execute on function public.has_role(uuid, public.app_role) to authenticated;
 grant select on public.orders, public.products, public.products_courses,
   public.entitlements, public.user_course_access, public.courses to authenticated;
+grant insert on public.orders to authenticated;
 grant insert on public.user_course_access to anon, authenticated;

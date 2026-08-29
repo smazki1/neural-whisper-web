@@ -1,7 +1,7 @@
 begin;
 set local search_path = public, extensions;
 
-select plan(16);
+select plan(21);
 
 insert into auth.users (id) values
   ('00000000-0000-0000-0000-000000000011'),
@@ -50,6 +50,42 @@ select throws_ok(
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000012', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000012","role":"authenticated"}', true);
+
+select throws_ok(
+  $$insert into public.orders (id, user_id, product_id, total_amount, status) values ('50000000-0000-0000-0000-000000000021', '00000000-0000-0000-0000-000000000012', '40000000-0000-0000-0000-000000000011', 100, 'pending')$$::text,
+  '42501'::char(5),
+  'new row violates row-level security policy for table "orders"'::text,
+  'authenticated user cannot create a pending order'::text
+);
+select throws_ok(
+  $$insert into public.orders (id, user_id, product_id, total_amount, status) values ('50000000-0000-0000-0000-000000000022', '00000000-0000-0000-0000-000000000012', '40000000-0000-0000-0000-000000000011', 100, 'completed')$$::text,
+  '42501'::char(5),
+  'new row violates row-level security policy for table "orders"'::text,
+  'authenticated user cannot create a completed order'::text
+);
+select throws_ok(
+  $$insert into public.orders (id, user_id, product_id, total_amount, status) values ('50000000-0000-0000-0000-000000000023', '00000000-0000-0000-0000-000000000012', '40000000-0000-0000-0000-000000000011', 100, 'failed')$$::text,
+  '42501'::char(5),
+  'new row violates row-level security policy for table "orders"'::text,
+  'authenticated user cannot create a failed order'::text
+);
+select throws_ok(
+  $$insert into public.orders (id, user_id, product_id, total_amount, status) values ('50000000-0000-0000-0000-000000000024', '00000000-0000-0000-0000-000000000012', '40000000-0000-0000-0000-000000000011', 100, 'refunded')$$::text,
+  '42501'::char(5),
+  'new row violates row-level security policy for table "orders"'::text,
+  'authenticated user cannot create a refunded order'::text
+);
+select is(
+  (
+    select count(*)
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'orders'
+      and cmd = 'INSERT'
+  ),
+  0::bigint,
+  'orders has no direct INSERT policy after hardening'
+);
 
 select throws_ok(
   $$insert into public.user_course_access (user_id, course_id, product_id, order_id) values ('00000000-0000-0000-0000-000000000012', '10000000-0000-0000-0000-000000000011', '40000000-0000-0000-0000-000000000011', '50000000-0000-0000-0000-000000000012')$$::text,

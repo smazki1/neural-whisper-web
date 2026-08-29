@@ -1,3 +1,6 @@
+drop policy if exists "Users can create their own orders"
+on public.orders;
+
 drop policy if exists "Users can insert own course access via paid order"
 on public.user_course_access;
 
