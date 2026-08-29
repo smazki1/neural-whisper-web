@@ -55,7 +55,9 @@ test("grant-course-access preserves replay audit and checks write failures", () 
   assert.match(functionSource, /\.in\("course_id", courseIds\)/);
   assert.match(functionSource, /\.insert\(missingAccess\)/);
   assert.match(functionSource, /insertError\.code !== "23505"/);
-  assert.match(functionSource, /replayAccessError/);
+  assert.match(functionSource, /const retryError = await insertMissingAccess\(missingAccess\)/);
+  assert.match(functionSource, /const remainingAccess = await readMissingAccess\(\)/);
+  assert.doesNotMatch(functionSource, /isExactAccess/);
   assert.match(functionSource, /return jsonResponse\(500, \{ error: "Internal server error" \}\)/);
 });
 

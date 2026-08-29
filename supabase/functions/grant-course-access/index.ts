@@ -122,54 +122,63 @@ export const createHandler =
     const readExistingAccess = () =>
       supabase
         .from("user_course_access")
-        .select("user_id, course_id, product_id, order_id")
+        .select("course_id")
         .eq("user_id", user.id)
         .in("course_id", courseIds);
 
-    const isExactAccess = (
-      access: {
+    const calculateMissingAccess = (
+      existingAccess: Array<{ course_id: string }>,
+    ) => {
+      const existingCourseIds = new Set(
+        existingAccess.map(({ course_id: courseId }) => courseId),
+      );
+      return courseIds
+        .filter((courseId) => !existingCourseIds.has(courseId))
+        .map((courseId) => ({
+          user_id: user.id,
+          course_id: courseId,
+          product_id: order.product_id,
+          order_id: order.id,
+        }));
+    };
+
+    const readMissingAccess = async () => {
+      const { data: existingAccess, error: existingAccessError } =
+        await readExistingAccess();
+
+      if (existingAccessError || !Array.isArray(existingAccess)) {
+        return null;
+      }
+
+      return calculateMissingAccess(existingAccess);
+    };
+
+    const insertMissingAccess = async (
+      missingAccess: Array<{
         user_id: string;
         course_id: string;
-        product_id: string | null;
-        order_id: string | null;
-      },
-    ) =>
-      access.user_id === user.id &&
-      access.product_id === order.product_id &&
-      access.order_id === order.id;
+        product_id: string;
+        order_id: string;
+      }>,
+    ) => {
+      const { error } = await supabase
+        .from("user_course_access")
+        .insert(missingAccess);
+      return error;
+    };
 
-    const { data: existingAccess, error: existingAccessError } =
-      await readExistingAccess();
+    let missingAccess = await readMissingAccess();
 
-    if (existingAccessError || !Array.isArray(existingAccess)) {
+    if (!missingAccess) {
       console.error("Course access lookup failed");
       return jsonResponse(500, { error: "Internal server error" });
     }
-
-    if (existingAccess.some((access) => !isExactAccess(access))) {
-      console.error("Course access conflicts with existing audit data");
-      return jsonResponse(500, { error: "Internal server error" });
-    }
-
-    const existingCourseIds = new Set(
-      existingAccess.map(({ course_id: courseId }) => courseId),
-    );
-    const missingAccess = courseIds
-      .filter((courseId) => !existingCourseIds.has(courseId))
-      .map((courseId) => ({
-        user_id: user.id,
-        course_id: courseId,
-        product_id: order.product_id,
-        order_id: order.id,
-      }));
 
     if (missingAccess.length === 0) {
       return jsonResponse(200, { success: true });
     }
 
-    const { error: insertError } = await supabase
-      .from("user_course_access")
-      .insert(missingAccess);
+    const insertError = await insertMissingAccess(missingAccess);
 
     if (!insertError) {
       return jsonResponse(200, { success: true });
@@ -180,27 +189,26 @@ export const createHandler =
       return jsonResponse(500, { error: "Internal server error" });
     }
 
-    const { data: replayAccess, error: replayAccessError } =
-      await readExistingAccess();
+    missingAccess = await readMissingAccess();
 
-    if (
-      replayAccessError ||
-      !Array.isArray(replayAccess) ||
-      replayAccess.length !== courseIds.length
-    ) {
+    if (!missingAccess) {
       console.error("Course access replay verification failed");
       return jsonResponse(500, { error: "Internal server error" });
     }
 
-    const replayByCourse = new Map(
-      replayAccess.map((access) => [access.course_id, access]),
-    );
-    const replayIsExact = courseIds.every((courseId) => {
-      const access = replayByCourse.get(courseId);
-      return access && isExactAccess(access);
-    });
+    if (missingAccess.length === 0) {
+      return jsonResponse(200, { success: true });
+    }
 
-    if (!replayIsExact) {
+    const retryError = await insertMissingAccess(missingAccess);
+
+    if (!retryError) {
+      return jsonResponse(200, { success: true });
+    }
+
+    const remainingAccess = await readMissingAccess();
+
+    if (!remainingAccess || remainingAccess.length > 0) {
       console.error("Course access replay verification failed");
       return jsonResponse(500, { error: "Internal server error" });
     }
