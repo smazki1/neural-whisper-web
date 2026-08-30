@@ -1,3 +1,5 @@
+set lock_timeout = '5s';
+
 alter type public.resource_type add value if not exists 'file';
 
 alter table public.resources
@@ -84,8 +86,8 @@ as $$
   order by m.position, l.position;
 $$;
 
-revoke all on function public.course_curriculum(uuid) from public;
-grant execute on function public.course_curriculum(uuid) to anon, authenticated;
+grant execute on function public.course_curriculum(uuid)
+  to public, anon, authenticated, service_role;
 
 -- Bucket configuration is tracked in SQL. File operations still go through
 -- the Storage API, with storage.objects treated as metadata only.
@@ -307,3 +309,5 @@ $$;
 revoke all on function public.reorder_lesson_resources(uuid, uuid[]) from public;
 grant execute on function public.reorder_lesson_resources(uuid, uuid[])
   to authenticated;
+
+reset lock_timeout;
