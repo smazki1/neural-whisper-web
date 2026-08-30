@@ -144,6 +144,28 @@ drop policy if exists "Exact course access can view resources"
 drop policy if exists "Admins can manage resources"
   on public.resources;
 
+create policy "Public can view resources of free or preview lessons"
+on public.resources
+for select
+to public
+using (
+  exists (
+    select 1
+    from public.courses c
+    join public.modules m on m.course_id = c.id
+    join public.lessons l on l.module_id = m.id
+    where l.id = resources.lesson_id
+      and (
+        c.user_id = (select auth.uid())
+        or (
+          c.published = true
+          and (c.is_free = true or l.is_preview = true)
+        )
+      )
+  )
+  or public.has_role((select auth.uid()), 'admin'::public.app_role)
+);
+
 create policy "Exact course access can view resources"
 on public.resources
 for select

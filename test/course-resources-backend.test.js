@@ -35,7 +35,8 @@ test("resource access is private and exact-course", () => {
   const migration = migrationSql();
 
   assert.match(migration, /'course-resources'[\s\S]*false[\s\S]*26214400/i);
-  assert.match(migration, /drop policy if exists "Public can view resources of free or preview lessons"/i);
+  assert.match(migration, /create policy "Public can view resources of free or preview lessons"/i);
+  assert.match(migration, /c\.published = true[\s\S]*c\.is_free = true[\s\S]*l\.is_preview = true/i);
   assert.match(migration, /resources\.storage_path = storage\.objects\.name/i);
   assert.match(migration, /uca\.course_id = m\.course_id/i);
   assert.match(migration, /e\.status = 'paid'[\s\S]*p\.course_id = m\.course_id/i);

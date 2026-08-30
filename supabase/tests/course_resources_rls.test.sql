@@ -240,12 +240,11 @@ select is(
       and tablename = 'resources'
       and policyname in (
         'Public can view resources of published courses',
-        'Public can view resources of free or preview lessons',
         'Owners can modify resources'
       )
   ),
   0::bigint,
-  'legacy public and owner resource policies are removed'
+  'legacy broad public and owner resource policies are removed'
 );
 select is(
   (
