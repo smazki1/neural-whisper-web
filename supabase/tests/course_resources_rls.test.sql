@@ -1,6 +1,6 @@
 begin;
 
-select plan(24);
+select plan(31);
 
 insert into auth.users (id) values
   ('00000000-0000-0000-0000-000000000101'),
@@ -128,6 +128,63 @@ insert into storage.objects (id, bucket_id, name) values
     '10000000-0000-0000-0000-000000000102/30000000-0000-0000-0000-000000000102/workbook-b.pdf'
   );
 
+select ok(
+  has_function_privilege(
+    'authenticated',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'authenticated retains execute on reorder_lesson_resources'
+);
+select ok(
+  not has_function_privilege(
+    'anon',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'anon cannot execute reorder_lesson_resources'
+);
+select ok(
+  not has_function_privilege(
+    'service_role',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'service_role cannot execute reorder_lesson_resources'
+);
+select ok(
+  not exists (
+    select 1
+    from pg_proc p
+    cross join lateral aclexplode(
+      coalesce(p.proacl, acldefault('f', p.proowner))
+    ) as privilege
+    where p.oid = 'public.reorder_lesson_resources(uuid,uuid[])'::regprocedure
+      and privilege.grantee = 0
+      and privilege.privilege_type = 'EXECUTE'
+  ),
+  'PUBLIC cannot execute reorder_lesson_resources'
+);
+select ok(
+  has_function_privilege(
+    'postgres',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'function owner postgres retains execute on reorder_lesson_resources'
+);
+
+set local role anon;
+select set_config('request.jwt.claim.sub', '', true);
+select set_config('request.jwt.claims', '{"role":"anon"}', true);
+select throws_ok(
+  $$select public.reorder_lesson_resources('30000000-0000-0000-0000-000000000101', array['35000000-0000-0000-0000-000000000101'::uuid, '35000000-0000-0000-0000-000000000102'::uuid])$$,
+  '42501'::char(5),
+  'permission denied for function reorder_lesson_resources'::text,
+  'anonymous calls fail at the execute permission boundary'
+);
+reset role;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000102', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000102","role":"authenticated"}', true);
@@ -202,6 +259,15 @@ select throws_ok(
   '22023'::char(5),
   'resource order must contain every lesson resource exactly once'::text,
   'incomplete resource order is rejected atomically'
+);
+select is(
+  (
+    select string_agg(id::text || ':' || position::text, ',' order by position)
+    from public.resources
+    where lesson_id = '30000000-0000-0000-0000-000000000101'
+  ),
+  '35000000-0000-0000-0000-000000000102:0,35000000-0000-0000-0000-000000000101:1',
+  'failed reorder leaves every resource position unchanged'
 );
 
 reset role;
