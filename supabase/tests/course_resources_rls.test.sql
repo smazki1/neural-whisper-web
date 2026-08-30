@@ -1,6 +1,6 @@
 begin;
 
-select plan(20);
+select plan(24);
 
 insert into auth.users (id) values
   ('00000000-0000-0000-0000-000000000101'),
@@ -254,6 +254,43 @@ select is(
   ),
   true,
   'curriculum exposes the explicit upcoming lesson state'
+);
+select ok(
+  exists (
+    select 1
+    from pg_proc p
+    cross join lateral aclexplode(
+      coalesce(p.proacl, acldefault('f', p.proowner))
+    ) as privilege
+    where p.oid = 'public.course_curriculum(uuid)'::regprocedure
+      and privilege.grantee = 0
+      and privilege.privilege_type = 'EXECUTE'
+  ),
+  'PUBLIC retains execute on course_curriculum'
+);
+select ok(
+  has_function_privilege(
+    'anon',
+    'public.course_curriculum(uuid)',
+    'EXECUTE'
+  ),
+  'anon retains execute on course_curriculum'
+);
+select ok(
+  has_function_privilege(
+    'authenticated',
+    'public.course_curriculum(uuid)',
+    'EXECUTE'
+  ),
+  'authenticated retains execute on course_curriculum'
+);
+select ok(
+  has_function_privilege(
+    'service_role',
+    'public.course_curriculum(uuid)',
+    'EXECUTE'
+  ),
+  'service_role retains execute on course_curriculum'
 );
 
 select * from finish();
