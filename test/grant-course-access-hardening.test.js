@@ -24,7 +24,11 @@ test("grant-course-access requires JWT verification and no service role", () => 
       "",
     )
     .replace(
-      /\n\[functions\.send-consultation-email\]\nverify_jwt = true\n$/,
+      /\n\[functions\.send-consultation-email\]\nverify_jwt = true\n/,
+      "",
+    )
+    .replace(
+      /\n\[functions\.notion-tracker\]\nverify_jwt = true\n$/,
       "",
     );
   assert.equal(
