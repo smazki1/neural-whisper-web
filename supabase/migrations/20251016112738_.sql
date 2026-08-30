@@ -58,7 +58,7 @@ SELECT
   featured_image_url,
   true,
   NOW(),
-  (SELECT id FROM auth.users WHERE email = 'avifrid121@gmail.com' LIMIT 1),
+  (SELECT id FROM auth.users ORDER BY created_at, id LIMIT 1),
   (SELECT id FROM categories LIMIT 1)
 FROM (
   VALUES
@@ -98,6 +98,7 @@ FROM (
     '/lovable-uploads/6471f652-e053-4640-8a34-0f7db2486913.png'
   )
 ) AS t(title, slug, content, excerpt, featured_image_url)
-WHERE NOT EXISTS (
+WHERE EXISTS (SELECT 1 FROM auth.users)
+AND NOT EXISTS (
   SELECT 1 FROM blog_posts WHERE slug = t.slug
 );;

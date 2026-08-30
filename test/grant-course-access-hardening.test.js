@@ -14,7 +14,7 @@ const hash = (path) => hashText(read(path));
 const functionSource = read("supabase/functions/grant-course-access/index.ts");
 const config = read("supabase/config.toml");
 const migration = read("supabase/migrations/20260829173000_harden_grant_course_access.sql");
-const fixture = read("supabase/tests/fixtures/grant_course_access_schema.sql");
+const fixture = read("supabase/tests/fixtures/grant_course_access_schema.fixture");
 
 test("grant-course-access requires JWT verification and no service role", () => {
   assert.match(config, /\[functions\.grant-course-access\]\s+verify_jwt = true/);
