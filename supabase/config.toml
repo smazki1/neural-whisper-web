@@ -24,3 +24,6 @@ verify_jwt = true
 
 [functions.send-consultation-email]
 verify_jwt = true
+
+[functions.notion-tracker]
+verify_jwt = true
