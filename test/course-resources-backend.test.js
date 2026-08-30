@@ -41,7 +41,11 @@ test("resource access is private and exact-course", () => {
   assert.match(migration, /uca\.course_id = m\.course_id/i);
   assert.match(migration, /e\.status = 'paid'[\s\S]*p\.course_id = m\.course_id/i);
   assert.doesNotMatch(migration, /bucket_id = 'lesson-content'/i);
-  assert.doesNotMatch(migration, /service_role/i);
+  assert.equal(
+    migration.match(/service_role/gi)?.length,
+    1,
+    "service_role must appear only in the course_curriculum execute grant",
+  );
 });
 
 test("resource ordering uses one authenticated RPC", () => {
@@ -50,4 +54,49 @@ test("resource ordering uses one authenticated RPC", () => {
   assert.match(migration, /create or replace function public\.reorder_lesson_resources/i);
   assert.match(migration, /unnest\(p_resource_ids\) with ordinality/i);
   assert.match(migration, /grant execute on function public\.reorder_lesson_resources/i);
+});
+
+test("course curriculum replacement preserves existing execute access", () => {
+  const migration = migrationSql();
+
+  assert.match(
+    migration,
+    /grant execute on function public\.course_curriculum\(uuid\)\s+to public, anon, authenticated, service_role;/i,
+  );
+  assert.doesNotMatch(
+    migration,
+    /revoke all on function public\.course_curriculum\(uuid\) from public;/i,
+  );
+});
+
+test("course curriculum result adds only is_upcoming", () => {
+  const migration = migrationSql();
+  const resultContract = migration.match(
+    /create function public\.course_curriculum\(p_course_id uuid\)\s+returns table\(([\s\S]*?)\)\s+language sql/i,
+  );
+
+  assert.ok(resultContract, "expected the course_curriculum result contract");
+  const columns = [...resultContract[1].matchAll(/^\s*([a-z_]+)\s+[a-z]+,?$/gim)]
+    .map((match) => match[1]);
+
+  assert.deepEqual(columns, [
+    "module_id",
+    "module_title",
+    "module_description",
+    "module_position",
+    "lesson_id",
+    "lesson_title",
+    "lesson_position",
+    "duration",
+    "duration_minutes",
+    "is_preview",
+    "is_upcoming",
+  ]);
+});
+
+test("course resources migration bounds lock waits", () => {
+  const migration = migrationSql();
+
+  assert.match(migration, /^set lock_timeout = '5s';/i);
+  assert.match(migration, /reset lock_timeout;\s*$/i);
 });
