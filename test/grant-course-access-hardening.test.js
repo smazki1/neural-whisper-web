@@ -18,12 +18,17 @@ const fixture = read("supabase/tests/fixtures/grant_course_access_schema.sql");
 
 test("grant-course-access requires JWT verification and no service role", () => {
   assert.match(config, /\[functions\.grant-course-access\]\s+verify_jwt = true/);
-  const configWithoutGrant = config.replace(
-    /\n\[functions\.grant-course-access\]\nverify_jwt = true\n$/,
-    "",
-  );
+  const configWithoutProtectedSections = config
+    .replace(
+      /\n\[functions\.grant-course-access\]\nverify_jwt = true\n/,
+      "",
+    )
+    .replace(
+      /\n\[functions\.send-consultation-email\]\nverify_jwt = true\n$/,
+      "",
+    );
   assert.equal(
-    hashText(configWithoutGrant),
+    hashText(configWithoutProtectedSections),
     "bda070365b35999aa105b2f4ed414f37b37a5a9211f55bc536eec4aee2fdd7fb",
     "another Edge Function config changed",
   );
