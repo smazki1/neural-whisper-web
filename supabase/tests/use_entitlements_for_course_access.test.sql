@@ -122,7 +122,7 @@ select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000
 select is((select count(*) from public.courses where id = '10000000-0000-0000-0000-000000000003'), 1::bigint, 'public free course remains readable');
 select is((select count(*) from public.modules where id = '20000000-0000-0000-0000-000000000003'), 1::bigint, 'public free module remains readable');
 select is((select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000003'), 1::bigint, 'public free lesson remains readable');
-select is((select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000003'), 1::bigint, 'public free resource remains readable');
+select is((select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000003'), 0::bigint, 'public free resource requires exact course access');
 select is((select count(*) from public.lessons where id = '30000000-0000-0000-0000-000000000005'), 0::bigint, 'locked paid lesson remains private');
 select is((select count(*) from public.resources where id = '35000000-0000-0000-0000-000000000005'), 0::bigint, 'resource attached to a locked paid lesson remains private');
 

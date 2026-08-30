@@ -25,6 +25,15 @@ function reorderExecuteMigrationSql() {
   return readFileSync(resolve(migrationsDir, candidates[0]), "utf8");
 }
 
+function removePublicResourceAccessMigrationSql() {
+  const candidates = readdirSync(migrationsDir)
+    .filter((fileName) => fileName.endsWith("_remove_public_lesson_resource_access.sql"))
+    .sort();
+
+  assert.equal(candidates.length, 1, "expected exactly one public resource access removal migration");
+  return readFileSync(resolve(migrationsDir, candidates[0]), "utf8");
+}
+
 test("resource schema separates external links from stored files", () => {
   const migration = migrationSql();
 
@@ -124,6 +133,20 @@ from public, anon, service_role;
 grant execute
 on function public.reorder_lesson_resources(uuid, uuid[])
 to authenticated;
+
+reset lock_timeout;`,
+  );
+});
+
+test("public lesson resource access removal changes only the public resources policy", () => {
+  const migration = removePublicResourceAccessMigrationSql();
+
+  assert.equal(
+    migration.trim(),
+    `set lock_timeout = '5s';
+
+drop policy if exists "Public can view resources of free or preview lessons"
+on public.resources;
 
 reset lock_timeout;`,
   );
