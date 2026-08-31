@@ -1,16 +1,10 @@
 revoke all privileges on table public.enrollments
 from public, anon, authenticated, service_role;
 
-grant select, insert on table public.enrollments to authenticated;
+grant select on table public.enrollments to authenticated;
 grant select, insert, update, delete on table public.enrollments to service_role;
 
 drop policy if exists "users insert own enrollments" on public.enrollments;
-create policy "users insert own enrollments"
-  on public.enrollments
-  as permissive
-  for insert
-  to authenticated
-  with check ((select auth.uid()) = user_id);
 
 drop policy if exists "users see own enrollments" on public.enrollments;
 create policy "users see own enrollments"

@@ -1,6 +1,6 @@
 begin;
 
-select plan(49);
+select plan(55);
 
 select is(
   (
@@ -28,7 +28,7 @@ select is(
     ) acl
   ),
   '[
-    {"grantee":"authenticated","privileges":["INSERT","SELECT"]},
+    {"grantee":"authenticated","privileges":["SELECT"]},
     {"grantee":"service_role","privileges":["DELETE","INSERT","SELECT","UPDATE"]}
   ]'::jsonb,
   'enrollments has exactly the approved direct grants and no PUBLIC or anon grants'
@@ -79,7 +79,7 @@ select is(
         ('anon', 'TRIGGER', false),
         ('anon', 'REFERENCES', false),
         ('authenticated', 'SELECT', true),
-        ('authenticated', 'INSERT', true),
+        ('authenticated', 'INSERT', false),
         ('authenticated', 'UPDATE', false),
         ('authenticated', 'DELETE', false),
         ('authenticated', 'TRUNCATE', false),
@@ -154,7 +154,6 @@ select is(
       and tablename = 'enrollments'
   ),
   '[
-    {"name":"users insert own enrollments","roles":["authenticated"],"command":"INSERT"},
     {"name":"users see own enrollments","roles":["authenticated"],"command":"SELECT"}
   ]'::jsonb,
   'enrollments policy names, commands, and roles are exact'
@@ -191,16 +190,16 @@ select is(
   'neither table has a policy targeting public or anon'
 );
 
-select ok(
+select is(
   (
-    select with_check ~* 'select[[:space:]]+auth[.]uid[(][)]'
-      and with_check ~* 'user_id'
+    select count(*)
     from pg_policies
     where schemaname = 'public'
       and tablename = 'enrollments'
-      and policyname = 'users insert own enrollments'
+      and cmd = 'INSERT'
   ),
-  'enrollments INSERT policy compares user_id to select auth.uid()'
+  0::bigint,
+  'enrollments has no INSERT policy'
 );
 
 select ok(
@@ -275,7 +274,13 @@ insert into public.courses (id, user_id, title, category, level, published, is_f
   ('10000000-0000-0000-0000-000000000902', '00000000-0000-0000-0000-000000000903', 'Payment access course 2', 'strategy', 'beginner', false, false),
   ('10000000-0000-0000-0000-000000000903', '00000000-0000-0000-0000-000000000903', 'Payment access course 3', 'strategy', 'beginner', false, false),
   ('10000000-0000-0000-0000-000000000904', '00000000-0000-0000-0000-000000000903', 'Payment access course 4', 'strategy', 'beginner', false, false),
-  ('10000000-0000-0000-0000-000000000905', '00000000-0000-0000-0000-000000000903', 'Payment access course 5', 'strategy', 'beginner', false, false);
+  ('10000000-0000-0000-0000-000000000905', '00000000-0000-0000-0000-000000000903', 'Payment access course 5', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000906', '00000000-0000-0000-0000-000000000903', 'Payment access course 6', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000907', '00000000-0000-0000-0000-000000000903', 'Payment access course 7', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000908', '00000000-0000-0000-0000-000000000903', 'Payment access course 8', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000909', '00000000-0000-0000-0000-000000000903', 'Payment access course 9', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000910', '00000000-0000-0000-0000-000000000903', 'Payment access course 10', 'strategy', 'beginner', false, false),
+  ('10000000-0000-0000-0000-000000000911', '00000000-0000-0000-0000-000000000903', 'Payment access course 11', 'strategy', 'beginner', false, false);
 
 insert into public.enrollments (id, user_id, course_id) values
   ('e0000000-0000-0000-0000-000000000901', '00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000901'),
@@ -341,15 +346,53 @@ select is(
   0::bigint,
   'authenticated owner cannot read another user enrollment'
 );
-select lives_ok(
-  $$insert into public.enrollments (id, user_id, course_id) values ('e0000000-0000-0000-0000-000000000904', '00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000904')$$,
-  'authenticated owner can insert own enrollment'
+select throws_ok(
+  $$insert into public.enrollments (id, user_id, course_id) values ('e0000000-0000-0000-0000-000000000904', '00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000904')$$::text,
+  '42501'::char(5),
+  null::text,
+  'authenticated owner cannot insert a normal enrollment'
 );
 select throws_ok(
   $$insert into public.enrollments (user_id, course_id) values ('00000000-0000-0000-0000-000000000902', '10000000-0000-0000-0000-000000000905')$$::text,
   '42501'::char(5),
   null::text,
   'authenticated owner cannot insert another user enrollment'
+);
+select throws_ok(
+  $$insert into public.enrollments (user_id, course_id, status) values ('00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000906', 'paid')$$::text,
+  '42501'::char(5),
+  null::text,
+  'authenticated owner cannot create a paid enrollment'
+);
+select throws_ok(
+  $$insert into public.enrollments (user_id, course_id, amount_paid) values ('00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000907', 999999)$$::text,
+  '42501'::char(5),
+  null::text,
+  'authenticated owner cannot set amount_paid'
+);
+select throws_ok(
+  $$insert into public.enrollments (user_id, course_id, icount_doc_number) values ('00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000908', 'forged-doc')$$::text,
+  '42501'::char(5),
+  null::text,
+  'authenticated owner cannot set icount_doc_number'
+);
+select throws_ok(
+  $$insert into public.enrollments (user_id, course_id, icount_confirmation_code) values ('00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000909', 'forged-confirmation')$$::text,
+  '42501'::char(5),
+  null::text,
+  'authenticated owner cannot set icount_confirmation_code'
+);
+select throws_ok(
+  $$insert into public.enrollments (user_id, course_id, icount_doc_url) values ('00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000910', 'https://example.test/forged')$$::text,
+  '42501'::char(5),
+  null::text,
+  'authenticated owner cannot set icount_doc_url'
+);
+select throws_ok(
+  $$insert into public.enrollments (user_id, course_id, enrolled_at) values ('00000000-0000-0000-0000-000000000901', '10000000-0000-0000-0000-000000000911', '2026-08-31 00:00:00+00')$$::text,
+  '42501'::char(5),
+  null::text,
+  'authenticated owner cannot set enrolled_at'
 );
 select throws_ok(
   $$update public.enrollments set status = 'paid' where id = 'e0000000-0000-0000-0000-000000000901'$$::text,
@@ -449,7 +492,7 @@ select set_config('request.jwt.claims', '{"role":"service_role"}', true);
 
 select is(
   (select count(*) from public.enrollments),
-  4::bigint,
+  3::bigint,
   'service_role can select all enrollments'
 );
 select lives_ok(

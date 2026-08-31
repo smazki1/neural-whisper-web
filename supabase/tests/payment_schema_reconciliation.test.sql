@@ -285,7 +285,6 @@ select is(
       and tablename = 'enrollments'
   ),
   '[
-    {"name":"users insert own enrollments","permissive":"PERMISSIVE","roles":["authenticated"],"command":"INSERT","using":null,"check":"(( SELECT auth.uid() AS uid) = user_id)"},
     {"name":"users see own enrollments","permissive":"PERMISSIVE","roles":["authenticated"],"command":"SELECT","using":"(( SELECT auth.uid() AS uid) = user_id)","check":null}
   ]'::jsonb,
   'enrollments policies and roles match the hardened access model'
@@ -312,7 +311,7 @@ select is(
     ) grants
   ),
   '[
-    {"grantee":"authenticated","grantable":"NO","privileges":["INSERT","SELECT"]},
+    {"grantee":"authenticated","grantable":"NO","privileges":["SELECT"]},
     {"grantee":"postgres","grantable":"YES","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]},
     {"grantee":"service_role","grantable":"NO","privileges":["DELETE","INSERT","SELECT","UPDATE"]}
   ]'::jsonb,
