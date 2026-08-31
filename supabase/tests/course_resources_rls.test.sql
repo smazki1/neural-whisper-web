@@ -1,6 +1,6 @@
 begin;
 
-select plan(24);
+select plan(36);
 
 insert into auth.users (id) values
   ('00000000-0000-0000-0000-000000000101'),
@@ -17,7 +17,7 @@ insert into public.courses (
   (
     '10000000-0000-0000-0000-000000000101',
     '00000000-0000-0000-0000-000000000101',
-    'Course A', 'strategy', 'beginner', true, false
+    'Course A', 'strategy', 'beginner', true, true
   ),
   (
     '10000000-0000-0000-0000-000000000102',
@@ -38,17 +38,17 @@ insert into public.modules (id, course_id, title, position) values
   );
 
 insert into public.lessons (
-  id, module_id, title, position, is_upcoming
+  id, module_id, title, position, is_preview, is_upcoming
 ) values
   (
     '30000000-0000-0000-0000-000000000101',
     '20000000-0000-0000-0000-000000000101',
-    'Lesson A', 0, false
+    'Lesson A', 0, false, false
   ),
   (
     '30000000-0000-0000-0000-000000000102',
     '20000000-0000-0000-0000-000000000102',
-    'Lesson B', 0, true
+    'Lesson B', 0, true, true
   );
 
 insert into public.products (
@@ -128,6 +128,63 @@ insert into storage.objects (id, bucket_id, name) values
     '10000000-0000-0000-0000-000000000102/30000000-0000-0000-0000-000000000102/workbook-b.pdf'
   );
 
+select ok(
+  has_function_privilege(
+    'authenticated',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'authenticated retains execute on reorder_lesson_resources'
+);
+select ok(
+  not has_function_privilege(
+    'anon',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'anon cannot execute reorder_lesson_resources'
+);
+select ok(
+  not has_function_privilege(
+    'service_role',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'service_role cannot execute reorder_lesson_resources'
+);
+select ok(
+  not exists (
+    select 1
+    from pg_proc p
+    cross join lateral aclexplode(
+      coalesce(p.proacl, acldefault('f', p.proowner))
+    ) as privilege
+    where p.oid = 'public.reorder_lesson_resources(uuid,uuid[])'::regprocedure
+      and privilege.grantee = 0
+      and privilege.privilege_type = 'EXECUTE'
+  ),
+  'PUBLIC cannot execute reorder_lesson_resources'
+);
+select ok(
+  has_function_privilege(
+    'postgres',
+    'public.reorder_lesson_resources(uuid,uuid[])',
+    'EXECUTE'
+  ),
+  'function owner postgres retains execute on reorder_lesson_resources'
+);
+
+set local role anon;
+select set_config('request.jwt.claim.sub', '', true);
+select set_config('request.jwt.claims', '{"role":"anon"}', true);
+select throws_ok(
+  $$select public.reorder_lesson_resources('30000000-0000-0000-0000-000000000101', array['35000000-0000-0000-0000-000000000101'::uuid, '35000000-0000-0000-0000-000000000102'::uuid])$$,
+  '42501'::char(5),
+  'permission denied for function reorder_lesson_resources'::text,
+  'anonymous calls fail at the execute permission boundary'
+);
+reset role;
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000102', true);
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000102","role":"authenticated"}', true);
@@ -171,6 +228,7 @@ select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000104
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000104","role":"authenticated"}', true);
 
 select is((select count(*) from public.resources), 0::bigint, 'user without access reads no resource metadata');
+select is((select count(url) from public.resources), 0::bigint, 'user without access reads no resource URLs');
 select is((select count(*) from storage.objects), 0::bigint, 'user without access reads no resource objects');
 select throws_ok(
   $$select public.reorder_lesson_resources('30000000-0000-0000-0000-000000000101', array['35000000-0000-0000-0000-000000000101'::uuid, '35000000-0000-0000-0000-000000000102'::uuid])$$,
@@ -203,13 +261,31 @@ select throws_ok(
   'resource order must contain every lesson resource exactly once'::text,
   'incomplete resource order is rejected atomically'
 );
+select is(
+  (
+    select string_agg(id::text || ':' || position::text, ',' order by position)
+    from public.resources
+    where lesson_id = '30000000-0000-0000-0000-000000000101'
+  ),
+  '35000000-0000-0000-0000-000000000102:0,35000000-0000-0000-0000-000000000101:1',
+  'failed reorder leaves every resource position unchanged'
+);
 
 reset role;
 
 set local role anon;
 select set_config('request.jwt.claim.sub', '', true);
 select set_config('request.jwt.claims', '{"role":"anon"}', true);
-select is((select count(*) from public.resources), 0::bigint, 'anonymous users read no resource metadata');
+select is(
+  (select count(*) from public.resources where lesson_id = '30000000-0000-0000-0000-000000000101'),
+  0::bigint,
+  'anonymous users cannot read resources from a free course'
+);
+select is(
+  (select count(*) from public.resources where lesson_id = '30000000-0000-0000-0000-000000000102'),
+  0::bigint,
+  'anonymous users cannot read resources from a preview lesson'
+);
 
 reset role;
 
@@ -245,6 +321,45 @@ select is(
   ),
   0::bigint,
   'legacy broad public and owner resource policies are removed'
+);
+select is(
+  (
+    select count(*)
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'resources'
+      and policyname = 'Public can view resources of free or preview lessons'
+  ),
+  0::bigint,
+  'free and preview lessons have no public resource policy'
+);
+select is(
+  (
+    select count(*)
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'resources'
+      and policyname in (
+        'Exact course access can view resources',
+        'Admins can manage resources'
+      )
+  ),
+  2::bigint,
+  'exact-course and admin resource policies remain installed'
+);
+select is(
+  (
+    select count(*)
+    from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname in (
+        'Exact course access can read course resources',
+        'Admins can manage course resources'
+      )
+  ),
+  2::bigint,
+  'course resource storage policies remain installed'
 );
 select is(
   (
