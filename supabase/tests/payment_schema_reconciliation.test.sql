@@ -101,9 +101,9 @@ select is(
       and tablename = 'icount_webhook_log'
   ),
   '[
-    {"name":"admin read webhook log","permissive":"PERMISSIVE","roles":["public"],"command":"SELECT","using":"has_role(auth.uid(), ''admin''::app_role)","check":null}
+    {"name":"admin read webhook log","permissive":"PERMISSIVE","roles":["authenticated"],"command":"SELECT","using":"has_role(( SELECT auth.uid() AS uid), ''admin''::app_role)","check":null}
   ]'::jsonb,
-  'icount_webhook_log policy matches Production exactly'
+  'icount_webhook_log policy matches the hardened access model'
 );
 
 select is(
@@ -127,12 +127,11 @@ select is(
     ) grants
   ),
   '[
-    {"grantee":"anon","grantable":"NO","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]},
-    {"grantee":"authenticated","grantable":"NO","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]},
+    {"grantee":"authenticated","grantable":"NO","privileges":["SELECT"]},
     {"grantee":"postgres","grantable":"YES","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]},
-    {"grantee":"service_role","grantable":"NO","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]}
+    {"grantee":"service_role","grantable":"NO","privileges":["INSERT","SELECT"]}
   ]'::jsonb,
-  'icount_webhook_log grants match Production exactly'
+  'icount_webhook_log grants match the hardened access model'
 );
 
 select has_table(
@@ -248,10 +247,11 @@ select is(
       and tablename = 'enrollments'
   ),
   '[
+    {"name":"enrollments_course_id_idx","definition":"CREATE INDEX enrollments_course_id_idx ON public.enrollments USING btree (course_id)"},
     {"name":"enrollments_pkey","definition":"CREATE UNIQUE INDEX enrollments_pkey ON public.enrollments USING btree (id)"},
     {"name":"enrollments_user_id_course_id_key","definition":"CREATE UNIQUE INDEX enrollments_user_id_course_id_key ON public.enrollments USING btree (user_id, course_id)"}
   ]'::jsonb,
-  'enrollments indexes match Production exactly'
+  'enrollments indexes include the hardened course lookup index'
 );
 
 select is(
@@ -285,10 +285,10 @@ select is(
       and tablename = 'enrollments'
   ),
   '[
-    {"name":"users insert own enrollments","permissive":"PERMISSIVE","roles":["public"],"command":"INSERT","using":null,"check":"(auth.uid() = user_id)"},
-    {"name":"users see own enrollments","permissive":"PERMISSIVE","roles":["public"],"command":"SELECT","using":"(auth.uid() = user_id)","check":null}
+    {"name":"users insert own enrollments","permissive":"PERMISSIVE","roles":["authenticated"],"command":"INSERT","using":null,"check":"(( SELECT auth.uid() AS uid) = user_id)"},
+    {"name":"users see own enrollments","permissive":"PERMISSIVE","roles":["authenticated"],"command":"SELECT","using":"(( SELECT auth.uid() AS uid) = user_id)","check":null}
   ]'::jsonb,
-  'enrollments policies and roles match Production exactly'
+  'enrollments policies and roles match the hardened access model'
 );
 
 select is(
@@ -312,12 +312,11 @@ select is(
     ) grants
   ),
   '[
-    {"grantee":"anon","grantable":"NO","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]},
-    {"grantee":"authenticated","grantable":"NO","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]},
+    {"grantee":"authenticated","grantable":"NO","privileges":["INSERT","SELECT"]},
     {"grantee":"postgres","grantable":"YES","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]},
-    {"grantee":"service_role","grantable":"NO","privileges":["DELETE","INSERT","REFERENCES","SELECT","TRIGGER","TRUNCATE","UPDATE"]}
+    {"grantee":"service_role","grantable":"NO","privileges":["DELETE","INSERT","SELECT","UPDATE"]}
   ]'::jsonb,
-  'enrollments grants match Production exactly'
+  'enrollments grants match the hardened access model'
 );
 
 select has_column(
