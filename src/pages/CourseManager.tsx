@@ -20,7 +20,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel as ShadFormLabel, For
 // Local types to match DB schema
 type CourseCategory = "strategy" | "marketing" | "tech";
 type CourseLevel = "beginner" | "intermediate" | "advanced";
-type ResourceType = "video" | "pdf" | "slides" | "link";
+type ResourceType = "video" | "pdf" | "slides" | "link" | "file";
 
 type Course = {
   id: string;
