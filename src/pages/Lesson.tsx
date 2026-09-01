@@ -30,7 +30,7 @@ interface Lesson {
 
 interface Resource {
   id: string;
-  type: 'video' | 'pdf' | 'slides' | 'link';
+  type: 'video' | 'pdf' | 'slides' | 'link' | 'file';
   label: string;
   url: string;
 }
