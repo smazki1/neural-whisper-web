@@ -30,7 +30,7 @@ interface Lesson {
 
 interface Resource {
   id: string;
-  type: 'video' | 'pdf' | 'slides' | 'link';
+  type: 'video' | 'pdf' | 'slides' | 'link' | 'file';
   label: string;
   url: string;
 }
@@ -45,6 +45,7 @@ const resourceTypeLabel: Record<string, string> = {
   pdf: "PDF",
   slides: "מצגת",
   link: "קישור",
+  file: "קובץ",
 };
 
 const Lesson: React.FC = () => {
