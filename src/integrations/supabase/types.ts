@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
@@ -800,6 +800,7 @@ export type Database = {
           extra_videos: Json
           id: string
           is_preview: boolean | null
+          is_upcoming: boolean
           module_id: string
           position: number
           resources_json: Json | null
@@ -817,6 +818,7 @@ export type Database = {
           extra_videos?: Json
           id?: string
           is_preview?: boolean | null
+          is_upcoming?: boolean
           module_id: string
           position?: number
           resources_json?: Json | null
@@ -834,6 +836,7 @@ export type Database = {
           extra_videos?: Json
           id?: string
           is_preview?: boolean | null
+          is_upcoming?: boolean
           module_id?: string
           position?: number
           resources_json?: Json | null
@@ -1009,6 +1012,75 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      payment_intents: {
+        Row: {
+          amount_paid: number | null
+          buyer_email: string | null
+          claimed_at: string | null
+          claimed_by: string | null
+          created_at: string
+          expected_amount: number
+          expires_at: string
+          failure_reason: string | null
+          icount_confirmation_code: string | null
+          icount_doc_number: string | null
+          icount_doc_url: string | null
+          id: string
+          paid_at: string | null
+          product_id: string
+          status: string
+        }
+        Insert: {
+          amount_paid?: number | null
+          buyer_email?: string | null
+          claimed_at?: string | null
+          claimed_by?: string | null
+          created_at?: string
+          expected_amount: number
+          expires_at?: string
+          failure_reason?: string | null
+          icount_confirmation_code?: string | null
+          icount_doc_number?: string | null
+          icount_doc_url?: string | null
+          id?: string
+          paid_at?: string | null
+          product_id: string
+          status?: string
+        }
+        Update: {
+          amount_paid?: number | null
+          buyer_email?: string | null
+          claimed_at?: string | null
+          claimed_by?: string | null
+          created_at?: string
+          expected_amount?: number
+          expires_at?: string
+          failure_reason?: string | null
+          icount_confirmation_code?: string | null
+          icount_doc_number?: string | null
+          icount_doc_url?: string | null
+          id?: string
+          paid_at?: string | null
+          product_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_intents_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payment_intents_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "published_products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       payments: {
         Row: {
@@ -1441,30 +1513,45 @@ export type Database = {
       resources: {
         Row: {
           created_at: string
+          file_name: string | null
           id: string
           label: string | null
           lesson_id: string
+          mime_type: string | null
+          position: number
+          size_bytes: number | null
+          storage_path: string | null
           type: Database["public"]["Enums"]["resource_type"]
           updated_at: string
-          url: string
+          url: string | null
         }
         Insert: {
           created_at?: string
+          file_name?: string | null
           id?: string
           label?: string | null
           lesson_id: string
+          mime_type?: string | null
+          position?: number
+          size_bytes?: number | null
+          storage_path?: string | null
           type: Database["public"]["Enums"]["resource_type"]
           updated_at?: string
-          url: string
+          url?: string | null
         }
         Update: {
           created_at?: string
+          file_name?: string | null
           id?: string
           label?: string | null
           lesson_id?: string
+          mime_type?: string | null
+          position?: number
+          size_bytes?: number | null
+          storage_path?: string | null
           type?: Database["public"]["Enums"]["resource_type"]
           updated_at?: string
-          url?: string
+          url?: string | null
         }
         Relationships: [
           {
@@ -2011,6 +2098,7 @@ export type Database = {
           duration: string
           duration_minutes: number
           is_preview: boolean
+          is_upcoming: boolean
           lesson_id: string
           lesson_position: number
           lesson_title: string
@@ -2064,6 +2152,10 @@ export type Database = {
           title: string
         }[]
       }
+      reorder_lesson_resources: {
+        Args: { p_lesson_id: string; p_resource_ids: string[] }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "instructor" | "student"
@@ -2073,7 +2165,7 @@ export type Database = {
       payment_status: "pending" | "completed" | "failed" | "refunded"
       product_category: "basic" | "advanced" | "business"
       product_type: "course" | "workshop" | "consultation" | "prompt_pack"
-      resource_type: "video" | "pdf" | "slides" | "link"
+      resource_type: "video" | "pdf" | "slides" | "link" | "file"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2208,7 +2300,7 @@ export const Constants = {
       payment_status: ["pending", "completed", "failed", "refunded"],
       product_category: ["basic", "advanced", "business"],
       product_type: ["course", "workshop", "consultation", "prompt_pack"],
-      resource_type: ["video", "pdf", "slides", "link"],
+      resource_type: ["video", "pdf", "slides", "link", "file"],
     },
   },
 } as const
