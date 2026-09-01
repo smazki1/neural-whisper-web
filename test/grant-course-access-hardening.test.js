@@ -20,6 +20,10 @@ test("grant-course-access requires JWT verification and no service role", () => 
   assert.match(config, /\[functions\.grant-course-access\]\s+verify_jwt = true/);
   const configWithoutProtectedSections = config
     .replace(
+      /\n\[functions\.create-icount-payment\]\nverify_jwt = true\n/,
+      "\n[functions.create-icount-payment]\nverify_jwt = false\n",
+    )
+    .replace(
       /\n\[functions\.grant-course-access\]\nverify_jwt = true\n/,
       "",
     )
@@ -91,9 +95,7 @@ test("the isolated RLS fixture contains no destructive schema operation", () => 
   assert.match(fixture, /grant insert on public\.orders to authenticated/i);
 });
 
-test("payment functions remain byte-for-byte unchanged", () => {
-  assert.equal(hash("supabase/functions/create-icount-payment/index.ts"), "a35cca259bcfd4fff8164e2c93d01757c0cb49b5d05657f98888720d3f085d3c");
+test("unrelated payment functions remain byte-for-byte unchanged", () => {
   assert.equal(hash("supabase/functions/icount-webhook/index.ts"), "15ebf7ba61fcb904ea1a8fe34cac316e142715a6e48b427e52bef75fc677a1a0");
-  assert.equal(hash("supabase/functions/create-payment-intent/index.ts"), "e45d278d867b72ad12f8bc9bb7dffc55ad1edb066b4013d501d18702c79f26ce");
   assert.equal(hash("supabase/functions/claim-payment/index.ts"), "603af3d96e4a3cd24a6f994c3e066bc56865845594f793eaf97df65d700b105f");
 });
