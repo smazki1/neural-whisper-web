@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
     },
     { 
       name: 'Instagram', 
-      href: 'https://www.instagram.com/avi_ai_frid/', 
+      href: 'https://www.instagram.com/ai.avi.frid/', 
       icon: Instagram,
       color: 'hover:text-pink-600'
     }
