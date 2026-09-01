@@ -45,6 +45,7 @@ const resourceTypeLabel: Record<string, string> = {
   pdf: "PDF",
   slides: "מצגת",
   link: "קישור",
+  file: "קובץ",
 };
 
 const Lesson: React.FC = () => {
