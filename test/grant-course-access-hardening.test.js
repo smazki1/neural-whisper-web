@@ -95,7 +95,6 @@ test("the isolated RLS fixture contains no destructive schema operation", () => 
   assert.match(fixture, /grant insert on public\.orders to authenticated/i);
 });
 
-test("unrelated payment functions remain byte-for-byte unchanged", () => {
+test("the unrelated iCount webhook remains byte-for-byte unchanged", () => {
   assert.equal(hash("supabase/functions/icount-webhook/index.ts"), "15ebf7ba61fcb904ea1a8fe34cac316e142715a6e48b427e52bef75fc677a1a0");
-  assert.equal(hash("supabase/functions/claim-payment/index.ts"), "603af3d96e4a3cd24a6f994c3e066bc56865845594f793eaf97df65d700b105f");
 });

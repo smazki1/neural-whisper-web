@@ -27,7 +27,12 @@ test('payment-first purchases use private intents and authenticated claims', asy
   assert.match(createIntent, /expected_amount/);
   assert.match(createIntent, /searchParams\.set\(["']cr["']/);
   assert.match(claimPayment, /auth\.getUser/);
-  assert.match(claimPayment, /buyer_email/);
+  assert.match(claimPayment, /rpc\("claim_payment_transaction"/);
+  assert.match(migrations, /buyer_email/);
+  assert.match(
+    migrations,
+    /pg_catalog\.lower\(pg_catalog\.btrim\(v_buyer_email, v_email_trim_chars\)\)/,
+  );
   assert.match(webhook, /payment_intents/);
   assert.match(webhook, /amount_mismatch/);
   assert.match(webhook, /ICOUNT_WEBHOOK_SECRET/);

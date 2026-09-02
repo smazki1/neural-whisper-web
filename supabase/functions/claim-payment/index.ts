@@ -11,8 +11,6 @@ const json = (body: unknown, status = 200) => new Response(JSON.stringify(body),
   headers: { ...corsHeaders, "Content-Type": "application/json" },
 });
 
-const normalizeEmail = (value: string | null | undefined) => value?.trim().toLowerCase() ?? "";
-
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
@@ -37,56 +35,18 @@ Deno.serve(async (req: Request) => {
       return json({ error: "invalid_intent" }, 400);
     }
 
-    const { data: intent, error: intentError } = await service
-      .from("payment_intents")
-      .select("id, product_id, status, buyer_email, amount_paid, icount_doc_number, icount_confirmation_code, icount_doc_url, claimed_by, products(slug)")
-      .eq("id", intentId)
-      .maybeSingle();
-
-    if (intentError) throw intentError;
-    if (!intent) return json({ status: "not_found" });
-    if (intent.status === "pending") return json({ status: "pending" });
-    if (intent.status === "failed") return json({ status: "failed" });
-
-    if (intent.status === "claimed") {
-      if (intent.claimed_by !== user.id) return json({ status: "already_claimed" });
-      const product = Array.isArray(intent.products) ? intent.products[0] : intent.products;
-      return json({ status: "claimed", productSlug: product?.slug, docUrl: intent.icount_doc_url });
-    }
-
-    if (normalizeEmail(intent.buyer_email) !== normalizeEmail(user.email)) {
-      return json({ status: "email_mismatch" });
-    }
-
-    const now = new Date().toISOString();
-    const { error: entitlementError } = await service
-      .from("entitlements")
-      .upsert({
-        user_id: user.id,
-        product_id: intent.product_id,
-        status: "paid",
-        amount_paid: intent.amount_paid,
-        icount_doc_number: intent.icount_doc_number,
-        icount_confirmation_code: intent.icount_confirmation_code,
-        icount_doc_url: intent.icount_doc_url,
-        granted_at: now,
-      }, { onConflict: "user_id,product_id" });
-
-    if (entitlementError) throw entitlementError;
-
-    const { data: claimed, error: claimError } = await service
-      .from("payment_intents")
-      .update({ status: "claimed", claimed_by: user.id, claimed_at: now })
-      .eq("id", intent.id)
-      .eq("status", "paid")
-      .select("id")
-      .maybeSingle();
+    const { data: claim, error: claimError } = await service.rpc("claim_payment_transaction", {
+      p_intent_id: intentId,
+      p_user_id: user.id,
+      p_user_email: user.email,
+    });
 
     if (claimError) throw claimError;
-    if (!claimed) return json({ status: "retry" });
+    if (!claim || typeof claim !== "object" || Array.isArray(claim)) {
+      throw new Error("invalid_claim_result");
+    }
 
-    const product = Array.isArray(intent.products) ? intent.products[0] : intent.products;
-    return json({ status: "claimed", productSlug: product?.slug, docUrl: intent.icount_doc_url });
+    return json(claim);
   } catch (error) {
     console.error("claim-payment failed", error);
     return json({ error: "internal_error" }, 500);
