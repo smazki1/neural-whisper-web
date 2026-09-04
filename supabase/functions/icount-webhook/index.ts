@@ -1,4 +1,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
+import {
+  getICountReference,
+  parseICountDocuments,
+} from "./payload.js";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -52,8 +56,7 @@ Deno.serve(async (req: Request) => {
   };
 
   try {
-    const payload = await req.json();
-    const documents: ICountDocument[] = Array.isArray(payload) ? payload : [payload];
+    const documents = await parseICountDocuments(req) as ICountDocument[];
     let processed = 0;
     let failed = 0;
 
@@ -63,7 +66,7 @@ Deno.serve(async (req: Request) => {
         continue;
       }
 
-      const reference = doc.custom_field?.trim();
+      const reference = getICountReference(doc);
       const amount = Number(doc.totalwithvat);
       if (!reference || !Number.isFinite(amount)) {
         await log(doc, "invalid_payload");

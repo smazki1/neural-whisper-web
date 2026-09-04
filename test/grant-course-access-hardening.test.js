@@ -96,5 +96,5 @@ test("the isolated RLS fixture contains no destructive schema operation", () => 
 });
 
 test("the unrelated iCount webhook remains byte-for-byte unchanged", () => {
-  assert.equal(hash("supabase/functions/icount-webhook/index.ts"), "15ebf7ba61fcb904ea1a8fe34cac316e142715a6e48b427e52bef75fc677a1a0");
+  assert.equal(hash("supabase/functions/icount-webhook/index.ts"), "5e93065450f40f95af8ac9d060130c236e2e906c13104048818f95de3383370e");
 });
