@@ -117,7 +117,8 @@ Deno.serve(async (req: Request) => {
       return json(origin, { error: "rate_limited" }, 429);
     }
     if (insertError) throw insertError;
-    paypage.searchParams.set("cr", intentId);
+    paypage.searchParams.delete("cr");
+    paypage.searchParams.set("m__custom_field", intentId);
 
     return json(origin, { intentId, url: paypage.toString() }, 201);
   } catch (error) {

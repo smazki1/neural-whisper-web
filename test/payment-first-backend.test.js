@@ -25,7 +25,8 @@ test('payment-first purchases use private intents and authenticated claims', asy
   assert.match(migrations, /create table public\.payment_intents/i);
   assert.match(migrations, /enable row level security/i);
   assert.match(createIntent, /expected_amount/);
-  assert.match(createIntent, /searchParams\.set\(["']cr["']/);
+  assert.match(createIntent, /searchParams\.set\(["']m__custom_field["']/);
+  assert.doesNotMatch(createIntent, /searchParams\.set\(["']cr["']/);
   assert.match(claimPayment, /auth\.getUser/);
   assert.match(claimPayment, /rpc\("claim_payment_transaction"/);
   assert.match(migrations, /buyer_email/);
