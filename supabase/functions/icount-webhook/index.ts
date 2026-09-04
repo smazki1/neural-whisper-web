@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 import {
+  getICountAmount,
   getICountReference,
   parseICountDocuments,
 } from "./payload.js";
@@ -67,8 +68,8 @@ Deno.serve(async (req: Request) => {
       }
 
       const reference = getICountReference(doc);
-      const amount = Number(doc.totalwithvat);
-      if (!reference || !Number.isFinite(amount)) {
+      const amount = getICountAmount(doc);
+      if (!reference || amount === null) {
         await log(doc, "invalid_payload");
         failed++;
         continue;
