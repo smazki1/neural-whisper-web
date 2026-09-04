@@ -1,0 +1,1 @@
+doctype=invrec&docnum=INV-FIXTURE-1001&custom_field=11111111-1111-4111-8111-111111111111&sum=149.90&total_paid=149.90&cc_total=149.90&confirmation_code=CONFIRM-FIXTURE&doc_url=https%3A%2F%2Fexample.test%2Finvoice.pdf&customer_email=buyer%40example.test
