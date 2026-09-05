@@ -234,10 +234,10 @@ const BlogPost = () => {
       <Helmet>
         <title>{post.title} - AI Master</title>
         <meta name="description" content={post.excerpt || post.title} />
-        <link rel="canonical" href={`https://aimaster-site.lovable.app/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://ai-master.co.il/blog/${encodeURIComponent(post.slug)}`} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt || post.title} />
-        <meta property="og:url" content={`https://aimaster-site.lovable.app/blog/${post.slug}`} />
+        <meta property="og:url" content={`https://ai-master.co.il/blog/${encodeURIComponent(post.slug)}`} />
         {post.featured_image_url && (
           <meta property="og:image" content={post.featured_image_url} />
         )}
