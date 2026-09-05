@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { sanitizeHtml } from '@/lib/sanitizeHtml.js';
 
 interface BlogPost {
   id: string;
@@ -364,7 +365,7 @@ const BlogPost = () => {
               [&>a]:text-accent [&>a]:font-medium [&>a]:underline [&>a:hover]:text-accent/80
               [&>code]:bg-muted [&>code]:px-2 [&>code]:py-1 [&>code]:rounded [&>code]:text-sm
               [&>pre]:bg-muted [&>pre]:p-4 [&>pre]:rounded-lg [&>pre]:mb-4 [&>pre]:overflow-x-auto"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             dir="rtl"
           />
 

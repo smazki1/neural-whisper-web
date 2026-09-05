@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, ArrowLeft, CheckCircle, BookOpen, Download, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { sanitizeHtml } from "@/lib/sanitizeHtml.js";
 
 interface Course {
   id: string;
@@ -320,7 +321,7 @@ const Lesson: React.FC = () => {
                 {lesson.content ? (
                   <div 
                     className="prose prose-lg max-w-none rtl:prose-headings:text-right rtl:prose-p:text-right"
-                    dangerouslySetInnerHTML={{ __html: lesson.content }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(lesson.content) }}
                   />
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
