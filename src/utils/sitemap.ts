@@ -19,7 +19,7 @@ interface SitemapData {
 }
 
 export const generateSitemap = (data: SitemapData = {}): string => {
-  const baseUrl = window.location.origin;
+  const baseUrl = 'https://ai-master.co.il';
   const urls: SitemapUrl[] = [];
 
   // Static pages
@@ -29,7 +29,7 @@ export const generateSitemap = (data: SitemapData = {}): string => {
     { path: '/contact', priority: 0.7, changefreq: 'monthly' as const },
     { path: '/products', priority: 0.9, changefreq: 'weekly' as const },
     { path: '/blog', priority: 0.9, changefreq: 'daily' as const },
-    { path: '/ai-marketing-accelerator', priority: 0.9, changefreq: 'weekly' as const },
+    { path: '/landing/ai-marketing-accelerator', priority: 0.9, changefreq: 'weekly' as const },
     { path: '/ai-strategy-course', priority: 0.9, changefreq: 'weekly' as const },
     { path: '/business-workshop', priority: 0.8, changefreq: 'weekly' as const },
     { path: '/privacy-policy', priority: 0.3, changefreq: 'yearly' as const },
@@ -49,7 +49,7 @@ export const generateSitemap = (data: SitemapData = {}): string => {
   if (data.posts) {
     data.posts.forEach(post => {
       urls.push({
-        loc: `${baseUrl}/blog/${post.slug}`,
+        loc: `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
         lastmod: post.updated_at || post.published_at,
         changefreq: 'monthly',
         priority: 0.7
@@ -61,7 +61,7 @@ export const generateSitemap = (data: SitemapData = {}): string => {
   if (data.products) {
     data.products.forEach(product => {
       urls.push({
-        loc: `${baseUrl}/products/${product.slug}`,
+        loc: `${baseUrl}/products/${encodeURIComponent(product.slug)}`,
         lastmod: product.updated_at || product.created_at,
         changefreq: 'weekly',
         priority: 0.8
@@ -85,7 +85,7 @@ ${urls.map(url => `  <url>
 
 // Generate robots.txt content
 export const generateRobotsTxt = (): string => {
-  const baseUrl = window.location.origin;
+  const baseUrl = 'https://ai-master.co.il';
   
   return `User-agent: *
 Allow: /

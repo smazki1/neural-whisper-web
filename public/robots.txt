@@ -8,7 +8,7 @@ Disallow: /api/
 Disallow: /_*
 
 # Sitemap
-Sitemap: https://bd07d56c-6e11-48a6-b27a-fc91f14b3c50.lovable.app/sitemap.xml
+Sitemap: https://ai-master.co.il/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1

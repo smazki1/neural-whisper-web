@@ -51,7 +51,7 @@ export const SEOProvider = ({ children }: SEOProviderProps) => {
 
   // Update canonical URL on route change
   useEffect(() => {
-    const currentUrl = `${window.location.origin}${location.pathname}`;
+    const currentUrl = `https://ai-master.co.il${location.pathname}`;
     updateCanonicalUrl(currentUrl);
   }, [location]);
 
