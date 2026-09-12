@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft,
@@ -400,7 +400,7 @@ export default function KnowledgeToProductDemo() {
         )}
       </header>
 
-      <div ref={liveRef} aria-live="polite" className="sr-only">
+      <div aria-live="polite" className="sr-only">
         {errors || savedMsg || (stage === "loading" ? "מכינים שלושה כיוונים" : "")}
       </div>
 
