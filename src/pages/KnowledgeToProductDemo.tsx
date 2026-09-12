@@ -213,7 +213,7 @@ export default function KnowledgeToProductDemo() {
   const [optIn, setOptIn] = useState(false);
   const [savedMsg, setSavedMsg] = useState("");
   const [confirmReset, setConfirmReset] = useState(false);
-  const liveRef = useRef<HTMLDivElement>(null);
+  
 
   /* שחזור מ-localStorage */
   useEffect(() => {
