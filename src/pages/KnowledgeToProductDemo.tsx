@@ -104,7 +104,7 @@ function buildIdeas(a: Answers, tweak = ""): Idea[] {
   const service: Idea = {
     id: "service",
     format: "service",
-    name: `${tweakPhrase ? `${tweakPhrase}: ` : ""}ליווי ממוקד ל${help}`,
+    name: `ליווי ממוקד: ${help}${tweakPhrase ? ` (${tweakPhrase})` : ""}`,
     deliverable: `פגישת עבודה אחת ומסמך פעולה קצר שמסדר בדיוק את ${help}.`,
     forWhom: audience,
     problem,
@@ -118,7 +118,7 @@ function buildIdeas(a: Answers, tweak = ""): Idea[] {
   const kit: Idea = {
     id: "kit",
     format: "kit",
-    name: `${tweakPhrase ? `${tweakPhrase} · ` : ""}ערכת עבודה עצמאית ל${topic}`,
+    name: `ערכת עבודה עצמאית: ${topic}${tweakPhrase ? ` (${tweakPhrase})` : ""}`,
     deliverable: `תבנית או צ'ק־ליסט שאפשר למלא לבד ולהגיע לתוצאה בלי פגישה איתכם.`,
     forWhom: audience,
     problem: problem,
@@ -135,7 +135,7 @@ function buildIdeas(a: Answers, tweak = ""): Idea[] {
   const workshop: Idea = {
     id: "workshop",
     format: "workshop",
-    name: `${tweakPhrase ? `${tweakPhrase} · ` : ""}מפגש אבחון קטן בנושא ${help}`,
+    name: `מפגש אבחון קטן: ${help}${tweakPhrase ? ` (${tweakPhrase})` : ""}`,
     deliverable: `מפגש קבוצתי קצר שבסופו כל משתתף יוצא עם אבחון ושלב אחד ליישום.`,
     forWhom: audienceUnclear ? `${audience} — קבוצה ראשונה קטנה` : audience,
     problem,
@@ -152,11 +152,11 @@ function buildIdeas(a: Answers, tweak = ""): Idea[] {
   const pref = a.preference || "both";
   let picked: Idea[];
   if (pref === "people") picked = [service, workshop, { ...kit, name: `${kit.name} (נלווה לליווי)` }];
-  else if (pref === "self") picked = [kit, { ...service, name: `בדיקה מודרכת ל${help}` }, { ...workshop, format: "workshop", name: `מפגש הדרכה חד־פעמי ל${topic}` }];
+  else if (pref === "self") picked = [kit, { ...service, name: `בדיקה מודרכת: ${help}` }, { ...workshop, format: "workshop", name: `מפגש הדרכה חד־פעמי: ${topic}` }];
   else picked = [service, kit, workshop];
 
   if (pref === "people") picked = [service, workshop];
-  if (pref === "self") picked = [kit, { ...service, name: `בדיקה מודרכת ל${help}`, deliverable: `סקירה קצרה של המצב הקיים והמלצות כתובות, בלי ליווי מתמשך.` }];
+  if (pref === "self") picked = [kit, { ...service, name: `בדיקה מודרכת: ${help}`, deliverable: `סקירה קצרה של המצב הקיים והמלצות כתובות, בלי ליווי מתמשך.` }];
 
   // תמיד שלושה כרטיסים כשהעדפה פתוחה; אחרת נשלים בגרסה נוספת של הפורמט המתאים
   if (picked.length < 3) {
@@ -167,7 +167,7 @@ function buildIdeas(a: Answers, tweak = ""): Idea[] {
         {
           ...service,
           id: "service-2",
-          name: `מסלול קצר של שתי פגישות ל${topic}`,
+          name: `מסלול קצר של שתי פגישות: ${topic}`,
           deliverable: "שתי פגישות: אחת לאבחון ואחת לבדיקת היישום.",
           firstVersion: `${smallScope}. להריץ עם שני אנשים בלבד.`,
           weeklyAction: "לבחור שני אנשים ולהציע להם את המסלול הקצר.",
@@ -180,7 +180,7 @@ function buildIdeas(a: Answers, tweak = ""): Idea[] {
         {
           ...kit,
           id: "kit-2",
-          name: `מדריך צעד־אחר־צעד ל${help}`,
+          name: `מדריך צעד־אחר־צעד: ${help}`,
           deliverable: "מדריך קצר שמוביל מהמצב ההתחלתי לתוצאה אחת מוגדרת.",
           firstVersion: "פרק אחד בלבד, שנשלח כקובץ.",
           weeklyAction: "לכתוב את הפרק הראשון ולשלוח אותו לשני אנשים.",
