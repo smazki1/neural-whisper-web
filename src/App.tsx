@@ -51,6 +51,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const CorporateWorkshops = lazy(() => import("./pages/CorporateWorkshops"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
+const KnowledgeToProductDemo = lazy(() => import("./pages/KnowledgeToProductDemo"));
 
 const queryClient = createOptimizedQueryClient();
 
@@ -119,6 +120,7 @@ const App = () => {
               <Route path="settings" element={<AdminSettings />} />
             </Route>
             <Route path="/landing/ai-marketing-accelerator" element={<AIMarketingAccelerator />} />
+            <Route path="/demo/knowledge-to-product" element={<KnowledgeToProductDemo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
               </Routes>
