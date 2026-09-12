@@ -120,6 +120,7 @@ const App = () => {
               <Route path="settings" element={<AdminSettings />} />
             </Route>
             <Route path="/landing/ai-marketing-accelerator" element={<AIMarketingAccelerator />} />
+            <Route path="/demo/knowledge-to-product" element={<KnowledgeToProductDemo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
               </Routes>
