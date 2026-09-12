@@ -213,6 +213,7 @@ export default function KnowledgeToProductDemo() {
   const [optIn, setOptIn] = useState(false);
   const [savedMsg, setSavedMsg] = useState("");
   const [confirmReset, setConfirmReset] = useState(false);
+  const [storageHydrated, setStorageHydrated] = useState(false);
   
 
   /* שחזור מ-localStorage */
@@ -223,22 +224,36 @@ export default function KnowledgeToProductDemo() {
       const parsed = JSON.parse(raw);
       if (parsed?.answers) setAnswers({ ...EMPTY, ...parsed.answers });
       if (typeof parsed?.step === "number") setStep(Math.min(parsed.step, QUESTIONS - 1));
-      if (parsed?.answers?.expertise) setStage("quiz");
+      if (parsed?.selectedIdea) {
+        setSelected(parsed.selectedIdea);
+        setEditName(parsed.selectedIdea.name || "");
+        setEditAudience(parsed.selectedIdea.forWhom || "");
+        setLeadName(parsed?.lead?.name || "");
+        setLeadEmail(parsed?.lead?.email || "");
+        setOptIn(Boolean(parsed?.lead?.optIn));
+        setStage("product");
+      } else if (parsed?.answers?.expertise) {
+        setStage("quiz");
+      }
     } catch {
       /* מתעלמים בשקט */
+    } finally {
+      setStorageHydrated(true);
     }
   }, []);
 
   useEffect(() => {
+    if (!storageHydrated) return;
     try {
+      const previous = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ answers, step, savedAt: new Date().toISOString() })
+        JSON.stringify({ ...previous, answers, step, savedAt: new Date().toISOString() })
       );
     } catch {
       /* מתעלמים בשקט */
     }
-  }, [answers, step]);
+  }, [answers, step, storageHydrated]);
 
   const set = <K extends keyof Answers>(k: K, v: Answers[K]) =>
     setAnswers((prev) => ({ ...prev, [k]: v }));
