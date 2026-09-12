@@ -51,6 +51,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const CorporateWorkshops = lazy(() => import("./pages/CorporateWorkshops"));
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"));
 const PaymentCanceled = lazy(() => import("./pages/PaymentCanceled"));
+const KnowledgeToProductDemo = lazy(() => import("./pages/KnowledgeToProductDemo"));
 
 const queryClient = createOptimizedQueryClient();
 
