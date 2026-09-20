@@ -1,31 +1,66 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
 import { Toaster } from '@/components/ui/toaster';
+import heroBackground from '@/assets/hero-bg-ai-modern.jpg';
+import heroVideo from '@/assets/contact/avi-hero-0920-1080p.mp4';
+import './contact.css';
 
 const Contact = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let stopPlayback: (() => void) | undefined;
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+    const startPlayback = () => {
+      stopPlayback?.();
+      setIsVideoPlaying(false);
+      if (reducedMotion.matches) return;
+
+      let stopped = false;
+      const showFallback = () => {
+        if (stopped) return;
+        stopPlayback?.();
+        setIsVideoPlaying(false);
+      };
+      const timeout = window.setTimeout(showFallback, 15000);
+      const onPlaying = () => {
+        if (stopped) return;
+        window.clearTimeout(timeout);
+        setIsVideoPlaying(true);
+      };
+      stopPlayback = () => {
+        stopped = true;
+        window.clearTimeout(timeout);
+        video.removeEventListener('playing', onPlaying);
+        video.removeEventListener('error', showFallback);
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+      };
+      video.addEventListener('playing', onPlaying);
+      video.addEventListener('error', showFallback);
+      video.muted = true;
+      video.src = heroVideo;
+      video.play().catch(showFallback);
+    };
+
+    startPlayback();
+    reducedMotion.addEventListener('change', startPlayback);
+    return () => {
+      stopPlayback?.();
+      reducedMotion.removeEventListener('change', startPlayback);
+    };
+  }, []);
 
   const whatsappUrl = "https://wa.me/972527772807?text=" + encodeURIComponent("שלום אבי, אני מעוניין ליצור קשר");
 
@@ -40,73 +75,44 @@ const Contact = () => {
       </Helmet>
 
       <Navbar onContactClick={() => setIsContactModalOpen(true)} />
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 pt-20">
-        <motion.div 
-          className="container mx-auto px-4 py-16"
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-        >
-          {/* Header Section */}
-          <motion.div variants={fadeInUp} className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              בואו נתחיל לעבוד
-              <span className="text-primary block mt-2">יחד</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              יש לכם פרויקט מרתק? רעיון חדשני? או סתם רוצים לדבר על העתיד של הטכנולוגיה?
-              <br />אני כאן כדי לעזור ולהדריך אתכם בדרך.
-            </p>
-          </motion.div>
-
-          <div className="max-w-2xl mx-auto">
-            {/* Contact Information */}
-            <motion.div variants={fadeInUp} className="space-y-6">
-              {/* Contact Details */}
-              <Card className="p-8 shadow-lg border-2 border-primary/10">
-                <h3 className="text-2xl font-semibold text-foreground mb-6 text-center">
-                  דרכי יצירת קשר
-                </h3>
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4">
-                    <Mail className="w-6 h-6 text-primary flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-lg">אימייל</p>
-                      <a href="mailto:avi@ai-master.co.il" className="text-muted-foreground hover:text-primary text-lg">
-                        avi@ai-master.co.il
-                      </a>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <Phone className="w-6 h-6 text-primary flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-lg">טלפון</p>
-                      <a href="tel:+972527772807" className="text-muted-foreground hover:text-primary text-lg">
-                        052-777-2807
-                      </a>
-                    </div>
-                  </div>
-                  
-                  
-                </div>
-
-                {/* WhatsApp Button */}
-                <div className="mt-8 pt-6 border-t border-border">
-                  <Button 
-                    onClick={() => window.open(whatsappUrl, '_blank')}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white text-lg py-6"
-                    size="lg"
-                  >
-                    <MessageCircle className="w-5 h-5 ml-2" />
-                    שלחו הודעה בוואטסאפ
-                  </Button>
-                </div>
-              </Card>
-            </motion.div>
+      <main className="contact-page min-h-screen bg-gradient-to-br from-background via-background to-primary/5 pt-20" dir="rtl">
+        <section className="contact-hero" aria-labelledby="contact-title">
+          <img className="contact-hero__background" src={heroBackground} alt="" />
+          <video
+            ref={videoRef}
+            className={`contact-hero__video${isVideoPlaying ? ' is-playing' : ''}`}
+            autoPlay muted loop playsInline preload="none"
+            poster={heroBackground} aria-hidden="true" tabIndex={-1}
+          />
+          <div className="contact-hero__shade" aria-hidden="true" />
+          <div className="contact-hero__content">
+            <h1 id="contact-title">בואו נתחיל לעבוד יחד</h1>
+            <p>יש לכם פרויקט מרתק? רעיון חדשני? או סתם רוצים לדבר על העתיד של הטכנולוגיה?</p>
           </div>
-        </motion.div>
-      </div>
+        </section>
+
+        <section className="contact-methods container mx-auto px-4" aria-labelledby="contact-methods-title">
+          <Card className="contact-methods__card shadow-lg border-2 border-primary/10">
+            <h2 id="contact-methods-title" className="text-2xl font-semibold text-foreground text-center">
+              דרכי יצירת קשר
+            </h2>
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="contact-methods__whatsapp">
+              <MessageCircle className="w-6 h-6" aria-hidden="true" />
+              שלחו הודעה בוואטסאפ
+            </a>
+            <div className="contact-methods__details">
+              <a href="tel:+972527772807" className="contact-methods__link">
+                <Phone className="w-6 h-6" aria-hidden="true" />
+                <span><span className="contact-methods__label">טלפון</span><span dir="ltr">052-777-2807</span></span>
+              </a>
+              <a href="mailto:avi@ai-master.co.il" className="contact-methods__link">
+                <Mail className="w-6 h-6" aria-hidden="true" />
+                <span><span className="contact-methods__label">אימייל</span><span dir="ltr">avi@ai-master.co.il</span></span>
+              </a>
+            </div>
+          </Card>
+        </section>
+      </main>
       <Footer />
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
       <Toaster />
