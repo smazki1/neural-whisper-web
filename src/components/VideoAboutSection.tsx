@@ -44,16 +44,6 @@ const VideoAboutSection = ({ videoExperiment = false }: { videoExperiment?: bool
             viewport={{ once: true }}
           >
             <div className="space-y-6">
-              <motion.h2 
-                className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight"
-                initial={videoExperiment ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                <span className="block premium-accent-gradient">המשימה שלי</span>
-              </motion.h2>
-              
               <motion.div 
                 className="w-20 h-1 bg-gradient-to-r from-accent to-accent/50 rounded-full"
                 initial={videoExperiment ? false : { width: 0 }}
