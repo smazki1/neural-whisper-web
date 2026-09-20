@@ -1,0 +1,24 @@
+@font-face { font-family:'Hero Heebo'; src:url('../../assets/fonts/heebo-hero-bold.ttf') format('truetype'); font-style:normal; font-weight:700; font-display:block; }
+/* Shared by immediate HTML and React: identical poster, crop and geometry. */
+.video-hero { --hero-mission-blue: #081d34; --hero-mission-overlap: 140px; }
+.video-hero { position: relative; isolation: isolate; overflow: hidden; height: clamp(620px, 82svh, 820px); background: #071b2b; }
+.video-hero__fallback, .video-hero__player, .video-hero__shade { position: absolute; inset: 0; width: 100%; height: 100%; }
+.video-hero__fallback, .video-hero__player { object-fit: cover; object-position: center top; }
+.video-hero__fallback { background: url('../../assets/experiments/avi-hero-poster.jpg') center top / cover no-repeat; }
+.video-hero__player { opacity: 0; pointer-events: none; transition: opacity 900ms ease; }
+.video-hero__player.is-playing { opacity: 1; }
+.video-hero__shade { background: linear-gradient(180deg, rgba(6,24,46,.23) 0%, rgba(6,24,46,.40) 38%, rgba(6,24,46,.86) 100%); }
+.video-hero::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: var(--hero-mission-overlap); background: linear-gradient(to bottom, #081d3400, var(--hero-mission-blue)); pointer-events: none; }
+.video-hero__content { position: absolute; z-index: 1; inset-inline: 24px; bottom: 17%; text-align: center; max-width: 1140px; margin-inline: auto; text-shadow: 0 3px 24px rgba(0,10,30,.55); }
+.video-hero__content h1 { font-size: clamp(40px,5.4vw,76px); line-height: 1.15; }
+.video-hero__accent { color: #ffdb76; font-weight: 900; }
+
+.video-hero { font-family: 'Hero Heebo',Heebo,sans-serif; }
+.video-hero__content h1 { margin:0; color:#fff; font-weight:700; letter-spacing:.025em; }
+.video-hero__nowrap { white-space:nowrap; }
+@media (max-width:767px) {
+  .video-hero { --hero-mission-overlap:80px; height:clamp(580px,80svh,720px); }
+  .video-hero__content { inset-inline:20px; bottom:15%; }
+  .video-hero__content h1 { font-size:clamp(34px,9vw,48px); }
+}
+@media (prefers-reduced-motion:reduce) { .video-hero__player { display:none; transition:none; } }

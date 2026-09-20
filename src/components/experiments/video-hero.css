@@ -1,14 +1,5 @@
-.video-hero, .video-intro { --hero-mission-blue: #081d34; --hero-mission-overlap: 140px; }
-.video-hero { position: relative; isolation: isolate; overflow: hidden; height: clamp(620px, 82svh, 820px); background: #071b2b; }
-.video-hero__fallback, .video-hero__player, .video-hero__shade { position: absolute; inset: 0; width: 100%; height: 100%; }
-.video-hero__fallback, .video-hero__player { object-fit: cover; object-position: center top; }
-.video-hero__player { opacity: 0; pointer-events: none; transition: opacity 900ms ease; }
-.video-hero__player.is-playing { opacity: 1; }
-.video-hero__shade { background: linear-gradient(180deg, rgba(6,24,46,.23) 0%, rgba(6,24,46,.40) 38%, rgba(6,24,46,.86) 100%); }
-.video-hero::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: var(--hero-mission-overlap); background: linear-gradient(to bottom, #081d3400, var(--hero-mission-blue)); pointer-events: none; }
-.video-hero__content { position: absolute; z-index: 1; inset-inline: 24px; bottom: 17%; text-align: center; max-width: 1140px; margin-inline: auto; text-shadow: 0 3px 24px rgba(0,10,30,.55); }
-.video-hero__content h1 { font-size: clamp(40px,5.4vw,76px); line-height: 1.15; }
-.video-hero__accent { color: #ffdb76; font-weight: 900; }
+/* Hero geometry is loaded once by index.html, before the application. */
+.video-intro { --hero-mission-blue: #081d34; --hero-mission-overlap: 140px; }
 .home-button { display: inline-flex; justify-content: center; align-items: center; min-height: 52px; padding: 12px 28px; border: 1px solid transparent; border-radius: 8px; font-weight: 700; font-size: 18px; transition: background .2s; }
 .home-button--gold { background: #efd06b; color: #102440; }
 .home-button--gold:hover { background: #ffe294; }
@@ -90,10 +81,7 @@
 .home-preview-note { position: relative; z-index: 1; top: 80px; text-align: center; background: #fff5cc; color: #493910; font-size: 13px; padding: 9px 20px; }
 .home-section :focus-visible, .video-hero :focus-visible { outline: 3px solid #c59b20; outline-offset: 5px; }
 @media (max-width: 767px) {
-  .video-hero, .video-intro { --hero-mission-overlap: 80px; }
-  .video-hero { height: clamp(580px,80svh,720px); }
-  .video-hero__content { inset-inline: 20px; bottom: 15%; }
-  .video-hero__content h1 { font-size: clamp(34px,9vw,48px); }
+  .video-intro { --hero-mission-overlap: 80px; }
   .home-button { padding-inline: 18px; font-size: 16px; flex: 1; }
   .home-container { width: calc(100% - 40px); }
   .home-section, .video-intro { padding-block: 56px; }
@@ -117,7 +105,6 @@
   .is-single .home-product h3 { font-size: 25px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .video-hero__player { display: none; transition: none; }
   [data-home-reveal] { opacity: 1 !important; translate: none !important; animation: none !important; transition: none !important; }
   .video-intro::before { background-size: auto, cover; background-position: center; }
   .home-testimonials * { transition: none !important; scroll-behavior: auto !important; }
