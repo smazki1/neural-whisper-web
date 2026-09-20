@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer = () => {
+const Footer = ({ showVault = false }: { showVault?: boolean }) => {
   return (
     <footer className="bg-brand-surface py-12 font-heebo border-t border-brand-surface" dir="rtl">
       <div className="container mx-auto px-6 max-w-6xl">
@@ -17,6 +17,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-xl font-semibold text-brand-text">השירותים שלנו</h4>
             <ul className="space-y-2 text-brand-text/80">
+              {showVault && <li><a href="https://vault.ai-master.co.il/" className="hover:text-brand-accent transition-colors duration-200">הכספת</a></li>}
               <li>
                 <a href="/products" className="hover:text-brand-accent transition-colors duration-200">
                   מוצרים וסדנאות
@@ -78,7 +79,7 @@ const Footer = () => {
             </a>
           </div>
           <p className="text-brand-text/60 text-center">
-            © 2025 AI Master. כל הזכויות שמורות.
+            © 2026 AI Master. כל הזכויות שמורות.
           </p>
         </div>
       </div>
