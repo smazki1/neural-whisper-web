@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { sanitizeHtml } from '@/lib/sanitizeHtml.js';
 
 interface BlogPost {
   id: string;
@@ -233,10 +234,10 @@ const BlogPost = () => {
       <Helmet>
         <title>{post.title} - AI Master</title>
         <meta name="description" content={post.excerpt || post.title} />
-        <link rel="canonical" href={`https://aimaster-site.lovable.app/blog/${post.slug}`} />
+        <link rel="canonical" href={`https://ai-master.co.il/blog/${encodeURIComponent(post.slug)}`} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt || post.title} />
-        <meta property="og:url" content={`https://aimaster-site.lovable.app/blog/${post.slug}`} />
+        <meta property="og:url" content={`https://ai-master.co.il/blog/${encodeURIComponent(post.slug)}`} />
         {post.featured_image_url && (
           <meta property="og:image" content={post.featured_image_url} />
         )}
@@ -364,7 +365,7 @@ const BlogPost = () => {
               [&>a]:text-accent [&>a]:font-medium [&>a]:underline [&>a:hover]:text-accent/80
               [&>code]:bg-muted [&>code]:px-2 [&>code]:py-1 [&>code]:rounded [&>code]:text-sm
               [&>pre]:bg-muted [&>pre]:p-4 [&>pre]:rounded-lg [&>pre]:mb-4 [&>pre]:overflow-x-auto"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             dir="rtl"
           />
 

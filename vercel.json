@@ -1,8 +1,157 @@
 {
-  "rewrites": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.ai-master.co.il"
+        }
+      ],
+      "headers": {
+        "Location": "https://ai-master.co.il/$1"
+      },
+      "status": 308
+    },
+    {
+      "src": "/sitemap\\.xml",
+      "dest": "https://ekqmbmfkzmqcxthsdgwg.supabase.co/functions/v1/generate-sitemap",
+      "headers": {
+        "Content-Type": "application/xml; charset=utf-8"
+      }
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/auth/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/reset-password/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/reset-password/[^/]+/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/update-password/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/about/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/avi/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/blog/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/blog/[^/]+/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/blog/manager/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/blog/editor/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/blog/editor/[^/]+/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/products/[^/]+/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/contact/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/consulting/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/corporate-workshops/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/payment-success/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/payment-canceled/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/business-workshop/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/ai-strategy-course/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/learn/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/courses/manage/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/courses/[^/]+/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/courses/[^/]+/lesson/[^/]+/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/dashboard/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/profile/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/privacy-policy/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/terms-of-service/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/landing/ai-marketing-accelerator/?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/admin(?:/.*)?",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html",
+      "status": 404
     }
   ]
 }

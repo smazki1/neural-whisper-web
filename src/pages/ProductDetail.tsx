@@ -6,15 +6,15 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowRight, Clock, Tag, Play, Star, Check, BookOpen } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { ArrowRight, Clock, Tag, Play, Check, BookOpen } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
 import { Toaster } from '@/components/ui/toaster';
 import productImageFallback from '@/assets/hero-bg-ai-modern.jpg';
 import { resolveProductImageUrl } from '@/lib/productImage.js';
+import { productDescriptionParagraphs } from '@/lib/productDescription.js';
+import { getVaultPurchaseUrl } from '@/lib/purchaseDestination.js';
 
 interface Product {
   id: string;
@@ -33,11 +33,8 @@ interface Product {
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [purchasing, setPurchasing] = useState(false);
   const [linkedCourses, setLinkedCourses] = useState<any[]>([]);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
@@ -93,15 +90,9 @@ const ProductDetail = () => {
     }
   };
 
-  const handlePurchase = async () => {
-    if (!user) {
-      // Redirect to auth page
-      navigate('/auth');
-      return;
-    }
-
-    // Redirect to checkout page
-    navigate(`/checkout/${product?.id}`);
+  const handlePurchase = () => {
+    if (!product) return;
+    window.location.assign(getVaultPurchaseUrl(product));
   };
 
   const getCategoryLabel = (category: string) => {
@@ -231,18 +222,12 @@ const ProductDetail = () => {
               </p>
             )}
 
-            <div className="flex items-center justify-center gap-6 mb-8">
-              {product.duration && (
-                <div className="flex items-center gap-2 text-brand-text-secondary">
-                  <Clock className="h-5 w-5" />
-                  <span className="text-lg">{product.duration}</span>
-                </div>
-              )}
-              <div className="flex items-center gap-2 text-brand-text-secondary">
-                <Star className="h-5 w-5 fill-current text-yellow-500" />
-                <span className="text-lg">4.8 (123 ביקורות)</span>
+            {product.duration && (
+              <div className="flex items-center justify-center gap-2 text-brand-text-secondary mb-8">
+                <Clock className="h-5 w-5" />
+                <span className="text-lg">{product.duration}</span>
               </div>
-            </div>
+            )}
 
             <div className="text-5xl font-bold text-brand-accent mb-8">
               {product.price > 0 ? `₪${product.price.toLocaleString()}` : 'חינם'}
@@ -252,16 +237,10 @@ const ProductDetail = () => {
               onClick={handlePurchase}
               className="premium-button-primary text-xl px-12 py-4"
               size="lg"
-              disabled={purchasing}
             >
-              {purchasing ? 'מעבד...' : product.price > 0 ? 'רכישה עכשיו' : 'התחילו עכשיו'}
+              {product.price > 0 ? 'רכישה עכשיו' : 'התחילו עכשיו'}
             </Button>
 
-            {!user && (
-              <p className="text-brand-text-secondary mt-4">
-                נדרשת התחברות לרכישה
-              </p>
-            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -440,8 +419,8 @@ const ProductDetail = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="prose prose-slate max-w-none text-brand-text">
-                      {product.description.split('\n').map((paragraph, index) => (
-                        <p key={index} className="mb-4 last:mb-0 leading-relaxed">
+                      {productDescriptionParagraphs(product.description).map((paragraph, index) => (
+                        <p key={index} className="mb-4 last:mb-0 leading-relaxed whitespace-pre-line">
                           {paragraph}
                         </p>
                       ))}
@@ -449,59 +428,6 @@ const ProductDetail = () => {
                   </CardContent>
                 </Card>
               )}
-
-              {/* Testimonials Section */}
-              <Card className="modern-card">
-                <CardHeader>
-                  <CardTitle className="text-brand-text">מה אומרים עלינו</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="border-r-4 border-brand-accent pr-4">
-                    <p className="text-brand-text mb-3 italic">
-                      "הקורס שינה לי את הדרך להסתכל על הבינה המלאכותית. המידע מעשי ושימושי מאוד!"
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center">
-                        <span className="text-brand-text font-bold text-sm">ש</span>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-brand-text">שרה כהן</p>
-                        <p className="text-sm text-brand-text-secondary">מנהלת שיווק</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="border-r-4 border-brand-accent pr-4">
-                    <p className="text-brand-text mb-3 italic">
-                      "המרצה מסביר בצורה ברורה ומעניינת. הצלחתי ליישם את מה שלמדתי מיד בעבודה."
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center">
-                        <span className="text-brand-text font-bold text-sm">ד</span>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-brand-text">דני לוי</p>
-                        <p className="text-sm text-brand-text-secondary">מפתח תוכנה</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border-r-4 border-brand-accent pr-4">
-                    <p className="text-brand-text mb-3 italic">
-                      "השקעה שמשתלמת! המידע עדכני והכלים שלמדתי עוזרים לי כל יום."
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-brand-accent rounded-full flex items-center justify-center">
-                        <span className="text-brand-text font-bold text-sm">מ</span>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-brand-text">מיכל אברמוביץ'</p>
-                        <p className="text-sm text-brand-text-secondary">יועצת עסקית</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* Final CTA */}
               <Card className="modern-card border-2 border-brand-accent bg-gradient-to-br from-brand-background to-white">
@@ -516,15 +442,9 @@ const ProductDetail = () => {
                     onClick={handlePurchase}
                     className="premium-button-primary text-xl px-12 py-4"
                     size="lg"
-                    disabled={purchasing}
                   >
-                    {purchasing ? 'מעבד...' : product.price > 0 ? `רכישה ב-₪${product.price.toLocaleString()}` : 'התחילו עכשיו חינם'}
+                    {product.price > 0 ? `רכישה ב-₪${product.price.toLocaleString()}` : 'התחילו עכשיו חינם'}
                   </Button>
-                  {!user && (
-                    <p className="text-brand-text-secondary mt-4">
-                      נדרשת התחברות לרכישה
-                    </p>
-                  )}
                 </CardContent>
               </Card>
             </div>

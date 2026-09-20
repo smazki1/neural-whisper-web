@@ -1,0 +1,13 @@
+{
+  "doctype": "invrec",
+  "docnum": "INV-FIXTURE-1001",
+  "totalwithvat": "149.90",
+  "total_paid": "149.90",
+  "doc_link": "https://example.test/invoice.pdf",
+  "client": {
+    "email": "buyer@example.test"
+  },
+  "custom": {
+    "cc_page_id": "page-fixture"
+  }
+}

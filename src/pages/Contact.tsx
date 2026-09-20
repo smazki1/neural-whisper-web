@@ -27,7 +27,7 @@ const Contact = () => {
     }
   };
 
-  const whatsappUrl = "https://wa.me/972542000000?text=" + encodeURIComponent("שלום אבי, אני מעוניין ליצור קשר");
+  const whatsappUrl = "https://wa.me/972527772807?text=" + encodeURIComponent("שלום אבי, אני מעוניין ליצור קשר");
 
   return (
     <>

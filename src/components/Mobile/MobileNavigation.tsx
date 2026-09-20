@@ -184,7 +184,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ className = 
                   <div className="flex gap-4">
                     {[
                       { name: 'Facebook', href: 'https://www.facebook.com/avi.frid.3/' },
-                      { name: 'Instagram', href: 'https://www.instagram.com/avifrid_ai/' },
+                      { name: 'Instagram', href: 'https://www.instagram.com/ai.avi.frid/' },
                     ].map((social) => (
                       <a
                         key={social.name}

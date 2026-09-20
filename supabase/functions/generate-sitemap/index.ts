@@ -19,7 +19,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const baseUrl = 'https://aimaster-site.lovable.app';
+    const baseUrl = 'https://ai-master.co.il';
 
     // Fetch published blog posts
     const { data: posts, error: postsError } = await supabase
@@ -34,24 +34,6 @@ serve(async (req) => {
     }
 
     console.log(`Found ${posts?.length || 0} published posts`);
-
-    // Fetch categories
-    const { data: categories, error: categoriesError } = await supabase
-      .from('categories')
-      .select('slug, created_at');
-
-    if (categoriesError) {
-      console.error('Error fetching categories:', categoriesError);
-    }
-
-    // Fetch tags
-    const { data: tags, error: tagsError } = await supabase
-      .from('blog_tags')
-      .select('slug, created_at');
-
-    if (tagsError) {
-      console.error('Error fetching tags:', tagsError);
-    }
 
     // Build sitemap XML
     let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
@@ -80,30 +62,10 @@ serve(async (req) => {
     posts?.forEach(post => {
       const lastmod = post.updated_at || post.published_at || new Date().toISOString();
       sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}/blog/${post.slug}</loc>\n`;
+      sitemap += `    <loc>${baseUrl}/blog/${encodeURIComponent(post.slug)}</loc>\n`;
       sitemap += `    <lastmod>${new Date(lastmod).toISOString()}</lastmod>\n`;
       sitemap += `    <changefreq>weekly</changefreq>\n`;
       sitemap += `    <priority>0.8</priority>\n`;
-      sitemap += `  </url>\n`;
-    });
-
-    // Categories
-    categories?.forEach(category => {
-      sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}/blog/category/${category.slug}</loc>\n`;
-      sitemap += `    <lastmod>${new Date(category.created_at).toISOString()}</lastmod>\n`;
-      sitemap += `    <changefreq>weekly</changefreq>\n`;
-      sitemap += `    <priority>0.7</priority>\n`;
-      sitemap += `  </url>\n`;
-    });
-
-    // Tags
-    tags?.forEach(tag => {
-      sitemap += `  <url>\n`;
-      sitemap += `    <loc>${baseUrl}/blog/tag/${tag.slug}</loc>\n`;
-      sitemap += `    <lastmod>${new Date(tag.created_at).toISOString()}</lastmod>\n`;
-      sitemap += `    <changefreq>weekly</changefreq>\n`;
-      sitemap += `    <priority>0.6</priority>\n`;
       sitemap += `  </url>\n`;
     });
 
@@ -114,7 +76,7 @@ serve(async (req) => {
     return new Response(sitemap, {
       headers: {
         ...corsHeaders,
-        'Content-Type': 'application/xml',
+        'Content-Type': 'application/xml; charset=utf-8',
         'Cache-Control': 'public, max-age=86400', // Cache for 24 hours
       },
     });
