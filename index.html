@@ -3,6 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link id="home-font-preload" rel="preload" as="font" type="font/ttf" href="/src/assets/fonts/heebo-hero-bold.ttf" crossorigin media="not all">
+    <link rel="stylesheet" href="/src/components/experiments/hero-layout.css">
+    <link id="home-image-preload" rel="preload" as="image" href="/src/assets/experiments/avi-hero-poster.jpg" fetchpriority="high" media="not all">
+    <script>
+      for (const id of ['home-font-preload', 'home-image-preload']) {
+        const link = document.getElementById(id);
+        if (location.pathname === '/') link.media = 'all';
+        else link.remove();
+      }
+    </script>
     <title>אבי פריד - הדרכות AI לארגונים ויזמים</title>
     <meta name="description" content="הדרכות וסדנאות שיהפכו את ה-AI לכוח שלך. ללא תלות, ללא סיבוכים - רק בהירות, כלים ומיומנויות שיעזרו לך להישאר רלוונטי בעידן הדיגיטלי." />
     <meta name="author" content="AI Master - Avi Fried" />
@@ -32,6 +42,23 @@
 
   <body>
     <div id="root"></div>
+    <!-- Immediate homepage shell; React replaces it using the same image and layout. -->
+    <template id="home-loading-template">
+      <div style="padding-top:80px;min-height:100svh;box-sizing:border-box">
+        <section class="video-hero" dir="rtl">
+          <div class="video-hero__fallback" aria-hidden="true"></div>
+          <div class="video-hero__shade" aria-hidden="true"></div>
+          <div class="video-hero__content"><h1>להיות על זה בעידן <span class="video-hero__nowrap">ה-<span class="video-hero__accent">AI</span></span></h1></div>
+        </section>
+      </div>
+    </template>
+    <script>
+      if (location.pathname === '/') {
+        document.body.style.margin = '0';
+        document.getElementById('root').append(document.getElementById('home-loading-template').content.cloneNode(true));
+      }
+      document.getElementById('home-loading-template').remove();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

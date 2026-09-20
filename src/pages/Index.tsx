@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import VideoHero from '../components/experiments/VideoHero';
 import VideoAboutSection from '../components/VideoAboutSection';
 import HowICanHelpSection from '../components/HowICanHelpSection';
 import ProductsSection from '../components/ProductsSection';
@@ -15,7 +16,6 @@ const HomepageMotion = lazy(() => import('../components/experiments/homepage/Hom
 const DirectionSection = lazy(() => import('../components/experiments/homepage/DirectionSection'));
 const Testimonials = lazy(() => import('../components/experiments/homepage/Testimonials'));
 const Catalogs = lazy(() => import('../components/experiments/homepage/Catalogs'));
-const VideoHero = lazy(() => import('../components/experiments/VideoHero'));
 
 function Index() {
   // The approved homepage is public; the original remains available for local comparison.
@@ -39,9 +39,7 @@ function Index() {
       <Navbar onContactClick={handleContactClick} hideAbout={videoExperiment} />
       {import.meta.env.DEV && videoExperiment && ['demo', 'single', 'multiple', 'empty'].includes(new URLSearchParams(location.search).get('catalog') ?? '') && <div className="home-preview-note" role="note">המחשה מקומית בלבד. קטלוג הארגונים משתמש בתכנים מהעמוד הקיים; במצב ריבוי כרטיסים הקורס משוכפל לצורך בדיקת התצוגה.</div>}
       <main id="main-content" className={videoExperiment ? undefined : "animate-fade-in"} style={videoExperiment ? { paddingTop: 80 } : undefined}>
-        <Suspense fallback={<Hero />}>
-          {videoExperiment ? <VideoHero /> : <Hero />}
-        </Suspense>
+        {videoExperiment ? <VideoHero /> : <Hero />}
         <VideoAboutSection videoExperiment={videoExperiment} />
         {videoExperiment ? <Suspense fallback={null}>
           <Testimonials />
