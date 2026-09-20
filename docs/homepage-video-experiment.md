@@ -85,3 +85,9 @@ Source: `/Users/avifrid/Downloads/0920 (1)(1).mp4`. Current asset: `src/assets/e
 - No-effects URL checked: all seven groups fully visible with no translation or artwork offset. OS reduced-motion emulation was not completed; its code path and CSS were reviewed. Mobile verification is viewport emulation, not a physical handset.
 - TypeScript, git diff whitespace check and Vite build passed. Screenshots: ../screenshots/motion-desktop.png and ../screenshots/motion-mobile.png. Pre-motion Index/CSS copies: ../before-scroll-motion/.
 - No merge, deployment, database write, production setting change or new task.
+
+## Publication preparation, 20 September 2026
+
+The owner explicitly approved publishing the reviewed homepage. This supersedes the local-only publication restriction in the historical entries above. Production now enables the reviewed homepage at `/`; query-based examples and their notice remain DEV-only. Production catalogs read existing published records. No data or production configuration changes are part of this release.
+
+The latest `origin/main` was merged into the existing worktree branch before release, preserving intervening production changes. The final review also removed testimony number controls and the external YouTube link, and updated the footer year to 2026. Keyboard and drag navigation remain available. Local original/experiment comparison URLs still work.
