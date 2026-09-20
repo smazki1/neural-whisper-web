@@ -30,8 +30,9 @@ interface Product {
   description: string | null;
   short_description: string | null;
   price: number;
-  category: 'advanced' | 'basic' | 'business';
-  product_type: 'course' | 'workshop' | 'consultation';
+  category: 'advanced' | 'basic' | 'business' | null;
+  product_type: 'course' | 'workshop' | 'consultation' | 'prompt_pack';
+  persona: string | null;
   duration: string | null;
   thumbnail_url: string | null;
   video_preview_url: string | null;
@@ -58,6 +59,7 @@ const AdminProducts = () => {
     price: '',
     category: '',
     product_type: 'course',
+    persona: '',
     duration: '',
     thumbnail_url: '',
     video_preview_url: '',
@@ -190,6 +192,7 @@ const AdminProducts = () => {
       price: '',
       category: '',
       product_type: 'course',
+      persona: '',
       duration: '',
       thumbnail_url: '',
       video_preview_url: '',
@@ -207,7 +210,7 @@ const AdminProducts = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.title || !formData.price || !formData.category) {
+    if (!formData.title || !formData.price) {
       toast({
         title: "שגיאה",
         description: "יש למלא את כל השדות הנדרשים",
@@ -223,8 +226,9 @@ const AdminProducts = () => {
         description: formData.description || null,
         short_description: formData.short_description || null,
         price: parseFloat(formData.price),
-        category: formData.category as 'advanced' | 'basic' | 'business',
-        product_type: formData.product_type as 'course' | 'workshop' | 'consultation',
+        category: (formData.category || null) as Product['category'],
+        product_type: formData.product_type as Product['product_type'],
+        persona: formData.persona || null,
         duration: formData.duration || null,
         thumbnail_url: formData.thumbnail_url || null,
         video_preview_url: formData.video_preview_url || null,
@@ -281,8 +285,9 @@ const AdminProducts = () => {
       description: product.description || '',
       short_description: product.short_description || '',
       price: product.price.toString(),
-      category: product.category,
+      category: product.category || '',
       product_type: product.product_type,
+      persona: product.persona || '',
       duration: product.duration || '',
       thumbnail_url: product.thumbnail_url || '',
       video_preview_url: product.video_preview_url || '',
@@ -358,7 +363,8 @@ const AdminProducts = () => {
     }).format(amount);
   };
 
-  const getCategoryLabel = (category: string) => {
+  const getCategoryLabel = (category: string | null) => {
+    if (!category) return 'ללא קטגוריה';
     const labels: Record<string, string> = {
       'basic': 'בסיסי',
       'advanced': 'מתקדם',
@@ -416,6 +422,7 @@ const AdminProducts = () => {
                       value={formData.slug}
                       onChange={(e) => setFormData({...formData, slug: e.target.value})}
                       placeholder="url-friendly-name"
+                      required
                     />
                   </div>
                 </div>
@@ -442,6 +449,26 @@ const AdminProducts = () => {
                   />
                 </div>
 
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="product_type">סוג מוצר</Label>
+                    <Select value={formData.product_type} onValueChange={(value) => setFormData({...formData, product_type: value})}>
+                      <SelectTrigger id="product_type"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="course">קורס דיגיטלי</SelectItem>
+                        <SelectItem value="workshop">הרצאה / סדנה</SelectItem>
+                        <SelectItem value="consultation">ייעוץ</SelectItem>
+                        <SelectItem value="prompt_pack">חבילת פרומפטים</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="persona">קהל יעד (רשות)</Label>
+                    <Input id="persona" value={formData.persona} onChange={(e) => setFormData({...formData, persona: e.target.value})} />
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">בגרסת עמוד הבית החדשה: קורס מפורסם מוצג בקטלוג הקורסים. הרצאה / סדנה בקטגוריה עסקי מוצגת בקטלוג הארגונים. אין צורך לסמן כמומלץ.</p>
+
                 <div className="grid grid-cols-3 gap-4">
                   <div>
                     <Label htmlFor="price">מחיר *</Label>
@@ -456,7 +483,7 @@ const AdminProducts = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="category">קטגוריה *</Label>
+                    <Label htmlFor="category">קטגוריה</Label>
                     <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
                       <SelectTrigger>
                         <SelectValue placeholder="בחר קטגוריה" />

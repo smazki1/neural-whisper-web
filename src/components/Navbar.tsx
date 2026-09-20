@@ -16,9 +16,10 @@ const VAULT_URL = 'https://vault.ai-master.co.il/';
 
 interface NavbarProps {
   onContactClick: () => void;
+  hideAbout?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => {
   const { user, signOut } = useAuth();
   const { roles } = useUserRoles(user?.id);
   const isAdmin = roles.includes('admin');
@@ -47,8 +48,9 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   };
 
   const navigationItems: NavItem[] = [
-    { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
-    { name: 'אודות', href: '/about' },
+    // Temporarily hidden. Uncomment to restore in both desktop and mobile navigation.
+    // { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
+    ...(!hideAbout ? [{ name: 'אודות', href: '/about' }] : []),
     { name: 'תהליכים וקורסים', href: '/products' },
     { name: 'יעוץ אישי', href: '/contact' },
     { name: 'סדנאות לארגונים', href: '/corporate-workshops' },
@@ -73,6 +75,14 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   return (
     <>
       <motion.nav
+        id="main-navigation"
+        aria-label="ניווט ראשי"
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && isMobileMenuOpen) {
+            setIsMobileMenuOpen(false);
+            document.getElementById('mobile-menu-toggle')?.focus();
+          }
+        }}
         className={`fixed top-0 w-full z-50 transition-all duration-500 font-heebo ${
           isScrolled
             ? 'professional-backdrop border-b'
@@ -312,6 +322,10 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
                 הכספת
               </ShinyButton>
               <motion.button
+                id="mobile-menu-toggle"
+                aria-label={isMobileMenuOpen ? 'סגירת תפריט' : 'פתיחת תפריט'}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-navigation"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="professional-text-primary hover:text-accent transition-colors duration-300 p-2"
                 whileTap={{ scale: 0.95 }}
@@ -330,6 +344,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
+              id="mobile-navigation"
               className="lg:hidden professional-backdrop border-t"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}

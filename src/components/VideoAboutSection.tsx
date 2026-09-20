@@ -2,15 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import aviPortrait from '@/assets/avi-fried-speaking-local.jpg';
 
-const VideoAboutSection = () => {
+const VideoAboutSection = ({ videoExperiment = false }: { videoExperiment?: boolean }) => {
   return (
-    <section className="py-20 lg:py-32 relative overflow-hidden" dir="rtl">
+    <section className={`py-20 lg:py-32 relative overflow-hidden ${videoExperiment ? 'video-intro' : ''}`} dir="rtl">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Video Section - Left Side */}
           <motion.div 
             className="relative order-2 lg:order-1"
-            initial={{ opacity: 0, x: -60 }}
+            initial={videoExperiment ? false : { opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
@@ -38,7 +38,7 @@ const VideoAboutSection = () => {
           {/* Content Section - Right Side */}
           <motion.div 
             className="order-1 lg:order-2 space-y-8"
-            initial={{ opacity: 0, x: 60 }}
+            initial={videoExperiment ? false : { opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
@@ -46,17 +46,17 @@ const VideoAboutSection = () => {
             <div className="space-y-6">
               <motion.h2 
                 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight"
-                initial={{ opacity: 0, y: 20 }}
+                initial={videoExperiment ? false : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
               >
-                <span className="block premium-accent-gradient">נעים מאוד, אבי פריד</span>
+                <span className="block premium-accent-gradient">המשימה שלי</span>
               </motion.h2>
               
               <motion.div 
                 className="w-20 h-1 bg-gradient-to-r from-accent to-accent/50 rounded-full"
-                initial={{ width: 0 }}
+                initial={videoExperiment ? false : { width: 0 }}
                 whileInView={{ width: 80 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
                 viewport={{ once: true }}
@@ -65,13 +65,13 @@ const VideoAboutSection = () => {
 
             <motion.div 
               className="space-y-6 text-lg lg:text-xl leading-relaxed text-brand-text"
-              initial={{ opacity: 0 }}
+              initial={videoExperiment ? false : { opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               viewport={{ once: true }}
             >
               <p>
-                <strong className="text-accent">ברוכים הבאים</strong>
+                <strong className="text-accent">נעים מאוד, שמי אבי פריד.</strong>
               </p>
               
               <p>
@@ -83,7 +83,7 @@ const VideoAboutSection = () => {
               </p>
               
               <p>
-                המשימה שלי: להפוך את הטכנולוגיה לנגישה ומעשית עבור כל מי שרוצה להשתמש בכוח של ה-AI כדי להשיג יותר בפחות זמן.
+                אני כאן כדי להפוך את הטכנולוגיה לנגישה ומעשית עבור כל מי שרוצה להשתמש בכוח של ה-AI כדי להשיג יותר בפחות זמן.
               </p>
             </motion.div>
 
