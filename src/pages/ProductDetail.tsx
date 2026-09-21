@@ -155,7 +155,7 @@ const ProductDetail = () => {
             <p className="text-muted-foreground mb-8">
               המוצר שחיפשת לא קיים או הוסר מהמערכת
             </p>
-            <Link to="/products">
+            <Link to="https://vault.ai-master.co.il/courses">
               <Button>
                 <ArrowRight className="h-4 w-4 ml-2" />
                 חזרה למוצרים
@@ -189,7 +189,7 @@ const ProductDetail = () => {
         <div className="container mx-auto px-6 lg:px-8 py-16">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-            <Link to="/products" className="hover:text-primary transition-colors">
+            <Link to="https://vault.ai-master.co.il/courses" className="hover:text-primary transition-colors">
               מוצרים
             </Link>
             <span>/</span>

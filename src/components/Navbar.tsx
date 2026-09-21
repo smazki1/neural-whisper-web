@@ -51,7 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => 
     // Temporarily hidden. Uncomment to restore in both desktop and mobile navigation.
     // { name: 'אירועים קרובים', href: '/events', action: () => setIsComingSoonOpen(true) },
     ...(!hideAbout ? [{ name: 'אודות', href: '/about' }] : []),
-    { name: 'תהליכים וקורסים', href: '/products' },
+    { name: 'תהליכים וקורסים', href: 'https://vault.ai-master.co.il/courses' },
     { name: 'יעוץ אישי', href: '/contact' },
     { name: 'סדנאות לארגונים', href: '/corporate-workshops' },
     { name: 'יצירת קשר', href: '/contact' }

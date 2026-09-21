@@ -6,7 +6,7 @@ export default function DirectionSection() {
       <h2 id="direction-title">להצליח לעבוד עם AI<br /><span>מבלי ללכת לאיבוד</span></h2>
       <div className="home-direction__actions">
         <a className="home-button home-button--gold" href="#courses" onClick={(event) => {
-          if (!document.getElementById('courses')) { event.preventDefault(); window.location.assign('/products'); }
+          if (!document.getElementById('courses')) { event.preventDefault(); window.location.assign('https://vault.ai-master.co.il/courses'); }
         }}>התחילו כאן</a>
         <Link className="home-button home-direction__organization" to="/corporate-workshops">ארגונים? אתם פה</Link>
       </div>

@@ -18,7 +18,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ className = 
 
   const navigationItems = [
     { name: 'בית', href: '/', icon: Home },
-    { name: 'קורסים', href: '/products', icon: BookOpen },
+    { name: 'קורסים', href: 'https://vault.ai-master.co.il/courses', icon: BookOpen },
     { name: 'אודות', href: '/about', icon: User },
     { name: 'יצירת קשר', href: '/contact', icon: MessageCircle },
   ];
