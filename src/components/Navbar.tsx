@@ -13,6 +13,8 @@ import { User, Settings, LogOut, BookOpen, Menu, X, ChevronDown, Facebook, Insta
 import { ShinyButton } from './ui/shiny-button';
 
 const VAULT_URL = 'https://vault.ai-master.co.il/';
+// Temporarily hide the vault CTA on desktop and mobile. Set to true to restore.
+const SHOW_VAULT_BUTTON = false;
 
 interface NavbarProps {
   onContactClick: () => void;
@@ -118,14 +120,14 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => 
                 </div>
 
               {/* Vault CTA and signed-in user menu */}
-              <ShinyButton
+              {SHOW_VAULT_BUTTON && <ShinyButton
                 href={VAULT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 ariaLabel="הכספת - פלטפורמת AI Master"
               >
                 הכספת
-              </ShinyButton>
+              </ShinyButton>}
               {user && (
                 <div className="flex items-center gap-3">
                   {/* Notifications Bell for Admin */}
@@ -296,16 +298,16 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => 
               </Link>
             </motion.div>
 
-            {/* Vault CTA - always visible (mobile + tablet) */}
+            {/* Mobile menu and optional vault CTA */}
             <div className="lg:hidden flex items-center gap-3">
-              <ShinyButton
+              {SHOW_VAULT_BUTTON && <ShinyButton
                 href={VAULT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 ariaLabel="הכספת - פלטפורמת AI Master"
               >
                 הכספת
-              </ShinyButton>
+              </ShinyButton>}
               <motion.button
                 id="mobile-menu-toggle"
                 aria-label={isMobileMenuOpen ? 'סגירת תפריט' : 'פתיחת תפריט'}
