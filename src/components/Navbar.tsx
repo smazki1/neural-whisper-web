@@ -117,8 +117,16 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => 
                   })}
                 </div>
 
-              {/* User Menu or Login */}
-              {user ? (
+              {/* Vault CTA and signed-in user menu */}
+              <ShinyButton
+                href={VAULT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                ariaLabel="הכספת - פלטפורמת AI Master"
+              >
+                הכספת
+              </ShinyButton>
+              {user && (
                 <div className="flex items-center gap-3">
                   {/* Notifications Bell for Admin */}
                   {isAdmin && (
@@ -210,34 +218,11 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => 
                   </DropdownMenuContent>
                 </DropdownMenu>
                 </div>
-              ) : (
-                <div className="flex items-center gap-3">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => navigate('/auth')}
-                      className="px-6 py-2 text-sm"
-                    >
-                      התחבר
-                    </Button>
-                  </motion.div>
-                </div>
               )}
             </div>
 
             {/* Navigation Links - Center */}
             <div className="hidden lg:flex items-center space-x-6 space-x-reverse">
-              {/* Vault CTA - Highlighted */}
-              <ShinyButton
-                href={VAULT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                ariaLabel="הכספת - פלטפורמת AI Master"
-              >
-                הכספת
-              </ShinyButton>
-
               {navigationItems.map((item, index) => (
                 <div key={item.name} className="relative">
                   {item.hasDropdown ? (
@@ -353,18 +338,6 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => 
             >
               <div className="container mx-auto px-6 py-6">
                 <div className="flex flex-col space-y-4">
-                  {/* Vault CTA - Mobile */}
-                  <ShinyButton
-                    href={VAULT_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    ariaLabel="הכספת - פלטפורמת AI Master"
-                    className="shiny-cta--block"
-                  >
-                    הכספת
-                  </ShinyButton>
-
                   {navigationItems.map((item) => (
                     <motion.div
                       key={item.name}
@@ -428,20 +401,6 @@ const Navbar: React.FC<NavbarProps> = ({ onContactClick, hideAbout = true }) => 
                     })}
                   </div>
 
-                  {/* Mobile Login Button */}
-                  {!user && (
-                    <div className="pt-4">
-                      <Button
-                        onClick={() => {
-                          navigate('/auth');
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className="w-full"
-                      >
-                        התחבר
-                      </Button>
-                    </div>
-                  )}
                 </div>
               </div>
             </motion.div>
