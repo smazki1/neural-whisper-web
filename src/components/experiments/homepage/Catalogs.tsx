@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, type ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowUpLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -37,7 +37,7 @@ function Catalog({ products, kind }: { products: Product[]; kind: 'courses' | 'o
   </section>;
 }
 
-export default function Catalogs() {
+export default function Catalogs({ afterCourses }: { afterCourses?: ReactNode }) {
   const mode = import.meta.env.DEV ? new URLSearchParams(location.search).get('catalog') : null;
   const { data: products = [] } = useQuery({
     queryKey: ['homepage-catalog', mode],
@@ -57,5 +57,5 @@ export default function Catalogs() {
     refetchInterval: mode ? false : 30000,
   });
   const { courses, organizations } = getHomepageCatalogs(products);
-  return <><Catalog products={courses} kind="courses" /><Catalog products={organizations} kind="organizations" /></>;
+  return <><Catalog products={courses} kind="courses" />{afterCourses}<Catalog products={organizations} kind="organizations" /></>;
 }

@@ -43,8 +43,7 @@ function Index() {
         <VideoAboutSection videoExperiment={videoExperiment} />
         {videoExperiment ? <Suspense fallback={null}>
           <Testimonials />
-          <DirectionSection />
-          <Catalogs />
+          <Catalogs afterCourses={<DirectionSection />} />
           <HomepageMotion />
         </Suspense> : <>
           <HowICanHelpSection />
