@@ -189,7 +189,7 @@ const PaymentSuccess = () => {
                   </Link>
                 )}
                 
-                <Link to="/products">
+                <Link to="https://vault.ai-master.co.il/courses">
                   <Button variant="outline" size="lg" className="w-full sm:w-auto">
                     <ArrowRight className="h-4 w-4 ml-2" />
                     המשך לקניות

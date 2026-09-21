@@ -60,7 +60,7 @@ const PaymentCanceled = () => {
                 </Button>
                 
                 <Button variant="outline" size="lg" className="w-full sm:w-auto" asChild>
-                  <Link to="/products">
+                  <Link to="https://vault.ai-master.co.il/courses">
                     <ArrowRight className="h-4 w-4 ml-2" />
                     חזרה למוצרים
                   </Link>

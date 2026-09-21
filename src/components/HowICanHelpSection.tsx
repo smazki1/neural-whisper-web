@@ -38,7 +38,7 @@ const HowICanHelpSection = () => {
             className="professional-button-primary text-xl lg:text-2xl px-8 py-6 w-full max-w-2xl text-center leading-relaxed"
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => { window.location.href = '/products'; }}
+            onClick={() => { window.location.href = 'https://vault.ai-master.co.il/courses'; }}
           >
             התחילו כאן
           </motion.button>

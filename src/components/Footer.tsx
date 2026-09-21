@@ -19,7 +19,7 @@ const Footer = ({ showVault = false }: { showVault?: boolean }) => {
             <ul className="space-y-2 text-brand-text/80">
               {showVault && <li><a href="https://vault.ai-master.co.il/" className="hover:text-brand-accent transition-colors duration-200">הכספת</a></li>}
               <li>
-                <a href="/products" className="hover:text-brand-accent transition-colors duration-200">
+                <a href="https://vault.ai-master.co.il/courses" className="hover:text-brand-accent transition-colors duration-200">
                   מוצרים וסדנאות
                 </a>
               </li>
