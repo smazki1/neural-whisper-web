@@ -105,6 +105,10 @@
       "dest": "/index.html"
     },
     {
+      "src": "/idea-to-business/?",
+      "dest": "/index.html"
+    },
+    {
       "src": "/ai-strategy-course/?",
       "dest": "/index.html"
     },
