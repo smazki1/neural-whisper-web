@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ContactModal from '@/components/ContactModal';
+import ContactForm from '@/components/ContactForm';
 import { Toaster } from '@/components/ui/toaster';
 import heroBackground from '@/assets/hero-bg-ai-modern.jpg';
 import heroVideo from '@/assets/contact/avi-hero-0920-1080p.mp4';
@@ -112,6 +113,10 @@ const Contact = () => {
             </div>
           </Card>
         </section>
+        <ContactForm
+          description="מלאו את הפרטים ונחזור אליכם בהקדם:"
+          source="טופס יצירת קשר"
+        />
       </main>
       <Footer />
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
