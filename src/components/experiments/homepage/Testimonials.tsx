@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Play } from 'lucide-react';
 
-const videos = ['QjkZ96r6DmU', 'D16zprjUmuQ', 'G9lYVvp6keE'];
+const videos = ['QjkZ96r6DmU', 'G9lYVvp6keE', 'D16zprjUmuQ'];
 const posterSizes = ['maxresdefault', 'sddefault', 'hqdefault'];
 
 function TestimonialPoster({ id }: { id: string }) {
