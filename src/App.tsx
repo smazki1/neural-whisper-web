@@ -30,6 +30,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogManager = lazy(() => import("./pages/BlogManager"));
 const BlogEditor = lazy(() => import("./pages/BlogEditor"));
 const BusinessWorkshop = lazy(() => import("./pages/BusinessWorkshop"));
+const IdeaToBusiness = lazy(() => import("./pages/IdeaToBusiness"));
 const AIStrategyCourse = lazy(() => import("./pages/AIStrategyCourse"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
@@ -90,6 +91,7 @@ const App = () => {
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-canceled" element={<PaymentCanceled />} />
             <Route path="/business-workshop" element={<BusinessWorkshop />} />
+            <Route path="/idea-to-business" element={<IdeaToBusiness />} />
             <Route path="/ai-strategy-course" element={<AIStrategyCourse />} />
             <Route path="/learn" element={<LearningPlatform />} />
             <Route path="/courses/manage" element={<ProtectedRoute><CourseManager /></ProtectedRoute>} />
