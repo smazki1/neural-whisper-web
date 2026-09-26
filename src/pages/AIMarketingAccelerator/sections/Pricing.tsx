@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Check, Crown, Timer, Shield, Zap } from "lucide-react";
 
-interface Props { onPrimary: () => void }
+interface Props { onPrimary: () => void; disabled?: boolean }
 
 const benefits = [
   "ליווי קהילתי תומך",
@@ -11,7 +11,7 @@ const benefits = [
   "שיטות עבודה מוכחות"
 ];
 
-export default function Pricing({ onPrimary }: Props) {
+export default function Pricing({ onPrimary, disabled = false }: Props) {
   return (
     <section className="relative py-20 md:py-32">
       {/* Background Effects */}
@@ -139,6 +139,7 @@ export default function Pricing({ onPrimary }: Props) {
                 <div className="space-y-4">
                   <button
                     onClick={onPrimary}
+                    disabled={disabled}
                     className="w-full premium-button-primary text-xl py-6 group"
                   >
                     <span className="flex items-center justify-center gap-3">

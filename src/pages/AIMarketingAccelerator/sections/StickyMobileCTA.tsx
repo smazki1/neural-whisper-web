@@ -2,9 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Zap, Crown } from "lucide-react";
 
-interface Props { onPrimary: () => void }
+interface Props { onPrimary: () => void; disabled?: boolean }
 
-export default function StickyMobileCTA({ onPrimary }: Props) {
+export default function StickyMobileCTA({ onPrimary, disabled = false }: Props) {
   return (
     <motion.div 
       initial={{ y: 100, opacity: 0 }}
@@ -31,6 +31,7 @@ export default function StickyMobileCTA({ onPrimary }: Props) {
           {/* CTA Button */}
           <button
             onClick={onPrimary}
+            disabled={disabled}
             className="premium-button-primary px-6 py-3 text-lg group min-w-[140px]"
           >
             <span className="flex items-center justify-center gap-2">
