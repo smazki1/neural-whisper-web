@@ -13,6 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { SEOHead } from "@/components/SEO/SEOHead";
+import { useProductCheckout } from "@/hooks/useProductCheckout";
 import { ideaToBusiness } from "@/content/ideaToBusiness";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,8 @@ import heroBackground02 from "@/assets/backgrounds/hero/hero-background-02.png";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
 
 const IdeaToBusiness = () => {
-  const { checkoutUrl, price, testimonials } = ideaToBusiness;
+  const { price, testimonials } = ideaToBusiness;
+  const { checkoutUrl, checkoutLoading } = useProductCheckout();
   const { trackEvent } = useAnalytics();
   const preview = import.meta.env.DEV;
   const purchaseClick = () =>
@@ -258,10 +260,13 @@ const IdeaToBusiness = () => {
             className="space-y-6"
           >
             <Button
-              asChild
+              asChild={!checkoutLoading}
+              disabled={checkoutLoading}
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-lg md:text-2xl px-6 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-              <a href="#enroll">אני רוצה להתחיל לבנות את הרעיון שלי</a>
+              {checkoutLoading ? 'טוען אפשרות רכישה...' : (
+                <a href={checkoutUrl || '#enroll'} onClick={checkoutUrl ? purchaseClick : undefined}>אני רוצה להתחיל לבנות את הרעיון שלי</a>
+              )}
             </Button>
 
             <div className="flex flex-wrap gap-x-6 gap-y-3 items-center justify-center text-gray-300">
@@ -709,7 +714,7 @@ const IdeaToBusiness = () => {
                   </span>
                 </div>
                 <p className="text-lg mb-4">תשלום חד־פעמי · כולל מע״מ</p>
-                {checkoutUrl ? (
+                {checkoutUrl && !checkoutLoading ? (
                   <Button
                     asChild
                     className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg px-8 py-6 h-auto whitespace-normal max-w-full rounded-lg"
@@ -727,7 +732,7 @@ const IdeaToBusiness = () => {
                     לרכישת הקורס
                   </Button>
                 )}
-                {!checkoutUrl && (
+                {!checkoutUrl && !checkoutLoading && (
                   <p id="price-checkout-pending" className="text-sm mt-3">
                     {preview
                       ? "הכפתור ממתין לקישור התשלום שלך."
@@ -828,7 +833,7 @@ const IdeaToBusiness = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {checkoutUrl ? (
+            {checkoutUrl && !checkoutLoading ? (
               <Button
                 asChild
                 className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-xl md:text-2xl px-8 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-lg"
@@ -847,7 +852,7 @@ const IdeaToBusiness = () => {
                   לרכישת הקורס ב־{price} ש״ח
                 </Button>
                 <p id="checkout-pending" className="mt-3 text-sm text-gray-200">
-                  {preview
+                  {checkoutLoading ? "טוען אפשרות רכישה..." : preview
                     ? "הכפתור ממתין לקישור התשלום שלך."
                     : "ההרשמה אינה זמינה כרגע."}
                 </p>

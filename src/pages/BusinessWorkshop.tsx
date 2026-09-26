@@ -1,12 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Clock, Users, Trophy, Zap, Target, Lightbulb, TrendingUp, Star, ChevronDown } from 'lucide-react';
+import { useProductCheckout } from '@/hooks/useProductCheckout';
 import { Button } from '@/components/ui/button';
 import heroBackground01 from '@/assets/backgrounds/hero/hero-background-01.png';
 import heroBackground02 from '@/assets/backgrounds/hero/hero-background-02.png';
 import heroBackground03 from '@/assets/backgrounds/hero/hero-background-03.png';
 
 const BusinessWorkshop = () => {
+  const { checkoutUrl, checkoutLoading } = useProductCheckout();
+  const handlePurchase = () => { if (checkoutUrl) window.location.assign(checkoutUrl); };
   const problems = [
     {
       icon: <Target className="h-8 w-8 text-blue-600" />,
@@ -203,7 +206,7 @@ const BusinessWorkshop = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="space-y-6"
           >
-            <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-2xl px-16 py-8 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300">
+            <Button disabled={checkoutLoading} onClick={handlePurchase} className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-2xl px-16 py-8 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300">
               🚀 הירשמו עכשיו - מקומות מוגבלים
             </Button>
             
@@ -655,7 +658,7 @@ const BusinessWorkshop = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-2xl px-16 py-8 rounded-lg">
+            <Button disabled={checkoutLoading} onClick={handlePurchase} className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-2xl px-16 py-8 rounded-lg">
               להרשמה מיידית - לחצו כאן
             </Button>
           </motion.div>

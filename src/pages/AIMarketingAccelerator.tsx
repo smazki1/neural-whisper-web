@@ -1,3 +1,4 @@
+import { useProductCheckout } from "@/hooks/useProductCheckout";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
@@ -13,6 +14,11 @@ import StickyMobileCTA from "./AIMarketingAccelerator/sections/StickyMobileCTA";
 
 function AIMarketingAccelerator() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const { checkoutUrl, checkoutLoading } = useProductCheckout();
+  const handlePurchase = () => {
+    if (checkoutUrl) window.location.assign(checkoutUrl);
+    else setIsContactOpen(true);
+  };
 
 
 
@@ -75,7 +81,7 @@ function AIMarketingAccelerator() {
 
         <Syllabus />
         <Testimonials />
-        <Pricing onPrimary={() => setIsContactOpen(true)} />
+        <Pricing onPrimary={handlePurchase} disabled={checkoutLoading} />
 
         {/* JSON-LD */}
         <script
@@ -101,7 +107,7 @@ function AIMarketingAccelerator() {
         />
       </main>
 
-      <StickyMobileCTA onPrimary={() => setIsContactOpen(true)} />
+      <StickyMobileCTA onPrimary={handlePurchase} disabled={checkoutLoading} />
 
       <Footer />
 

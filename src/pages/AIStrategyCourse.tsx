@@ -8,10 +8,13 @@ import {
   Map, Megaphone, Settings, DollarSign,
   ChevronDown, ChevronUp, Quote
 } from 'lucide-react';
+import { useProductCheckout } from '@/hooks/useProductCheckout';
 import { Button } from '@/components/ui/button';
 import heroBackground from '@/assets/backgrounds/hero/hero-background-15.png';
 
 const AIStrategyCourse = () => {
+  const { checkoutUrl, checkoutLoading } = useProductCheckout();
+  const handlePurchase = () => { if (checkoutUrl) window.location.assign(checkoutUrl); };
   const [expandedSession, setExpandedSession] = useState<number | null>(null);
 
   return (
@@ -83,7 +86,7 @@ const AIStrategyCourse = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <Button 
+              <Button disabled={checkoutLoading} onClick={handlePurchase}
                 size="lg" 
                 className="bg-gradient-to-r from-gold-500 to-yellow-500 hover:from-gold-600 hover:to-yellow-600 text-black font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
               >
@@ -602,7 +605,7 @@ const AIStrategyCourse = () => {
                   </p>
                 </div>
 
-                <Button 
+                <Button disabled={checkoutLoading} onClick={handlePurchase}
                   size="lg" 
                   className="bg-gradient-to-r from-gold-500 to-yellow-500 hover:from-gold-600 hover:to-yellow-600 text-black font-bold text-xl px-12 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
                 >
@@ -660,7 +663,7 @@ const AIStrategyCourse = () => {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <Button 
+              <Button disabled={checkoutLoading} onClick={handlePurchase}
                 size="lg" 
                 className="bg-gradient-to-r from-gold-500 to-yellow-500 hover:from-gold-600 hover:to-yellow-600 text-black font-bold text-2xl px-16 py-8 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300"
               >

@@ -14,10 +14,12 @@ import { Toaster } from '@/components/ui/toaster';
 import productImageFallback from '@/assets/hero-bg-ai-modern.jpg';
 import { resolveProductImageUrl } from '@/lib/productImage.js';
 import { productDescriptionParagraphs } from '@/lib/productDescription.js';
+import { icountCheckoutUrl } from '@/lib/productCheckout.js';
 import { getVaultPurchaseUrl } from '@/lib/purchaseDestination.js';
 
 interface Product {
   id: string;
+  icount_page_url: string | null;
   title: string;
   slug: string;
   description: string;
@@ -92,7 +94,7 @@ const ProductDetail = () => {
 
   const handlePurchase = () => {
     if (!product) return;
-    window.location.assign(getVaultPurchaseUrl(product));
+    window.location.assign(icountCheckoutUrl(product.icount_page_url) || getVaultPurchaseUrl(product));
   };
 
   const getCategoryLabel = (category: string) => {
