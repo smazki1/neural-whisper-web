@@ -3,13 +3,8 @@ import { motion } from "framer-motion";
 import {
   CheckCircle,
   Clock,
-  Users,
   Trophy,
   Zap,
-  Target,
-  Lightbulb,
-  TrendingUp,
-  Star,
   ChevronDown,
 } from "lucide-react";
 import { SEOHead } from "@/components/SEO/SEOHead";
@@ -33,27 +28,6 @@ const IdeaToBusiness = () => {
       label: "idea-to-business",
       value: price,
     });
-  const problems = [
-    {
-      icon: <Target className="h-8 w-8 text-blue-600" />,
-      title: "יש לכם רעיון, אבל אין כיוון ברור",
-      description:
-        "למי בדיוק זה מתאים? מה כדאי למכור? ואיך מסבירים למה לבחור בכם?",
-    },
-    {
-      icon: <Lightbulb className="h-8 w-8 text-blue-600" />,
-      title: "עוד שיחה עם ChatGPT. עוד גרסה שנשמרת",
-      description:
-        "הרבה רעיונות וחומר, אבל ההחלטות על המוצר וההצעה עדיין מחכות.",
-    },
-    {
-      icon: <TrendingUp className="h-8 w-8 text-blue-600" />,
-      title: "רוצים להתקדם למשהו שאפשר להציג",
-      description:
-        "מוצר ברור, הצעה שאפשר להסביר ודף שאפשר לשלוח לאנשים ולקבל עליו משוב.",
-    },
-  ];
-
   const solutions = [
     "כיוון עסקי ברור יותר: נישה, מחקר שוק והבנת הקהל שלכם",
     "שפה וזהות לעסק: ניסוחים, צבעים וסגנון שמרגישים שלכם",
@@ -203,54 +177,31 @@ const IdeaToBusiness = () => {
         </div>
 
         <div className="relative z-10 container mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="mb-8"
-          >
-            <div className="inline-flex items-center bg-yellow-400/20 backdrop-blur-sm border border-yellow-400/30 rounded-full px-6 py-3 mb-6">
-              <Star className="h-5 w-5 text-yellow-400 ml-2" />
-              <span className="text-yellow-400 font-semibold">
-                קורס מוקלט עם אבי פריד
-              </span>
-            </div>
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-orange-400 mb-6 leading-tight"
           >
-            מרעיון לעסק
-            <br />
-            בונים מוצר, הצעה
-            <br />
-            ודף נחיתה עם AI
+            להפוך את הרעיון שלך לעסק
           </motion.h1>
 
-          <motion.div
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-3xl md:text-4xl font-bold text-yellow-400 mb-6 drop-shadow-lg"
+            className="text-xl md:text-2xl text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed"
           >
-            הרעיון שלכם מקבל צורה.
-          </motion.div>
+            <strong className="text-yellow-300">״מרעיון לעסק עם AI״</strong> הוא קורס מעשי לבעלי עסקים ועצמאים שרוצים להפוך רעיון למוצר, או לתת לעסק הקיים כיוון ברור יותר.
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl md:text-2xl text-gray-200 mb-12 max-w-4xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            מכיוון עסקי, דרך מוצר והצעה ברורים, ועד לדף חי שאפשר להתחיל להציג
-            לקהל.
-            <br />
-            <span className="text-yellow-300 font-semibold">
-              קורס מעשי בעברית, ללא צורך בניסיון בכתיבת קוד
-            </span>
+            בעזרת ChatGPT ושיטת עבודה מסודרת, תבנו מוצר שלקוחות מבינים למה הם צריכים והצעה שקל להציג ולמכור, עם חומרים שיאפשרו לכם לצאת לשוק. בלי להיות תלויים באיש מקצוע בכל צעד.
           </motion.p>
 
           <motion.div
@@ -265,20 +216,10 @@ const IdeaToBusiness = () => {
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-lg md:text-2xl px-6 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
               {checkoutLoading ? 'טוען אפשרות רכישה...' : (
-                <a href={checkoutUrl || '#enroll'} onClick={checkoutUrl ? purchaseClick : undefined}>אני רוצה להתחיל לבנות את הרעיון שלי</a>
+                <a href={checkoutUrl || '#enroll'} onClick={checkoutUrl ? purchaseClick : undefined}>אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
               )}
             </Button>
 
-            <div className="flex flex-wrap gap-x-6 gap-y-3 items-center justify-center text-gray-300">
-              <div className="flex items-center">
-                <Users className="h-5 w-5 ml-2" />
-                <span>קבוצת WhatsApp לתמיכה</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="h-5 w-5 ml-2" />
-                <span>לומדים בקצב שלכם</span>
-              </div>
-            </div>
           </motion.div>
 
           {/* Scroll indicator */}
@@ -322,47 +263,28 @@ const IdeaToBusiness = () => {
             transition={{ duration: 0.8 }}
             className="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-16"
           >
-            הרעיון שם. גם הרצון. אז למה זה עדיין לא קורה?
+            יש לכם רעיון טוב, אבל אתם לא באמת יודעים מה הצעד הבא?
           </motion.h2>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {problems.map((problem, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                whileHover={{ scale: 1.05, y: -10 }}
-                className="text-center p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 hover:shadow-2xl transition-all duration-300"
-              >
-                <motion.div
-                  className="flex justify-center mb-6"
-                  whileHover={{ rotate: 10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="p-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full text-white">
-                    {problem.icon}
-                  </div>
-                </motion.div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4 leading-tight">
-                  {problem.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {problem.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-4xl mx-auto space-y-6 text-lg md:text-xl text-gray-700 leading-relaxed"
           >
-            <p className="text-lg text-blue-900 font-medium">
-              כשכל החלטה תלויה בהחלטה אחרת, קשה לדעת מאיפה להתחיל. בקורס עובדים
-              לפי סדר: מכירים את הקהל, מחדדים את המוצר וההצעה, ובונים להם דף.
+            <p>אולי עלה לכם רעיון למוצר חדש, אבל אתם לא יודעים מאיפה להתחיל.</p>
+            <p>אולי העסק כבר קיים, אבל אתם מרגישים שאתם עובדים קשה, עושים המון דברים, ובכל זאת לא באמת מתקדמים בקצב שהייתם רוצים.</p>
+            <p>ואולי אתם כל הזמן שואלים את עצמכם:</p>
+            <ul className="space-y-2">
+              <li>האם זה המוצר הנכון?</li>
+              <li>איך אני יודע מה הלקוחות שלי באמת ירצו?</li>
+              <li>איך נכון להציג ולמכור את מה שאני מציע?</li>
+              <li>מה אני צריך לעשות קודם?</li>
+              <li>ואיך אני אמור לבנות את כל זה בלי לבזבז שבועות על כל שלב?</li>
+            </ul>
+            <p>בפועל, המון זמן הולך על לחשוב, לבדוק, לשנות כיוון, לחפש אנשי מקצוע ולהתחיל שוב מחדש.</p>
+            <p className="text-blue-900 font-bold">
+              לא חסרים לכם רעיונות. חסרה לכם דרך ברורה לקחת רעיון ולהפוך אותו למשהו שאפשר לצאת איתו לשוק.
             </p>
           </motion.div>
         </div>
