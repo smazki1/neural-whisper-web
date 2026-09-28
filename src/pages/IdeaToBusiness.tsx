@@ -190,18 +190,18 @@ const IdeaToBusiness = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-200 mb-6 max-w-4xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed"
           >
-            <strong className="text-yellow-300">״מרעיון לעסק עם AI״</strong> הוא קורס חדשני לבעלי עסקים ועצמאים שרוצים להשתמש ב-AI כדי ליצור, לפתח ולבנות את העסק בצורה חכמה ויעילה יותר, בלי להיות תלויים בכל שלב באיש מקצוע אחר.
+            <strong className="text-yellow-300">״מרעיון לעסק עם AI״</strong> הוא קורס מעשי לבעלי עסקים ועצמאים שרוצים להפוך רעיון למוצר, או לתת לעסק הקיים כיוון ברור יותר.
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl md:text-2xl text-gray-200 mb-12 max-w-4xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            בעזרת ChatGPT ושיטת עבודה מסודרת תלמדו לקחת רעיון שעוד לא ברור איך לקדם, או עסק שכבר קיים אבל עדיין לא מספיק ממוקד, ולהפוך אותו למשהו שאפשר באמת לעבוד איתו: להבין אילו מוצרים נכון לפתח או לחדד, למי נכון למכור אותם ומה באמת חשוב ללקוחות שלכם, לזקק את כל זה להצעה ברורה ומושכת, ולבנות את הנכסים הראשונים שיעזרו לכם להתחיל לשווק ולמכור כבר במהלך הקורס, בלי שכל צעד בדרך דורש עוד בעל מקצוע ועוד הוצאה.
+            בעזרת ChatGPT ושיטת עבודה מסודרת, תבנו מוצר שלקוחות מבינים למה הם צריכים והצעה שקל להציג ולמכור, עם חומרים שיאפשרו לכם לצאת לשוק. בלי להיות תלויים באיש מקצוע בכל צעד.
           </motion.p>
 
           <motion.div
