@@ -105,13 +105,19 @@ export function LibrarySection() {
   return <section id="growing-library" className="bg-slate-900 py-16 md:py-24 text-white">
     <div className={wrap}>
       <div className="max-w-3xl mx-auto text-center mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
+
+    </div>
+  </section>;
+}
+
+export function UpcomingLibraryCards() {
+  return <div className="mx-auto mb-12 max-w-[1104px] font-medium text-white">
       <div className="grid gap-6 lg:grid-cols-3">{library.map(item => <article key={item.title} className="future-library-card rounded-2xl border border-white/15 bg-white/[0.04] overflow-hidden">
         <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
         <div className="p-6 text-center"><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
       </article>)}</div>
       <DraftNote className="mt-8 max-w-3xl">רשימת ההרחבות בהמשך היא טיוטה רחבה לבחירתך. יש לסגור את התכולה לפני הפרסום.</DraftNote>
-    </div>
-  </section>;
+  </div>;
 }
 
 const collagePositions = ["md:col-span-2 md:row-span-2 md:rotate-[-2deg]", "md:rotate-[3deg] md:-mr-5 md:mt-6", "md:rotate-[-3deg] md:-mr-3", "md:col-span-2 md:col-start-2 md:rotate-[2deg]"];
@@ -166,8 +172,7 @@ export function AvailableLessons() {
       <div dir="rtl" className="space-y-5">
         {upcomingCourseGroups.map(group => <article key={group.title} className="rounded-2xl border border-white/20 bg-white/[0.04] p-5 md:p-7 grid md:grid-cols-[minmax(0,1fr)_190px] gap-5 md:gap-7 items-start">
           <div className="min-w-0">
-            <span className="inline-flex rounded-full border border-yellow-300/30 bg-yellow-300/10 px-3 py-1 text-sm font-bold text-yellow-200">בקרוב כחלק מהקורס</span>
-            <h5 className="text-right text-xl md:text-2xl mt-4 mb-5 font-bold">{group.title}</h5>
+            <h5 className="text-right text-xl md:text-2xl mb-5 font-bold">{group.title}</h5>
             <ul className="space-y-4 text-lg text-slate-100 leading-relaxed">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul>
           </div>
           <aside aria-label={`עלות הבונוס: ${group.title}`} className="px-5 py-6 text-center md:self-center">

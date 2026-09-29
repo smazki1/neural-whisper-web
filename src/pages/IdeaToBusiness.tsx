@@ -17,7 +17,7 @@ import heroBackground02 from "@/assets/backgrounds/hero/hero-background-02.png";
 import {
   AboutAviSection, AvailableLessons, DraftNote, FAQSection, LibrarySection,
   OutputsSection, PossibilitiesSection, ReviewChecklist, SolutionSection,
-  TestimonialsSection, TimeSection, VibeCodingSection,
+  TestimonialsSection, TimeSection, UpcomingLibraryCards, VibeCodingSection,
 } from "@/components/idea-to-business/LandingSections";
 
 const IdeaToBusiness = () => {
@@ -185,8 +185,6 @@ const IdeaToBusiness = () => {
       <VibeCodingSection />
       <OutputsSection />
       <LibrarySection />
-      <TestimonialsSection />
-      <AboutAviSection />
 
       {/* Bonuses Section */}
       <section className="py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">
@@ -203,6 +201,7 @@ const IdeaToBusiness = () => {
           </motion.h2>
 
           <AvailableLessons />
+          <UpcomingLibraryCards />
           <aside aria-label="מחיר השקת הקורס" className="mx-auto mb-8 max-w-4xl rounded-2xl border border-yellow-300/40 bg-slate-900/70 px-6 py-9 md:px-10 md:py-11">
             <div className="flex flex-col items-center gap-6 md:gap-7 text-center">
               <h3 className="text-2xl md:text-3xl font-bold text-white">כל זה במחיר השקה</h3>
@@ -248,6 +247,9 @@ const IdeaToBusiness = () => {
           </div>
         </div>
       </section>
+
+      <TestimonialsSection />
+      <AboutAviSection />
 
       {/* Target Audience */}
       <section className="py-12 md:py-16 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
