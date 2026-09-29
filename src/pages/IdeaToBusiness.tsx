@@ -14,10 +14,14 @@ import { useAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
 import heroBackground01 from "@/assets/backgrounds/hero/hero-background-01.png";
 import heroBackground02 from "@/assets/backgrounds/hero/hero-background-02.png";
-import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
+import {
+  AboutAviSection, DraftNote, FAQSection, JourneySection, LibrarySection,
+  OutputsSection, PossibilitiesSection, ReviewChecklist, SolutionSection,
+  TestimonialsSection, TimeSection, VibeCodingSection,
+} from "@/components/idea-to-business/LandingSections";
 
 const IdeaToBusiness = () => {
-  const { price, testimonials } = ideaToBusiness;
+  const { price } = ideaToBusiness;
   const { checkoutUrl, checkoutLoading } = useProductCheckout();
   const { trackEvent } = useAnalytics();
   const preview = import.meta.env.DEV;
@@ -28,14 +32,6 @@ const IdeaToBusiness = () => {
       label: "idea-to-business",
       value: price,
     });
-  const solutions = [
-    "כיוון עסקי ברור יותר: נישה, מחקר שוק והבנת הקהל שלכם",
-    "שפה וזהות לעסק: ניסוחים, צבעים וסגנון שמרגישים שלכם",
-    "מפת מוצרים ומוצר אחד שבחרתם לפתח",
-    "הצעה עסקית ברורה: למי היא מתאימה ומה מקבלים",
-    "דף נחיתה חי למוצר שלכם, שנבנה בעזרת AI",
-  ];
-
   const suitableFor = [
     "מי שיש להם ידע, ניסיון או רעיון ורוצים להפוך אותם למוצר",
     "מי שיש להם כמה כיוונים ורוצים לבחור במה להתמקד",
@@ -49,39 +45,6 @@ const IdeaToBusiness = () => {
     "מי שמצפים שה־AI יקבל עבורם את כל ההחלטות העסקיות",
   ];
 
-  const curriculum = [
-    {
-      title: "יסודות העסק",
-      duration: "כיוון וזהות",
-      color: "blue",
-      topics: [
-        "זיהוי נישה, מחקר שוק והיכרות מעמיקה עם קהל היעד",
-        "חידוד השפה, הייחודיות וטון הדיבור של העסק",
-        "גיבוש כיוון חזותי: צבעים, פונטים וסגנון",
-      ],
-    },
-    {
-      title: "מוצרים והצעה",
-      duration: "מוצר מוגדר",
-      color: "green",
-      topics: [
-        "יצירת מפת מוצרים ובחירת מוצר אחד לפיתוח",
-        "הגדרת המוצר: למי הוא מתאים ומה הוא כולל",
-        "חידוד ההצעה והסיבה לבחור בה",
-      ],
-    },
-    {
-      title: "בניית דף נחיתה",
-      duration: "דף משלכם",
-      color: "purple",
-      topics: [
-        "הפיכת המחקר וההצעה לבריף מסודר",
-        "כתיבת הטקסט וגיבוש העיצוב בעזרת AI",
-        "בניית דף חי שאפשר לפרסם ולהציג לקהל",
-      ],
-    },
-  ];
-
   const bonuses = [
     {
       title: "לומדים ומיישמים",
@@ -92,11 +55,10 @@ const IdeaToBusiness = () => {
       ],
     },
     {
-      title: "תמיכה וגישה גם בהמשך",
+      title: "תמיכה במהלך הדרך",
       items: [
         "קבוצת WhatsApp לתמיכה במהלך הלמידה והיישום",
-        "גישה לכל החיים לתוכן הקורס",
-        "עדכונים שיתווספו לקורס",
+        "גישה לכל החיים לתוכן הקורס הזמין",
       ],
     },
   ];
@@ -134,48 +96,6 @@ const IdeaToBusiness = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-purple-900/70 to-slate-900/80"></div>
         <div className="absolute inset-0 bg-black/30"></div>
 
-        {/* Floating AI elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 5, -5, 0],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute top-20 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-xl"
-          />
-          <motion.div
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 10, 0],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-            className="absolute top-40 right-20 w-24 h-24 bg-blue-400/20 rounded-full blur-xl"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-            className="absolute bottom-32 left-32 w-20 h-20 bg-purple-400/20 rounded-full blur-xl"
-          />
-        </div>
-
         <div className="relative z-10 container mx-auto px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 50 }}
@@ -192,7 +112,7 @@ const IdeaToBusiness = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed"
           >
-            <strong className="text-yellow-300">״מרעיון לעסק עם AI״</strong> הוא קורס מעשי לבעלי עסקים ועצמאים שרוצים להפוך רעיון למוצר, או לתת לעסק הקיים כיוון ברור יותר.
+            <strong className="text-yellow-300">״מרעיון לעסק עם AI״</strong> הוא קורס חדשני לבעלי עסקים ועצמאים שרוצים להשתמש ב-AI כדי ליצור, לפתח ולבנות את העסק בצורה חכמה ויעילה יותר, בלי להיות תלויים בכל שלב באיש מקצוע אחר.
           </motion.p>
 
           <motion.p
@@ -201,7 +121,7 @@ const IdeaToBusiness = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            בעזרת ChatGPT ושיטת עבודה מסודרת, תבנו מוצר שלקוחות מבינים למה הם צריכים והצעה שקל להציג ולמכור, עם חומרים שיאפשרו לכם לצאת לשוק. בלי להיות תלויים באיש מקצוע בכל צעד.
+            בעזרת ChatGPT ושיטת עבודה מסודרת תלמדו לקחת רעיון שעוד לא ברור איך לקדם, או עסק שכבר קיים אבל עדיין לא מספיק ממוקד, ולחבר את כל החלקים שצריך כדי להתחיל להתקדם איתו באמת: להבין מה נכון לפתח, למי נכון למכור, איך לחדד את ההצעה, ואיך להפוך את הרעיונות שלכם למוצרים, מסרים ונכסים שאפשר להתחיל לעבוד איתם בעולם האמיתי.
           </motion.p>
 
           <motion.div
@@ -210,6 +130,7 @@ const IdeaToBusiness = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="space-y-6"
           >
+            <DraftNote className="max-w-xl mx-auto">נוסח CTA סופי לבחירתך. כפתור הבדיקה משתמש בינתיים בנוסח הקיים.</DraftNote>
             <Button
               asChild={!checkoutLoading}
               disabled={checkoutLoading}
@@ -284,75 +205,65 @@ const IdeaToBusiness = () => {
             </ul>
             <p>בפועל, המון זמן הולך על לחשוב, לבדוק, לשנות כיוון, לחפש אנשי מקצוע ולהתחיל שוב מחדש.</p>
             <p className="text-blue-900 font-bold">
-              לא חסרים לכם רעיונות. חסרה לכם דרך ברורה לקחת רעיון ולהפוך אותו למשהו שאפשר לצאת איתו לשוק.
+              לא חסרים לכם רעיונות.<br />חסרה לכם דרך ברורה לקחת רעיון ולהפוך אותו למשהו שאפשר לצאת איתו לשוק.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Solution Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: `url(${heroBackground03})` }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-purple-900/30"></div>
+      <SolutionSection />
+      <PossibilitiesSection />
+      <JourneySection />
+      <VibeCodingSection />
+      <OutputsSection />
+      <LibrarySection />
+      <AboutAviSection />
+      <TestimonialsSection />
 
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-20 -right-20 w-40 h-40 border border-yellow-400/20 rounded-full"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-20 -left-20 w-60 h-60 border border-blue-400/20 rounded-full"
-          />
-        </div>
-
+      {/* Bonuses Section */}
+      <section className="py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(234,179,8,0.1),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(249,115,22,0.1),transparent_50%)]"></div>
         <div className="container mx-auto px-6 relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl font-bold text-center text-white mb-16"
+            className="text-3xl md:text-4xl font-bold text-center text-yellow-400 mb-16"
           >
-            עם מה יוצאים מהקורס?
+            מה מקבלים בפועל
           </motion.h2>
 
-          <div className="max-w-4xl mx-auto">
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-xl text-center text-gray-200 mb-12 font-medium"
-            >
-              חמישה תוצרים שתבנו על הרעיון או העסק שלכם, שלב אחר שלב:
-            </motion.p>
+          <DraftNote className="max-w-4xl mx-auto mb-8">התכולה שלהלן נשמרה מהדף הקיים. רשימת היחידות הזמינות ומדיניות הגישה ליחידות עתידיות עדיין ממתינות לאישור.</DraftNote>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {bonuses.map((bonus, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm p-8 rounded-2xl border-2 border-yellow-400/50 hover:border-yellow-400 transition-all duration-300 shadow-2xl hover:shadow-yellow-400/20"
+              >
+                <div className="flex items-center mb-6">
+                  <Trophy className="h-8 w-8 text-yellow-400 ml-3" />
+                  <h3 className="text-xl font-bold text-yellow-400">
+                    {bonus.title}
+                  </h3>
+                </div>
 
-            <div className="space-y-4">
-              {solutions.map((solution, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  className="flex items-center space-x-4 space-x-reverse bg-white/10 backdrop-blur-sm border border-white/20 p-6 rounded-xl shadow-lg hover:bg-white/20 transition-all duration-300"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <CheckCircle className="h-8 w-8 text-green-400 flex-shrink-0" />
-                  </motion.div>
-                  <span className="text-lg text-white font-medium">
-                    {solution}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
+                <ul className="space-y-3">
+                  {bonus.items.map((item, itemIndex) => (
+                    <li
+                      key={itemIndex}
+                      className="flex items-center space-x-3 space-x-reverse"
+                    >
+                      <Zap className="h-5 w-5 text-yellow-400 flex-shrink-0" />
+                      <span className="text-gray-300">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -425,173 +336,7 @@ const IdeaToBusiness = () => {
         </div>
       </section>
 
-      {/* Curriculum Timeline */}
-      <section
-        id="curriculum"
-        className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_70%)]"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl font-bold text-center text-white mb-16"
-          >
-            תוכנית הקורס
-          </motion.h2>
-
-          <div className="max-w-4xl mx-auto space-y-8">
-            {curriculum.map((section, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className={`relative p-8 rounded-2xl bg-white/10 backdrop-blur-sm shadow-2xl border-2 hover:bg-white/20 transition-all duration-300 ${
-                  section.color === "blue"
-                    ? "border-blue-400 hover:border-blue-300"
-                    : section.color === "green"
-                      ? "border-green-400 hover:border-green-300"
-                      : "border-purple-400 hover:border-purple-300"
-                }`}
-              >
-                <div className="flex flex-wrap gap-3 items-center justify-between mb-4">
-                  <h3
-                    className={`text-2xl font-bold ${
-                      section.color === "blue"
-                        ? "text-blue-300"
-                        : section.color === "green"
-                          ? "text-green-300"
-                          : "text-purple-300"
-                    }`}
-                  >
-                    חלק {index + 1}: {section.title}
-                  </h3>
-                  <span
-                    className={`px-4 py-2 rounded-full text-sm font-medium ${
-                      section.color === "blue"
-                        ? "bg-blue-500/20 text-blue-200 border border-blue-400/30"
-                        : section.color === "green"
-                          ? "bg-green-500/20 text-green-200 border border-green-400/30"
-                          : "bg-purple-500/20 text-purple-200 border border-purple-400/30"
-                    }`}
-                  >
-                    {section.duration}
-                  </span>
-                </div>
-
-                <ul className="space-y-3">
-                  {section.topics.map((topic, topicIndex) => (
-                    <li
-                      key={topicIndex}
-                      className="flex items-center space-x-3 space-x-reverse"
-                    >
-                      <div
-                        className={`h-2 w-2 rounded-full ${
-                          section.color === "blue"
-                            ? "bg-blue-500"
-                            : section.color === "green"
-                              ? "bg-green-500"
-                              : "bg-purple-500"
-                        }`}
-                      ></div>
-                      <span className="text-gray-200 font-medium">{topic}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Bonuses Section */}
-      <section className="py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(234,179,8,0.1),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(249,115,22,0.1),transparent_50%)]"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl font-bold text-center text-yellow-400 mb-16"
-          >
-            מה תקבלו
-          </motion.h2>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {bonuses.map((bonus, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm p-8 rounded-2xl border-2 border-yellow-400/50 hover:border-yellow-400 transition-all duration-300 shadow-2xl hover:shadow-yellow-400/20"
-              >
-                <div className="flex items-center mb-6">
-                  <Trophy className="h-8 w-8 text-yellow-400 ml-3" />
-                  <h3 className="text-xl font-bold text-yellow-400">
-                    {bonus.title}
-                  </h3>
-                </div>
-
-                <ul className="space-y-3">
-                  {bonus.items.map((item, itemIndex) => (
-                    <li
-                      key={itemIndex}
-                      className="flex items-center space-x-3 space-x-reverse"
-                    >
-                      <Zap className="h-5 w-5 text-yellow-400 flex-shrink-0" />
-                      <span className="text-gray-300">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {(testimonials.length > 0 || preview) && (
-        <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-          <div className="container mx-auto px-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-blue-900 mb-12">
-              במילים של המשתתפים
-            </h2>
-            {!testimonials.length && (
-              <p className="text-center text-gray-600 mb-8">
-                תצוגה מקדימה בלבד: מקום לצילומי WhatsApp שתוסיף. האזור יוסתר
-                בפרסום כל עוד הוא ריק.
-              </p>
-            )}
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-start">
-              {testimonials.length
-                ? testimonials.map((item) => (
-                    <figure
-                      key={item.src}
-                      className="bg-white/80 p-4 rounded-2xl shadow-xl border border-gray-200/50"
-                    >
-                      <img
-                        src={item.src}
-                        alt={item.alt}
-                        className="w-full h-auto rounded-xl"
-                        loading="lazy"
-                      />
-                    </figure>
-                  ))
-                : [1, 2, 3].map((n) => (
-                    <div
-                      key={n}
-                      className="h-64 flex items-center justify-center bg-white/80 rounded-2xl border-2 border-dashed border-blue-200 text-blue-800"
-                    >
-                      מקום לצילום מסך {n}
-                    </div>
-                  ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <TimeSection />
 
       {/* Pricing Section */}
       <section
@@ -622,7 +367,7 @@ const IdeaToBusiness = () => {
               <div className="flex items-center justify-center mb-4">
                 <Clock className="h-8 w-8 text-yellow-400 ml-3" />
                 <span className="text-xl font-semibold">
-                  כל הקורס, בקצב שלכם
+                  מחיר השקה
                 </span>
               </div>
 
@@ -636,6 +381,7 @@ const IdeaToBusiness = () => {
                   </span>
                 </div>
                 <p className="text-lg mb-4">תשלום חד־פעמי · כולל מע״מ</p>
+                <DraftNote className="mb-6">מחיר מלא עתידי ונוסח CTA סופי. לא נקבע עדיין מחיר מלא.</DraftNote>
                 {checkoutUrl && !checkoutLoading ? (
                   <Button
                     asChild
@@ -662,20 +408,10 @@ const IdeaToBusiness = () => {
                   </p>
                 )}
                 <p className="text-sm mt-4">
-                  לאחר השלמת התשלום וההרשמה תקבלו גישה לקורס.
+                  גישה מיידית לכל היחידות הזמינות כרגע, לאחר השלמת התשלום וההרשמה.
                 </p>
               </div>
 
-              {/* Sparkle effect */}
-              <div className="absolute top-4 right-4">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="text-yellow-300 text-2xl"
-                >
-                  ✨
-                </motion.div>
-              </div>
             </motion.div>
 
             <motion.div
@@ -697,6 +433,8 @@ const IdeaToBusiness = () => {
         </div>
       </section>
 
+      <FAQSection />
+
       {/* Final CTA */}
       <section className="py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
         <div
@@ -704,31 +442,6 @@ const IdeaToBusiness = () => {
           style={{ backgroundImage: `url(${heroBackground01})` }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-purple-900/80 to-slate-900/70"></div>
-
-        {/* Animated particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{
-                y: [0, -100, 0],
-                x: [0, Math.sin(i) * 50, 0],
-                opacity: [0.3, 0.8, 0.3],
-              }}
-              transition={{
-                duration: 8 + i,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 2,
-              }}
-              className={`absolute w-2 h-2 bg-yellow-400 rounded-full blur-sm`}
-              style={{
-                left: `${20 + i * 15}%`,
-                top: `${30 + i * 10}%`,
-              }}
-            />
-          ))}
-        </div>
 
         <div className="container mx-auto px-6 text-center relative z-10">
           <motion.h2
@@ -746,10 +459,10 @@ const IdeaToBusiness = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xl text-white mb-8 max-w-3xl mx-auto"
           >
-            אתם לא צריכים לפתור היום את כל העסק. תתחילו מהצעד שיהפוך את הרעיון
-            שלכם לקצת יותר ברור, עד למוצר, להצעה ולדף שאפשר להציג.
+            התחילו מהרעיון שאתם רוצים לקדם. למדו לחשוב, לפתח ולבנות בעזרת AI, עם דרך עבודה שתוכלו לחזור אליה גם ברעיון הבא.
           </motion.p>
 
+          <DraftNote className="max-w-xl mx-auto mb-6">נוסח CTA סופי לבחירתך. נשמר כפתור הרכישה הקיים לצורך בדיקה.</DraftNote>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -788,10 +501,11 @@ const IdeaToBusiness = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-yellow-400 mt-6 font-medium"
           >
-            גישה לכל החיים · עדכוני קורס · קבוצת WhatsApp לתמיכה
+            גישה ליחידות הזמינות · קבוצת WhatsApp לתמיכה
           </motion.p>
         </div>
       </section>
+      <ReviewChecklist />
     </main>
   );
 };
