@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import {
   CheckCircle,
-  Clock,
+  ArrowLeft,
   Trophy,
   Zap,
   ChevronDown,
@@ -329,97 +329,56 @@ const IdeaToBusiness = () => {
       <TimeSection />
 
       {/* Pricing Section */}
-      <section
-        id="enroll"
-        className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-green-50/50 to-blue-50/50"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16"
-          >
-            מרעיון לעסק עם AI
-          </motion.h2>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl mx-auto text-center"
-          >
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 rounded-2xl text-white mb-8 shadow-2xl relative overflow-hidden"
-            >
-              <div className="flex items-center justify-center mb-4">
-                <Clock className="h-8 w-8 text-yellow-400 ml-3" />
-                <span className="text-xl font-semibold">
-                  מחיר השקה
-                </span>
+      <section id="enroll" aria-labelledby="enroll-heading" className="bg-slate-50 py-16 md:py-24">
+        <div className="container mx-auto max-w-6xl px-6">
+          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_60px_-35px_rgba(15,23,42,0.35)]">
+            <div className="grid md:grid-cols-[1.1fr_1fr]">
+              <div className="p-7 md:p-10 lg:p-12 text-slate-900">
+                <p className="text-sm font-bold text-blue-800">הקורס של אבי פריד</p>
+                <h2 id="enroll-heading" className="mt-3 text-3xl lg:text-4xl font-bold text-blue-900">מרעיון לעסק עם AI</h2>
+                <p className="mt-4 max-w-md text-lg leading-relaxed text-slate-600">לקחת את הרעיון שלכם, לבנות את מה שצריך ולהתחיל לצאת איתו ללקוחות.</p>
+                <ul className="mt-8 space-y-5 text-lg font-medium">
+                  {["גישה לכל החיים", "קורס מוקלט בעברית, בקצב שלכם", "לומדים ומיישמים על הרעיון או העסק שלכם"].map(item => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle className="mt-1 h-5 w-5 shrink-0 text-blue-700" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <div className="text-center">
-                <div className="flex items-center justify-center space-x-4 space-x-reverse mb-4">
-                  <span
-                    dir="ltr"
-                    className="text-5xl font-bold text-yellow-400"
-                  >
-                    ₪{price}
-                  </span>
+              <div className="flex flex-col justify-center bg-slate-900 p-7 md:p-10 lg:p-12 text-center text-white">
+                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-base text-slate-300">
+                  <span>מחיר מלא מתוכנן</span>
+                  <bdi className="font-semibold">{ideaToBusiness.plannedFullPrice.toLocaleString("he-IL")} ₪</bdi>
                 </div>
-                <p className="text-lg mb-4">תשלום חד־פעמי · כולל מע״מ</p>
-                <DraftNote className="mb-6">מחיר מלא עתידי ונוסח CTA סופי. לא נקבע עדיין מחיר מלא.</DraftNote>
+                <p className="mt-6 text-lg font-bold text-yellow-300">מחיר השקה</p>
+                <p className="mt-1 mb-7 flex items-baseline justify-center gap-2" aria-label={`מחיר השקה ${price} שקלים`}>
+                  <span className="text-[76px] md:text-[88px] font-bold leading-none tracking-tight">{price}</span>
+                  <span className="text-3xl font-medium text-slate-300" aria-hidden="true">₪</span>
+                </p>
                 {checkoutUrl && !checkoutLoading ? (
-                  <Button
-                    asChild
-                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg px-8 py-6 h-auto whitespace-normal max-w-full rounded-lg"
-                  >
-                    <a href={checkoutUrl} onClick={purchaseClick}>
-                      לרכישת הקורס
-                    </a>
+                  <Button asChild className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950 hover:bg-yellow-200 focus-visible:ring-yellow-300 focus-visible:ring-offset-slate-900">
+                    <a href={checkoutUrl} onClick={purchaseClick}>לרכישת הקורס <ArrowLeft className="mr-3 h-5 w-5" aria-hidden="true" /></a>
                   </Button>
                 ) : (
-                  <Button
-                    disabled
-                    aria-describedby="price-checkout-pending"
-                    className="bg-yellow-500 text-black font-bold text-lg px-8 py-6 h-auto rounded-lg"
-                  >
-                    לרכישת הקורס
+                  <Button disabled aria-describedby="price-checkout-pending" className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950">
+                    {checkoutLoading ? "טוען אפשרות רכישה..." : "לרכישת הקורס"}
                   </Button>
                 )}
-                {!checkoutUrl && !checkoutLoading && (
-                  <p id="price-checkout-pending" className="text-sm mt-3">
-                    {preview
-                      ? "הכפתור ממתין לקישור התשלום שלך."
-                      : "ההרשמה אינה זמינה כרגע."}
+                {(!checkoutUrl || checkoutLoading) && (
+                  <p id="price-checkout-pending" className="mt-3 text-sm text-slate-300">
+                    {checkoutLoading ? "בודקים את אפשרות הרכישה." : preview ? "הכפתור ממתין לקישור התשלום שלך." : "ההרשמה אינה זמינה כרגע."}
                   </p>
                 )}
-                <p className="text-sm mt-4">
-                  גישה מיידית לכל היחידות הזמינות כרגע, לאחר השלמת התשלום וההרשמה.
-                </p>
+                <p className="mt-4 text-sm text-slate-300">גישה לכל החיים · לומדים בקצב שלכם</p>
               </div>
-
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-r from-green-100 to-emerald-100 p-6 rounded-2xl border-2 border-green-300 shadow-lg"
-            >
-              <div className="flex items-center justify-center mb-3">
-                <CheckCircle className="h-6 w-6 text-green-600 ml-2" />
-                <h3 className="text-lg font-bold text-green-800">
-                  מה צריך כדי להתחיל?
-                </h3>
-              </div>
-              <p className="text-green-700">
-                ידע בסיסי במחשב ובדפדפן, חשבון ChatGPT (אפשר להתחיל בחינם), מסמך
-                Google Docs ריק ורעיון או עסק שתרצו לעבוד עליו.
-              </p>
-            </motion.div>
-          </motion.div>
+            </div>
+            <div className="border-t border-slate-200 bg-slate-50/70 px-7 py-6 md:px-10 lg:px-12 text-slate-600 text-base leading-relaxed">
+              <span className="font-bold text-slate-900">מה צריך כדי להתחיל? </span>
+              ידע בסיסי במחשב ובדפדפן, חשבון ChatGPT (אפשר להתחיל בחינם), מסמך Google Docs ריק ורעיון או עסק שתרצו לעבוד עליו.
+            </div>
+          </div>
         </div>
       </section>
 
