@@ -125,7 +125,7 @@ const IdeaToBusiness = () => {
               asChild
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-lg md:text-2xl px-6 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-              <a href="#enroll">אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
+              <a href="#start-building">אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
             </Button>
 
           </motion.div>
@@ -320,7 +320,7 @@ const IdeaToBusiness = () => {
       <TimeSection />
 
       {/* CTA before frequently asked questions */}
-      <section className="py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
+      <section id="start-building" className="py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{ backgroundImage: `url(${heroBackground01})` }}
