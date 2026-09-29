@@ -1,9 +1,11 @@
-import { Image as ImageIcon, ArrowLeft, Code2 } from "lucide-react";
+import { Image as ImageIcon, ArrowLeft, CheckCircle, Code2 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ideaToBusiness } from "@/content/ideaToBusiness";
+import { motion, useReducedMotion } from "framer-motion";
+import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
+import { availableCourseModules, digitalProductBonus, upcomingCourseUnits, ideaToBusiness } from "@/content/ideaToBusiness";
 import type { ReactNode } from "react";
 
-const wrap = "container mx-auto px-6 max-w-6xl";
+const wrap = "container mx-auto px-6 max-w-6xl font-medium";
 const heading = "text-3xl md:text-4xl font-bold leading-tight text-balance";
 
 /** Visible editorial placeholders are intentional in this unapproved draft. */
@@ -18,8 +20,12 @@ function ImageSlot({ label, className = "" }: { label: string; className?: strin
 export function SolutionSection() {
   return <section id="course-solution" className="bg-slate-900 py-16 md:py-24 text-white">
     <div className={`${wrap} grid gap-10 md:grid-cols-2 md:items-center`}>
-      <div><p className="text-yellow-300 font-medium mb-4">מרעיון לדבר שאפשר לקדם</p><h2 className={heading}>דרך עבודה שחוזרים אליה,<br className="hidden md:block" /> בכל פעם שעולה רעיון חדש.</h2></div>
-      <div className="space-y-6 text-lg text-slate-200 leading-relaxed"><p>להבין מה נכון לבנות, לפתח את ההצעה, ולהתחיל להפוך אותה למשהו שאפשר להציג, לנסות ולשפר.</p><p>במקום להתחיל בכל פעם מחדש, לומדים לחבר בין החשיבה העסקית לבין הבנייה בפועל בעזרת AI.</p><p className="text-yellow-300 font-semibold">יותר יכולת להחליט. יותר יכולת לבנות בעצמכם.</p></div>
+      <div><p className="text-xl md:text-2xl text-yellow-300 font-bold mb-5">מרעיון למוצר שאפשר להתחיל למכור</p><h2 className={heading}>דרך עבודה שחוזרים אליה,<br className="hidden md:block" /> בכל פעם שעולה רעיון חדש.</h2></div>
+      <div className="space-y-7 text-xl md:text-2xl text-slate-100 font-medium leading-relaxed">
+        <p>יש לכם רעיון למוצר או לעסק? תלמדו לחבר אותו להצעה ברורה ולבנות את מה שצריך כדי להתחיל לשווק ולמכור ללקוחות.</p>
+        <p>בעזרת AI תוכלו להכין גרסה ראשונה שאפשר להוציא לשוק ולשפר מתוך המפגש עם הלקוחות, בלי לחכות שהכול יהיה מושלם ובלי להתחיל מהשקעה גדולה ומחודשים של הכנות.</p>
+        <p className="text-yellow-300 font-bold">יותר יכולת להחליט. יותר יכולת לבנות בעצמכם.</p>
+      </div>
     </div>
   </section>;
 }
@@ -32,15 +38,33 @@ const situations = [
 ];
 
 export function PossibilitiesSection() {
-  return <section id="possibilities" className="bg-slate-50 py-16 md:py-24 text-slate-900">
-    <div className={wrap}>
-      <div className="max-w-3xl mx-auto text-center mb-10"><h2 className={`${heading} text-blue-900 mb-6`}>אז מה בעצם תוכלו לעשות עם כל זה?</h2><p className="text-lg leading-relaxed">המטרה של הקורס היא לא להפוך אתכם לאנשי שיווק, מתכנתים, קופירייטרים ומעצבים.</p><p className="text-lg leading-relaxed mt-3">המטרה היא שבפעם הבאה שיעלה לכם רעיון בעסק, לא תיתקעו בשאלה:</p><p className="text-2xl md:text-3xl font-bold text-blue-900 mt-5">״אוקיי... ומה עכשיו?״</p></div>
-      <div className="grid md:grid-cols-2 gap-x-12">
-        {situations.map((item, index) => <article key={item.title} className="border-t border-slate-300 py-7"><div className="flex items-start gap-4"><span className="text-sm text-blue-700 font-bold pt-1" aria-hidden="true">0{index + 1}</span><div><h3 className="text-xl font-bold mb-3">{item.title}</h3><p className="text-slate-600 text-lg leading-relaxed">{item.text}</p></div></div></article>)}
+  const reducedMotion = useReducedMotion();
+  return <>
+    <section id="possibilities" className="bg-slate-50 py-20 md:py-28 text-slate-900">
+      <div className={`${wrap} max-w-4xl text-center`}>
+        <h2 className={`${heading} text-blue-900 mb-8`}>אז מה בעצם תוכלו לעשות עם כל זה?</h2>
+        <p className="text-xl md:text-2xl leading-relaxed">המטרה של הקורס היא לא להפוך אתכם לאנשי שיווק, מתכנתים, קופירייטרים ומעצבים.</p>
+        <p className="text-xl md:text-2xl leading-relaxed mt-6">המטרה היא שבפעם הבאה שיעלה לכם רעיון בעסק, לא תיתקעו בשאלה:</p>
       </div>
-      <p className="max-w-3xl mx-auto text-center text-lg leading-relaxed mt-8"><strong>לא כדי לעשות הכול לבד לנצח.</strong><br />אלא כדי שתוכלו להזיז את העסק קדימה בלי שכל רעיון חדש מתחיל בחיפוש אחר האדם הבא שיעשה אותו בשבילכם.</p>
-    </div>
-  </section>;
+    </section>
+    <section id="business-scenarios" className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 py-16 md:py-24 text-white">
+      <div className="absolute inset-0 bg-cover bg-center opacity-[0.15]" style={{ backgroundImage: `url(${heroBackground03})` }} aria-hidden="true" />
+      <div className={`${wrap} relative max-w-5xl`}>
+        <h2 className="text-3xl md:text-5xl font-bold text-center mb-12 md:mb-16">״אוקיי... ומה עכשיו?״</h2>
+        <div className="space-y-5 md:space-y-6">
+          {situations.map((item) => <motion.article key={item.title}
+            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-start gap-4 md:gap-6 rounded-2xl border border-white/25 bg-white/10 p-6 md:p-8 backdrop-blur-sm">
+            <CheckCircle className="mt-1 h-7 w-7 md:h-8 md:w-8 shrink-0 text-green-400" aria-hidden="true" />
+            <div><h3 className="text-xl md:text-2xl font-bold mb-3">{item.title}</h3><p className="text-lg md:text-xl text-slate-100 leading-relaxed">{item.text}</p></div>
+          </motion.article>)}
+        </div>
+        <p className="max-w-3xl mx-auto text-center text-xl leading-relaxed mt-12 md:mt-16"><strong className="block text-yellow-300 mb-3">לא כדי לעשות הכול לבד לנצח.</strong>אלא כדי שתוכלו להזיז את העסק קדימה בלי שכל רעיון חדש מתחיל בחיפוש אחר האדם הבא שיעשה אותו בשבילכם.</p>
+      </div>
+    </section>
+  </>;
 }
 
 const journey = [
@@ -52,9 +76,9 @@ const journey = [
 ];
 
 export function JourneySection() {
-  return <section id="curriculum" className="bg-gradient-to-br from-slate-900 via-blue-950 to-purple-950 py-16 md:py-24 text-white">
+  return <section id="curriculum" className="bg-slate-900 py-16 md:py-24 text-white">
     <div className={`${wrap} grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-20`}>
-      <div><p className="text-yellow-300 mb-4 font-medium">מסלול הליבה</p><h2 className={`${heading} mb-6`}>מכאן מתחילים לבנות</h2><p className="text-slate-300 text-lg leading-relaxed">רעיון אחד, תהליך מתמשך. כל שלב נשען על מה שבניתם בשלב שלפניו.</p><DraftNote className="mt-6">רשימת היחידות הזמינות והיחידות שבפיתוח. זו מפת המסלול, ולא אישור שכל חמשת השלבים כבר זמינים לצפייה.</DraftNote></div>
+      <div><p className="text-xl text-yellow-300 mb-4 font-bold">מסלול הליבה</p><h2 className={`${heading} mb-6`}>מכאן מתחילים לבנות</h2><p className="text-slate-300 text-lg leading-relaxed">רעיון אחד, תהליך מתמשך. כל שלב נשען על מה שבניתם בשלב שלפניו.</p><p className="mt-6 text-base leading-relaxed text-slate-300">יסודות העסק, מוצרים והצעה ובניית דף נחיתה זמינים כעת. יחידות Vibe Coding יתווספו בהמשך. <a href="#available-lessons" className="text-yellow-300 underline underline-offset-4">לרשימת השיעורים הזמינים</a></p></div>
       <ol className="relative space-y-8 before:absolute before:top-5 before:bottom-5 before:right-5 before:w-px before:bg-white/20">
         {journey.map((item, index) => <li key={item.title} className="relative flex gap-5"><span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-900 border border-yellow-300/60 text-yellow-300 font-bold">{index + 1}</span><div className="pt-1"><h3 className="text-xl md:text-2xl font-bold mb-3">{item.title}</h3><p className="text-slate-300 text-lg leading-relaxed">{item.text}</p></div></li>)}
       </ol>
@@ -65,7 +89,7 @@ export function JourneySection() {
 export function VibeCodingSection() {
   return <section id="building-products" className="bg-white py-16 md:py-24 text-slate-900">
     <div className={`${wrap} grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center`}>
-      <div><h2 className={`${heading} text-blue-900 mb-6`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-lg leading-relaxed space-y-4"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p><p>לפעמים תבנו כלי שיעזור למכור את המוצר הקיים שלכם. ולפעמים תתחילו לבנות משהו קטן ותגלו שהוא בעצמו יכול להפוך למוצר חדש.</p></div><DraftNote className="mt-6">זמינות יחידות Vibe Coding ממתינה לאישור. יחידות שטרם זמינות יסומנו ״בקרוב״ או ״בפיתוח״.</DraftNote></div>
+      <div><h2 className={`${heading} text-blue-900 mb-6`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-lg leading-relaxed space-y-4"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p><p>לפעמים תבנו כלי שיעזור למכור את המוצר הקיים שלכם. ולפעמים תתחילו לבנות משהו קטן ותגלו שהוא בעצמו יכול להפוך למוצר חדש.</p></div><p className="mt-6 rounded-xl bg-slate-100 px-5 py-4 text-base font-bold text-blue-900">בקרוב בקורס: יחידות Vibe Coding. הן עדיין אינן זמינות לצפייה.</p></div>
       <div className="rounded-2xl bg-slate-900 p-7 md:p-10 text-white"><Code2 className="h-8 w-8 text-yellow-300 mb-6" aria-hidden="true" /><p className="text-slate-300 mb-5">זה יכול להיות</p><ul className="grid grid-cols-2 gap-x-4 gap-y-4 text-lg">{["מחשבון", "סימולטור", "מחולל", "כלי שנותן המלצה אישית", "אפליקציה קטנה", "מערכת פנימית", "מוצר דיגיטלי חדש"].map(x => <li key={x} className="border-b border-white/15 pb-3">{x}</li>)}</ul><p className="text-xl font-semibold text-yellow-300 leading-relaxed mt-7">לא רק לבנות את מה שעוטף את המוצר שלכם.<br />עם AI אפשר להתחיל לבנות גם את המוצר עצמו.</p></div>
     </div>
   </section>;
@@ -92,7 +116,7 @@ const library = [
 export function LibrarySection() {
   return <section id="growing-library" className="bg-slate-900 py-16 md:py-24 text-white">
     <div className={wrap}><div className="max-w-3xl mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
-      <DraftNote className="mb-8">חלק מהתכנים עדיין בפיתוח. נדרשות רשימות היחידות הזמינות והיחידות שיסומנו ״בקרוב״ או ״בפיתוח״. התחומים הבאים אינם רשימת יחידות זמינות לצפייה.</DraftNote>
+      <DraftNote className="mb-8">תוכנית ההרחבות לספרייה עדיין ממתינה לאישור. התחומים הבאים מציגים כיווני התפתחות, ואינם רשימת יחידות זמינות לצפייה.</DraftNote>
       <div className="grid gap-x-12 md:grid-cols-2">{library.map(item => <article key={item.title} className="py-7 border-t border-white/20"><span className="inline-block text-xs font-medium text-yellow-200 border border-yellow-200/40 px-2 py-1 rounded mb-4">זמינות ממתינה לאישור</span><h3 className="text-xl font-bold mb-3">{item.title}</h3><p className="text-slate-300 text-lg leading-relaxed">{item.text}</p></article>)}</div>
       <p className="max-w-3xl text-lg leading-relaxed mt-8">המטרה היא לא שתצטרכו את כל הדברים האלה ביום הראשון. המטרה היא שככל שהעסק שלכם מתקדם, יהיו לכם בתוך הקורס כלים שיעזרו לכם לבנות את הדבר הבא שאתם צריכים.</p>
       <DraftNote className="mt-6 max-w-3xl">החלטה לגבי גישת רוכשי מחיר ההשקה ליחידות עתידיות ולגבי תשלום נוסף, אם יהיה.</DraftNote>
@@ -132,6 +156,31 @@ export function TestimonialsSection() {
   </section>;
 }
 
+export function AvailableLessons() {
+  return <div id="available-lessons" className="max-w-4xl mx-auto mb-12 text-white scroll-mt-8">
+    <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <h3 className="text-2xl font-bold">כבר מחכה לכם בקורס</h3>
+      <span className="text-green-300 font-bold">זמין עכשיו</span>
+    </div>
+    <Accordion type="multiple" defaultValue={["available-0"]} dir="rtl" className="border-y border-white/20">
+      {availableCourseModules.map((module, i) => <AccordionItem key={module.title} value={`available-${i}`} className="border-white/20">
+        <AccordionTrigger className="text-right text-xl gap-4 py-6 font-bold"><span>{module.title} <span className="text-sm text-slate-300 font-medium">({module.lessons.length})</span></span></AccordionTrigger>
+        <AccordionContent className="text-lg text-slate-100 leading-relaxed">
+          <ul className="space-y-3 pb-3">{module.lessons.map(lesson => <li key={lesson} className="flex items-start gap-3"><CheckCircle className="h-5 w-5 shrink-0 text-green-400 mt-1" aria-hidden="true" />{lesson}</li>)}</ul>
+        </AccordionContent>
+      </AccordionItem>)}
+    </Accordion>
+    <div className="mt-6 rounded-2xl border border-yellow-300/40 bg-yellow-300/10 p-6 md:p-8">
+      <p className="text-lg text-yellow-300 font-bold mb-2">בונוס זמין בקורס</p>
+      <h4 className="text-xl md:text-2xl font-bold">{digitalProductBonus}</h4>
+    </div>
+    <div className="mt-8 border-t border-white/15 pt-6">
+      <h4 className="text-lg font-bold mb-4">בקרוב · עדיין לא זמין לצפייה</h4>
+      <ul className="flex flex-wrap gap-3">{upcomingCourseUnits.map(unit => <li key={unit} className="rounded-lg border border-white/20 px-3 py-2 text-base text-slate-300">{unit}</li>)}</ul>
+    </div>
+  </div>;
+}
+
 export function TimeSection() {
   return <section id="time" className="bg-white py-16 md:py-24 text-slate-900">
     <div className={wrap}><h2 className={`${heading} text-blue-900 max-w-3xl mb-8`}>״אבל אין לי זמן עכשיו לשבת ולבנות את כל זה״</h2><div className="grid gap-10 md:grid-cols-2"><div className="space-y-4 text-lg leading-relaxed"><p><strong>נכון. הקורס הזה כן דורש עבודה.</strong></p><p>אין פה כפתור שתלחצו עליו ובבוקר יהיה לכם עסק חדש.</p><p>אבל אם אתם ממילא רוצים לפתח מוצר, לבנות דף, להבין את הקהל או להתחיל לשווק משהו חדש, הזמן הזה יידרש בכל מקרה.</p><p className="text-2xl font-bold text-blue-900">השאלה היא איפה הוא ילך.</p></div><div className="border-r border-slate-300 pr-6"><p className="text-lg mb-4">אפשר לבזבז אותו על:</p><ul className="space-y-3 text-slate-600 text-lg">{["עשרות סרטוני YouTube.", "חיפוש אחרי הכלי הנכון.", "ניסוי של עוד עשרה פרומפטים.", "התכתבויות עם ספקים.", "לבנות משהו, לגלות שהוא לא נכון ולהתחיל מחדש."].map(x => <li key={x} className="flex gap-3"><ArrowLeft className="h-5 w-5 shrink-0 mt-1" aria-hidden="true" />{x}</li>)}</ul></div></div><div className="mt-10 border-t border-slate-200 pt-8 text-lg leading-relaxed max-w-4xl"><p>או שאפשר לעבוד לפי תהליך מסודר שמוביל אתכם בכל פעם לדבר הבא שצריך לעשות.</p><p className="mt-5 text-xl font-bold text-blue-900">המטרה של הקורס היא לא לגרום לעסק לא לדרוש עבודה.<br />המטרה היא לגרום לעבודה שלכם להיות הרבה יותר ממוקדת.</p></div></div>
@@ -144,7 +193,7 @@ const faqs = [
   { q: "אני לא טכנולוגי, זה בשבילי?", a: "לא צריך ניסיון בכתיבת קוד. כן צריך נכונות להתנסות, ללמוד ולבדוק את מה שבונים. AI עוזר בתהליך, ואתם מקבלים את ההחלטות." },
   { q: "כמה זמן צריך להשקיע?", a: "זהו קורס מוקלט ללמידה בקצב שלכם. היישום דורש זמן ועבודה, בהתאם לרעיון ולמה שתרצו לבנות. אפשר להתקדם שלב אחר שלב; אין כאן הבטחה לעסק מוכן בלחיצת כפתור." },
   { q: "יש לי כבר עסק ואתר, האם הקורס עדיין רלוונטי?", a: "כן. אפשר לעבוד על מוצר חדש, לחדד הצעה קיימת או לפתח כלי שיעזור לעסק. אין צורך להתחיל את העסק מחדש." },
-  { q: "מה זמין בקורס כרגע ומה יתווסף בהמשך?", todo: "רשימת היחידות שכבר זמינות ורשימת היחידות שיסומנו ״בקרוב״ או ״בפיתוח״. עד לקבלת הרשימות אין כאן התחייבות לזמינות של יחידה מסוימת." },
+  { q: "מה זמין בקורס כרגע ומה יתווסף בהמשך?", a: "כבר זמינים שיעורי הפתיחה, יסודות העסק, מוצרים והצעה, בניית דף נחיתה, חומרי העזר והבונוס על מוצר דיגיטלי לחדירה לשוק. מבוא ל־GEN-AI, היכרות עם הכלים, עבודה חכמה עם AI ויחידות Vibe Coding מסומנים בקרוב ואינם זמינים עדיין לצפייה. הפירוט המלא מופיע באזור ״מה מקבלים בפועל״." },
   { q: "האם יש גישה לתכנים עתידיים?", todo: "מדיניות הגישה ליחידות עתידיות לרוכשי מחיר ההשקה, כולל השאלה אם תהיה תוספת תשלום. התשובה הסופית טרם נקבעה." },
 ];
 
@@ -153,5 +202,5 @@ export function FAQSection() {
 }
 
 export function ReviewChecklist() {
-  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "מדיניות גישה לעדכונים עתידיים", "תמונות אבי, הרצאות וסדנאות", "צילומי מוצרים וכלים ובחירת פרויקטים", "עדויות משתתפים אמיתיות", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "רשימת היחידות שכבר זמינות", "רשימת היחידות שבקרוב או בפיתוח"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
+  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "מדיניות גישה לעדכונים עתידיים", "תמונות אבי, הרצאות וסדנאות", "צילומי מוצרים וכלים ובחירת פרויקטים", "עדויות משתתפים אמיתיות", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "אישור תוכנית ההרחבות לספרייה המתפתחת"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
 }

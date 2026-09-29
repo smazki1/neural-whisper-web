@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import heroBackground01 from "@/assets/backgrounds/hero/hero-background-01.png";
 import heroBackground02 from "@/assets/backgrounds/hero/hero-background-02.png";
 import {
-  AboutAviSection, DraftNote, FAQSection, JourneySection, LibrarySection,
+  AboutAviSection, AvailableLessons, DraftNote, FAQSection, JourneySection, LibrarySection,
   OutputsSection, PossibilitiesSection, ReviewChecklist, SolutionSection,
   TestimonialsSection, TimeSection, VibeCodingSection,
 } from "@/components/idea-to-business/LandingSections";
@@ -110,7 +110,7 @@ const IdeaToBusiness = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-100 mb-6 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-gray-100 font-medium mb-6 max-w-3xl mx-auto leading-relaxed"
           >
             <strong className="text-yellow-300">״מרעיון לעסק עם AI״</strong> הוא קורס חדשני לבעלי עסקים ועצמאים שרוצים להשתמש ב-AI כדי ליצור, לפתח ולבנות את העסק בצורה חכמה ויעילה יותר, בלי להיות תלויים בכל שלב באיש מקצוע אחר.
           </motion.p>
@@ -119,9 +119,9 @@ const IdeaToBusiness = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-200 font-medium mb-8 max-w-3xl mx-auto leading-relaxed"
           >
-            בעזרת ChatGPT ושיטת עבודה מסודרת תלמדו לקחת רעיון שעוד לא ברור איך לקדם, או עסק שכבר קיים אבל עדיין לא מספיק ממוקד, ולחבר את כל החלקים שצריך כדי להתחיל להתקדם איתו באמת: להבין מה נכון לפתח, למי נכון למכור, איך לחדד את ההצעה, ואיך להפוך את הרעיונות שלכם למוצרים, מסרים ונכסים שאפשר להתחיל לעבוד איתם בעולם האמיתי.
+            בעזרת ChatGPT ושיטת עבודה מסודרת תלמדו לקחת רעיון או עסק שעדיין לא מספיק ממוקד, ולחבר את כל החלקים שיאפשרו לכם לצאת לשוק. בלי להיות תלויים באיש מקצוע בכל צעד.
           </motion.p>
 
           <motion.div
@@ -130,7 +130,6 @@ const IdeaToBusiness = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="space-y-6"
           >
-            <DraftNote className="max-w-xl mx-auto">נוסח CTA סופי לבחירתך. כפתור הבדיקה משתמש בינתיים בנוסח הקיים.</DraftNote>
             <Button
               asChild={!checkoutLoading}
               disabled={checkoutLoading}
@@ -234,7 +233,7 @@ const IdeaToBusiness = () => {
             מה מקבלים בפועל
           </motion.h2>
 
-          <DraftNote className="max-w-4xl mx-auto mb-8">התכולה שלהלן נשמרה מהדף הקיים. רשימת היחידות הזמינות ומדיניות הגישה ליחידות עתידיות עדיין ממתינות לאישור.</DraftNote>
+          <AvailableLessons />
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {bonuses.map((bonus, index) => (
               <motion.div
