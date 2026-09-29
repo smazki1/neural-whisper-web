@@ -184,11 +184,9 @@ export function TimeSection() {
     <div className={wrap}>
       <header className="mx-auto max-w-3xl text-center">
         <h2 id="time-heading" className={`${heading} text-blue-900`}>״אבל אין לי זמן עכשיו<br className="hidden sm:block" /> לשבת ולבנות את כל זה״</h2>
-        <p className="mt-6 text-lg md:text-xl leading-relaxed">
-          <strong>נכון. הקורס הזה כן דורש עבודה.</strong><br />
-          אין פה כפתור שתלחצו עליו ובבוקר יהיה לכם עסק חדש.
-        </p>
-        <p className="mx-auto mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-slate-600">אבל אם אתם ממילא רוצים לפתח מוצר, לבנות דף, להבין את הקהל או להתחיל לשווק משהו חדש, הזמן הזה יידרש בכל מקרה.</p>
+        <p className="mt-8 md:mt-10 text-lg md:text-xl font-bold leading-relaxed">נכון. הקורס הזה כן דורש עבודה.</p>
+        <p className="mx-auto mt-4 max-w-xl text-lg md:text-xl leading-8">אין פה כפתור שתלחצו עליו ובבוקר יהיה לכם עסק חדש.</p>
+        <p className="mx-auto mt-7 md:mt-8 max-w-xl text-base md:text-lg leading-8 text-slate-600">אבל אם אתם ממילא רוצים לפתח מוצר, לבנות דף, להבין את הקהל או להתחיל לשווק משהו חדש, הזמן הזה יידרש בכל מקרה.</p>
       </header>
 
       <div className="my-8 md:my-10 flex items-center justify-center gap-4">
