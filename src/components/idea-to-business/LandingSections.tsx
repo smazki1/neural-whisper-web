@@ -108,7 +108,7 @@ export function LibrarySection() {
         <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
         <div className="p-6 text-center"><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
       </article>)}</div>
-      <DraftNote className="mt-8 max-w-3xl">רשימת ההרחבות בהמשך היא טיוטה רחבה לבחירתך. יש לסגור את התכולה ואת מדיניות הגישה לתכנים עתידיים לפני הפרסום.</DraftNote>
+      <DraftNote className="mt-8 max-w-3xl">רשימת ההרחבות בהמשך היא טיוטה רחבה לבחירתך. יש לסגור את התכולה לפני הפרסום.</DraftNote>
     </div>
   </section>;
 }
@@ -235,13 +235,13 @@ const faqs = [
   { q: "כמה זמן צריך להשקיע?", a: "זהו קורס מוקלט ללמידה בקצב שלכם. היישום דורש זמן ועבודה, בהתאם לרעיון ולמה שתרצו לבנות. אפשר להתקדם שלב אחר שלב; אין כאן הבטחה לעסק מוכן בלחיצת כפתור." },
   { q: "יש לי כבר עסק ואתר, האם הקורס עדיין רלוונטי?", a: "כן. אפשר לעבוד על מוצר חדש, לחדד הצעה קיימת או לפתח כלי שיעזור לעסק. אין צורך להתחיל את העסק מחדש." },
   { q: "מה זמין בקורס כרגע ומה יתווסף בהמשך?", a: "כבר זמינים שיעורי הפתיחה, יסודות העסק, מוצרים והצעה, בניית דף נחיתה, חומרי העזר והבונוס על מוצר דיגיטלי לחדירה לשוק. באזור ״בקרוב״ מוצגים כיווני ההמשך: תוכן שיווקי, קרוסלות, דיוור, CRM, אוטומציות וכלים חכמים. רשימת התכנים העתידיים עדיין בעריכה ואינה זמינה לצפייה. הפירוט מופיע באזור ״מה מקבלים בפועל״." },
-  { q: "האם יש גישה לתכנים עתידיים?", todo: "מדיניות הגישה ליחידות עתידיות לרוכשי מחיר ההשקה, כולל השאלה אם תהיה תוספת תשלום. התשובה הסופית טרם נקבעה." },
+  { q: "האם יש גישה לתכנים עתידיים?", a: "כן. גם מי שרוכשים את הקורס במחיר ההשקה יקבלו גישה לתכנים חדשים שיתווספו לקורס בהמשך." },
 ];
 
 export function FAQSection() {
-  return <section id="faq" className="bg-white py-16 md:py-24 text-slate-900"><div className="container mx-auto px-6 max-w-4xl"><h2 className={`${heading} text-blue-900 mb-10`}>לפני שמתחילים, כמה תשובות</h2><Accordion type="single" collapsible dir="rtl">{faqs.map((item, i) => <AccordionItem key={item.q} value={`faq-${i}`} className="border-slate-200"><AccordionTrigger className="text-right text-lg md:text-xl gap-5 py-6">{item.q}</AccordionTrigger><AccordionContent className="text-base md:text-lg leading-relaxed text-slate-600">{item.todo ? <DraftNote>{item.todo}</DraftNote> : item.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>;
+  return <section id="faq" className="bg-white py-16 md:py-24 text-slate-900"><div className="container mx-auto px-6 max-w-4xl"><h2 className={`${heading} text-blue-900 mb-10`}>לפני שמתחילים, כמה תשובות</h2><Accordion type="single" collapsible dir="rtl">{faqs.map((item, i) => <AccordionItem key={item.q} value={`faq-${i}`} className="border-slate-200"><AccordionTrigger className="text-right text-lg md:text-xl gap-5 py-6">{item.q}</AccordionTrigger><AccordionContent className="text-base md:text-lg leading-relaxed text-slate-600">{item.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>;
 }
 
 export function ReviewChecklist() {
-  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "מדיניות גישה לעדכונים עתידיים", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "אישור תוכנית ההרחבות לספרייה המתפתחת"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
+  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "אישור תוכנית ההרחבות לספרייה המתפתחת"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
 }
