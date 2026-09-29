@@ -122,13 +122,10 @@ const IdeaToBusiness = () => {
             className="space-y-6"
           >
             <Button
-              asChild={!checkoutLoading}
-              disabled={checkoutLoading}
+              asChild
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-lg md:text-2xl px-6 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-              {checkoutLoading ? 'טוען אפשרות רכישה...' : (
-                <a href={checkoutUrl || '#enroll'} onClick={checkoutUrl ? purchaseClick : undefined}>אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
-              )}
+              <a href="#enroll">אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
             </Button>
 
           </motion.div>
