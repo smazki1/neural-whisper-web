@@ -211,7 +211,7 @@ export function TimeSection() {
             <span className="h-7 w-1 rounded-full bg-yellow-300" aria-hidden="true" />
             <h3 className="text-xl md:text-2xl font-bold">עבודה שמתקדמת</h3>
           </div>
-          <p className="mt-4 text-lg md:text-xl leading-relaxed text-slate-200">לעבוד לפי תהליך מסודר שמוביל אתכם בכל פעם לדבר הבא שצריך לעשות.</p>
+          <p className="mt-4 text-lg md:text-xl leading-relaxed text-slate-200">תדעו מה לקדם עכשיו, מה יכול לחכות ואיך לבנות בעצמכם את מה שצריך כדי להגיע ללקוחות.</p>
           <ol aria-label="שלבי העבודה בקורס" className="my-8 flex items-start">
             {["מחדדים רעיון", "בונים הצעה", "יוצרים בפועל"].map((step, index) => <li key={step} className="relative flex flex-1 flex-col items-center gap-3 text-center before:absolute before:top-4 before:right-1/2 before:h-px before:w-full before:bg-white/20 last:before:hidden">
               <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-yellow-300/50 bg-slate-900 text-sm font-bold text-yellow-300" aria-hidden="true">{index + 1}</span>
@@ -219,8 +219,8 @@ export function TimeSection() {
             </li>)}
           </ol>
           <div className="mt-auto border-t border-white/15 pt-6">
-            <p className="text-base leading-relaxed text-slate-300">המטרה היא לא לגרום לעסק לא לדרוש עבודה.</p>
-            <p className="mt-2 text-2xl md:text-3xl font-bold leading-relaxed text-yellow-300">המטרה היא שהעבודה שלכם<br className="hidden lg:block" /> תהיה הרבה יותר ממוקדת.</p>
+            <p className="text-base leading-relaxed text-slate-300">המטרה של הקורס היא לא לעשות עבורכם את כל העבודה.</p>
+            <p className="mt-2 text-2xl md:text-3xl font-bold leading-relaxed text-yellow-300">אלא לעזור לכם לעבור מהכנות למכירות, ולבנות משם את הצעד הבא בעסק.</p>
           </div>
         </div>
       </div>
