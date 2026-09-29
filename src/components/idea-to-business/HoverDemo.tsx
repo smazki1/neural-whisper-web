@@ -3,7 +3,7 @@ import { useReducedMotion } from "framer-motion";
 import { Pointer } from "lucide-react";
 import "./HoverDemo.css";
 
-type Demo = { src: string; poster: string; alt: string; caption: string };
+type Demo = { title: string; src: string; poster: string; alt: string; caption: string };
 
 export function HoverDemo({ demo }: { demo: Demo }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -42,6 +42,7 @@ export function HoverDemo({ demo }: { demo: Demo }) {
   }, []);
 
   return <div className="demo-showcase">
+    <h3 className="mb-3 text-center text-xl font-bold text-blue-900">{demo.title}</h3>
     <button
       ref={buttonRef}
       type="button"

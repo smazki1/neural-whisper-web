@@ -5,10 +5,10 @@ export const ideaToBusiness = {
   // alt should transcribe the relevant feedback for people using screen readers.
   // Populate only with real, approved assets supplied by Avi.
   examples: [
-    { src: "/media/idea-to-business/room-design.mp4", poster: "/media/idea-to-business/room-design-poster.jpg", alt: "מדמיינים מחדש את החדר", caption: "מעלים תמונה של החדר ומקבלים הדמיית עיצוב שאפשר להשוות למקור." },
-    { src: "/media/idea-to-business/carousel-builder.mp4", poster: "/media/idea-to-business/carousel-builder-poster.jpg", alt: "מהידע שלכם לקרוסלה", caption: "הופכים רעיון לרצף שקפים, עם מסרים ועיצוב שאפשר לערוך." },
-    { src: "/media/idea-to-business/branded-pricelist.mp4", poster: "/media/idea-to-business/branded-pricelist-poster.jpg", alt: "מחירון שמדבר בשפה של העסק", caption: "בונים מחירון מעוצב ומותאם למותג, לשירותים ולמחירים שלכם." },
-    { src: "/media/idea-to-business/product-photography.mp4", poster: "/media/idea-to-business/product-photography-poster.jpg", alt: "מתמונת מוצר לצילום שיווקי", caption: "מעלים תמונת מוצר והופכים אותה לתמונה עם רקע ואווירה חדשים." },
+    { title: "עיצוב חדרים עם AI", src: "/media/idea-to-business/room-design.mp4", poster: "/media/idea-to-business/room-design-poster.jpg", alt: "מדמיינים מחדש את החדר", caption: "מעלים תמונה של החדר ומקבלים הדמיית עיצוב שאפשר להשוות למקור." },
+    { title: "יצירת קרוסלות", src: "/media/idea-to-business/carousel-builder.mp4", poster: "/media/idea-to-business/carousel-builder-poster.jpg", alt: "מהידע שלכם לקרוסלה", caption: "הופכים רעיון לרצף שקפים, עם מסרים ועיצוב שאפשר לערוך." },
+    { title: "מחירון ממותג", src: "/media/idea-to-business/branded-pricelist.mp4", poster: "/media/idea-to-business/branded-pricelist-poster.jpg", alt: "מחירון שמדבר בשפה של העסק", caption: "בונים מחירון מעוצב ומותאם למותג, לשירותים ולמחירים שלכם." },
+    { title: "צילום מוצר עם AI", src: "/media/idea-to-business/product-photography.mp4", poster: "/media/idea-to-business/product-photography-poster.jpg", alt: "מתמונת מוצר לצילום שיווקי", caption: "מעלים תמונת מוצר והופכים אותה לתמונה עם רקע ואווירה חדשים." },
   ],
   aviPhotos: [] as Array<{ src: string; alt: string }>,
   testimonials: [] as Array<{ src: string; alt: string }>,
