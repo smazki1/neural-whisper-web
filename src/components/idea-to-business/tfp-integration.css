@@ -1,0 +1,8 @@
+/* At 320px the page's 24px gutters make the supplied composition too narrow.
+   Give only this component room, while keeping it inside the viewport. */
+@media (max-width: 359px) {
+  .tfp {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+  }
+}
