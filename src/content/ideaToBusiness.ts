@@ -6,10 +6,10 @@ export const ideaToBusiness = {
   // alt should transcribe the relevant feedback for people using screen readers.
   // Populate only with real, approved assets supplied by Avi.
   examples: [
-    { title: "עיצוב חדרים עם AI", src: "/media/idea-to-business/room-design.mp4", poster: "/media/idea-to-business/room-design-poster.jpg", alt: "מדמיינים מחדש את החדר", caption: "מעלים תמונה של החדר ומקבלים הדמיית עיצוב שאפשר להשוות למקור." },
-    { title: "יצירת קרוסלות", src: "/media/idea-to-business/carousel-builder.mp4", poster: "/media/idea-to-business/carousel-builder-poster.jpg", alt: "מהידע שלכם לקרוסלה", caption: "הופכים רעיון לרצף שקפים, עם מסרים ועיצוב שאפשר לערוך." },
-    { title: "מחירון ממותג", src: "/media/idea-to-business/branded-pricelist.mp4", poster: "/media/idea-to-business/branded-pricelist-poster.jpg", alt: "מחירון שמדבר בשפה של העסק", caption: "בונים מחירון מעוצב ומותאם למותג, לשירותים ולמחירים שלכם." },
-    { title: "צילום מוצר עם AI", src: "/media/idea-to-business/product-photography.mp4", poster: "/media/idea-to-business/product-photography-poster.jpg", alt: "מתמונת מוצר לצילום שיווקי", caption: "מעלים תמונת מוצר והופכים אותה לתמונה עם רקע ואווירה חדשים." },
+    { title: "עיצוב חדרים חכם", src: "/media/idea-to-business/room-design.mp4", poster: "/media/idea-to-business/room-design-poster.jpg", alt: "מדמיינים מחדש את החדר", caption: "מעלים תמונה של החדר ומקבלים הדמיית עיצוב שאפשר להשוות למקור." },
+    { title: "עיצוב קרוסלות שיווקיות", src: "/media/idea-to-business/carousel-builder.mp4", poster: "/media/idea-to-business/carousel-builder-poster.jpg", alt: "מהידע שלכם לקרוסלה", caption: "הופכים רעיון לרצף שקפים, עם מסרים ועיצוב שאפשר לערוך." },
+    { title: "יצירת מחירון והצעות מחיר מעוצבות", src: "/media/idea-to-business/branded-pricelist.mp4", poster: "/media/idea-to-business/branded-pricelist-poster.jpg", alt: "מחירון שמדבר בשפה של העסק", caption: "בונים מחירון מעוצב ומותאם למותג, לשירותים ולמחירים שלכם." },
+    { title: "תמונות מוקאפ למוצרים", src: "/media/idea-to-business/product-photography.mp4", poster: "/media/idea-to-business/product-photography-poster.jpg", alt: "מתמונת מוצר לצילום שיווקי", caption: "מעלים תמונת מוצר והופכים אותה לתמונה עם רקע ואווירה חדשים." },
   ],
   aviPhotos: [
     { src: "/images/idea-to-business/avi-workshop-audience.jpg", alt: "אבי מרצה בסדנה מול משתתפים שעובדים עם מחשבים ניידים", position: "50% 76%" },
