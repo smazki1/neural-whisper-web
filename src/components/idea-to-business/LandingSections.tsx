@@ -153,7 +153,6 @@ export function AvailableLessons() {
   return <div id="available-lessons" className="max-w-4xl mx-auto mb-12 text-white scroll-mt-8">
     <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
       <h3 className="text-2xl font-bold">כבר מחכה לכם בקורס</h3>
-      <span className="text-green-300 font-bold">זמין עכשיו</span>
     </div>
     <Accordion type="multiple" defaultValue={["available-0"]} dir="rtl" className="border-y border-white/20">
       {availableCourseModules.map((module, i) => <AccordionItem key={module.title} value={`available-${i}`} className="border-white/20">
