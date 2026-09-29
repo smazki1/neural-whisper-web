@@ -186,21 +186,8 @@ export function AvailableLessons() {
 }
 
 export function TimeSection() {
-  return <section id="time" aria-labelledby="time-heading" className="bg-white py-16 md:py-24 text-slate-900">
+  return <section id="time" aria-labelledby="time-heading" className="bg-white py-16 md:py-24">
     <div className={wrap}>
-      <header className="mx-auto max-w-3xl text-center">
-        <h2 id="time-heading" className={`${heading} text-blue-900`}>״אבל אין לי זמן עכשיו<br className="hidden sm:block" /> לשבת ולבנות את כל זה״</h2>
-        <p className="mt-8 md:mt-10 text-lg md:text-xl font-bold leading-relaxed">נכון. הקורס הזה כן דורש עבודה.</p>
-        <p className="mx-auto mt-4 max-w-xl text-lg md:text-xl leading-8">אין פה כפתור שתלחצו עליו ובבוקר יהיה לכם עסק חדש.</p>
-        <p className="mx-auto mt-7 md:mt-8 max-w-xl text-base md:text-lg leading-8 text-slate-600">אבל אם אתם ממילא רוצים לפתח מוצר, לבנות דף, להבין את הקהל או להתחיל לשווק משהו חדש, הזמן הזה יידרש בכל מקרה.</p>
-      </header>
-
-      <div className="my-8 md:my-10 flex items-center justify-center gap-4">
-        <span className="hidden h-px w-20 bg-slate-200 sm:block" aria-hidden="true" />
-        <p className="text-xl md:text-2xl font-bold text-blue-900">השאלה היא איפה הוא ילך.</p>
-        <span className="hidden h-px w-20 bg-slate-200 sm:block" aria-hidden="true" />
-      </div>
-
       <TimeToProgress />
     </div>
   </section>;

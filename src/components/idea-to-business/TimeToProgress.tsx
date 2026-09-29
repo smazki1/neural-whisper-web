@@ -55,13 +55,7 @@ export function TimeToProgress() {
     </svg>
 
     <div className="tfp-head">
-      <div className="tfp-h tfp-h-a" aria-hidden="true">
-        <h3 className="tfp-title">זמן שמתפזר</h3>
-        <p className="tfp-sub">עוד חיפוש, עוד ניסיון, עוד התחלה מחדש.</p>
-      </div>
-      <div className="tfp-h tfp-h-b">
-        <h3 className="tfp-title">״אבל אין לי זמן עכשיו לשבת ולבנות את כל זה״</h3>
-      </div>
+      <h2 id="time-heading" className="tfp-title">״אבל אין לי זמן עכשיו<br className="hidden sm:block" /> לשבת ולבנות את כל זה״</h2>
     </div>
 
     <ul className="tfp-chaos" aria-hidden="true" role="list">

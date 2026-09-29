@@ -1,19 +1,18 @@
-/* Preserve the supplied heading geometry against the landing page heading rule. */
-.tfp h3.tfp-title {
-  padding: 0;
-  line-height: 1.35;
-}
-
-/* The longer quote replaces the final heading and subtitle as one block. */
-.tfp .tfp-h-b .tfp-title {
+/* Keep one persistent, centered heading inside the animation's dark stage. */
+.tfp h2.tfp-title {
   display: block;
-  max-width: 22em;
-  border-inline-start: 4px solid var(--tfp-amber);
-  padding-inline-start: 18px;
+  max-width: 48rem;
+  margin-inline: auto;
+  padding: 0.08em 0;
+  font-size: 30px;
+  line-height: 1.4;
+  color: #fff;
+  text-align: center;
   text-wrap: balance;
 }
-.tfp .tfp-h-b .tfp-title::before {
-  display: none;
+
+@container tfp (min-width: 720px) {
+  .tfp h2.tfp-title { font-size: 36px; }
 }
 
 /* At 320px the page's 24px gutters make the supplied composition too narrow.
