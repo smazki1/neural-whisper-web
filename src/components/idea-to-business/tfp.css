@@ -27,7 +27,7 @@
 /* ---------- הבמה ---------- */
 .tfp-stage {
   position: relative;
-  height: 830px;                       /* גובה קבוע — בלי קפיצות בעמוד */
+  height: 790px;                       /* גובה קבוע — בלי קפיצות בעמוד */
   overflow: hidden;
   isolation: isolate;
   border-radius: var(--tfp-radius);
@@ -66,62 +66,31 @@
   opacity: .9;
 }
 
-/* ---------- כותרות: מתחלפות באותו מקום, כיחידות שלמות ---------- */
+/* ---------- כותרת עליונה: קבועה, בלי תנועה ---------- */
 .tfp-head {
   position: absolute;
   z-index: 3;
   top: 32px;
   right: 24px;
   left: 24px;
-  height: 156px;
 }
-.tfp-h {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .7s ease, transform .8s var(--tfp-soft);
-}
-.tfp-title {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.tfp-quote {
   margin: 0;
-  font-size: clamp(26px, 7.4cqi, 30px);
+  font-size: clamp(22px, 7cqi, 28px);
   font-weight: 700;
   line-height: 1.35;
+  color: var(--tfp-ink);
+  text-align: center;
+  text-wrap: balance;
 }
-.tfp-h-b .tfp-title::before {
-  content: "";
-  flex: none;
-  width: 4px;
-  height: 1.1em;
-  border-radius: 2px;
-  background: var(--tfp-amber);
-}
-.tfp-sub {
-  max-width: 34em;
-  margin: 10px 0 0;
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--tfp-ink-2);
-  text-wrap: pretty;
-}
-.tfp-h-b .tfp-sub { color: rgba(244, 241, 234, .84); }
-
-.is-a .tfp-h-a { opacity: 1; transform: none; }
-.is-b .tfp-h-a { opacity: 0; transform: translateY(-8px); transition-duration: .5s; }
-.is-c .tfp-h-b { opacity: 1; transform: none; }
+.tfp-quote > span { display: block; }
 
 /* ---------- המשימות שמפזרות את הזמן ---------- */
 .tfp-chaos {
   position: absolute;
   z-index: 2;
-  top: 200px;
-  bottom: 96px;
+  top: 130px;
+  bottom: 290px;
   right: 24px;
   left: 24px;
   pointer-events: none;
@@ -152,10 +121,10 @@
   to   { transform: translate(var(--dx), var(--dy)); }
 }
 .tfp-chip:nth-child(1) { right: 0;  top: 1%;  --cr: -2deg;   --cd: .45s; --fd: 0s;    --dx: 3px;  --dy: -5px; --ox: 18px;  --oy: -14px; }
-.tfp-chip:nth-child(2) { left: 0;   top: 20%; --cr: 1.5deg;  --cd: .85s; --fd: -1s;   --dx: -4px; --dy: 4px;  --ox: -20px; --oy: -8px; }
-.tfp-chip:nth-child(3) { right: 4%; top: 40%; --cr: -1deg;   --cd: 1.25s; --fd: -2s;  --dx: 4px;  --dy: 5px;  --ox: 16px;  --oy: 10px; }
+.tfp-chip:nth-child(2) { left: 0;   top: 19%; --cr: 1.5deg;  --cd: .85s; --fd: -1s;   --dx: -4px; --dy: 4px;  --ox: -20px; --oy: -8px; }
+.tfp-chip:nth-child(3) { right: 4%; top: 38%; --cr: -1deg;   --cd: 1.25s; --fd: -2s;  --dx: 4px;  --dy: 5px;  --ox: 16px;  --oy: 10px; }
 .tfp-chip:nth-child(4) { left: 2%;  top: 60%; --cr: 2deg;    --cd: 1.65s; --fd: -3s;  --dx: -3px; --dy: -4px; --ox: -18px; --oy: 8px; }
-.tfp-chip:nth-child(5) { right: 0;  top: 78%; --cr: -1.5deg; --cd: 2.05s; --fd: -1.5s; --dx: 4px; --dy: 3px;  --ox: 10px;  --oy: 18px; }
+.tfp-chip:nth-child(5) { right: 0;  top: 80%; --cr: -1.5deg; --cd: 2.05s; --fd: -1.5s; --dx: 4px; --dy: 3px;  --ox: 10px;  --oy: 18px; }
 
 .is-a .tfp-chip { opacity: 1; transform: rotate(var(--cr)); }
 .is-b .tfp-chip {
@@ -169,7 +138,7 @@
 .tfp-diagram {
   position: absolute;
   z-index: 3;
-  top: 208px;
+  top: 164px;
   right: 24px;
   left: 24px;
   height: 330px;
@@ -243,11 +212,23 @@
 .tfp-step.is-on .tfp-node { opacity: 1; transform: none; }
 .tfp-step.is-on .tfp-label { opacity: 1; }
 
-/* ---------- משפט הסיום ---------- */
+/* גיבוי: אם ה־JS לא רץ, קו סטטי מחבר בין השלבים (ה־JS מסמן ‎.tfp-ready‎ ומסתיר אותו) */
+.tfp-diagram::before {
+  content: "";
+  position: absolute;
+  top: 84px;
+  bottom: 4px;
+  left: calc(100% - 39px);
+  width: 2px;
+  background: rgba(250, 204, 21, .85);
+}
+.tfp-ready .tfp-diagram::before { display: none; }
+
+/* ---------- משפט תחתון: קבוע, בלי תנועה ---------- */
 .tfp-say {
   position: absolute;
   z-index: 3;
-  top: 562px;
+  top: 518px;
   right: 24px;
   left: 24px;
   margin: 0;
@@ -255,9 +236,6 @@
 .tfp-say-1,
 .tfp-say-2 {
   display: block;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .9s ease, transform 1s var(--tfp-soft);
 }
 .tfp-say-1 {
   margin-bottom: 10px;
@@ -274,16 +252,13 @@
   color: var(--tfp-amber);
   text-wrap: balance;
 }
-.is-d .tfp-say-1 { opacity: 1; transform: none; }
-.is-d .tfp-say-2 { opacity: 1; transform: none; transition-delay: .3s; }
 
 /* ---------- מחשב ---------- */
 @container tfp (min-width: 720px) {
-  .tfp-head { top: 48px; right: 56px; left: 56px; height: 124px; }
-  .tfp-title { font-size: clamp(30px, 3.4cqi, 36px); }
-  .tfp-sub { font-size: 19px; }
+  .tfp-head { top: 44px; right: 56px; left: 56px; }
+  .tfp-quote { font-size: clamp(30px, 3.6cqi, 38px); }
 
-  .tfp-chaos { top: 190px; bottom: 40px; right: 56px; left: 56px; }
+  .tfp-chaos { top: 168px; bottom: 196px; right: 56px; left: 56px; }
   .tfp-chip > span { font-size: 17px; }
   .tfp-chip:nth-child(1) { right: 4%;  left: auto; top: 6%; }
   .tfp-chip:nth-child(2) { right: 44%; left: auto; top: 0; }
@@ -291,7 +266,7 @@
   .tfp-chip:nth-child(4) { right: 14%; left: auto; top: 52%; }
   .tfp-chip:nth-child(5) { left: 10%;  right: auto; top: 74%; }
 
-  .tfp-diagram { top: 196px; right: 56px; left: 56px; height: 170px; }
+  .tfp-diagram { top: 200px; right: 56px; left: 56px; height: 170px; }
   .tfp-knot { top: calc(50% - 30px); width: 104px; height: 60px; }
   .tfp-knot-cap { top: calc(100% + 6px); right: 50%; transform: translateX(50%); }
   .tfp-step,
@@ -300,6 +275,7 @@
   .tfp-step:nth-of-type(2) { top: 50%; left: calc((100% - 124px) * .5); }
   .tfp-step:nth-of-type(3) { top: 50%; left: calc((100% - 124px) * .16); }
   .tfp-end { left: 0; }
+  .tfp-diagram::before { top: calc(50% - 1px); bottom: auto; left: 0; right: 124px; width: auto; height: 2px; }
   .tfp-label { top: 36px; right: auto; left: 0; transform: translateX(-50%); }
 
   .tfp-say { top: auto; bottom: 48px; right: 56px; left: 56px; }

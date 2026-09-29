@@ -7,7 +7,7 @@
   var PHASES = ["is-a", "is-b", "is-c", "is-d", "is-done"];
   // ציר הזמן (מילישניות)
   var T = { a: 60, drawFrom: 300, drawDur: 2700, b: 3200, morphFrom: 3350, morphDur: 2300,
-            c: 5050, progFrom: 5750, progDur: 2300, d: 8300, done: 9900 };
+            c: 5050, progFrom: 5750, progDur: 2300, d: 8100, done: 8700 };
   var N = 72, K = 26;                  // נקודות הקו; מתוכן — נקודות הקשר
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -178,8 +178,10 @@
       if (io) io.disconnect();
       if (ro) ro.disconnect();
       delete root.__tfp;
+      root.classList.remove("tfp-ready");
     }
     root.__tfp = { destroy: destroy, replay: play };
+    root.classList.add("tfp-ready");
 
     if (reduceMotion) {
       stage.classList.add("tfp-static");

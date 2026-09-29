@@ -16,7 +16,7 @@ function loadRuntime() {
   if (!runtimeReady) {
     runtimeReady = new Promise<void>((resolve, reject) => {
       const script = document.createElement("script");
-      script.src = "/time-to-progress/tfp.js?v=3";
+      script.src = "/time-to-progress/tfp.js?v=4";
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => {
@@ -55,7 +55,7 @@ export function TimeToProgress() {
     </svg>
 
     <div className="tfp-head">
-      <h2 id="time-heading" className="tfp-title">״אבל אין לי זמן עכשיו<br className="hidden sm:block" /> לשבת ולבנות את כל זה״</h2>
+      <h3 id="time-heading" className="tfp-quote"><span>״אבל אין לי זמן עכשיו</span> <span>לשבת ולבנות את כל זה״</span></h3>
     </div>
 
     <ul className="tfp-chaos" aria-hidden="true" role="list">
