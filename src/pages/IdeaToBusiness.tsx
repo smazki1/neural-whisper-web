@@ -439,14 +439,6 @@ const IdeaToBusiness = () => {
             )}
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-yellow-400 mt-6 font-medium"
-          >
-            גישה ליחידות הזמינות · קבוצת WhatsApp לתמיכה
-          </motion.p>
         </div>
       </section>
       <ReviewChecklist />
