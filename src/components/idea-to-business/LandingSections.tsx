@@ -106,7 +106,7 @@ function ComingSoonArt({ kind }: { kind: string }) {
 export function LibrarySection() {
   return <section id="growing-library" className="bg-slate-900 py-16 md:py-24 text-white">
     <div className={wrap}>
-      <div className="max-w-3xl mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
+      <div className="max-w-3xl mx-auto text-center mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
       <div className="grid gap-6 lg:grid-cols-3">{library.map(item => <article key={item.title} className="future-library-card rounded-2xl border border-white/15 bg-white/[0.04] overflow-hidden">
         <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
         <div className="p-6"><item.icon className="h-6 w-6 text-yellow-300 mb-4" aria-hidden="true" /><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
