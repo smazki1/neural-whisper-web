@@ -169,7 +169,7 @@ export function AvailableLessons() {
             <h5 className="text-right text-xl md:text-2xl mt-4 mb-5 font-bold">{group.title}</h5>
             <ul className="space-y-4 text-lg text-slate-100 leading-relaxed">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul>
           </div>
-          <aside aria-label={`עלות הבונוס: ${group.title}`} className="rounded-xl border border-yellow-200/20 bg-slate-950/30 px-5 py-6 text-center md:self-center">
+          <aside aria-label={`עלות הבונוס: ${group.title}`} className="px-5 py-6 text-center md:self-center">
             <p className="text-base font-semibold text-yellow-100 mb-2">עלות הבונוס</p>
             <p className="text-3xl md:text-4xl font-bold text-yellow-300"><bdi>₪{group.bonusPrice}</bdi></p>
           </aside>
