@@ -4,10 +4,16 @@
   line-height: 1.35;
 }
 
-/* The global touch-target rule otherwise changes the supplied replay layout. */
-.tfp .tfp-replay {
-  min-width: 0;
-  min-height: 0;
+/* The longer quote replaces the final heading and subtitle as one block. */
+.tfp .tfp-h-b .tfp-title {
+  display: block;
+  max-width: 22em;
+  border-inline-start: 4px solid var(--tfp-amber);
+  padding-inline-start: 18px;
+  text-wrap: balance;
+}
+.tfp .tfp-h-b .tfp-title::before {
+  display: none;
 }
 
 /* At 320px the page's 24px gutters make the supplied composition too narrow.

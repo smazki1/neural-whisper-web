@@ -16,7 +16,7 @@ function loadRuntime() {
   if (!runtimeReady) {
     runtimeReady = new Promise<void>((resolve, reject) => {
       const script = document.createElement("script");
-      script.src = "/time-to-progress/tfp.js?v=2";
+      script.src = "/time-to-progress/tfp.js?v=3";
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => {
@@ -60,8 +60,7 @@ export function TimeToProgress() {
         <p className="tfp-sub">עוד חיפוש, עוד ניסיון, עוד התחלה מחדש.</p>
       </div>
       <div className="tfp-h tfp-h-b">
-        <h3 className="tfp-title">עבודה שמתקדמת</h3>
-        <p className="tfp-sub">תדעו מה לקדם עכשיו, מה יכול לחכות ואיך לבנות בעצמכם את מה שצריך כדי להגיע ללקוחות.</p>
+        <h3 className="tfp-title">״אבל אין לי זמן עכשיו לשבת ולבנות את כל זה״</h3>
       </div>
     </div>
 
@@ -88,10 +87,7 @@ export function TimeToProgress() {
       <span className="tfp-say-2">אלא לעזור לכם לעבור מהכנות למכירות, ולבנות משם את הצעד הבא בעסק.</span>
     </p>
 
-    <button className="tfp-replay" type="button">
-      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8a4.8 4.8 0 1 0 1.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M4.6 1.8v2.9H1.7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-      צפייה חוזרת
-    </button>
+
   </div>
 </section>
   );

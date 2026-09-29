@@ -1,6 +1,6 @@
 /* "מזמן שמתפזר לעבודה שמתקדמת" — מנגנון האנימציה.
    קו אחד שמסתבך בין המשימות, נמשך ומתיישר לדרך עם שלושה שלבים.
-   הפעלה אחת כשהרכיב נכנס למסך, עצירה בסוף, הפעלה חוזרת בכפתור. */
+   הפעלה בכניסה למסך ולולאה עם השהיה של ארבע שניות בסיום. */
 (function () {
   "use strict";
 
@@ -52,8 +52,7 @@
     var knot = root.querySelector(".tfp-knot");
     var end = root.querySelector(".tfp-end");
     var steps = [].slice.call(root.querySelectorAll(".tfp-step"));
-    var replay = root.querySelector(".tfp-replay");
-    var raf = 0, t0 = 0, running = false, alive = true, io = null, ro = null;
+    var loopTimer = 0, raf = 0, t0 = 0, running = false, alive = true, io = null, ro = null;
     var state = { draw: 1, morph: 1, prog: 1 };
 
     function center(el, s) {
@@ -129,11 +128,17 @@
       if (t >= T.c) stage.classList.add("is-c");
       if (t >= T.d) stage.classList.add("is-d");
       render();
-      if (t >= T.done) { stage.classList.add("is-done"); running = false; return; }
+      if (t >= T.done) {
+        stage.classList.add("is-done");
+        running = false;
+        loopTimer = setTimeout(function () { if (alive) play(); }, 4000);
+        return;
+      }
       raf = requestAnimationFrame(frame);
     }
 
     function reset() {
+      clearTimeout(loopTimer);
       cancelAnimationFrame(raf);
       running = false;
       stage.classList.add("tfp-instant");
@@ -152,18 +157,13 @@
     }
 
     function showFinal() {
+      clearTimeout(loopTimer);
       cancelAnimationFrame(raf);
       running = false;
       ["is-a", "is-b", "is-c", "is-d", "is-done"].forEach(function (c) { stage.classList.add(c); });
       state.draw = 1; state.morph = 1; state.prog = 1;
       render();
     }
-
-    replay.addEventListener("click", function () {
-      play();
-      stage.setAttribute("tabindex", "-1");
-      stage.focus({ preventScroll: true });
-    });
 
     // שינוי גודל: מציירים מחדש את המצב הנוכחי
     if ("ResizeObserver" in window) {
@@ -173,6 +173,7 @@
 
     function destroy() {
       alive = false;
+      clearTimeout(loopTimer);
       cancelAnimationFrame(raf);
       if (io) io.disconnect();
       if (ro) ro.disconnect();
@@ -183,7 +184,6 @@
     if (reduceMotion) {
       stage.classList.add("tfp-static");
       showFinal();
-      replay.hidden = true;
       return destroy;
     }
 
@@ -211,7 +211,7 @@
         inView = visible;
         // Entering the viewport starts a fresh run, without pointer interaction.
         if (visible) play();
-        else { cancelAnimationFrame(raf); running = false; }
+        else { clearTimeout(loopTimer); cancelAnimationFrame(raf); running = false; }
       }, { threshold: .1 });
       io.observe(stage);
     });
