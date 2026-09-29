@@ -154,3 +154,117 @@
   .idea-to-business .audience-gallery figure:nth-child(even) img { aspect-ratio: 4 / 5; }
   .idea-to-business .testimonials-gallery { columns: 1; }
 }
+
+/* Desktop reading scale. About's pending historical layout is deliberately unscoped. */
+@media (min-width: 1024px) {
+  .idea-to-business .landing-responsive {
+    --landing-body: clamp(20px, calc(9px + .85vw), 26px);
+    --landing-lead: clamp(22px, calc(10px + 1vw), 30px);
+    --landing-title: clamp(36px, calc(12px + 2vw), 50px);
+    --landing-subtitle: clamp(26px, calc(10px + 1.2vw), 34px);
+    --landing-gap: clamp(32px, 3vw, 56px);
+  }
+
+  .idea-to-business .landing-responsive > .container,
+  .idea-to-business #feedback > .audience-shell {
+    width: calc(100% - clamp(64px, 7vw, 160px));
+    max-width: 1600px;
+    padding-inline: 0;
+  }
+
+  .idea-to-business .landing-responsive :is(.text-base, .text-lg) {
+    font-size: var(--landing-body);
+    line-height: 1.65;
+  }
+  .idea-to-business .landing-responsive .text-xl {
+    font-size: var(--landing-lead);
+    line-height: 1.65;
+  }
+  .idea-to-business .landing-responsive .text-2xl {
+    font-size: var(--landing-subtitle);
+    line-height: 1.5;
+  }
+  .idea-to-business .landing-responsive h2 {
+    font-size: var(--landing-title);
+    line-height: 1.4;
+  }
+  .idea-to-business .landing-responsive :is(h3, h4, h5):not(.tfp-quote) {
+    font-size: var(--landing-subtitle);
+    line-height: 1.45;
+  }
+  .idea-to-business .landing-hero h1 {
+    font-size: clamp(64px, 5vw, 96px);
+  }
+
+  /* Prose stays shorter than media and curriculum rows. */
+  .idea-to-business .landing-responsive .max-w-3xl {
+    max-width: 1040px;
+  }
+  .idea-to-business #course-problem .max-w-4xl {
+    max-width: 1060px;
+  }
+  .idea-to-business .landing-hero p {
+    max-width: 36em;
+    font-size: var(--landing-lead);
+  }
+  .idea-to-business #course-problem h2 {
+    max-width: 24em;
+    margin-inline: auto;
+  }
+  .idea-to-business #course-solution > .grid {
+    gap: clamp(48px, 5vw, 96px);
+  }
+  .idea-to-business #course-solution h2 { max-width: 15em; }
+  .idea-to-business #course-solution p { max-width: 32em; }
+  .idea-to-business #business-scenarios { max-width: 1280px; }
+  .idea-to-business #business-scenarios article { padding: clamp(28px, 2.4vw, 44px); }
+  .idea-to-business #business-scenarios p { max-width: 48em; }
+  .idea-to-business #building-products > .grid {
+    grid-template-columns: minmax(0, 1fr) 502px;
+    gap: clamp(48px, 5vw, 96px);
+  }
+  .idea-to-business #building-products > .grid > div:first-child { max-width: 720px; }
+  .idea-to-business #examples .grid { gap: var(--landing-gap); }
+  .idea-to-business #examples h2 { max-width: 25em; margin-inline: auto; }
+  .idea-to-business #growing-library p { font-size: var(--landing-lead); }
+
+  .idea-to-business #available-lessons,
+  .idea-to-business .upcoming-library { max-width: none; }
+  .idea-to-business #available-lessons > [data-orientation],
+  .idea-to-business #available-lessons > div:first-child { max-width: 1280px; margin-inline: auto; }
+  .idea-to-business #upcoming-content article {
+    grid-template-columns: minmax(0, 1fr) clamp(220px, 20vw, 320px);
+    padding: clamp(28px, 2.4vw, 44px);
+    gap: var(--landing-gap);
+  }
+  .idea-to-business #upcoming-content h4 { font-size: var(--landing-title); }
+  .idea-to-business #upcoming-content ul { max-width: 42em; }
+  .idea-to-business #upcoming-content aside p:last-child { font-size: clamp(40px, 3vw, 58px); }
+  .idea-to-business .upcoming-library > .grid { gap: var(--landing-gap); }
+  .idea-to-business .future-library-card > div:last-child { padding: clamp(24px, 2vw, 36px); }
+  .idea-to-business .landing-curriculum > .container > .grid {
+    max-width: none;
+    gap: var(--landing-gap);
+    font-size: var(--landing-body);
+    line-height: 1.65;
+  }
+  .idea-to-business .landing-curriculum > .container > aside { max-width: 1100px; }
+  .idea-to-business #launch-offer-heading { font-size: var(--landing-title); }
+  .idea-to-business .landing-audience > .container > .grid { gap: var(--landing-gap); }
+  .idea-to-business .landing-audience span.text-gray-800 {
+    font-size: var(--landing-body);
+    line-height: 1.65;
+  }
+  .idea-to-business .testimonials-gallery { column-gap: var(--landing-gap); }
+  .idea-to-business .testimonials-gallery figure { margin-bottom: var(--landing-gap); }
+
+  /* The animated component keeps its own typography and timeline. */
+  .idea-to-business #time > .container { max-width: 1440px; }
+  .idea-to-business #faq > .container { max-width: 1200px; }
+  .idea-to-business #enroll > .container { max-width: 1120px; }
+  .idea-to-business #enroll .max-w-2xl { max-width: 960px; }
+  .idea-to-business #enroll .max-w-sm { max-width: 480px; }
+  .idea-to-business #start-building > .container > p { max-width: 38em; }
+  .idea-to-business .landing-hero a,
+  .idea-to-business #start-building a { font-size: var(--landing-lead); }
+}

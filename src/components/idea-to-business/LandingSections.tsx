@@ -7,7 +7,7 @@ import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
 import { availableCourseModules, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
 import { motion, useReducedMotion } from "framer-motion";
 
-const wrap = "container mx-auto px-6 max-w-6xl font-medium";
+const wrap = "landing-shell container mx-auto px-6 max-w-6xl font-medium";
 const heading = "text-3xl md:text-4xl font-bold leading-tight text-balance";
 
 export function SolutionSection() {
@@ -15,7 +15,7 @@ export function SolutionSection() {
   const initial = reducedMotion ? false : { opacity: 0, y: 24 };
   const visible = { opacity: 1, y: 0 };
 
-  return <section id="course-solution" className="bg-slate-900 py-16 md:py-24 text-white">
+  return <section id="course-solution" className="landing-responsive bg-slate-900 py-16 md:py-24 text-white">
     <div className={`${wrap} grid gap-9 md:gap-12 lg:gap-20 md:grid-cols-[1fr_1.05fr] md:items-start`}>
       <motion.div initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65 }}>
         <p className="text-lg text-yellow-300 font-bold mb-4">מרעיון למוצר שאפשר להתחיל למכור</p>
@@ -40,7 +40,7 @@ const situations = [
 
 export function PossibilitiesSection() {
   const reducedMotion = useReducedMotion();
-  return <section id="possibilities" className="relative bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 py-16 md:py-20 text-white">
+  return <section id="possibilities" className="landing-responsive relative bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 py-16 md:py-20 text-white">
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true"><div className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${heroBackground03})` }} /></div>
     <div className={`${wrap} relative`}>
       <header className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
@@ -61,7 +61,7 @@ export function PossibilitiesSection() {
 }
 
 export function VibeCodingSection() {
-  return <section id="building-products" className="border-t border-white/10 bg-slate-900 py-16 md:py-24 text-slate-200">
+  return <section id="building-products" className="landing-responsive border-t border-white/10 bg-slate-900 py-16 md:py-24 text-slate-200">
     <div className={`${wrap} grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center`}>
       <div><h2 className={`${heading} text-white mb-8`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-xl md:text-2xl leading-relaxed space-y-6"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p></div></div>
       <div className="w-full max-w-[502px] min-w-0 rounded-2xl bg-slate-900 text-white"><KnowledgeTakesShape /></div>
@@ -70,7 +70,7 @@ export function VibeCodingSection() {
 }
 
 export function OutputsSection() {
-  return <section id="examples" className="bg-slate-100 py-16 md:py-24 text-slate-900">
+  return <section id="examples" className="landing-responsive bg-slate-100 py-16 md:py-24 text-slate-900">
     <div className={wrap}>
       <h2 className={`${heading} text-blue-900 text-center mb-10 md:mb-14`}>מעולם לא היה קל יותר להפוך את הרעיון שלכם לאפליקציה</h2>
       <div className="grid gap-7 md:gap-10 md:grid-cols-2">
@@ -96,7 +96,7 @@ function ComingSoonArt({ kind }: { kind: string }) {
 }
 
 export function LibrarySection() {
-  return <section id="growing-library" className="bg-slate-900 py-16 md:py-24 text-white">
+  return <section id="growing-library" className="landing-responsive bg-slate-900 py-16 md:py-24 text-white">
     <div className={wrap}>
       <div className="max-w-3xl mx-auto text-center mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-xl md:text-2xl font-semibold leading-relaxed text-slate-100">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-xl md:text-2xl font-semibold leading-relaxed text-slate-100 mt-5">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
 
@@ -105,7 +105,7 @@ export function LibrarySection() {
 }
 
 export function UpcomingLibraryCards() {
-  return <div className="mx-auto mb-12 max-w-[1104px] font-medium text-white">
+  return <div className="upcoming-library mx-auto mb-12 max-w-[1104px] font-medium text-white">
       <div className="grid gap-6 lg:grid-cols-3">{library.map(item => <article key={item.title} className="future-library-card rounded-2xl border border-white/15 bg-white/[0.04] overflow-hidden">
         <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
         <div className="p-6 text-center"><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
@@ -137,7 +137,7 @@ export function AboutAviSection() {
 
 export function TestimonialsSection() {
   const { testimonials } = ideaToBusiness;
-  return <section id="feedback" className="bg-slate-100 py-16 md:py-24 text-slate-900">
+  return <section id="feedback" className="landing-responsive bg-slate-100 py-16 md:py-24 text-slate-900">
     <div className="audience-shell">
       <h2 className={`${heading} text-blue-900 text-center mb-10`}>אל תיקחו רק את המילה שלי</h2>
       <div className="testimonials-gallery">
@@ -186,7 +186,7 @@ export function AvailableLessons() {
 }
 
 export function TimeSection() {
-  return <section id="time" aria-labelledby="time-heading" className="bg-white py-16 md:py-24">
+  return <section id="time" aria-labelledby="time-heading" className="landing-responsive bg-white py-16 md:py-24">
     <div className={wrap}>
       <TimeToProgress />
     </div>
@@ -204,5 +204,5 @@ const faqs = [
 ];
 
 export function FAQSection() {
-  return <section id="faq" className="bg-white py-16 md:py-24 text-slate-900"><div className="container mx-auto px-6 max-w-4xl"><h2 className={`${heading} text-blue-900 mb-10`}>לפני שמתחילים, כמה תשובות</h2><Accordion type="single" collapsible dir="rtl">{faqs.map((item, i) => <AccordionItem key={item.q} value={`faq-${i}`} className="border-slate-200"><AccordionTrigger className="text-right text-lg md:text-xl gap-5 py-6">{item.q}</AccordionTrigger><AccordionContent className="text-base md:text-lg leading-relaxed text-slate-600">{item.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>;
+  return <section id="faq" className="landing-responsive bg-white py-16 md:py-24 text-slate-900"><div className="container mx-auto px-6 max-w-4xl"><h2 className={`${heading} text-blue-900 mb-10`}>לפני שמתחילים, כמה תשובות</h2><Accordion type="single" collapsible dir="rtl">{faqs.map((item, i) => <AccordionItem key={item.q} value={`faq-${i}`} className="border-slate-200"><AccordionTrigger className="text-right text-lg md:text-xl gap-5 py-6">{item.q}</AccordionTrigger><AccordionContent className="text-base md:text-lg leading-relaxed text-slate-600">{item.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>;
 }

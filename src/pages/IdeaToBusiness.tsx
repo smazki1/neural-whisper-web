@@ -82,7 +82,7 @@ const IdeaToBusiness = () => {
         <a href="#available-lessons">לתוכנית הקורס</a>
       </nav>
       {/* Hero Section */}
-      <section className="relative min-h-screen py-16 md:py-24 flex items-center justify-center overflow-hidden">
+      <section className="landing-responsive landing-hero relative min-h-screen py-16 md:py-24 flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroBackground01})` }}
@@ -130,7 +130,7 @@ const IdeaToBusiness = () => {
       {/* Problem Section */}
       <section
         id="course-problem"
-        className="py-20 bg-gradient-to-br from-slate-50 to-gray-100 relative overflow-hidden"
+        className="landing-responsive py-20 bg-gradient-to-br from-slate-50 to-gray-100 relative overflow-hidden"
       >
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
@@ -178,7 +178,7 @@ const IdeaToBusiness = () => {
       <LibrarySection />
 
       {/* Bonuses Section */}
-      <section className="py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">
+      <section className="landing-responsive landing-curriculum py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(234,179,8,0.1),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(249,115,22,0.1),transparent_50%)]"></div>
         <div className="container mx-auto px-6 relative z-10">
@@ -244,7 +244,7 @@ const IdeaToBusiness = () => {
       <AboutAviSection />
 
       {/* Target Audience */}
-      <section className="py-12 md:py-16 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+      <section className="landing-responsive landing-audience py-12 md:py-16 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-50/30 to-red-50/30"></div>
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid items-start md:grid-cols-2 gap-5 md:gap-6">
@@ -314,7 +314,7 @@ const IdeaToBusiness = () => {
       <TimeSection />
 
       {/* CTA before frequently asked questions */}
-      <section id="start-building" className="py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
+      <section id="start-building" className="landing-responsive py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{ backgroundImage: `url(${heroBackground01})` }}
@@ -380,7 +380,7 @@ const IdeaToBusiness = () => {
       <FAQSection />
 
       {/* Pricing Section */}
-      <section id="enroll" aria-labelledby="enroll-heading" className="bg-slate-50 py-14 md:py-20">
+      <section id="enroll" aria-labelledby="enroll-heading" className="landing-responsive bg-slate-50 py-14 md:py-20">
         <div className="container mx-auto max-w-4xl px-5 sm:px-6">
           <div className="rounded-3xl border border-slate-700 bg-slate-900 px-6 py-8 md:px-12 md:py-10 text-center text-white shadow-[0_24px_64px_-36px_rgba(15,23,42,0.5)]">
             <h2 id="enroll-heading" className="text-3xl md:text-4xl font-bold">מרעיון לעסק עם AI</h2>
