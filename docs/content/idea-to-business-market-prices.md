@@ -1,6 +1,8 @@
-# Service-price examples beside upcoming course units
+# Historical service-price research
 
-Checked 2026-09-29. These are individual providers' published examples, not market averages, valuations of the course, or promised savings. Do not total them: the content example is monthly, the others are project/session prices. The page names the service scope, VAT treatment and original source next to each amount. Learning to perform work is not the same as purchasing professional delivery.
+The visible price cards no longer use this comparison. Avi requested the label "עלות הבונוס", marketing at NIS 2,200 and both NIS 1,500 amounts changed to NIS 2,500. Research remains NIS 1,200 and AI products NIS 4,000. These are owner-selected bonus display amounts, not updated third-party quotes. The comparison disclosure was removed with the change.
+
+Original research checked 2026-09-29. These are individual providers' published examples, not market averages, valuations of the course, or promised savings. Do not total them: the content example is monthly, the others are project/session prices. The page names the service scope, VAT treatment and original source next to each amount. Learning to perform work is not the same as purchasing professional delivery.
 
 - Research: Content Wing, digital competitor research from NIS 1,200 before VAT. This is not the price of a full market-research engagement. https://contentwing.co.il/pricing/
 - Marketing content: Content Wing, four social posts with images per month from NIS 500 before VAT. This is not the price of all outputs listed in the module. https://contentwing.co.il/pricing/

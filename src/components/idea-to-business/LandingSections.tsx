@@ -162,23 +162,19 @@ export function AvailableLessons() {
         <p className="text-yellow-300 font-bold text-xl md:text-2xl mb-3">וזו רק ההתחלה</p>
         <h4 className="text-3xl md:text-4xl font-bold text-balance mb-5">בקרוב: עוד דרכים לבנות ולקדם את העסק</h4>
       </div>
-      <Accordion type="multiple" defaultValue={["upcoming-0"]} dir="rtl" className="space-y-5">
-        {upcomingCourseGroups.map((group, i) => <AccordionItem key={group.title} value={`upcoming-${i}`} className="rounded-2xl border border-white/20 bg-white/[0.04] p-5 md:p-7 grid md:grid-cols-[minmax(0,1fr)_190px] gap-5 md:gap-7 items-start">
+      <div dir="rtl" className="space-y-5">
+        {upcomingCourseGroups.map(group => <article key={group.title} className="rounded-2xl border border-white/20 bg-white/[0.04] p-5 md:p-7 grid md:grid-cols-[minmax(0,1fr)_190px] gap-5 md:gap-7 items-start">
           <div className="min-w-0">
             <span className="inline-flex rounded-full border border-yellow-300/30 bg-yellow-300/10 px-3 py-1 text-sm font-bold text-yellow-200">בקרוב כחלק מהקורס</span>
-            <AccordionTrigger className="text-right text-xl md:text-2xl gap-4 pt-4 pb-3 font-bold hover:no-underline">{group.title}</AccordionTrigger>
-            <AccordionContent className="text-lg text-slate-100 leading-relaxed"><ul className="space-y-4 pt-3">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul></AccordionContent>
+            <h5 className="text-right text-xl md:text-2xl mt-4 mb-5 font-bold">{group.title}</h5>
+            <ul className="space-y-4 text-lg text-slate-100 leading-relaxed">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul>
           </div>
-          <aside aria-label={`סכום להשוואה: ${group.title}`} className="rounded-xl border border-yellow-200/20 bg-slate-950/30 px-5 py-6 text-center md:self-center">
-            <p className="text-3xl md:text-4xl font-bold text-yellow-300"><bdi>₪{group.market.price}</bdi></p>
+          <aside aria-label={`עלות הבונוס: ${group.title}`} className="rounded-xl border border-yellow-200/20 bg-slate-950/30 px-5 py-6 text-center md:self-center">
+            <p className="text-base font-semibold text-yellow-100 mb-2">עלות הבונוס</p>
+            <p className="text-3xl md:text-4xl font-bold text-yellow-300"><bdi>₪{group.bonusPrice}</bdi></p>
           </aside>
-        </AccordionItem>)}
-      </Accordion>
-      <details className="text-sm leading-relaxed text-slate-300 mt-6">
-        <summary className="cursor-pointer">על השוואת המחירים</summary>
-        <p className="mt-3">הסכומים הם דוגמאות לשירותים אצל ספקים, ולא מחירי הבונוסים או הבטחת חיסכון. בקורס לומדים לבצע בעצמכם; השירותים אינם כלולים ברכישה. העלות בפועל תלויה בהיקף העבודה, וייתכנו עלויות לכלים ולמנויים.</p>
-        <ul className="mt-3 space-y-2">{upcomingCourseGroups.map(group => <li key={group.title}>{group.market.service}: {group.market.qualifier} <bdi>₪{group.market.price}</bdi>, {group.market.unit}. <a href={group.market.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-white" aria-label={`מקור המחיר: ${group.market.service}`}>מקור המחיר</a></li>)}</ul>
-      </details>
+        </article>)}
+      </div>
     </div>
   </div>;
 }
