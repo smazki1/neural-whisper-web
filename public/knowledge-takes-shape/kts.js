@@ -194,9 +194,16 @@
     fontsReady.then(function () {
       if (!alive) return;
       if (!("IntersectionObserver" in window)) { play(); return; }
+      var inView = false;
       io = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) { io.disconnect(); play(); }
-      }, { threshold: .45 });
+        var entry = entries[entries.length - 1];
+        var visible = entry.isIntersecting && entry.intersectionRatio >= .1;
+        if (visible === inView) return;
+        inView = visible;
+        // Entering the viewport starts a fresh run, without pointer interaction.
+        if (visible) play();
+        else { clearAll(); }
+      }, { threshold: .1 });
       io.observe(stage);
     });
 

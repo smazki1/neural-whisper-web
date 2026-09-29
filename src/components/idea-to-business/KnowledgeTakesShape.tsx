@@ -17,7 +17,7 @@ function loadRuntime() {
   if (!runtimeReady) {
     runtimeReady = new Promise<void>((resolve, reject) => {
       const script = document.createElement("script");
-      script.src = "/knowledge-takes-shape/kts.js?v=2";
+      script.src = "/knowledge-takes-shape/kts.js?v=3";
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => { runtimeReady = undefined; script.remove(); reject(new Error("KnowledgeTakesShape failed to load")); };

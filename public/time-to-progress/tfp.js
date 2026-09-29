@@ -203,9 +203,16 @@
       if (!alive) return;
       render();                                  // מידות סופיות אחרי טעינת הגופן
       if (!("IntersectionObserver" in window)) { play(); return; }
+      var inView = false;
       io = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) { io.disconnect(); play(); }
-      }, { threshold: .35 });
+        var entry = entries[entries.length - 1];
+        var visible = entry.isIntersecting && entry.intersectionRatio >= .1;
+        if (visible === inView) return;
+        inView = visible;
+        // Entering the viewport starts a fresh run, without pointer interaction.
+        if (visible) play();
+        else { cancelAnimationFrame(raf); running = false; }
+      }, { threshold: .1 });
       io.observe(stage);
     });
 

@@ -16,7 +16,7 @@ function loadRuntime() {
   if (!runtimeReady) {
     runtimeReady = new Promise<void>((resolve, reject) => {
       const script = document.createElement("script");
-      script.src = "/time-to-progress/tfp.js";
+      script.src = "/time-to-progress/tfp.js?v=2";
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => {
