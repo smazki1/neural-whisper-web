@@ -124,7 +124,6 @@ export function AboutAviSection() {
           <div className="grid grid-cols-2 md:grid-cols-3 auto-rows-[144px] md:auto-rows-[176px] gap-3 md:gap-4 md:py-5">
             {aviPhotos.map((photo, i) => <div key={photo.src} className={`relative min-w-0 min-h-0 overflow-hidden rounded-2xl md:shadow-md ${collagePositions[i % collagePositions.length]}`}><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="w-full h-full object-cover" style={{ objectPosition: photo.position }} /></div>)}
           </div>
-          <figcaption className="mt-4 text-sm text-slate-600 text-center">מתוך הרצאות וסדנאות בהנחיית אבי</figcaption>
         </figure>
         <div className="space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p>אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p>את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p>לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p></div>
       </div>
