@@ -1,7 +1,7 @@
 /** Purchase links are managed in the vault product editor. */
 export const ideaToBusiness = {
   price: 490,
-  plannedFullPrice: 990,
+  fullPrice: 2990,
   // Add approved screenshots under public/images/idea-to-business/.
   // alt should transcribe the relevant feedback for people using screen readers.
   // Populate only with real, approved assets supplied by Avi.

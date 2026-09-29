@@ -225,6 +225,19 @@ const IdeaToBusiness = () => {
           </motion.h2>
 
           <AvailableLessons />
+          <aside aria-label="מחיר השקת הקורס" className="mx-auto mb-8 max-w-4xl rounded-2xl border border-yellow-300/40 bg-slate-900/70 px-6 py-7 md:px-8">
+            <div className="flex flex-col items-center justify-between gap-5 text-center md:flex-row md:gap-8 md:text-right">
+              <h3 className="text-2xl font-bold text-white">כל זה במחיר השקה</h3>
+              <div className="flex items-center gap-5">
+                <bdi className="text-5xl font-bold tracking-tight text-yellow-300">{price} ₪</bdi>
+                <div className="text-base leading-relaxed text-slate-300">
+                  <span className="block">במקום</span>
+                  <del><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del>
+                </div>
+              </div>
+              <a href="#enroll" className="inline-flex items-center gap-2 rounded-md py-2 text-base font-bold text-yellow-200 underline underline-offset-4 hover:text-yellow-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-yellow-300">לפרטי ההרשמה <ArrowLeft className="h-4 w-4" aria-hidden="true" /></a>
+            </div>
+          </aside>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {bonuses.map((bonus, index) => (
               <motion.div
@@ -340,7 +353,7 @@ const IdeaToBusiness = () => {
                 <span className="text-[80px] md:text-[96px] font-bold leading-none tracking-tight">{price}</span>
                 <span className="text-3xl font-medium text-slate-300" aria-hidden="true">₪</span>
               </p>
-              <p className="mt-3 text-base text-slate-300">מחיר מלא מתוכנן <bdi className="mr-1">{ideaToBusiness.plannedFullPrice.toLocaleString("he-IL")} ₪</bdi></p>
+              <p className="mt-3 text-base text-slate-300">במקום <del className="mr-1"><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del></p>
             </div>
 
             <div className="mx-auto mt-7 max-w-sm">
