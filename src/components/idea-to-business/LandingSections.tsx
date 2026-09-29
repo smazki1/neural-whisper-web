@@ -22,13 +22,13 @@ export function SolutionSection() {
   const visible = { opacity: 1, y: 0 };
 
   return <section id="course-solution" className="bg-slate-900 py-16 md:py-24 text-white">
-    <div className={`${wrap} grid gap-10 md:gap-14 md:grid-cols-2 md:items-center`}>
+    <div className={`${wrap} grid gap-9 md:gap-12 lg:gap-20 md:grid-cols-[1fr_1.05fr] md:items-start`}>
       <motion.div initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65 }}>
-        <p className="text-xl md:text-2xl text-yellow-300 font-bold mb-5">מרעיון למוצר שאפשר להתחיל למכור</p>
-        <h2 className={heading}>דרך עבודה שחוזרים אליה,<br className="hidden md:block" /> בכל פעם שעולה רעיון חדש.</h2>
-        <p className="mt-7 text-xl md:text-2xl leading-relaxed text-yellow-300 font-bold">יותר יכולת להחליט.<br />יותר יכולת לבנות בעצמכם.</p>
+        <p className="text-lg text-yellow-300 font-bold mb-4">מרעיון למוצר שאפשר להתחיל למכור</p>
+        <h2 className="max-w-lg text-3xl lg:text-4xl font-bold text-balance">דרך עבודה שחוזרים אליה, בכל פעם שעולה רעיון חדש.</h2>
+        <p className="mt-6 lg:mt-8 text-xl leading-relaxed text-yellow-300 font-bold">יותר יכולת להחליט.<br />יותר יכולת לבנות בעצמכם.</p>
       </motion.div>
-      <motion.div className="space-y-7 text-xl md:text-2xl text-slate-100 font-medium leading-relaxed" initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65, delay: reducedMotion ? 0 : 0.12 }}>
+      <motion.div className="space-y-6 text-lg lg:text-xl text-slate-200 font-medium leading-[1.8]" initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65, delay: reducedMotion ? 0 : 0.12 }}>
         <p>יש לכם רעיון למוצר או לעסק? תלמדו לחבר אותו להצעה ברורה ולבנות את מה שצריך כדי להתחיל לשווק ולמכור ללקוחות.</p>
         <p>מהרגע שיש לכם כיוון ברור, AI הופך לכלי שמחבר בין הרעיון, ההצעה, המסרים והנכסים של העסק, כך שתוכלו להתקדם מהר יותר עם הרבה פחות ניחושים ותלות באחרים.</p>
       </motion.div>
