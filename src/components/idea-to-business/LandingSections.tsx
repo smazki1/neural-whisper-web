@@ -1,6 +1,6 @@
 import { HoverDemo } from "./HoverDemo";
 import { KnowledgeTakesShape } from "./KnowledgeTakesShape";
-import { Image as ImageIcon, ArrowLeft, CheckCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, CheckCircle, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
 import { availableCourseModules, digitalProductBonus, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
@@ -13,10 +13,6 @@ const heading = "text-3xl md:text-4xl font-bold leading-tight text-balance";
 /** Visible editorial placeholders are intentional in this unapproved draft. */
 export function DraftNote({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <p className={`rounded-xl border border-dashed border-amber-500/60 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-amber-950 ${className}`}><span className="font-bold">להשלמה עם אבי: </span>{children}</p>;
-}
-
-function ImageSlot({ label, className = "" }: { label: string; className?: string }) {
-  return <div className={`flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-slate-400 bg-slate-100 p-5 text-center text-slate-600 ${className}`}><ImageIcon className="h-7 w-7 opacity-60" aria-hidden="true" /><span className="text-sm font-medium leading-relaxed">{label}</span><span className="text-xs">מקום שמור לתמונה אמיתית</span></div>;
 }
 
 export function SolutionSection() {
@@ -117,33 +113,30 @@ export function LibrarySection() {
   </section>;
 }
 
-const photoLabels = ["תמונה מרכזית · אבי מול קהל", "תמונה מסדנה", "אבי בעבודה", "עבודה עם צוות או ארגון", "תמונה מהרצאה"];
-const collagePositions = ["md:col-span-2 md:row-span-2 md:rotate-[-2deg]", "md:rotate-[3deg] md:-mr-5 md:mt-6", "md:rotate-[-3deg] md:-mr-3", "md:rotate-[2deg]", "md:col-span-2 md:rotate-[-1deg] md:-mt-4"];
-
 export function AboutAviSection() {
   const { aviPhotos } = ideaToBusiness;
   return <section id="about-avi" className="bg-stone-50 py-16 md:py-24 text-slate-900 overflow-hidden">
     <div className={wrap}><h2 className={`${heading} text-blue-900 max-w-3xl mx-auto text-center mb-12`}>אני לא מלמד AI מהצד.<br />אני משתמש בו כדי לבנות דברים אמיתיים.</h2>
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 items-start">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 md:py-5">
-          {(aviPhotos.length ? aviPhotos : photoLabels.map(alt => ({ src: "", alt }))).map((photo, i) => <div key={photo.src || photo.alt} className={`relative min-w-0 rounded-2xl md:shadow-md ${collagePositions[i % collagePositions.length]}`}>{photo.src ? <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-full min-h-36 object-cover rounded-2xl" /> : <ImageSlot label={photo.alt} className="h-full min-h-36 md:min-h-44" />}</div>)}
-        </div>
-        <div className="space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p>אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p>את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p>לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p><DraftNote>4–6 תמונות אמיתיות ונתוני סמכות מאומתים: הרצאות, משתתפים, ארגונים או שנות ניסיון. לא מוצגים מספרים לפני אישור.</DraftNote></div>
+        <figure>
+          <div className="grid grid-cols-3 gap-3 md:gap-4">
+            {aviPhotos.map((photo, i) => <a key={photo.src} href={photo.src} target="_blank" rel="noopener noreferrer" aria-label={`${photo.alt}, פתיחה בגודל מלא בלשונית חדשה`} className={`block overflow-hidden rounded-2xl shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 focus-visible:outline-offset-4 ${i === 0 ? "col-span-3 aspect-[4/3]" : "aspect-[3/4]"}`}><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="w-full h-full object-cover" style={{ objectPosition: photo.position }} /></a>)}
+          </div>
+          <figcaption className="mt-4 text-sm text-slate-600 text-center">מתוך הרצאות וסדנאות בהנחיית אבי · לחצו לפתיחת תמונה בגודל מלא</figcaption>
+        </figure>
+        <div className="space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p>אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p>את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p>לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p></div>
       </div>
     </div>
   </section>;
 }
 
-const feedbackSizes = ["min-h-64", "min-h-44", "min-h-56", "min-h-48", "min-h-72", "min-h-44", "min-h-60", "min-h-52", "min-h-48", "min-h-64"];
-const feedbackRotation = ["md:rotate-[-1deg]", "md:rotate-[1.5deg]", "md:rotate-[-0.5deg]"];
-
 export function TestimonialsSection() {
   const { testimonials } = ideaToBusiness;
   return <section id="feedback" className="bg-slate-100 py-16 md:py-24 text-slate-900 overflow-hidden">
     <div className={wrap}><h2 className={`${heading} text-blue-900 text-center mb-6`}>אל תיקחו רק את המילה שלי</h2>
-      {!testimonials.length && <DraftNote className="max-w-3xl mx-auto mb-10">8–15 צילומי מסך אמיתיים של פידבקים. זהו שלד עיצובי בלבד, ללא עדויות או הודעות מומצאות.</DraftNote>}
-      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 pt-3 md:block md:columns-3 lg:columns-4 md:gap-5 md:overflow-visible">
-        {(testimonials.length ? testimonials : feedbackSizes.map((_, i) => ({src: "", alt: `צילום עדות ${i + 1} · ממתין לתמונה מאבי`}))).map((item, i) => <figure key={item.src || item.alt} className={`w-[78%] shrink-0 snap-center md:w-auto md:break-inside-avoid mb-5 rounded-2xl bg-white p-3 border border-slate-200 shadow-sm ${feedbackRotation[i % feedbackRotation.length]}`}>{item.src ? <img src={item.src} alt={item.alt} loading="lazy" className="w-full h-auto rounded-xl" /> : <ImageSlot label={item.alt} className={feedbackSizes[i % feedbackSizes.length]} />}</figure>)}
+      <p className="text-center text-slate-600 mb-8">לחצו על עדות לקריאה בגודל מלא</p>
+      <div className="max-w-5xl mx-auto columns-1 md:columns-2 gap-6">
+        {testimonials.map((item, i) => <figure key={item.src} className="break-inside-avoid mb-6 rounded-2xl bg-white p-2 border border-slate-200 shadow-sm"><a href={item.src} target="_blank" rel="noopener noreferrer" aria-label={`פתיחת עדות ${i + 1} בגודל מלא בלשונית חדשה`} className="block rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 focus-visible:outline-offset-4"><img src={item.src} alt={item.alt} loading="lazy" decoding="async" className="w-full h-auto rounded-xl" /></a></figure>)}
       </div>
     </div>
   </section>;
@@ -202,5 +195,5 @@ export function FAQSection() {
 }
 
 export function ReviewChecklist() {
-  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "מדיניות גישה לעדכונים עתידיים", "תמונות אבי, הרצאות וסדנאות", "עדויות משתתפים אמיתיות", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "אישור תוכנית ההרחבות לספרייה המתפתחת"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
+  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "מדיניות גישה לעדכונים עתידיים", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "אישור תוכנית ההרחבות לספרייה המתפתחת"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
 }

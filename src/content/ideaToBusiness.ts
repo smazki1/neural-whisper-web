@@ -10,8 +10,19 @@ export const ideaToBusiness = {
     { title: "מחירון ממותג", src: "/media/idea-to-business/branded-pricelist.mp4", poster: "/media/idea-to-business/branded-pricelist-poster.jpg", alt: "מחירון שמדבר בשפה של העסק", caption: "בונים מחירון מעוצב ומותאם למותג, לשירותים ולמחירים שלכם." },
     { title: "צילום מוצר עם AI", src: "/media/idea-to-business/product-photography.mp4", poster: "/media/idea-to-business/product-photography-poster.jpg", alt: "מתמונת מוצר לצילום שיווקי", caption: "מעלים תמונת מוצר והופכים אותה לתמונה עם רקע ואווירה חדשים." },
   ],
-  aviPhotos: [] as Array<{ src: string; alt: string }>,
-  testimonials: [] as Array<{ src: string; alt: string }>,
+  aviPhotos: [
+    { src: "/images/idea-to-business/avi-workshop-audience.jpg", alt: "אבי מרצה בסדנה מול משתתפים שעובדים עם מחשבים ניידים", position: "50% 76%" },
+    { src: "/images/idea-to-business/avi-workshop-teaching.jpg", alt: "אבי מסביר למשתתפים בסדנה מעשית", position: "60% 70%" },
+    { src: "/images/idea-to-business/avi-lecture.jpg", alt: "אבי במהלך הרצאה, לצד פודיום ולוח", position: "48% 45%" },
+    { src: "/images/idea-to-business/avi-hands-on-guidance.png", alt: "אבי מסייע למשתתפים בעבודה אישית מול המחשב", position: "50% 65%" },
+  ],
+  testimonials: [
+    { src: "/images/idea-to-business/testimonial-business-plan.png", alt: "עדות משתתף: למדתי לכוון את הצ׳אט לדברים שאני צריך. הוא בנה לי תוכנית עסקית מלאה כולל תקציב, אנשי מקצוע וזמנים. הדבר חסך לי שבועות של עבודה. כיום הוא יוצר לי תכנים, תיאורים למוצרים ומיילים, ולדברי המשתתף חוסך יותר מ־60 אחוז מזמן העבודה." },
+    { src: "/images/idea-to-business/testimonial-business-clarity.png", alt: "עדות משתתפת: למדתי ליצור סדר ושלד ברור ומובן לעסק בעזרת הצ׳אט, לפתח את הנישה העסקית, למצוא את הערכים, נקודות הכאב והייחודיות. תודה על קורס מקיף ומעשיר שמקל עליי באפיון ובמיקוד העסק." },
+    { src: "/images/idea-to-business/testimonial-business-focus.png", alt: "תודה ענקית על קורס מקיף ומעשיר! מרגישה שהידע שקיבלתי בקורס מקל עליי באפיון ומיקוד העסק שלי." },
+    { src: "/images/idea-to-business/testimonial-learning-experience.png", alt: "המון תודה אבי, אתה מעביר את החומר בכיף וחיוך ומלא תשוקה וסקרנות. למדתי כל כך הרבה דברים חדשים ולא פחות חשוב, זה היה מעניין!" },
+    { src: "/images/idea-to-business/testimonial-everyday-ai.png", alt: "עדות הומוריסטית על הקורס: פעם הייתה לי הרבה עבודה והיום את הרוב ChatGPT עושה; אני מבלה איתו יותר מאשר עם אשתי. ועכשיו ברצינות: תודה רבה לך אבי על כל הטוב הזה!" },
+  ],
 };
 
 // Course metadata checked on 2026-09-29. Only non-upcoming lessons with
