@@ -104,7 +104,7 @@ function ComingSoonArt({ kind }: { kind: string }) {
 export function LibrarySection() {
   return <section id="growing-library" className="bg-slate-900 py-16 md:py-24 text-white">
     <div className={wrap}>
-      <div className="max-w-3xl mx-auto text-center mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
+      <div className="max-w-3xl mx-auto text-center mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-xl md:text-2xl font-semibold leading-relaxed text-slate-100">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-xl md:text-2xl font-semibold leading-relaxed text-slate-100 mt-5">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
 
     </div>
   </section>;
