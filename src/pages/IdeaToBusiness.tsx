@@ -341,51 +341,7 @@ const IdeaToBusiness = () => {
 
       <TimeSection />
 
-      {/* Pricing Section */}
-      <section id="enroll" aria-labelledby="enroll-heading" className="bg-slate-50 py-14 md:py-20">
-        <div className="container mx-auto max-w-4xl px-5 sm:px-6">
-          <div className="rounded-3xl border border-slate-700 bg-slate-900 px-6 py-8 md:px-12 md:py-10 text-center text-white shadow-[0_24px_64px_-36px_rgba(15,23,42,0.5)]">
-            <h2 id="enroll-heading" className="text-3xl md:text-4xl font-bold">מרעיון לעסק עם AI</h2>
-
-            <div className="mt-7">
-              <p className="text-lg font-bold text-yellow-300">מחיר השקה</p>
-              <p className="mt-2 flex items-baseline justify-center gap-2" aria-label={`מחיר השקה ${price} שקלים`}>
-                <span className="text-[80px] md:text-[96px] font-bold leading-none tracking-tight">{price}</span>
-                <span className="text-3xl font-medium text-slate-300" aria-hidden="true">₪</span>
-              </p>
-              <p className="mt-3 text-base text-slate-300">במקום <del className="mr-1"><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del></p>
-            </div>
-
-            <div className="mx-auto mt-7 max-w-sm">
-              {checkoutUrl && !checkoutLoading ? (
-                <Button asChild className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950 hover:bg-yellow-200 focus-visible:ring-yellow-300 focus-visible:ring-offset-slate-900">
-                  <a href={checkoutUrl} onClick={purchaseClick}>לרכישת הקורס <ArrowLeft className="mr-3 h-5 w-5" aria-hidden="true" /></a>
-                </Button>
-              ) : (
-                <Button disabled aria-describedby="price-checkout-pending" className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950">
-                  {checkoutLoading ? "טוען אפשרות רכישה..." : "לרכישת הקורס"}
-                </Button>
-              )}
-              {(!checkoutUrl || checkoutLoading) && (
-                <p id="price-checkout-pending" className="mt-3 text-sm text-slate-300">
-                  {checkoutLoading ? "בודקים את אפשרות הרכישה." : preview ? "הכפתור ממתין לקישור התשלום שלך." : "ההרשמה אינה זמינה כרגע."}
-                </p>
-              )}
-            </div>
-
-          </div>
-
-          <div className="mx-auto mt-9 md:mt-10 max-w-xl text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-blue-900">מה צריך כדי להתחיל?</h3>
-            <p className="mt-3 text-lg leading-relaxed text-slate-700">רעיון או עסק שתרצו לקדם, וידע בסיסי במחשב ובדפדפן.</p>
-            <p className="mt-4 text-base leading-7 text-slate-600">לעבודה בקורס תצטרכו חשבון ChatGPT ומסמך Google Docs ריק.<br className="hidden sm:block" /> אפשר להתחיל גם עם חשבון ChatGPT חינמי.</p>
-          </div>
-        </div>
-      </section>
-
-      <FAQSection />
-
-      {/* Final CTA */}
+      {/* CTA before frequently asked questions */}
       <section className="py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
@@ -445,6 +401,50 @@ const IdeaToBusiness = () => {
             )}
           </motion.div>
 
+        </div>
+      </section>
+
+      <FAQSection />
+
+      {/* Pricing Section */}
+      <section id="enroll" aria-labelledby="enroll-heading" className="bg-slate-50 py-14 md:py-20">
+        <div className="container mx-auto max-w-4xl px-5 sm:px-6">
+          <div className="rounded-3xl border border-slate-700 bg-slate-900 px-6 py-8 md:px-12 md:py-10 text-center text-white shadow-[0_24px_64px_-36px_rgba(15,23,42,0.5)]">
+            <h2 id="enroll-heading" className="text-3xl md:text-4xl font-bold">מרעיון לעסק עם AI</h2>
+
+            <div className="mt-7">
+              <p className="text-lg font-bold text-yellow-300">מחיר השקה</p>
+              <p className="mt-2 flex items-baseline justify-center gap-2" aria-label={`מחיר השקה ${price} שקלים`}>
+                <span className="text-[80px] md:text-[96px] font-bold leading-none tracking-tight">{price}</span>
+                <span className="text-3xl font-medium text-slate-300" aria-hidden="true">₪</span>
+              </p>
+              <p className="mt-3 text-base text-slate-300">במקום <del className="mr-1"><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del></p>
+            </div>
+
+            <div className="mx-auto mt-7 max-w-sm">
+              {checkoutUrl && !checkoutLoading ? (
+                <Button asChild className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950 hover:bg-yellow-200 focus-visible:ring-yellow-300 focus-visible:ring-offset-slate-900">
+                  <a href={checkoutUrl} onClick={purchaseClick}>לרכישת הקורס <ArrowLeft className="mr-3 h-5 w-5" aria-hidden="true" /></a>
+                </Button>
+              ) : (
+                <Button disabled aria-describedby="price-checkout-pending" className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950">
+                  {checkoutLoading ? "טוען אפשרות רכישה..." : "לרכישת הקורס"}
+                </Button>
+              )}
+              {(!checkoutUrl || checkoutLoading) && (
+                <p id="price-checkout-pending" className="mt-3 text-sm text-slate-300">
+                  {checkoutLoading ? "בודקים את אפשרות הרכישה." : preview ? "הכפתור ממתין לקישור התשלום שלך." : "ההרשמה אינה זמינה כרגע."}
+                </p>
+              )}
+            </div>
+
+          </div>
+
+          <div className="mx-auto mt-9 md:mt-10 max-w-xl text-center">
+            <h3 className="text-xl md:text-2xl font-bold text-blue-900">מה צריך כדי להתחיל?</h3>
+            <p className="mt-3 text-lg leading-relaxed text-slate-700">רעיון או עסק שתרצו לקדם, וידע בסיסי במחשב ובדפדפן.</p>
+            <p className="mt-4 text-base leading-7 text-slate-600">לעבודה בקורס תצטרכו חשבון ChatGPT ומסמך Google Docs ריק.<br className="hidden sm:block" /> אפשר להתחיל גם עם חשבון ChatGPT חינמי.</p>
+          </div>
         </div>
       </section>
       <ReviewChecklist />
