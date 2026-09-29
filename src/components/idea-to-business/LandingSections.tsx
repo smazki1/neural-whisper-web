@@ -47,21 +47,22 @@ const situations = [
 ];
 
 export function PossibilitiesSection() {
+  const reducedMotion = useReducedMotion();
   return <section id="possibilities" className="relative bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 py-16 md:py-20 text-white">
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true"><div className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${heroBackground03})` }} /></div>
     <div className={`${wrap} relative`}>
-      <header className="max-w-3xl mx-auto text-center mb-9 md:mb-10">
+      <header className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
         <h2 className={`${heading} mb-5`}>מה תוכלו לבנות עם היכולת הזאת</h2>
         <p className="text-xl text-slate-100 leading-relaxed">מהרעיון וההצעה, דרך השפה של המותג, ועד הדרך שבה הלקוחות פוגשים אתכם.</p>
       </header>
-      <div id="business-scenarios" className="max-w-5xl mx-auto space-y-4 md:space-y-5">
-        {situations.map(item => <article key={item.title} className="rounded-2xl border border-white/25 bg-white/10 p-6 md:px-8 md:py-7">
+      <div id="business-scenarios" className="max-w-5xl mx-auto space-y-6 md:space-y-7">
+        {situations.map(item => <motion.article key={item.title} initial={reducedMotion ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.6 }} className="rounded-2xl border border-white/25 bg-white/10 p-6 md:px-8 md:py-7">
           <div className="flex items-start gap-3 md:gap-5 mb-3">
             <CheckCircle className="mt-2 h-6 w-6 shrink-0 text-green-400" aria-hidden="true" />
             <h3 className="min-w-0 flex-1 text-xl md:text-2xl font-bold">{item.title}</h3>
           </div>
           <p className="text-lg md:text-xl text-slate-100 leading-relaxed md:pr-11">{item.text}</p>
-        </article>)}
+        </motion.article>)}
       </div>
     </div>
   </section>;
