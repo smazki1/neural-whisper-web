@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
 import { availableCourseModules, digitalProductBonus, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
 import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const wrap = "container mx-auto px-6 max-w-6xl font-medium";
 const heading = "text-3xl md:text-4xl font-bold leading-tight text-balance";
@@ -18,14 +19,21 @@ function ImageSlot({ label, className = "" }: { label: string; className?: strin
 }
 
 export function SolutionSection() {
+  const reducedMotion = useReducedMotion();
+  const initial = reducedMotion ? false : { opacity: 0, y: 24 };
+  const visible = { opacity: 1, y: 0 };
+
   return <section id="course-solution" className="bg-slate-900 py-16 md:py-24 text-white">
-    <div className={`${wrap} grid gap-10 md:grid-cols-2 md:items-center`}>
-      <div><p className="text-xl md:text-2xl text-yellow-300 font-bold mb-5">מרעיון למוצר שאפשר להתחיל למכור</p><h2 className={heading}>דרך עבודה שחוזרים אליה,<br className="hidden md:block" /> בכל פעם שעולה רעיון חדש.</h2></div>
-      <div className="space-y-7 text-xl md:text-2xl text-slate-100 font-medium leading-relaxed">
+    <div className={`${wrap} grid gap-10 md:gap-14 md:grid-cols-2 md:items-center`}>
+      <motion.div initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65 }}>
+        <p className="text-xl md:text-2xl text-yellow-300 font-bold mb-5">מרעיון למוצר שאפשר להתחיל למכור</p>
+        <h2 className={heading}>דרך עבודה שחוזרים אליה,<br className="hidden md:block" /> בכל פעם שעולה רעיון חדש.</h2>
+        <p className="mt-7 text-xl md:text-2xl leading-relaxed text-yellow-300 font-bold">יותר יכולת להחליט.<br />יותר יכולת לבנות בעצמכם.</p>
+      </motion.div>
+      <motion.div className="space-y-7 text-xl md:text-2xl text-slate-100 font-medium leading-relaxed" initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65, delay: reducedMotion ? 0 : 0.12 }}>
         <p>יש לכם רעיון למוצר או לעסק? תלמדו לחבר אותו להצעה ברורה ולבנות את מה שצריך כדי להתחיל לשווק ולמכור ללקוחות.</p>
         <p>מהרגע שיש לכם כיוון ברור, AI הופך לכלי שמחבר בין הרעיון, ההצעה, המסרים והנכסים של העסק, כך שתוכלו להתקדם מהר יותר עם הרבה פחות ניחושים ותלות באחרים.</p>
-        <p className="text-yellow-300 font-bold">יותר יכולת להחליט. יותר יכולת לבנות בעצמכם.</p>
-      </div>
+      </motion.div>
     </div>
   </section>;
 }
