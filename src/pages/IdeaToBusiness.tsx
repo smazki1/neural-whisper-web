@@ -329,55 +329,50 @@ const IdeaToBusiness = () => {
       <TimeSection />
 
       {/* Pricing Section */}
-      <section id="enroll" aria-labelledby="enroll-heading" className="bg-slate-50 py-16 md:py-24">
-        <div className="container mx-auto max-w-3xl px-5 sm:px-6">
-          <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_60px_-35px_rgba(15,23,42,0.35)]">
-            <div className="flex flex-col">
-              <div className="px-6 py-8 md:px-10 md:py-10 text-center text-slate-900">
-                <p className="text-sm font-bold text-blue-800">הקורס של אבי פריד</p>
-                <h2 id="enroll-heading" className="mt-3 text-3xl lg:text-4xl font-bold text-blue-900">מרעיון לעסק עם AI</h2>
-                <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-slate-600">לקחת את הרעיון שלכם, לבנות את מה שצריך ולהתחיל לצאת איתו ללקוחות.</p>
-                <ul className="mx-auto mt-6 flex max-w-xl flex-wrap justify-center gap-x-6 gap-y-3 text-base md:text-lg font-medium">
-                  {["גישה לכל החיים", "קורס מוקלט בעברית, בקצב שלכם", "לומדים ומיישמים על הרעיון או העסק שלכם"].map(item => (
-                    <li key={item} className="flex items-start justify-center gap-2">
-                      <CheckCircle className="mt-1 h-5 w-5 shrink-0 text-blue-700" aria-hidden="true" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+      <section id="enroll" aria-labelledby="enroll-heading" className="bg-slate-50 py-14 md:py-20">
+        <div className="container mx-auto max-w-4xl px-5 sm:px-6">
+          <div className="rounded-3xl border border-slate-700 bg-slate-900 px-6 py-8 md:px-12 md:py-10 text-center text-white shadow-[0_24px_64px_-36px_rgba(15,23,42,0.5)]">
+            <h2 id="enroll-heading" className="text-3xl md:text-4xl font-bold">מרעיון לעסק עם AI</h2>
 
-              <div className="flex flex-col items-center bg-slate-900 px-6 py-8 md:px-10 md:py-10 text-center text-white">
-                <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-base text-slate-300">
-                  <span>מחיר מלא מתוכנן</span>
-                  <bdi className="font-semibold">{ideaToBusiness.plannedFullPrice.toLocaleString("he-IL")} ₪</bdi>
-                </div>
-                <p className="mt-6 text-lg font-bold text-yellow-300">מחיר השקה</p>
-                <p className="mt-1 mb-7 flex items-baseline justify-center gap-2" aria-label={`מחיר השקה ${price} שקלים`}>
-                  <span className="text-[76px] md:text-[88px] font-bold leading-none tracking-tight">{price}</span>
-                  <span className="text-3xl font-medium text-slate-300" aria-hidden="true">₪</span>
+            <div className="mt-7">
+              <p className="text-lg font-bold text-yellow-300">מחיר השקה</p>
+              <p className="mt-2 flex items-baseline justify-center gap-2" aria-label={`מחיר השקה ${price} שקלים`}>
+                <span className="text-[80px] md:text-[96px] font-bold leading-none tracking-tight">{price}</span>
+                <span className="text-3xl font-medium text-slate-300" aria-hidden="true">₪</span>
+              </p>
+              <p className="mt-3 text-base text-slate-300">מחיר מלא מתוכנן <bdi className="mr-1">{ideaToBusiness.plannedFullPrice.toLocaleString("he-IL")} ₪</bdi></p>
+            </div>
+
+            <div className="mx-auto mt-7 max-w-sm">
+              {checkoutUrl && !checkoutLoading ? (
+                <Button asChild className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950 hover:bg-yellow-200 focus-visible:ring-yellow-300 focus-visible:ring-offset-slate-900">
+                  <a href={checkoutUrl} onClick={purchaseClick}>לרכישת הקורס <ArrowLeft className="mr-3 h-5 w-5" aria-hidden="true" /></a>
+                </Button>
+              ) : (
+                <Button disabled aria-describedby="price-checkout-pending" className="w-full h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950">
+                  {checkoutLoading ? "טוען אפשרות רכישה..." : "לרכישת הקורס"}
+                </Button>
+              )}
+              {(!checkoutUrl || checkoutLoading) && (
+                <p id="price-checkout-pending" className="mt-3 text-sm text-slate-300">
+                  {checkoutLoading ? "בודקים את אפשרות הרכישה." : preview ? "הכפתור ממתין לקישור התשלום שלך." : "ההרשמה אינה זמינה כרגע."}
                 </p>
-                {checkoutUrl && !checkoutLoading ? (
-                  <Button asChild className="w-full max-w-sm h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950 hover:bg-yellow-200 focus-visible:ring-yellow-300 focus-visible:ring-offset-slate-900">
-                    <a href={checkoutUrl} onClick={purchaseClick}>לרכישת הקורס <ArrowLeft className="mr-3 h-5 w-5" aria-hidden="true" /></a>
-                  </Button>
-                ) : (
-                  <Button disabled aria-describedby="price-checkout-pending" className="w-full max-w-sm h-auto min-h-14 rounded-xl bg-yellow-300 px-5 py-4 text-lg font-bold text-slate-950">
-                    {checkoutLoading ? "טוען אפשרות רכישה..." : "לרכישת הקורס"}
-                  </Button>
-                )}
-                {(!checkoutUrl || checkoutLoading) && (
-                  <p id="price-checkout-pending" className="mt-3 text-sm text-slate-300">
-                    {checkoutLoading ? "בודקים את אפשרות הרכישה." : preview ? "הכפתור ממתין לקישור התשלום שלך." : "ההרשמה אינה זמינה כרגע."}
-                  </p>
-                )}
-                <p className="mt-4 text-sm text-slate-300">גישה לכל החיים · לומדים בקצב שלכם</p>
-              </div>
+              )}
             </div>
-            <div className="border-t border-slate-200 bg-slate-50/70 px-6 py-5 md:px-10 text-center text-slate-600 text-sm md:text-base leading-relaxed">
-              <span className="font-bold text-slate-900">מה צריך כדי להתחיל? </span>
-              ידע בסיסי במחשב ובדפדפן, חשבון ChatGPT (אפשר להתחיל בחינם), מסמך Google Docs ריק ורעיון או עסק שתרצו לעבוד עליו.
-            </div>
+
+            <ul className="mt-8 grid gap-3 border-t border-white/15 pt-6 text-base text-slate-200 sm:grid-cols-3 sm:gap-4">
+              {["גישה לכל החיים", "כולל תכנים עתידיים", "קורס מוקלט בעברית"].map(item => (
+                <li key={item} className="flex items-center justify-center gap-2">
+                  <CheckCircle className="h-4 w-4 shrink-0 text-yellow-300" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mx-auto mt-7 max-w-xl text-center">
+            <p className="text-lg leading-relaxed text-slate-700">לקחת את הרעיון שלכם, לבנות את מה שצריך ולהתחיל לצאת איתו ללקוחות.</p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-500"><strong className="font-semibold text-slate-600">מה צריך כדי להתחיל?</strong> ידע בסיסי במחשב ובדפדפן, חשבון ChatGPT (אפשר להתחיל בחינם), מסמך Google Docs ריק ורעיון או עסק שתרצו לעבוד עליו.</p>
           </div>
         </div>
       </section>
