@@ -111,8 +111,6 @@ export function LibrarySection() {
         <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
         <div className="p-6 text-center"><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
       </article>)}</div>
-      <p className="max-w-4xl text-xl md:text-2xl font-medium leading-relaxed mt-12">המטרה היא לא שתצטרכו את כל הדברים האלה ביום הראשון. המטרה היא שככל שהעסק שלכם מתקדם, יהיו לכם בתוך הקורס כלים שיעזרו לכם לבנות את הדבר הבא שאתם צריכים.</p>
-      <a href="#upcoming-content" className="inline-flex items-center gap-2 text-yellow-300 text-lg font-bold mt-6 underline underline-offset-4">הצצה לתכנים שבדרך<ArrowLeft className="h-5 w-5" aria-hidden="true" /></a>
       <DraftNote className="mt-8 max-w-3xl">רשימת ההרחבות בהמשך היא טיוטה רחבה לבחירתך. יש לסגור את התכולה ואת מדיניות הגישה לתכנים עתידיים לפני הפרסום.</DraftNote>
     </div>
   </section>;
