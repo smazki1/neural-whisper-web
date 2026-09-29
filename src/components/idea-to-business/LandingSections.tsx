@@ -1,5 +1,5 @@
 import { KnowledgeTakesShape } from "./KnowledgeTakesShape";
-import { Image as ImageIcon, ArrowLeft, CheckCircle, Sparkles, Layers3, Workflow } from "lucide-react";
+import { Image as ImageIcon, ArrowLeft, CheckCircle, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
 import { availableCourseModules, digitalProductBonus, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
@@ -89,9 +89,9 @@ export function OutputsSection() {
 }
 
 const library = [
-  { title: "להפוך תוכן לתנועה בעסק", text: "קרוסלות, פוסטים ותסריטים שמחברים בין הידע שלכם לבין מה שמעניין את הלקוחות.", kind: "content", icon: Layers3 },
-  { title: "לבנות מוצרים וכלים עם AI", text: "להפוך את הידע שלכם לכלים חכמים, מוצרים אינטראקטיביים ואפליקציות שמותאמים לעסק שלכם.", kind: "tools", icon: Sparkles },
-  { title: "לעשות סדר במה שקורה אחרי שמגיע ליד", text: "CRM, דיוור ומעקב מסודר שמחברים בין הפנייה הראשונה לבין הצעד הבא עם כל לקוח.", kind: "crm", icon: Workflow },
+  { title: "להפוך תוכן לתנועה בעסק", text: "קרוסלות, פוסטים ותסריטים שמחברים בין הידע שלכם לבין מה שמעניין את הלקוחות.", kind: "content" },
+  { title: "לבנות מוצרים וכלים עם AI", text: "להפוך את הידע שלכם לכלים חכמים, מוצרים אינטראקטיביים ואפליקציות שמותאמים לעסק שלכם.", kind: "tools" },
+  { title: "לעשות סדר במה שקורה אחרי שמגיע ליד", text: "CRM, דיוור ומעקב מסודר שמחברים בין הפנייה הראשונה לבין הצעד הבא עם כל לקוח.", kind: "crm" },
 ];
 
 function ComingSoonArt({ kind }: { kind: string }) {
@@ -109,7 +109,7 @@ export function LibrarySection() {
       <div className="max-w-3xl mx-auto text-center mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
       <div className="grid gap-6 lg:grid-cols-3">{library.map(item => <article key={item.title} className="future-library-card rounded-2xl border border-white/15 bg-white/[0.04] overflow-hidden">
         <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
-        <div className="p-6"><item.icon className="h-6 w-6 text-yellow-300 mb-4" aria-hidden="true" /><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
+        <div className="p-6 text-center"><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
       </article>)}</div>
       <p className="max-w-4xl text-xl md:text-2xl font-medium leading-relaxed mt-12">המטרה היא לא שתצטרכו את כל הדברים האלה ביום הראשון. המטרה היא שככל שהעסק שלכם מתקדם, יהיו לכם בתוך הקורס כלים שיעזרו לכם לבנות את הדבר הבא שאתם צריכים.</p>
       <a href="#upcoming-content" className="inline-flex items-center gap-2 text-yellow-300 text-lg font-bold mt-6 underline underline-offset-4">הצצה לתכנים שבדרך<ArrowLeft className="h-5 w-5" aria-hidden="true" /></a>
