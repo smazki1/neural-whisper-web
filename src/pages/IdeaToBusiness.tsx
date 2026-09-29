@@ -352,10 +352,6 @@ const IdeaToBusiness = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <p className="mb-5 flex flex-wrap items-baseline justify-center gap-3 text-[28px] md:text-4xl font-semibold leading-tight text-white">
-              <span>במקום</span>
-              <del><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del>
-            </p>
             {checkoutUrl && !checkoutLoading ? (
               <Button
                 asChild
@@ -381,6 +377,10 @@ const IdeaToBusiness = () => {
                 </p>
               </>
             )}
+            <p className="mt-5 flex flex-wrap items-baseline justify-center gap-3 text-[28px] md:text-4xl font-semibold leading-tight text-white">
+              <span>במקום</span>
+              <del><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del>
+            </p>
           </motion.div>
 
         </div>
