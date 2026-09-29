@@ -207,8 +207,8 @@ const IdeaToBusiness = () => {
       <VibeCodingSection />
       <OutputsSection />
       <LibrarySection />
-      <AboutAviSection />
       <TestimonialsSection />
+      <AboutAviSection />
 
       {/* Bonuses Section */}
       <section className="py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">

@@ -122,7 +122,7 @@ const collagePositions = ["md:col-span-2 md:row-span-2 md:rotate-[-2deg]", "md:r
 export function AboutAviSection() {
   const { aviPhotos } = ideaToBusiness;
   return <section id="about-avi" className="bg-stone-50 py-16 md:py-24 text-slate-900 overflow-hidden">
-    <div className={wrap}><h2 className={`${heading} text-blue-900 max-w-3xl mb-12`}>אני לא מלמד AI מהצד.<br />אני משתמש בו כדי לבנות דברים אמיתיים.</h2>
+    <div className={wrap}><h2 className={`${heading} text-blue-900 max-w-3xl mx-auto text-center mb-12`}>אני לא מלמד AI מהצד.<br />אני משתמש בו כדי לבנות דברים אמיתיים.</h2>
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 items-start">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 md:py-5">
           {(aviPhotos.length ? aviPhotos : photoLabels.map(alt => ({ src: "", alt }))).map((photo, i) => <div key={photo.src || photo.alt} className={`relative min-w-0 rounded-2xl md:shadow-md ${collagePositions[i % collagePositions.length]}`}>{photo.src ? <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-full min-h-36 object-cover rounded-2xl" /> : <ImageSlot label={photo.alt} className="h-full min-h-36 md:min-h-44" />}</div>)}
