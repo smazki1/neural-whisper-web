@@ -171,17 +171,16 @@ export function AvailableLessons() {
             <AccordionTrigger className="text-right text-xl md:text-2xl gap-4 pt-4 pb-3 font-bold hover:no-underline">{group.title}</AccordionTrigger>
             <AccordionContent className="text-lg text-slate-100 leading-relaxed"><ul className="space-y-4 pt-3">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul></AccordionContent>
           </div>
-          <aside aria-label={`השוואת עלות: ${group.title}`} className="rounded-xl border border-yellow-200/20 bg-slate-950/30 p-4 text-center">
-            <p className="text-sm text-slate-300">דוגמה לעלות אצל איש מקצוע</p>
-            <p className="text-base font-semibold text-white mt-2">{group.market.service}</p>
-            <p className="text-sm text-yellow-100 mt-4">{group.market.qualifier}</p>
-            <p className="text-3xl font-bold text-yellow-300 mt-1"><bdi>₪{group.market.price}</bdi></p>
-            <p className="text-sm text-slate-300 mt-1">{group.market.unit}</p>
-            <a href={group.market.source} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-slate-300 underline underline-offset-4 mt-3 hover:text-white" aria-label={`מקור המחיר: ${group.market.service}`}>מקור המחיר</a>
+          <aside aria-label={`סכום להשוואה: ${group.title}`} className="rounded-xl border border-yellow-200/20 bg-slate-950/30 px-5 py-6 text-center md:self-center">
+            <p className="text-3xl md:text-4xl font-bold text-yellow-300"><bdi>₪{group.market.price}</bdi></p>
           </aside>
         </AccordionItem>)}
       </Accordion>
-      <p className="text-sm leading-relaxed text-slate-300 mt-6">המחירים הם דוגמאות לשירותים בהיקף המצוין, לפי מחירוני ספקים. בקורס לומדים לבצע בעצמכם; השירותים אינם כלולים ברכישה. העלות בפועל תלויה בספק ובהיקף העבודה, וייתכנו עלויות לכלים ולמנויים.</p>
+      <details className="text-sm leading-relaxed text-slate-300 mt-6">
+        <summary className="cursor-pointer">על השוואת המחירים</summary>
+        <p className="mt-3">הסכומים הם דוגמאות לשירותים אצל ספקים, ולא מחירי הבונוסים או הבטחת חיסכון. בקורס לומדים לבצע בעצמכם; השירותים אינם כלולים ברכישה. העלות בפועל תלויה בהיקף העבודה, וייתכנו עלויות לכלים ולמנויים.</p>
+        <ul className="mt-3 space-y-2">{upcomingCourseGroups.map(group => <li key={group.title}>{group.market.service}: {group.market.qualifier} <bdi>₪{group.market.price}</bdi>, {group.market.unit}. <a href={group.market.source} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-white" aria-label={`מקור המחיר: ${group.market.service}`}>מקור המחיר</a></li>)}</ul>
+      </details>
     </div>
   </div>;
 }
