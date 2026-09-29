@@ -22,7 +22,7 @@ export function SolutionSection() {
         <h2 className="max-w-lg text-3xl lg:text-4xl font-bold text-balance">דרך עבודה שחוזרים אליה, בכל פעם שעולה רעיון חדש.</h2>
         <p className="mt-6 lg:mt-8 text-xl leading-relaxed text-yellow-300 font-bold">יותר יכולת להחליט.<br />יותר יכולת לבנות בעצמכם.</p>
       </motion.div>
-      <motion.div className="space-y-6 text-lg lg:text-xl text-slate-200 font-medium leading-[1.8]" initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65, delay: reducedMotion ? 0 : 0.12 }}>
+      <motion.div className="hidden md:block space-y-6 text-lg lg:text-xl text-slate-200 font-medium leading-[1.8]" initial={initial} whileInView={visible} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reducedMotion ? 0 : 0.65, delay: reducedMotion ? 0 : 0.12 }}>
         <p>יש לכם רעיון למוצר או לעסק? תלמדו לחבר אותו להצעה ברורה ולבנות את מה שצריך כדי להתחיל לשווק ולמכור ללקוחות.</p>
         <p>מהרגע שיש לכם כיוון ברור, AI הופך לכלי שמחבר בין הרעיון, ההצעה, המסרים והנכסים של העסק, כך שתוכלו להתקדם מהר יותר עם הרבה פחות ניחושים ותלות באחרים.</p>
       </motion.div>
@@ -105,7 +105,7 @@ export function LibrarySection() {
 }
 
 export function UpcomingLibraryCards() {
-  return <div className="upcoming-library mx-auto mb-12 max-w-[1104px] font-medium text-white">
+  return <div className="upcoming-library hidden md:block mx-auto mb-12 max-w-[1104px] font-medium text-white">
       <div className="grid gap-6 lg:grid-cols-3">{library.map(item => <article key={item.title} className="future-library-card rounded-2xl border border-white/15 bg-white/[0.04] overflow-hidden">
         <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
         <div className="p-6 text-center"><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
@@ -121,7 +121,7 @@ export function AboutAviSection() {
     <div className="audience-shell">
       <h2 className={`${heading} text-blue-900 max-w-3xl mx-auto text-center mb-12`}><span className="block">אני לא מלמד AI.</span><span className="block mx-auto max-w-2xl text-balance">אני מלמד אנשים לבנות איתו דברים שפעם לא היו אפשריים.</span></h2>
       <div className="audience-intro">
-        <div className="audience-copy space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p>אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p>את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p>לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p></div>
+        <div className="audience-copy space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p className="hidden md:block">אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p className="hidden md:block">את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p className="hidden md:block">לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p></div>
         <figure className="audience-main-photo">
           <img src={aviPhotos[0].src} alt={aviPhotos[0].alt} loading="lazy" decoding="async" style={{ objectPosition: audiencePositions[0] }} />
         </figure>

@@ -119,7 +119,7 @@ const IdeaToBusiness = () => {
               asChild
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-lg md:text-2xl px-6 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-              <a href="#start-building">אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
+              <a className="landing-hero-cta" href="#start-building">אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
             </Button>
 
           </motion.div>
@@ -241,6 +241,7 @@ const IdeaToBusiness = () => {
       </section>
 
       <TestimonialsSection />
+      <div className="landing-mobile-section-order">
       <AboutAviSection />
 
       {/* Target Audience */}
@@ -312,6 +313,7 @@ const IdeaToBusiness = () => {
       </section>
 
       <TimeSection />
+      </div>
 
       {/* CTA before frequently asked questions */}
       <section id="start-building" className="landing-responsive py-20 bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 relative overflow-hidden">
@@ -350,7 +352,7 @@ const IdeaToBusiness = () => {
                 asChild
                 className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-xl md:text-2xl px-8 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-lg"
               >
-                <a href={checkoutUrl} onClick={purchaseClick}>
+                <a className="landing-purchase-cta" href={checkoutUrl} onClick={purchaseClick}>
                   לרכישת הקורס ב־{price} ש״ח
                 </a>
               </Button>
