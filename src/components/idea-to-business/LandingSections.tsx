@@ -71,7 +71,7 @@ export function PossibilitiesSection() {
 export function VibeCodingSection() {
   return <section id="building-products" className="border-t border-white/10 bg-slate-900 py-16 md:py-24 text-slate-200">
     <div className={`${wrap} grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center`}>
-      <div><h2 className={`${heading} text-white mb-8`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-xl md:text-2xl leading-relaxed space-y-6"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p><p>לפעמים תבנו כלי שיעזור למכור את המוצר הקיים שלכם. ולפעמים תתחילו לבנות משהו קטן ותגלו שהוא בעצמו יכול להפוך למוצר חדש.</p></div></div>
+      <div><h2 className={`${heading} text-white mb-8`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-xl md:text-2xl leading-relaxed space-y-6"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p></div></div>
       <div className="w-full max-w-[502px] min-w-0 rounded-2xl bg-slate-900 text-white"><KnowledgeTakesShape /></div>
     </div>
   </section>;
