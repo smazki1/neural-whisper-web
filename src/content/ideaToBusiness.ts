@@ -26,19 +26,23 @@ export const ideaToBusiness = {
 };
 
 // Course metadata checked on 2026-09-29. Only non-upcoming lessons with
-// video or resources are listed. The digital-product bonus was confirmed by Avi.
+// video or resources are listed. Supplementary materials are omitted from this landing page.
 export const availableCourseModules = [
   { title: "מתחילים מכאן", lessons: ["ברוכים הבאים לקורס", "איך הקורס עובד - הכנת סביבת העבודה"] },
   { title: "יסודות העסק", lessons: ["מציאת הנישה הייחודית שלך", "מחקר שוק וקהל יעד", "לגרום ל‑AI להפסיק להישמע כמו AI", "זהות ויזואלית", "פיתוח פרסונה מורחב"] },
   { title: "מוצרים והצעה", lessons: ["מפת מוצרים", "פיתוח הצעה"] },
   { title: "בניית דף נחיתה", lessons: ["בניית דף נחיתה חלק 1", "בניית דף נחיתה חלק 2", "חיבור דומיין"] },
-  { title: "בונוסים וחומרי עזר", lessons: ["חומרי עזר", "שינוי כיוון תצוגה (ימין לשמאל)"] },
 ];
-export const digitalProductBonus = "מוצר דיגיטלי לחדירה לשוק";
-// Editorial candidates collected from Avi's course project, ACTIONS and Notes and Ideas.
-// These are proposed additions for review, not a published syllabus or release schedule.
+// Planned course additions. Service examples are not course prices or promised savings.
+// Published provider prices checked 2026-09-29; see docs/content/idea-to-business-market-prices.md.
 export const upcomingCourseGroups = [
-  { title: "תוכן שיווקי בשפה של העסק", items: [
+  { title: "מחקר שמגלה הזדמנויות", market: { service: "מחקר מתחרים דיגיטלי", price: "1,200", qualifier: "החל מ־", unit: "לפני מע״מ", source: "https://contentwing.co.il/pricing/" }, items: [
+    "מחקר שוק מתקדם: ביקוש, מגמות ומקורות אמינים",
+    "מחקר מתחרים: הצעות, מסרים, חוזקות ופערים שאפשר לנצל",
+    "השוואת ממצאים ממחקרי AI וקבלת החלטות עסקיות",
+    "זיהוי כיוונים חדשים לעסק מתוך חומרים וידע שכבר קיימים",
+  ] },
+  { title: "כל מה שצריך כדי לשווק את העסק", market: { service: "4 פוסטים עם תמונות בחודש", price: "500", qualifier: "החל מ־", unit: "לחודש, לפני מע״מ", source: "https://contentwing.co.il/pricing/" }, items: [
     "בנק רעיונות תוכן מתוך שאלות, כאבים והתנגדויות של הלקוחות",
     "פוסטים שיווקיים בשפת המותג",
     "קרוסלות: מרעיון לרצף שקפים ולעיצוב",
@@ -46,7 +50,7 @@ export const upcomingCourseGroups = [
     "פליירים למוצר, שירות, סדנה או אירוע",
     "הצעות מחיר מעוצבות ומותאמות ללקוח",
   ] },
-  { title: "מתוכן לפניות ומפניות ללקוחות", items: [
+  { title: "מתוכן לפניות ומפניות ללקוחות", market: { service: "הקמת תהליך אוטומציה ללידים", price: "1,500", qualifier: "החל מ־", unit: "לפני מע״מ", source: "https://contentwing.co.il/pricing/" }, items: [
     "חיבור התוכן למוצר טעימה ולמסלול הרשמה",
     "טפסים, איסוף פרטים והמשך הדרך אחרי ההרשמה",
     "בניית רשימת תפוצה ומסירת מוצר טעימה במייל",
@@ -55,16 +59,18 @@ export const upcomingCourseGroups = [
     "מעקב אחר לקוחות, סטטוסים והפעולה הבאה",
     "אוטומציית התראה ומעקב אחרי ליד חדש",
   ] },
-  { title: "מוצרים וכלים חכמים בהתאמה לעסק", items: [
+  { title: "פיתוח מוצרי AI חכמים", market: { service: "פיתוח סוכן AI לעסק", price: "4,000", qualifier: "החל מ־", unit: "לפני מע״מ", source: "https://nidamsystems.com/projects" }, items: [
     "בניית כלים ואפליקציות עסקיות עם AI ו־Vibe Coding",
     "מחשבונים וסימולטורים שמציגים תוצאה אישית",
     "שאלוני אבחון ומחוללי המלצות",
     "מוצרי טעימה אינטראקטיביים שממחישים את הערך שלכם",
     "כלי AI שמסייע ללקוח לבחור מוצר או לבנות תוכנית פעולה",
   ] },
-  { title: "להעמיק במחקר ולזהות הזדמנויות", items: [
-    "מחקר שוק מתקדם: ביקוש, מגמות ומקורות אמינים",
-    "השוואת ממצאים ממחקרי AI וקבלת החלטות עסקיות",
-    "זיהוי כיוונים חדשים לעסק מתוך חומרים וידע שכבר קיימים",
+  { title: "אסטרטגיית חדירה לשוק", market: { service: "פגישת ייעוץ שיווקי של שעתיים", price: "1,500", qualifier: "מחיר לדוגמה", unit: "כולל מע״מ", source: "https://www.letapel.co.il/personaly" }, items: [
+    "בחירת הקהל הראשון שאליו נכון לצאת עם המוצר",
+    "יצירת מוצר טעימה שמציג את הערך ומוביל להצעה שלכם",
+    "תכנון ערוצי שיווק ושיתופי פעולה שמתאימים לעסק",
+    "בניית מהלך השקה שאפשר להתחיל ליישם גם בלי קידום ממומן",
+    "בדיקת המסרים בשטח ושיפור ההצעה מתוך תגובות הלקוחות",
   ] },
 ];

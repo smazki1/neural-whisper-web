@@ -3,7 +3,7 @@ import { KnowledgeTakesShape } from "./KnowledgeTakesShape";
 import { ArrowLeft, CheckCircle, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
-import { availableCourseModules, digitalProductBonus, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
+import { availableCourseModules, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
 import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -113,16 +113,18 @@ export function LibrarySection() {
   </section>;
 }
 
+const collagePositions = ["md:col-span-2 md:row-span-2 md:rotate-[-2deg]", "md:rotate-[3deg] md:-mr-5 md:mt-6", "md:rotate-[-3deg] md:-mr-3", "md:col-span-2 md:col-start-2 md:rotate-[2deg]"];
+
 export function AboutAviSection() {
   const { aviPhotos } = ideaToBusiness;
   return <section id="about-avi" className="bg-stone-50 py-16 md:py-24 text-slate-900 overflow-hidden">
     <div className={wrap}><h2 className={`${heading} text-blue-900 max-w-3xl mx-auto text-center mb-12`}>אני לא מלמד AI מהצד.<br />אני משתמש בו כדי לבנות דברים אמיתיים.</h2>
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 items-start">
         <figure>
-          <div className="grid grid-cols-3 gap-3 md:gap-4">
-            {aviPhotos.map((photo, i) => <a key={photo.src} href={photo.src} target="_blank" rel="noopener noreferrer" aria-label={`${photo.alt}, פתיחה בגודל מלא בלשונית חדשה`} className={`block overflow-hidden rounded-2xl shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 focus-visible:outline-offset-4 ${i === 0 ? "col-span-3 aspect-[4/3]" : "aspect-[3/4]"}`}><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="w-full h-full object-cover" style={{ objectPosition: photo.position }} /></a>)}
+          <div className="grid grid-cols-2 md:grid-cols-3 auto-rows-[144px] md:auto-rows-[176px] gap-3 md:gap-4 md:py-5">
+            {aviPhotos.map((photo, i) => <div key={photo.src} className={`relative min-w-0 min-h-0 overflow-hidden rounded-2xl md:shadow-md ${collagePositions[i % collagePositions.length]}`}><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="w-full h-full object-cover" style={{ objectPosition: photo.position }} /></div>)}
           </div>
-          <figcaption className="mt-4 text-sm text-slate-600 text-center">מתוך הרצאות וסדנאות בהנחיית אבי · לחצו לפתיחת תמונה בגודל מלא</figcaption>
+          <figcaption className="mt-4 text-sm text-slate-600 text-center">מתוך הרצאות וסדנאות בהנחיית אבי</figcaption>
         </figure>
         <div className="space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p>אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p>את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p>לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p></div>
       </div>
@@ -130,13 +132,14 @@ export function AboutAviSection() {
   </section>;
 }
 
+const feedbackRotation = ["md:rotate-[-1deg]", "md:rotate-[1.5deg]", "md:rotate-[-0.5deg]"];
+
 export function TestimonialsSection() {
   const { testimonials } = ideaToBusiness;
   return <section id="feedback" className="bg-slate-100 py-16 md:py-24 text-slate-900 overflow-hidden">
     <div className={wrap}><h2 className={`${heading} text-blue-900 text-center mb-6`}>אל תיקחו רק את המילה שלי</h2>
-      <p className="text-center text-slate-600 mb-8">לחצו על עדות לקריאה בגודל מלא</p>
-      <div className="max-w-5xl mx-auto columns-1 md:columns-2 gap-6">
-        {testimonials.map((item, i) => <figure key={item.src} className="break-inside-avoid mb-6 rounded-2xl bg-white p-2 border border-slate-200 shadow-sm"><a href={item.src} target="_blank" rel="noopener noreferrer" aria-label={`פתיחת עדות ${i + 1} בגודל מלא בלשונית חדשה`} className="block rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 focus-visible:outline-offset-4"><img src={item.src} alt={item.alt} loading="lazy" decoding="async" className="w-full h-auto rounded-xl" /></a></figure>)}
+      <div className="flex items-start gap-4 overflow-x-auto snap-x snap-mandatory pb-6 pt-3 md:block md:columns-3 lg:columns-4 md:gap-5 md:overflow-visible">
+        {testimonials.map((item, i) => <figure key={item.src} className={`w-[78%] shrink-0 snap-center md:w-auto md:break-inside-avoid mb-5 rounded-2xl bg-white p-3 border border-slate-200 shadow-sm ${feedbackRotation[i % feedbackRotation.length]}`}><img src={item.src} alt={item.alt} loading="lazy" decoding="async" className="w-full h-auto rounded-xl" /></figure>)}
       </div>
     </div>
   </section>;
@@ -155,21 +158,30 @@ export function AvailableLessons() {
         </AccordionContent>
       </AccordionItem>)}
     </Accordion>
-    <div className="mt-6 rounded-2xl border border-yellow-300/40 bg-yellow-300/10 p-6 md:p-8">
-      <p className="text-lg text-yellow-300 font-bold mb-2">בונוס זמין בקורס</p>
-      <h4 className="text-xl md:text-2xl font-bold">{digitalProductBonus}</h4>
-    </div>
-    <div id="upcoming-content" className="mt-12 border-t border-white/20 pt-10 scroll-mt-8">
-      <p className="text-yellow-300 font-bold text-lg mb-2">וזו רק ההתחלה</p>
-      <h4 className="text-2xl md:text-3xl font-bold mb-4">בקרוב: עוד דרכים לבנות ולקדם את העסק</h4>
-      <p className="text-lg text-slate-200 leading-relaxed mb-6">תוכן, לקוחות, כלים חכמים והזדמנויות חדשות. הצצה לנושאים שמתוכננים להרחיב את מה שתוכלו לעשות עם AI.</p>
-      <DraftNote className="mb-6">ריכזתי כאן את הרעיונות מהפרויקט, מהמשימות וממאגר הרעיונות. זו רשימה רחבה לעריכה שלך, לא סילבוס סופי או התחייבות למועד עלייה.</DraftNote>
-      <Accordion type="multiple" defaultValue={["upcoming-0"]} dir="rtl">
-        {upcomingCourseGroups.map((group, i) => <AccordionItem key={group.title} value={`upcoming-${i}`} className="border-white/20">
-          <AccordionTrigger className="text-right text-xl gap-4 py-6 font-bold">{group.title}</AccordionTrigger>
-          <AccordionContent className="text-lg text-slate-100 leading-relaxed"><ul className="space-y-4 pb-3">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul></AccordionContent>
+    <div id="upcoming-content" className="mt-16 border-t border-white/20 pt-12 md:pt-16 scroll-mt-8">
+      <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
+        <p className="text-yellow-300 font-bold text-xl md:text-2xl mb-3">וזו רק ההתחלה</p>
+        <h4 className="text-3xl md:text-4xl font-bold text-balance mb-5">בקרוב: עוד דרכים לבנות ולקדם את העסק</h4>
+        <p className="text-xl md:text-2xl text-slate-200 leading-relaxed">ממחקר ותוכן ועד מוצרים חכמים ולקוחות חדשים. עוד יכולות שתוכלו להוסיף לעסק, כחלק מהקורס.</p>
+      </div>
+      <Accordion type="multiple" defaultValue={["upcoming-0"]} dir="rtl" className="space-y-5">
+        {upcomingCourseGroups.map((group, i) => <AccordionItem key={group.title} value={`upcoming-${i}`} className="rounded-2xl border border-white/20 bg-white/[0.04] p-5 md:p-7 grid md:grid-cols-[minmax(0,1fr)_190px] gap-5 md:gap-7 items-start">
+          <div className="min-w-0">
+            <span className="inline-flex rounded-full border border-yellow-300/30 bg-yellow-300/10 px-3 py-1 text-sm font-bold text-yellow-200">בקרוב כחלק מהקורס</span>
+            <AccordionTrigger className="text-right text-xl md:text-2xl gap-4 pt-4 pb-3 font-bold hover:no-underline">{group.title}</AccordionTrigger>
+            <AccordionContent className="text-lg text-slate-100 leading-relaxed"><ul className="space-y-4 pt-3">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul></AccordionContent>
+          </div>
+          <aside aria-label={`השוואת עלות: ${group.title}`} className="rounded-xl border border-yellow-200/20 bg-slate-950/30 p-4 text-center">
+            <p className="text-sm text-slate-300">דוגמה לעלות אצל איש מקצוע</p>
+            <p className="text-base font-semibold text-white mt-2">{group.market.service}</p>
+            <p className="text-sm text-yellow-100 mt-4">{group.market.qualifier}</p>
+            <p className="text-3xl font-bold text-yellow-300 mt-1"><bdi>₪{group.market.price}</bdi></p>
+            <p className="text-sm text-slate-300 mt-1">{group.market.unit}</p>
+            <a href={group.market.source} target="_blank" rel="noopener noreferrer" className="inline-block text-sm text-slate-300 underline underline-offset-4 mt-3 hover:text-white" aria-label={`מקור המחיר: ${group.market.service}`}>מקור המחיר</a>
+          </aside>
         </AccordionItem>)}
       </Accordion>
+      <p className="text-sm leading-relaxed text-slate-300 mt-6">המחירים הם דוגמאות לשירותים בהיקף המצוין, לפי מחירוני ספקים. בקורס לומדים לבצע בעצמכם; השירותים אינם כלולים ברכישה. העלות בפועל תלויה בספק ובהיקף העבודה, וייתכנו עלויות לכלים ולמנויים.</p>
     </div>
   </div>;
 }
