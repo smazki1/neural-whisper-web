@@ -225,11 +225,11 @@ const IdeaToBusiness = () => {
           </motion.h2>
 
           <AvailableLessons />
-          <aside aria-label="מחיר השקת הקורס" className="mx-auto mb-8 max-w-4xl rounded-2xl border border-yellow-300/40 bg-slate-900/70 px-6 py-7 md:px-8">
-            <div className="flex flex-col items-center justify-between gap-5 text-center md:flex-row md:gap-8 md:text-right">
-              <h3 className="text-2xl font-bold text-white">כל זה במחיר השקה</h3>
-              <div className="flex items-center gap-5">
-                <bdi className="text-5xl font-bold tracking-tight text-yellow-300">{price} ₪</bdi>
+          <aside aria-label="מחיר השקת הקורס" className="mx-auto mb-8 max-w-4xl rounded-2xl border border-yellow-300/40 bg-slate-900/70 px-6 py-9 md:px-10 md:py-11">
+            <div className="flex flex-col items-center gap-6 md:gap-7 text-center">
+              <h3 className="text-2xl md:text-3xl font-bold text-white">כל זה במחיר השקה</h3>
+              <div className="flex flex-wrap items-center justify-center gap-5 md:gap-7">
+                <bdi className="text-5xl md:text-6xl font-bold tracking-tight text-yellow-300">{price} ₪</bdi>
                 <div className="text-base leading-relaxed text-slate-300">
                   <span className="block">במקום</span>
                   <del><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del>
