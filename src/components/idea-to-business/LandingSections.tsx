@@ -1,4 +1,5 @@
-import { Image as ImageIcon, ArrowLeft, CheckCircle, Code2, Sparkles, Layers3, Workflow } from "lucide-react";
+import { KnowledgeTakesShape } from "./KnowledgeTakesShape";
+import { Image as ImageIcon, ArrowLeft, CheckCircle, Sparkles, Layers3, Workflow } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
 import { availableCourseModules, digitalProductBonus, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
@@ -62,7 +63,7 @@ export function VibeCodingSection() {
   return <section id="building-products" className="bg-white py-16 md:py-24 text-slate-900">
     <div className={`${wrap} grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center`}>
       <div><h2 className={`${heading} text-blue-900 mb-6`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-lg leading-relaxed space-y-4"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p><p>לפעמים תבנו כלי שיעזור למכור את המוצר הקיים שלכם. ולפעמים תתחילו לבנות משהו קטן ותגלו שהוא בעצמו יכול להפוך למוצר חדש.</p></div></div>
-      <div className="rounded-2xl bg-slate-900 p-7 md:p-10 text-white"><Code2 className="h-8 w-8 text-yellow-300 mb-6" aria-hidden="true" /><p className="text-slate-300 mb-5">זה יכול להיות</p><ul className="grid grid-cols-2 gap-x-4 gap-y-4 text-lg">{["מחשבון", "סימולטור", "מחולל", "כלי שנותן המלצה אישית", "אפליקציה קטנה", "מערכת פנימית", "מוצר דיגיטלי חדש"].map(x => <li key={x} className="border-b border-white/15 pb-3">{x}</li>)}</ul><p className="text-xl font-semibold text-yellow-300 leading-relaxed mt-7">לא רק לבנות את מה שעוטף את המוצר שלכם.<br />עם AI אפשר להתחיל לבנות גם את המוצר עצמו.</p></div>
+      <div className="w-full max-w-[502px] min-w-0 rounded-2xl bg-slate-900 text-white"><KnowledgeTakesShape /><div className="px-7 pb-7 md:px-10 md:pb-10"><p className="text-xl font-semibold text-yellow-300 leading-relaxed mt-7">לא רק לבנות את מה שעוטף את המוצר שלכם.<br />עם AI אפשר להתחיל לבנות גם את המוצר עצמו.</p></div></div>
     </div>
   </section>;
 }

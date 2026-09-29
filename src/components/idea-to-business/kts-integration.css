@@ -1,0 +1,7 @@
+/* The site's mobile touch-target minimums distort the supplied animation's
+   initial dots and final controls. Keep its original geometry inside .kts. */
+.kts button,
+.kts input[type="range"] {
+  min-width: 0;
+  min-height: 0;
+}

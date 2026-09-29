@@ -1,0 +1,513 @@
+/* =========================================================
+   "הידע שלכם מקבל צורה" — רכיב אנימציה לדף הנחיתה
+   כל הסגנונות תחומים תחת ‎.kts‎ כדי לא לגעת בשאר האתר.
+   ========================================================= */
+
+@property --kts-sweep {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.kts {
+  --kts-bg: #0F172A;
+  --kts-ink: #F4F1EA;                      /* לבן שבור */
+  --kts-ink-2: rgba(244, 241, 234, .64);
+  --kts-amber: #FACC15;
+  --kts-ease: cubic-bezier(.65, .05, .25, 1);
+  --kts-soft: cubic-bezier(.22, .8, .3, 1);
+  --kts-radius: 22px;
+
+  container: kts / inline-size;
+  position: relative;
+  width: 100%;
+  direction: rtl;
+  color: var(--kts-ink);
+  font-family: "Noto Sans Hebrew", "Arial Hebrew", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.kts *, .kts *::before, .kts *::after { box-sizing: border-box; }
+
+/* ---------- הבמה ---------- */
+.kts-stage {
+  /* גאומטריית המוצר (הכרטיס) */
+  --W: min(300px, calc(100% - 32px));
+  --H: 348px;
+  --nw: min(250px, calc(100% - 56px));      /* רוחב פתק */
+  --rx: calc(50% - var(--W) / 2);           /* מיקום הכרטיס */
+  --ry: 126px;
+  --v: 72;
+
+  position: relative;
+  height: 600px;                            /* גובה קבוע — בלי קפיצות בעמוד */
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: var(--kts-radius);
+  background:
+    radial-gradient(60% 55% at 80% 6%, rgba(250, 204, 21, .05), transparent 70%),
+    radial-gradient(75% 60% at 12% 104%, rgba(64, 96, 168, .17), transparent 70%),
+    var(--kts-bg);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 234, .06);
+  outline: none;
+}
+.kts-stage.is-final { --ry: 28px; }
+
+@container kts (min-width: 720px) {
+  .kts-stage { height: 460px; --W: 300px; --nw: 250px; --ry: 56px; }
+  .kts-stage.is-final { --rx: max(32px, calc(22% - 150px)); --ry: 56px; }
+}
+
+/* אור רך מאחורי המוצר */
+.kts-glow {
+  position: absolute;
+  z-index: 0;
+  left: calc(var(--rx) - 90px);
+  top: calc(var(--ry) - 70px);
+  width: calc(var(--W) + 180px);
+  height: calc(var(--H) + 140px);
+  background: radial-gradient(closest-side, rgba(250, 204, 21, .075), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: left 1s var(--kts-ease), top 1s var(--kts-ease), opacity 1.2s ease;
+}
+.is-form .kts-glow { opacity: 1; }
+
+/* ---------- חוטים שמחברים בין המחשבות ---------- */
+.kts-threads {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.kts-thread {
+  fill: none;
+  stroke: rgba(244, 241, 234, .24);
+  stroke-width: 1.2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.4s var(--kts-ease), opacity .4s ease;
+}
+.is-threads .kts-thread { stroke-dashoffset: 0; }
+.is-fade .kts-thread { opacity: 0; }
+
+/* ---------- הכרטיס והמסגרת שנסגרת ---------- */
+.kts-card,
+.kts-frame {
+  position: absolute;
+  left: var(--rx);
+  top: var(--ry);
+  width: var(--W);
+  height: var(--H);
+  border-radius: var(--kts-radius);
+  pointer-events: none;
+  transition:
+    left 1s var(--kts-ease) 0s,
+    top 1s var(--kts-ease) 0s,
+    opacity .8s ease var(--cd, 0s),
+    transform .9s var(--kts-soft) var(--cd, 0s),
+    border-color .8s ease,
+    --kts-sweep 1.1s var(--kts-ease);
+}
+.kts-card {
+  z-index: 1;
+  opacity: 0;
+  transform: scale(.985);
+  background: linear-gradient(180deg, #18233B 0%, #111A2D 100%);
+  box-shadow:
+    0 40px 80px -34px rgba(0, 0, 0, .8),
+    inset 0 1px 0 rgba(244, 241, 234, .06);
+}
+.kts-frame {
+  z-index: 3;
+  opacity: 0;
+  border: 1px solid rgba(250, 204, 21, .62);
+  -webkit-mask: conic-gradient(#000 0 calc(var(--kts-sweep) / 2), transparent 0 calc(360deg - var(--kts-sweep) / 2), #000 0);
+          mask: conic-gradient(#000 0 calc(var(--kts-sweep) / 2), transparent 0 calc(360deg - var(--kts-sweep) / 2), #000 0);
+}
+.is-join .kts-card { --cd: .35s; opacity: 1; transform: none; }
+.is-join .kts-frame { opacity: 1; --kts-sweep: 360deg; }
+.is-form .kts-frame { border-color: rgba(244, 241, 234, .1); }
+
+/* ---------- פתקים → חלקי המוצר ---------- */
+.kts-piece {
+  position: absolute;
+  z-index: 2;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  opacity: var(--o);
+  transform: translateY(var(--dy)) rotate(var(--r)) scale(var(--s));
+  transition-property: left, top, width, height, transform, opacity;
+  transition-duration: var(--t, 1.1s);
+  transition-timing-function: var(--tf, var(--kts-ease));
+  transition-delay: var(--d, 0s);
+
+  --w: var(--nw);
+  --h: 120px;
+  --o: 0;
+  --dy: 14px;
+  --r: 0deg;
+  --s: 1;
+}
+
+/* מיקומי חומר הגלם — מובייל: זיגזג אנכי */
+.kts-p1 { --x: calc(93% - var(--nw)); --y: 36px;  --r: -2deg; }
+.kts-p2 { --x: 7%;                    --y: 212px; --r: 1.6deg; --s: .96; }
+.kts-p3 { --x: calc(50% - var(--nw) / 2 + 5%); --y: 388px; --r: -1deg; }
+
+/* מיקומי חומר הגלם — מחשב: קומפוזיציה אלכסונית */
+@container kts (min-width: 720px) {
+  .kts-p1 { --x: 58%; --y: 52px; }
+  .kts-p2 { --x: 12%; --y: 166px; }
+  .kts-p3 { --x: 48%; --y: 296px; }
+}
+
+/* 1. חומר הגלם מופיע */
+.is-raw .kts-piece { --o: 1; --dy: 0px; --t: 1s; --tf: var(--kts-soft); }
+.is-raw .kts-p2 { --d: .3s; }
+.is-raw .kts-p3 { --d: .6s; }
+
+/* 2א. מתקרבים ומסתדרים */
+.is-gather .kts-piece {
+  --x: calc(var(--rx) + 14px);
+  --w: calc(var(--W) - 28px);
+  --h: 64px;
+  --r: 0deg;
+  --s: 1;
+  --t: 1.1s;
+  --tf: var(--kts-ease);
+}
+.is-gather .kts-p1 { --y: calc(var(--ry) - 10px); --d: 0s; }
+.is-gather .kts-p2 { --y: calc(var(--ry) + 88px); --d: .07s; }
+.is-gather .kts-p3 { --y: calc(var(--ry) + 186px); --h: 172px; --d: .14s; }
+
+/* 2ב. ננעלים למבנה אחד */
+.is-join .kts-piece { --t: .8s; --d: 0s; }
+.is-join .kts-p1 { --y: calc(var(--ry) + 14px); }
+.is-join .kts-p3 { --y: calc(var(--ry) + 162px); }
+
+/* 4. הקומפוזיציה מתיישבת */
+.is-final .kts-piece { --t: 1s; --d: 0s; }
+
+/* משטח הפתק */
+.kts-float {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background:
+    linear-gradient(165deg, rgba(244, 241, 234, .075), rgba(244, 241, 234, .02) 60%),
+    #152038;
+  box-shadow:
+    0 26px 50px -26px rgba(0, 0, 0, .85),
+    inset 0 0 0 1px rgba(244, 241, 234, .1),
+    inset 0 1px 0 rgba(244, 241, 234, .08);
+  transition: background .9s ease, box-shadow .9s ease, border-radius .9s ease;
+}
+.kts-p2 .kts-float {
+  background:
+    linear-gradient(165deg, rgba(244, 241, 234, .06), rgba(244, 241, 234, .015) 60%),
+    #131C31;
+  box-shadow:
+    0 16px 34px -22px rgba(0, 0, 0, .8),
+    inset 0 0 0 1px rgba(244, 241, 234, .08);
+}
+.is-join .kts-float,
+.is-join .kts-p2 .kts-float {
+  border-radius: 14px;
+  background: rgba(244, 241, 234, .028);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 234, .065);
+}
+
+/* טקסט הפתק — יחידה אחת שלמה */
+.kts-note-text {
+  position: absolute;
+  top: 46px;
+  right: 20px;
+  left: 20px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--kts-ink);
+  text-wrap: balance;
+  transition: opacity .45s ease, transform .45s ease, visibility 0s linear 0s;
+}
+.is-fade .kts-note-text {
+  opacity: 0;
+  transform: translateY(-6px);
+  visibility: hidden;
+  transition: opacity .45s ease, transform .45s ease, visibility 0s linear .45s;
+}
+
+/* ---------- סימן 1: שתי נקודות → בחירה ---------- */
+.kts-choice {
+  position: absolute;
+  top: 21px;
+  right: 20px;
+  width: 30px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(244, 241, 234, 0);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 234, 0);
+  transition-property: top, right, width, height, background, box-shadow;
+  transition-duration: .85s;
+  transition-timing-function: var(--kts-ease);
+}
+.kts-opt {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(244, 241, 234, .55);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--kts-ink-2);
+  font: inherit;
+  cursor: pointer;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: top, bottom, right, width, border-color, color;
+  transition-duration: .85s, .85s, .85s, .85s, .5s, .3s;
+  transition-timing-function: var(--kts-ease);
+}
+.kts-opt[data-opt="a"] { right: 0; }
+.kts-opt[data-opt="b"] { right: 20px; }
+.kts-opt svg {
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.kts-ind {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  right: 4px;
+  width: calc(50% - 6px);
+  border-radius: 999px;
+  background: rgba(250, 204, 21, .12);
+  box-shadow: inset 0 0 0 1px rgba(250, 204, 21, .5);
+  opacity: 0;
+  transition: right .55s var(--kts-soft), opacity .5s ease;
+}
+.is-form .kts-choice {
+  top: calc(50% - 22px);
+  right: 14px;
+  width: calc(100% - 28px);
+  height: 44px;
+  background: rgba(244, 241, 234, .04);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 234, .06);
+}
+.is-form .kts-opt { top: 4px; bottom: 4px; width: calc(50% - 6px); border-color: transparent; }
+.is-form .kts-opt[data-opt="a"] { right: 4px; }
+.is-form .kts-opt[data-opt="b"] { right: calc(50% + 2px); }
+.is-form .kts-opt svg { opacity: 1; transition-delay: .5s; }
+.is-form .kts-ind { opacity: 1; transition-delay: 0s, .55s; }
+.kts-stage[data-opt="b"] .kts-ind { right: calc(50% + 2px); }
+.kts-stage[data-opt="a"] .kts-opt[data-opt="a"],
+.kts-stage[data-opt="b"] .kts-opt[data-opt="b"] { color: var(--kts-amber); }
+
+/* ---------- סימן 2: דרך עם שלבים → מחוון ---------- */
+.kts-slider {
+  position: absolute;
+  top: 23px;
+  right: 20px;
+  width: 44px;
+  height: 6px;
+  transition-property: top, right, width, height;
+  transition-duration: .85s;
+  transition-timing-function: var(--kts-ease);
+}
+.kts-track {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1.5px;
+  border-radius: 4px;
+  background: rgba(244, 241, 234, .45);
+  transform: translateY(-50%);
+  transition: height .6s ease, background .6s ease;
+}
+.kts-tick {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--t) * 100%);
+  width: 6px;
+  height: 6px;
+  margin: -3px -3px 0 0;
+  border-radius: 50%;
+  background: var(--kts-ink);
+  opacity: .75;
+  transition: opacity .6s ease, transform .6s ease;
+}
+.kts-fill {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: calc(var(--v) * 1%);
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 4px;
+  background: var(--kts-amber);
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.kts-knob {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--v) * 1%);
+  width: 20px;
+  height: 20px;
+  margin: -10px -10px 0 0;
+  border-radius: 50%;
+  background: var(--kts-amber);
+  box-shadow: 0 0 0 5px rgba(250, 204, 21, .14), 0 4px 10px rgba(0, 0, 0, .45);
+  transform: scale(0);
+  transition: transform .5s var(--kts-soft), box-shadow .2s ease;
+}
+.kts-range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -12px;
+  width: calc(100% + 24px);
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+          appearance: none;
+  background: transparent;
+}
+.kts-range::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 40px; }
+.kts-range::-moz-range-thumb { width: 24px; height: 40px; border: 0; }
+.kts-slider:has(.kts-range:focus-visible) .kts-knob {
+  box-shadow: 0 0 0 3px var(--kts-bg), 0 0 0 5px var(--kts-amber);
+}
+.is-form .kts-slider { top: calc(50% - 20px); right: 28px; width: calc(100% - 56px); height: 40px; }
+.is-form .kts-track { height: 4px; background: rgba(244, 241, 234, .12); }
+.is-form .kts-tick { opacity: .28; transform: scale(.66); }
+.is-form .kts-fill { opacity: 1; transition-delay: .45s; }
+.is-form .kts-knob { transform: scale(1); transition-delay: .45s, 0s; }
+
+/* ---------- סימן 3: קשת לא גמורה → תוצאה ---------- */
+.kts-result {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  transition-property: top, right, width, height;
+  transition-duration: .95s;
+  transition-timing-function: var(--kts-ease);
+}
+.kts-result svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.kts-ring-track { fill: none; stroke: rgba(244, 241, 234, .14); stroke-width: 10; }
+.kts-ring-arc {
+  fill: none;
+  stroke: rgba(244, 241, 234, .7);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke .7s ease, opacity .45s ease;
+}
+.kts-seg { opacity: 0; transition: opacity .45s ease; }
+.kts-seg circle { fill: none; stroke-width: 10; stroke: rgba(244, 241, 234, .12); transition: stroke .25s ease; }
+.kts-seg circle.on { stroke: var(--kts-amber); }
+.kts-stage[data-opt="b"] .kts-seg { opacity: 1; }
+.kts-stage[data-opt="b"] .kts-ring-arc { opacity: 0; }
+.kts-num {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.is-form .kts-result { top: calc(50% - 62px); right: calc(50% - 62px); width: 124px; height: 124px; }
+.is-form .kts-ring-arc { stroke: var(--kts-amber); }
+.is-form .kts-num { opacity: 1; transition-delay: .55s; }
+
+/* ---------- משפט הסיום ---------- */
+.kts-say {
+  position: absolute;
+  z-index: 4;
+  top: calc(28px + var(--H) + 30px);
+  right: 24px;
+  left: 24px;
+  margin: 0;
+  font-size: clamp(24px, 7.2cqi, 30px);
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  text-wrap: balance;
+}
+.kts-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .9s ease, transform 1s var(--kts-soft);
+}
+.kts-hl { color: var(--kts-amber); }
+.is-final .kts-line { opacity: 1; transform: none; }
+.is-final .kts-line:first-child { transition-delay: .75s; }  /* במובייל: אחרי שהכרטיס עלה */
+.is-final .kts-line:last-child { transition-delay: 1s; }
+
+@container kts (min-width: 720px) {
+  .kts-say {
+    top: 50%;
+    right: max(40px, 6%);
+    left: calc(var(--rx) + var(--W) + 44px);
+    transform: translateY(-50%);
+    font-size: clamp(28px, 3.4cqi, 38px);
+    text-align: right;
+  }
+  .is-final .kts-line:first-child { transition-delay: .35s; }
+  .is-final .kts-line:last-child { transition-delay: .6s; }
+}
+
+/* ---------- הפעלה חוזרת ---------- */
+.kts-replay {
+  position: absolute;
+  z-index: 5;
+  bottom: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 6px 14px 6px 12px;
+  border: 1px solid rgba(244, 241, 234, .14);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .7);
+  color: var(--kts-ink-2);
+  font: 500 14px/1.4 "Noto Sans Hebrew", "Arial Hebrew", system-ui, sans-serif;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s ease, visibility 0s linear .5s, color .2s ease, border-color .2s ease;
+}
+.kts-replay svg { width: 16px; height: 16px; flex: none; }
+.is-done .kts-replay { opacity: 1; visibility: visible; transition: opacity .5s ease, visibility 0s, color .2s ease, border-color .2s ease; }
+.kts-replay:hover { color: var(--kts-ink); border-color: rgba(244, 241, 234, .32); }
+.kts-replay:focus-visible,
+.kts-opt:focus-visible { outline: 2px solid var(--kts-amber); outline-offset: 2px; }
+.kts-replay[hidden] { display: none; }
+
+/* ---------- מצבי שירות ---------- */
+.kts-instant,
+.kts-instant * { transition: none !important; }
+.kts-static,
+.kts-static * { transition: none !important; }
