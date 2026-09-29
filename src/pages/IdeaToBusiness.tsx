@@ -422,10 +422,10 @@ const IdeaToBusiness = () => {
 
           </div>
 
-          <div className="mx-auto mt-9 md:mt-10 max-w-xl text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-blue-900">מה צריך כדי להתחיל?</h3>
-            <p className="mt-3 text-lg leading-relaxed text-slate-700">רעיון או עסק שתרצו לקדם, וידע בסיסי במחשב ובדפדפן.</p>
-            <p className="mt-4 text-base leading-7 text-slate-600">לעבודה בקורס תצטרכו חשבון ChatGPT ומסמך Google Docs ריק.<br className="hidden sm:block" /> אפשר להתחיל גם עם חשבון ChatGPT חינמי.</p>
+          <div className="mx-auto mt-9 md:mt-10 max-w-2xl text-center">
+            <h3 className="text-2xl md:text-3xl font-bold text-blue-900">מה צריך כדי להתחיל?</h3>
+            <p className="mt-5 text-xl md:text-2xl font-medium leading-relaxed text-slate-700">רעיון או עסק שתרצו לקדם, וידע בסיסי במחשב ובדפדפן.</p>
+            <p className="mt-5 text-xl md:text-2xl font-medium leading-relaxed text-slate-600">לעבודה בקורס תצטרכו חשבון ChatGPT ומסמך Google Docs ריק.<br className="hidden sm:block" /> אפשר להתחיל גם עם חשבון ChatGPT חינמי.</p>
           </div>
         </div>
       </section>
