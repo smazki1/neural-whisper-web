@@ -373,19 +373,12 @@ const IdeaToBusiness = () => {
               )}
             </div>
 
-            <ul className="mt-8 grid gap-3 border-t border-white/15 pt-6 text-base text-slate-200 sm:grid-cols-3 sm:gap-4">
-              {["גישה לכל החיים", "כולל תכנים עתידיים", "קורס מוקלט בעברית"].map(item => (
-                <li key={item} className="flex items-center justify-center gap-2">
-                  <CheckCircle className="h-4 w-4 shrink-0 text-yellow-300" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <div className="mx-auto mt-7 max-w-xl text-center">
-            <p className="text-lg leading-relaxed text-slate-700">לקחת את הרעיון שלכם, לבנות את מה שצריך ולהתחיל לצאת איתו ללקוחות.</p>
-            <p className="mt-4 text-sm leading-relaxed text-slate-500"><strong className="font-semibold text-slate-600">מה צריך כדי להתחיל?</strong> ידע בסיסי במחשב ובדפדפן, חשבון ChatGPT (אפשר להתחיל בחינם), מסמך Google Docs ריק ורעיון או עסק שתרצו לעבוד עליו.</p>
+          <div className="mx-auto mt-9 md:mt-10 max-w-xl text-center">
+            <h3 className="text-xl md:text-2xl font-bold text-blue-900">מה צריך כדי להתחיל?</h3>
+            <p className="mt-3 text-lg leading-relaxed text-slate-700">רעיון או עסק שתרצו לקדם, וידע בסיסי במחשב ובדפדפן.</p>
+            <p className="mt-4 text-base leading-7 text-slate-600">לעבודה בקורס תצטרכו חשבון ChatGPT ומסמך Google Docs ריק.<br className="hidden sm:block" /> אפשר להתחיל גם עם חשבון ChatGPT חינמי.</p>
           </div>
         </div>
       </section>
