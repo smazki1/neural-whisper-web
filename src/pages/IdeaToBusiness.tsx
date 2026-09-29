@@ -259,29 +259,29 @@ const IdeaToBusiness = () => {
       </section>
 
       {/* Target Audience */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-50/30 to-red-50/30"></div>
         <div className="container mx-auto px-6 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid items-start md:grid-cols-2 gap-5 md:gap-6">
             {/* Suitable For */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-green-200/50">
-                <h3 className="text-2xl font-bold text-green-600 mb-8 text-center flex items-center justify-center">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-7 shadow-xl border border-green-200/50">
+                <h3 className="text-2xl font-bold text-green-600 mb-5 text-center flex items-center justify-center">
                   <CheckCircle className="h-8 w-8 ml-3" />
                   למי זה מתאים
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {suitableFor.map((item, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className="flex items-center space-x-3 space-x-reverse p-3 rounded-lg hover:bg-green-50/50 transition-colors"
+                      className="flex items-center space-x-3 space-x-reverse px-1 py-2 rounded-lg hover:bg-green-50/50 transition-colors"
                     >
                       <CheckCircle className="h-6 w-6 text-green-500 flex-shrink-0" />
                       <span className="text-gray-800 font-medium">{item}</span>
@@ -297,21 +297,21 @@ const IdeaToBusiness = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-red-200/50">
-                <h3 className="text-2xl font-bold text-red-600 mb-8 text-center flex items-center justify-center">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-7 shadow-xl border border-red-200/50">
+                <h3 className="text-2xl font-bold text-red-600 mb-5 text-center flex items-center justify-center">
                   <div className="h-8 w-8 flex-shrink-0 rounded-full bg-red-500 flex items-center justify-center ml-3">
                     <span className="text-white text-lg">✕</span>
                   </div>
                   למי זה לא מתאים
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {notSuitableFor.map((item, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className="flex items-center space-x-3 space-x-reverse p-3 rounded-lg hover:bg-red-50/50 transition-colors"
+                      className="flex items-center space-x-3 space-x-reverse px-1 py-2 rounded-lg hover:bg-red-50/50 transition-colors"
                     >
                       <div className="h-6 w-6 flex-shrink-0 rounded-full bg-red-500 flex items-center justify-center">
                         <span className="text-white text-xs">✕</span>
