@@ -1,3 +1,4 @@
+import { HoverDemo } from "./HoverDemo";
 import { KnowledgeTakesShape } from "./KnowledgeTakesShape";
 import { Image as ImageIcon, ArrowLeft, CheckCircle, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -78,11 +79,12 @@ export function VibeCodingSection() {
 }
 
 export function OutputsSection() {
-  const { examples } = ideaToBusiness;
   return <section id="examples" className="bg-slate-100 py-16 md:py-24 text-slate-900">
-    <div className={wrap}><h2 className={`${heading} text-blue-900 mb-6`}>דברים שפעם היו נשארים רעיון</h2><DraftNote className="mb-8 max-w-3xl">יש לבחור 3–6 פרויקטים אמיתיים, לספק תמונה ומשפט לכל פרויקט ולהחליט אם לכלול את FoodVision. המקומות השמורים אינם דוגמאות לתוצרים.</DraftNote>
-      <div className="grid gap-6 md:grid-cols-2">
-        {examples.length ? examples.map(item => <figure key={item.src} className="min-w-0"><img src={item.src} alt={item.alt} loading="lazy" className="w-full aspect-[16/10] object-contain rounded-2xl bg-white border border-slate-200" /><figcaption className="mt-4 text-lg font-medium">{item.caption}</figcaption></figure>) : [1, 2, 3, 4].map(n => <ImageSlot key={n} label={`פרויקט ${n} · צילום ומשפט מאבי`} className="aspect-[16/10]" />)}
+    <div className={wrap}>
+      <h2 className={`${heading} text-blue-900 mb-6`}>דברים שפעם היו נשארים רעיון</h2>
+      <p className="text-lg text-slate-600 mb-8">עברו עם העכבר על הדגמה כדי לראות אותה בפעולה. בנייד, נוגעים להפעלה ולעצירה.</p>
+      <div className="grid gap-x-8 gap-y-10 md:grid-cols-2">
+        {ideaToBusiness.examples.map(demo => <HoverDemo key={demo.src} demo={demo} />)}
       </div>
     </div>
   </section>;
@@ -202,5 +204,5 @@ export function FAQSection() {
 }
 
 export function ReviewChecklist() {
-  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "מדיניות גישה לעדכונים עתידיים", "תמונות אבי, הרצאות וסדנאות", "צילומי מוצרים וכלים ובחירת פרויקטים", "עדויות משתתפים אמיתיות", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "אישור תוכנית ההרחבות לספרייה המתפתחת"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
+  return <aside id="review-items" className="bg-amber-50 text-amber-950 border-y border-amber-200 py-10"><div className={`${wrap} max-w-4xl`}><h2 className="text-xl font-bold mb-5">טיוטה לבדיקה · מה נשאר להשלים לפני פרסום</h2><ul className="grid sm:grid-cols-2 gap-3 text-sm leading-relaxed">{["נוסח CTA סופי", "מחיר מלא עתידי", "מדיניות גישה לעדכונים עתידיים", "תמונות אבי, הרצאות וסדנאות", "עדויות משתתפים אמיתיות", "נתוני סמכות מאומתים", "החלטה אם להציג את FoodVision", "אישור תוכנית ההרחבות לספרייה המתפתחת"].map(x => <li key={x} className="flex gap-2"><span aria-hidden="true">○</span><span>{x}</span></li>)}</ul></div></aside>;
 }
