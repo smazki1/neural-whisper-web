@@ -199,18 +199,18 @@ const IdeaToBusiness = () => {
 
           <AvailableLessons />
           <UpcomingLibraryCards />
-          <aside aria-labelledby="launch-offer-heading" className="mx-auto mb-10 max-w-4xl rounded-3xl border border-yellow-300/30 bg-slate-900 px-6 py-10 sm:px-10 md:py-14">
+          <aside aria-labelledby="launch-offer-heading" className="mx-auto mb-10 max-w-4xl rounded-3xl border border-yellow-300/30 bg-slate-900 px-6 py-8 sm:px-10 md:py-10">
             <div className="mx-auto max-w-xl text-center">
               <h3 id="launch-offer-heading" className="text-3xl md:text-[40px] font-bold text-white">כל זה במחיר השקה</h3>
-              <p className="mt-6 flex items-baseline justify-center gap-3 text-yellow-300" aria-label={`מחיר השקה ${price} שקלים`}>
-                <span className="text-[88px] md:text-[112px] font-bold leading-none tracking-tight">{price}</span>
+              <p className="mt-4 flex items-baseline justify-center gap-3 text-yellow-300" aria-label={`מחיר השקה ${price} שקלים`}>
+                <span className="text-[88px] md:text-[104px] font-bold leading-none tracking-tight">{price}</span>
                 <span className="text-4xl md:text-5xl font-bold" aria-hidden="true">₪</span>
               </p>
-              <p className="mt-4 flex items-baseline justify-center gap-2 text-xl md:text-2xl text-slate-300">
+              <p className="mt-3 flex items-baseline justify-center gap-3 text-[28px] md:text-4xl font-semibold leading-tight text-slate-200">
                 <span>במקום</span>
                 <del><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del>
               </p>
-              <a href="#enroll" className="mx-auto mt-8 flex w-full max-w-md items-center justify-center gap-4 rounded-xl bg-yellow-300 px-5 py-5 text-xl md:text-2xl font-bold text-slate-950 transition-colors hover:bg-yellow-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-yellow-300">לפרטי ההרשמה <ArrowLeft className="h-6 w-6 shrink-0" aria-hidden="true" /></a>
+              <a href="#enroll" className="mx-auto mt-5 flex w-full max-w-md items-center justify-center rounded-xl bg-yellow-300 px-5 py-4 text-2xl md:text-[28px] font-bold text-slate-950 transition-colors hover:bg-yellow-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-yellow-300">לפרטי ההרשמה</a>
             </div>
           </aside>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
