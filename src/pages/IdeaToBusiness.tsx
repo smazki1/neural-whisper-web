@@ -202,17 +202,18 @@ const IdeaToBusiness = () => {
 
           <AvailableLessons />
           <UpcomingLibraryCards />
-          <aside aria-label="מחיר השקת הקורס" className="mx-auto mb-8 max-w-4xl rounded-2xl border border-yellow-300/40 bg-slate-900/70 px-6 py-9 md:px-10 md:py-11">
-            <div className="flex flex-col items-center gap-6 md:gap-7 text-center">
-              <h3 className="text-2xl md:text-3xl font-bold text-white">כל זה במחיר השקה</h3>
-              <div className="flex flex-wrap items-center justify-center gap-5 md:gap-7">
-                <bdi className="text-5xl md:text-6xl font-bold tracking-tight text-yellow-300">{price} ₪</bdi>
-                <div className="text-base leading-relaxed text-slate-300">
-                  <span className="block">במקום</span>
-                  <del><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del>
-                </div>
-              </div>
-              <a href="#enroll" className="inline-flex items-center gap-2 rounded-md py-2 text-base font-bold text-yellow-200 underline underline-offset-4 hover:text-yellow-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-yellow-300">לפרטי ההרשמה <ArrowLeft className="h-4 w-4" aria-hidden="true" /></a>
+          <aside aria-labelledby="launch-offer-heading" className="mx-auto mb-10 max-w-4xl rounded-3xl border border-yellow-300/30 bg-slate-900 px-6 py-10 sm:px-10 md:py-14">
+            <div className="mx-auto max-w-xl text-center">
+              <h3 id="launch-offer-heading" className="text-3xl md:text-[40px] font-bold text-white">כל זה במחיר השקה</h3>
+              <p className="mt-6 flex items-baseline justify-center gap-3 text-yellow-300" aria-label={`מחיר השקה ${price} שקלים`}>
+                <span className="text-[88px] md:text-[112px] font-bold leading-none tracking-tight">{price}</span>
+                <span className="text-4xl md:text-5xl font-bold" aria-hidden="true">₪</span>
+              </p>
+              <p className="mt-4 flex items-baseline justify-center gap-2 text-xl md:text-2xl text-slate-300">
+                <span>במקום</span>
+                <del><bdi>{ideaToBusiness.fullPrice.toLocaleString("he-IL")} ₪</bdi></del>
+              </p>
+              <a href="#enroll" className="mx-auto mt-8 flex w-full max-w-md items-center justify-center gap-4 rounded-xl bg-yellow-300 px-5 py-5 text-xl md:text-2xl font-bold text-slate-950 transition-colors hover:bg-yellow-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-yellow-300">לפרטי ההרשמה <ArrowLeft className="h-6 w-6 shrink-0" aria-hidden="true" /></a>
             </div>
           </aside>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
