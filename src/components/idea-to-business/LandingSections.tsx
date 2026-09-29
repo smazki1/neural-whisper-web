@@ -1,5 +1,6 @@
 import { HoverDemo } from "./HoverDemo";
 import { KnowledgeTakesShape } from "./KnowledgeTakesShape";
+import { TimeToProgress } from "./TimeToProgress";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
@@ -195,33 +196,7 @@ export function TimeSection() {
         <span className="hidden h-px w-20 bg-slate-200 sm:block" aria-hidden="true" />
       </div>
 
-      <div className="grid gap-3 md:grid-cols-[0.9fr_1.1fr] md:gap-5">
-        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-9">
-          <h3 className="text-xl md:text-2xl font-bold text-slate-700">זמן שמתפזר</h3>
-          <p className="mt-1 text-base text-slate-500">עוד חיפוש, עוד ניסיון, עוד התחלה מחדש.</p>
-          <ul className="mt-6 divide-y divide-slate-200 text-base md:text-lg leading-relaxed text-slate-600">
-            {["עשרות סרטוני YouTube", "חיפוש אחרי הכלי הנכון", "ניסוי של עוד עשרה פרומפטים", "התכתבויות עם ספקים", "לבנות משהו, לגלות שהוא לא נכון ולהתחיל מחדש"].map(x => <li key={x} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0"><span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true" /><span>{x}</span></li>)}
-          </ul>
-        </div>
-
-        <div className="flex flex-col rounded-3xl bg-slate-900 p-6 md:p-9 text-white">
-          <div className="flex items-center gap-3">
-            <span className="h-7 w-1 rounded-full bg-yellow-300" aria-hidden="true" />
-            <h3 className="text-xl md:text-2xl font-bold">עבודה שמתקדמת</h3>
-          </div>
-          <p className="mt-4 text-lg md:text-xl leading-relaxed text-slate-200">תדעו מה לקדם עכשיו, מה יכול לחכות ואיך לבנות בעצמכם את מה שצריך כדי להגיע ללקוחות.</p>
-          <ol aria-label="שלבי העבודה בקורס" className="my-8 flex items-start">
-            {["מחדדים רעיון", "בונים הצעה", "יוצרים בפועל"].map((step, index) => <li key={step} className="relative flex flex-1 flex-col items-center gap-3 text-center before:absolute before:top-4 before:right-1/2 before:h-px before:w-full before:bg-white/20 last:before:hidden">
-              <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-yellow-300/50 bg-slate-900 text-sm font-bold text-yellow-300" aria-hidden="true">{index + 1}</span>
-              <span className="text-sm md:text-base text-slate-200">{step}</span>
-            </li>)}
-          </ol>
-          <div className="mt-auto border-t border-white/15 pt-6">
-            <p className="text-base leading-relaxed text-slate-300">המטרה של הקורס היא לא לעשות עבורכם את כל העבודה.</p>
-            <p className="mt-2 text-2xl md:text-3xl font-bold leading-relaxed text-yellow-300">אלא לעזור לכם לעבור מהכנות למכירות, ולבנות משם את הצעד הבא בעסק.</p>
-          </div>
-        </div>
-      </div>
+      <TimeToProgress />
     </div>
   </section>;
 }
