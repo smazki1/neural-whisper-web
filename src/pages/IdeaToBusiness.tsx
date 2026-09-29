@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   Trophy,
   Zap,
-  ChevronDown,
 } from "lucide-react";
 import { SEOHead } from "@/components/SEO/SEOHead";
 import { useProductCheckout } from "@/hooks/useProductCheckout";
@@ -134,27 +133,6 @@ const IdeaToBusiness = () => {
 
           </motion.div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="mt-10"
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="flex flex-col items-center text-gray-400"
-            >
-              <a
-                href="#course-problem"
-                className="text-sm mb-2 hover:underline underline-offset-4"
-              >
-                גלו עוד
-              </a>
-              <ChevronDown className="h-6 w-6" />
-            </motion.div>
-          </motion.div>
         </div>
       </section>
 
