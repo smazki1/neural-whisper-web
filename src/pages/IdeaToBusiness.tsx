@@ -1,3 +1,4 @@
+import "./idea-to-business.css";
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -15,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import heroBackground01 from "@/assets/backgrounds/hero/hero-background-01.png";
 import heroBackground02 from "@/assets/backgrounds/hero/hero-background-02.png";
 import {
-  AboutAviSection, AvailableLessons, DraftNote, FAQSection, JourneySection, LibrarySection,
+  AboutAviSection, AvailableLessons, DraftNote, FAQSection, LibrarySection,
   OutputsSection, PossibilitiesSection, ReviewChecklist, SolutionSection,
   TestimonialsSection, TimeSection, VibeCodingSection,
 } from "@/components/idea-to-business/LandingSections";
@@ -67,7 +68,7 @@ const IdeaToBusiness = () => {
     <main
       id="main-content"
       tabIndex={-1}
-      className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-800"
+      className="idea-to-business min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-800"
       dir="rtl"
     >
       <SEOHead
@@ -80,7 +81,7 @@ const IdeaToBusiness = () => {
         aria-label="ניווט בעמוד"
         className="sr-only focus-within:not-sr-only"
       >
-        <a href="#curriculum">לתוכנית הקורס</a>
+        <a href="#available-lessons">לתוכנית הקורס</a>
       </nav>
       {preview && !checkoutUrl && (
         <aside className="bg-yellow-100 text-yellow-950 text-sm text-center px-6 py-2">
@@ -113,15 +114,6 @@ const IdeaToBusiness = () => {
             className="text-xl md:text-2xl text-gray-100 font-medium mb-6 max-w-3xl mx-auto leading-relaxed"
           >
             <strong className="text-yellow-300">״מרעיון לעסק עם AI״</strong> הוא קורס חדשני לבעלי עסקים ועצמאים שרוצים להשתמש ב-AI כדי ליצור, לפתח ולבנות את העסק בצורה חכמה ויעילה יותר, בלי להיות תלויים בכל שלב באיש מקצוע אחר.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg md:text-xl text-gray-200 font-medium mb-8 max-w-3xl mx-auto leading-relaxed"
-          >
-            בעזרת ChatGPT ושיטת עבודה מסודרת תלמדו לקחת רעיון או עסק שעדיין לא מספיק ממוקד, ולחבר את כל החלקים שיאפשרו לכם לצאת לשוק. בלי להיות תלויים באיש מקצוע בכל צעד.
           </motion.p>
 
           <motion.div
@@ -212,7 +204,6 @@ const IdeaToBusiness = () => {
 
       <SolutionSection />
       <PossibilitiesSection />
-      <JourneySection />
       <VibeCodingSection />
       <OutputsSection />
       <LibrarySection />

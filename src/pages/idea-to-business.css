@@ -1,0 +1,6 @@
+/* Hebrew headings need room for tall glyphs at every responsive size. */
+.idea-to-business :is(h1, h2, h3, h4) {
+  line-height: 1.4;
+  padding-block: 0.08em;
+  overflow-wrap: break-word;
+}

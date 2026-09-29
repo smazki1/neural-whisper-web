@@ -1,6 +1,5 @@
 import { Image as ImageIcon, ArrowLeft, CheckCircle, Code2 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { motion, useReducedMotion } from "framer-motion";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
 import { availableCourseModules, digitalProductBonus, upcomingCourseUnits, ideaToBusiness } from "@/content/ideaToBusiness";
 import type { ReactNode } from "react";
@@ -23,7 +22,7 @@ export function SolutionSection() {
       <div><p className="text-xl md:text-2xl text-yellow-300 font-bold mb-5">מרעיון למוצר שאפשר להתחיל למכור</p><h2 className={heading}>דרך עבודה שחוזרים אליה,<br className="hidden md:block" /> בכל פעם שעולה רעיון חדש.</h2></div>
       <div className="space-y-7 text-xl md:text-2xl text-slate-100 font-medium leading-relaxed">
         <p>יש לכם רעיון למוצר או לעסק? תלמדו לחבר אותו להצעה ברורה ולבנות את מה שצריך כדי להתחיל לשווק ולמכור ללקוחות.</p>
-        <p>בעזרת AI תוכלו להכין גרסה ראשונה שאפשר להוציא לשוק ולשפר מתוך המפגש עם הלקוחות, בלי לחכות שהכול יהיה מושלם ובלי להתחיל מהשקעה גדולה ומחודשים של הכנות.</p>
+        <p>מהרגע שיש לכם כיוון ברור, AI הופך לכלי שמחבר בין הרעיון, ההצעה, המסרים והנכסים של העסק, כך שתוכלו להתקדם מהר יותר עם הרבה פחות ניחושים ותלות באחרים.</p>
         <p className="text-yellow-300 font-bold">יותר יכולת להחליט. יותר יכולת לבנות בעצמכם.</p>
       </div>
     </div>
@@ -31,57 +30,30 @@ export function SolutionSection() {
 }
 
 const situations = [
-  { title: "יש לכם רעיון למוצר חדש?", text: "תדעו איך לבחון אותו, לחדד אותו ולהפוך אותו להצעה שאפשר להתחיל לצאת איתה לשוק." },
-  { title: "צריכים דרך להציג ולמכור אותו?", text: "תדעו איך להתחיל לבנות את הדף, המסרים והנכסים שיעזרו לאנשים להבין מה אתם מציעים ולמה זה רלוונטי להם." },
-  { title: "צריכים להתחיל לשווק?", text: "תוכלו להשתמש ב-AI כדי להפוך את הרעיונות והידע שלכם לתוכן, מסרים וחומרים שאפשר לעבוד איתם במקום להתחיל כל פעם מדף ריק." },
-  { title: "ויש לכם רעיון לכלי, מחשבון, סימולטור או מוצר דיגיטלי?", text: "תוכלו להתחיל להפוך גם אותו לגרסה שאפשר לראות, לנסות ולשפר." },
+  { title: "רעיון שהופך להצעה ברורה", text: "במקום להישאר עם רעיון כללי, תחדדו למי הוא מיועד, מה באמת חשוב ללקוח ואיך להפוך אותו להצעה שקל להבין, להציג ולמכור." },
+  { title: "מותג שמרגיש מדויק ועקבי", text: "תחברו בין הקהל, הקול והזהות הוויזואלית כדי שהעסק ירגיש כמו מותג אחד ברור, ולא כמו אוסף של ניסוחים, צבעים ופוסטים שלא מדברים יחד." },
+  { title: "בנק תוכן שמדבר בשפה של המותג", text: "תשתמשו בשפה ובמסרים שכבר גיבשתם כדי לבנות בנק תוכן בשפת המותג שלכם, עם רעיונות שאפשר להפוך לפוסטים, קרוסלות ותסריטים בלי להתחיל כל פעם מחדש." },
+  { title: "דרך ברורה להגיע לשוק", text: "תתכננו איפה לפגוש את הקהל, איך להציג את המוצר ואילו פעולות יעזרו לחשוף אותו לאנשים הרלוונטיים, גם בלי להתחיל מתקציב לפרסום ממומן." },
+  { title: "ובקרוב: רעיון שהופך לכלי אמיתי", text: "תוכלו לקחת ידע או רעיון ולבנות ממנו כלי שנותן ללקוח ערך אמיתי, יוצר חוויה אישית ויכול לפתוח באופן טבעי שיחה או פנייה לעסק." },
 ];
 
 export function PossibilitiesSection() {
-  const reducedMotion = useReducedMotion();
-  return <>
-    <section id="possibilities" className="bg-slate-50 py-20 md:py-28 text-slate-900">
-      <div className={`${wrap} max-w-4xl text-center`}>
-        <h2 className={`${heading} text-blue-900 mb-8`}>אז מה בעצם תוכלו לעשות עם כל זה?</h2>
-        <p className="text-xl md:text-2xl leading-relaxed">המטרה של הקורס היא לא להפוך אתכם לאנשי שיווק, מתכנתים, קופירייטרים ומעצבים.</p>
-        <p className="text-xl md:text-2xl leading-relaxed mt-6">המטרה היא שבפעם הבאה שיעלה לכם רעיון בעסק, לא תיתקעו בשאלה:</p>
+  return <section id="possibilities" className="relative bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 py-16 md:py-20 text-white">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true"><div className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${heroBackground03})` }} /></div>
+    <div className={`${wrap} relative`}>
+      <header className="max-w-3xl mx-auto text-center mb-9 md:mb-10">
+        <h2 className={`${heading} mb-5`}>מה תוכלו לבנות עם היכולת הזאת</h2>
+        <p className="text-xl text-slate-100 leading-relaxed">מהרעיון וההצעה, דרך השפה של המותג, ועד הדרך שבה הלקוחות פוגשים אתכם.</p>
+      </header>
+      <div id="business-scenarios" className="max-w-5xl mx-auto space-y-4 md:space-y-5">
+        {situations.map(item => <article key={item.title} className="rounded-2xl border border-white/25 bg-white/10 p-6 md:px-8 md:py-7">
+          <div className="flex items-start gap-3 md:gap-5 mb-3">
+            <CheckCircle className="mt-2 h-6 w-6 shrink-0 text-green-400" aria-hidden="true" />
+            <h3 className="min-w-0 flex-1 text-xl md:text-2xl font-bold">{item.title}</h3>
+          </div>
+          <p className="text-lg md:text-xl text-slate-100 leading-relaxed md:pr-11">{item.text}</p>
+        </article>)}
       </div>
-    </section>
-    <section id="business-scenarios" className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-purple-900 to-slate-900 py-16 md:py-24 text-white">
-      <div className="absolute inset-0 bg-cover bg-center opacity-[0.15]" style={{ backgroundImage: `url(${heroBackground03})` }} aria-hidden="true" />
-      <div className={`${wrap} relative max-w-5xl`}>
-        <h2 className="text-3xl md:text-5xl font-bold text-center mb-12 md:mb-16">״אוקיי... ומה עכשיו?״</h2>
-        <div className="space-y-5 md:space-y-6">
-          {situations.map((item) => <motion.article key={item.title}
-            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-start gap-4 md:gap-6 rounded-2xl border border-white/25 bg-white/10 p-6 md:p-8 backdrop-blur-sm">
-            <CheckCircle className="mt-1 h-7 w-7 md:h-8 md:w-8 shrink-0 text-green-400" aria-hidden="true" />
-            <div><h3 className="text-xl md:text-2xl font-bold mb-3">{item.title}</h3><p className="text-lg md:text-xl text-slate-100 leading-relaxed">{item.text}</p></div>
-          </motion.article>)}
-        </div>
-        <p className="max-w-3xl mx-auto text-center text-xl leading-relaxed mt-12 md:mt-16"><strong className="block text-yellow-300 mb-3">לא כדי לעשות הכול לבד לנצח.</strong>אלא כדי שתוכלו להזיז את העסק קדימה בלי שכל רעיון חדש מתחיל בחיפוש אחר האדם הבא שיעשה אותו בשבילכם.</p>
-      </div>
-    </section>
-  </>;
-}
-
-const journey = [
-  { title: "להבין מה נכון לבנות", text: "לחדד את העסק, הקהל והבעיה שרוצים לפתור, כדי שהדברים שתבנו יישענו על צורך אמיתי ולא רק על תחושת בטן." },
-  { title: "להפוך רעיון למוצר ולהצעה", text: "לפתח ולחדד מוצרים, להבין את הערך שלהם ולהפוך אותם להצעה שקל יותר להסביר, להציג ולבדוק." },
-  { title: "לבנות את הדרך לשוק", text: "להפוך את ההצעה לדף, מסרים ונכסים שיעזרו להתחיל להוציא אותה החוצה." },
-  { title: "לבנות דברים שפעם דרשו בעל מקצוע", text: "להשתמש ב-AI וב-Vibe Coding כדי להתחיל ליצור כלים, אפליקציות קטנות, מוצרי טעימה ונכסים עסקיים בעצמכם." },
-  { title: "להמשיך לפתח את העסק", text: "להשתמש באותה דרך חשיבה גם בהמשך, כאשר צריך תוכן, לידים, כלים, מערכות או מוצר חדש." },
-];
-
-export function JourneySection() {
-  return <section id="curriculum" className="bg-slate-900 py-16 md:py-24 text-white">
-    <div className={`${wrap} grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-20`}>
-      <div><p className="text-xl text-yellow-300 mb-4 font-bold">מסלול הליבה</p><h2 className={`${heading} mb-6`}>מכאן מתחילים לבנות</h2><p className="text-slate-300 text-lg leading-relaxed">רעיון אחד, תהליך מתמשך. כל שלב נשען על מה שבניתם בשלב שלפניו.</p><p className="mt-6 text-base leading-relaxed text-slate-300">יסודות העסק, מוצרים והצעה ובניית דף נחיתה זמינים כעת. יחידות Vibe Coding יתווספו בהמשך. <a href="#available-lessons" className="text-yellow-300 underline underline-offset-4">לרשימת השיעורים הזמינים</a></p></div>
-      <ol className="relative space-y-8 before:absolute before:top-5 before:bottom-5 before:right-5 before:w-px before:bg-white/20">
-        {journey.map((item, index) => <li key={item.title} className="relative flex gap-5"><span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-900 border border-yellow-300/60 text-yellow-300 font-bold">{index + 1}</span><div className="pt-1"><h3 className="text-xl md:text-2xl font-bold mb-3">{item.title}</h3><p className="text-slate-300 text-lg leading-relaxed">{item.text}</p></div></li>)}
-      </ol>
     </div>
   </section>;
 }
