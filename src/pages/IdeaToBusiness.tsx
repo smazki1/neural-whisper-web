@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 import heroBackground01 from "@/assets/backgrounds/hero/hero-background-01.png";
 import heroBackground02 from "@/assets/backgrounds/hero/hero-background-02.png";
 import {
-  AboutAviSection, AvailableLessons, DraftNote, FAQSection, LibrarySection,
-  OutputsSection, PossibilitiesSection, ReviewChecklist, SolutionSection,
+  AboutAviSection, AvailableLessons, FAQSection, LibrarySection,
+  OutputsSection, PossibilitiesSection, SolutionSection,
   TestimonialsSection, TimeSection, UpcomingLibraryCards, VibeCodingSection,
 } from "@/components/idea-to-business/LandingSections";
 
@@ -24,7 +24,6 @@ const IdeaToBusiness = () => {
   const { price } = ideaToBusiness;
   const { checkoutUrl, checkoutLoading } = useProductCheckout();
   const { trackEvent } = useAnalytics();
-  const preview = import.meta.env.DEV;
   const purchaseClick = () =>
     trackEvent({
       action: "course_checkout_click",
@@ -82,11 +81,6 @@ const IdeaToBusiness = () => {
       >
         <a href="#available-lessons">לתוכנית הקורס</a>
       </nav>
-      {preview && !checkoutUrl && (
-        <aside className="bg-yellow-100 text-yellow-950 text-sm text-center px-6 py-2">
-          תצוגה מקדימה לאבי · יש להשלים קישור תשלום לפני הפרסום
-        </aside>
-      )}
       {/* Hero Section */}
       <section className="relative min-h-screen py-16 md:py-24 flex items-center justify-center overflow-hidden">
         <div
@@ -346,7 +340,6 @@ const IdeaToBusiness = () => {
             התחילו מהרעיון שאתם רוצים לקדם. למדו לחשוב, לפתח ולבנות בעזרת AI, עם דרך עבודה שתוכלו לחזור אליה גם ברעיון הבא.
           </motion.p>
 
-          <DraftNote className="max-w-xl mx-auto mb-6">נוסח CTA סופי לבחירתך. נשמר כפתור הרכישה הקיים לצורך בדיקה.</DraftNote>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -371,9 +364,7 @@ const IdeaToBusiness = () => {
                   לרכישת הקורס ב־{price} ש״ח
                 </Button>
                 <p id="checkout-pending" className="mt-3 text-sm text-gray-200">
-                  {checkoutLoading ? "טוען אפשרות רכישה..." : preview
-                    ? "הכפתור ממתין לקישור התשלום שלך."
-                    : "ההרשמה אינה זמינה כרגע."}
+                  {checkoutLoading ? "טוען אפשרות רכישה..." : "ההרשמה אינה זמינה כרגע."}
                 </p>
               </>
             )}
@@ -415,7 +406,7 @@ const IdeaToBusiness = () => {
               )}
               {(!checkoutUrl || checkoutLoading) && (
                 <p id="price-checkout-pending" className="mt-3 text-sm text-slate-300">
-                  {checkoutLoading ? "בודקים את אפשרות הרכישה." : preview ? "הכפתור ממתין לקישור התשלום שלך." : "ההרשמה אינה זמינה כרגע."}
+                  {checkoutLoading ? "בודקים את אפשרות הרכישה." : "ההרשמה אינה זמינה כרגע."}
                 </p>
               )}
             </div>
@@ -429,7 +420,6 @@ const IdeaToBusiness = () => {
           </div>
         </div>
       </section>
-      <ReviewChecklist />
     </main>
   );
 };
