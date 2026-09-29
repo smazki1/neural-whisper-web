@@ -5,3 +5,8 @@
   min-width: 0;
   min-height: 0;
 }
+
+/* Keep the supplied runtime intact while removing replay from this page. */
+.kts .kts-replay {
+  display: none;
+}
