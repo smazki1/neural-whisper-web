@@ -161,7 +161,6 @@ export function AvailableLessons() {
       <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
         <p className="text-yellow-300 font-bold text-xl md:text-2xl mb-3">וזו רק ההתחלה</p>
         <h4 className="text-3xl md:text-4xl font-bold text-balance mb-5">בקרוב: עוד דרכים לבנות ולקדם את העסק</h4>
-        <p className="text-xl md:text-2xl text-slate-200 leading-relaxed">ממחקר ותוכן ועד מוצרים חכמים ולקוחות חדשים. עוד יכולות שתוכלו להוסיף לעסק, כחלק מהקורס.</p>
       </div>
       <Accordion type="multiple" defaultValue={["upcoming-0"]} dir="rtl" className="space-y-5">
         {upcomingCourseGroups.map((group, i) => <AccordionItem key={group.title} value={`upcoming-${i}`} className="rounded-2xl border border-white/20 bg-white/[0.04] p-5 md:p-7 grid md:grid-cols-[minmax(0,1fr)_190px] gap-5 md:gap-7 items-start">
