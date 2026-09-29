@@ -17,7 +17,7 @@ function loadRuntime() {
   if (!runtimeReady) {
     runtimeReady = new Promise<void>((resolve, reject) => {
       const script = document.createElement("script");
-      script.src = "/knowledge-takes-shape/kts.js";
+      script.src = "/knowledge-takes-shape/kts.js?v=2";
       script.async = true;
       script.onload = () => resolve();
       script.onerror = () => { runtimeReady = undefined; script.remove(); reject(new Error("KnowledgeTakesShape failed to load")); };
@@ -34,7 +34,7 @@ export function KnowledgeTakesShape() {
     let cancelled = false;
     let destroy: (() => void) | undefined;
     // Defer even an already-loaded runtime so Strict Mode's discarded effect
-    // never initializes the same DOM twice. The supplied runtime stays unchanged.
+    // never initializes the same DOM twice.
     loadRuntime().then(() => {
       if (!cancelled && rootRef.current) {
         destroy = window.KnowledgeTakesShape?.init(rootRef.current);

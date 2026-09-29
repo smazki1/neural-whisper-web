@@ -1,5 +1,5 @@
 /* "הידע שלכם מקבל צורה" — מנגנון האנימציה.
-   מפעיל כל ‎.kts‎ בעמוד: פעם אחת כשנכנס למסך, עוצר בסוף, ומאפשר הפעלה חוזרת. */
+   מפעיל כל ‎.kts‎ בעמוד: כשנכנס למסך, ומשהה ארבע שניות בסוף לפני הפעלה חוזרת. */
 (function () {
   "use strict";
 
@@ -148,6 +148,7 @@
       at(T.optB, function () { setOpt("b"); });
       at(T.final, function () { add("is-final"); setInteractive(true); });
       at(T.done, function () { add("is-done"); });
+      at(T.done + 4000, play);
     }
 
     // אינטראקציה בסיום
