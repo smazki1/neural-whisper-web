@@ -77,3 +77,80 @@
 @media (prefers-reduced-motion: reduce) {
   .idea-to-business .coming-soon-badge { animation: none; }
 }
+
+/* Audience photography and testimonials have their own wider reading area. */
+.idea-to-business .audience-shell {
+  width: min(1360px, calc(100% - 96px));
+  margin-inline: auto;
+  font-weight: 500;
+}
+.idea-to-business .audience-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 48px;
+  align-items: center;
+}
+.idea-to-business .audience-copy { grid-column: 2; grid-row: 1; }
+.idea-to-business .audience-main-photo {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+.idea-to-business .audience-main-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.12;
+  object-fit: cover;
+  border-radius: 20px;
+}
+.idea-to-business .audience-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+.idea-to-business .audience-gallery figure { margin: 0; }
+.idea-to-business .audience-gallery img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.idea-to-business .testimonials-gallery { columns: 3; column-gap: 24px; }
+.idea-to-business .testimonials-gallery figure {
+  margin: 0 0 24px;
+  break-inside: avoid;
+}
+.idea-to-business .testimonials-gallery a {
+  display: block;
+  padding: 2px;
+  border: 1px solid #c5a253;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #e7cf8a, #c5a253 55%, #a67c32);
+  cursor: zoom-in;
+}
+.idea-to-business .testimonials-gallery a:focus-visible {
+  outline: 3px solid #a67c32;
+  outline-offset: 5px;
+}
+.idea-to-business .testimonials-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+@media (max-width: 1023px) {
+  .idea-to-business .audience-shell { width: calc(100% - 48px); }
+  .idea-to-business .audience-intro { grid-template-columns: 1fr; gap: 32px; }
+  .idea-to-business .audience-copy,
+  .idea-to-business .audience-main-photo { grid-column: auto; grid-row: auto; }
+  .idea-to-business .testimonials-gallery { columns: 2; }
+}
+@media (max-width: 639px) {
+  .idea-to-business .audience-shell { width: calc(100% - 32px); }
+  .idea-to-business .audience-gallery { grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
+  .idea-to-business .audience-main-photo img { aspect-ratio: 4 / 5; }
+  .idea-to-business .audience-gallery figure:nth-child(even) img { aspect-ratio: 4 / 5; }
+  .idea-to-business .testimonials-gallery { columns: 1; }
+}
