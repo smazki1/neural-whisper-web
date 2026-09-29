@@ -78,7 +78,7 @@ export function VibeCodingSection() {
 export function OutputsSection() {
   return <section id="examples" className="bg-slate-100 py-16 md:py-24 text-slate-900">
     <div className={wrap}>
-      <h2 className={`${heading} text-blue-900 text-center mb-10 md:mb-14`}>מעולם לא היה קל יותר להפוך את הרעיון שלכם למציאות</h2>
+      <h2 className={`${heading} text-blue-900 text-center mb-10 md:mb-14`}>מעולם לא היה קל יותר להפוך את הרעיון שלכם לאפליקציה</h2>
       <div className="grid gap-7 md:gap-10 md:grid-cols-2">
         {ideaToBusiness.examples.map(demo => <HoverDemo key={demo.src} demo={demo} />)}
       </div>
