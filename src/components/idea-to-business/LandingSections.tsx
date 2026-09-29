@@ -1,7 +1,7 @@
-import { Image as ImageIcon, ArrowLeft, CheckCircle, Code2 } from "lucide-react";
+import { Image as ImageIcon, ArrowLeft, CheckCircle, Code2, Sparkles, Layers3, Workflow } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
-import { availableCourseModules, digitalProductBonus, upcomingCourseUnits, ideaToBusiness } from "@/content/ideaToBusiness";
+import { availableCourseModules, digitalProductBonus, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
 import type { ReactNode } from "react";
 
 const wrap = "container mx-auto px-6 max-w-6xl font-medium";
@@ -34,7 +34,7 @@ const situations = [
   { title: "מותג שמרגיש מדויק ועקבי", text: "תחברו בין הקהל, הקול והזהות הוויזואלית כדי שהעסק ירגיש כמו מותג אחד ברור, ולא כמו אוסף של ניסוחים, צבעים ופוסטים שלא מדברים יחד." },
   { title: "בנק תוכן שמדבר בשפה של המותג", text: "תשתמשו בשפה ובמסרים שכבר גיבשתם כדי לבנות בנק תוכן בשפת המותג שלכם, עם רעיונות שאפשר להפוך לפוסטים, קרוסלות ותסריטים בלי להתחיל כל פעם מחדש." },
   { title: "דרך ברורה להגיע לשוק", text: "תתכננו איפה לפגוש את הקהל, איך להציג את המוצר ואילו פעולות יעזרו לחשוף אותו לאנשים הרלוונטיים, גם בלי להתחיל מתקציב לפרסום ממומן." },
-  { title: "ובקרוב: רעיון שהופך לכלי אמיתי", text: "תוכלו לקחת ידע או רעיון ולבנות ממנו כלי שנותן ללקוח ערך אמיתי, יוצר חוויה אישית ויכול לפתוח באופן טבעי שיחה או פנייה לעסק." },
+  { title: "רעיון שהופך לכלי אמיתי", text: "תוכלו לקחת את הידע הייחודי שלכם ולבנות כלי שמותאם בדיוק לעסק ולקהל שלכם. להציע ערך חדש בדרך משלכם, לתת ללקוחות סיבה לבחור דווקא בכם ולבלוט מעבר לעוד הבטחה שיווקית." },
 ];
 
 export function PossibilitiesSection() {
@@ -61,7 +61,7 @@ export function PossibilitiesSection() {
 export function VibeCodingSection() {
   return <section id="building-products" className="bg-white py-16 md:py-24 text-slate-900">
     <div className={`${wrap} grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center`}>
-      <div><h2 className={`${heading} text-blue-900 mb-6`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-lg leading-relaxed space-y-4"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p><p>לפעמים תבנו כלי שיעזור למכור את המוצר הקיים שלכם. ולפעמים תתחילו לבנות משהו קטן ותגלו שהוא בעצמו יכול להפוך למוצר חדש.</p></div><p className="mt-6 rounded-xl bg-slate-100 px-5 py-4 text-base font-bold text-blue-900">בקרוב בקורס: יחידות Vibe Coding. הן עדיין אינן זמינות לצפייה.</p></div>
+      <div><h2 className={`${heading} text-blue-900 mb-6`}>ולפעמים, הדבר שאתם בונים הוא המוצר עצמו</h2><div className="text-lg leading-relaxed space-y-4"><p>AI לא רק עוזר לכם לשווק מהר יותר.</p><p>בעזרת Vibe Coding אפשר לקחת רעיון שהיה נשאר פעם במחברת ולהתחיל להפוך אותו לכלי אמיתי שאנשים יכולים להשתמש בו.</p><p>לפעמים תבנו כלי שיעזור למכור את המוצר הקיים שלכם. ולפעמים תתחילו לבנות משהו קטן ותגלו שהוא בעצמו יכול להפוך למוצר חדש.</p></div></div>
       <div className="rounded-2xl bg-slate-900 p-7 md:p-10 text-white"><Code2 className="h-8 w-8 text-yellow-300 mb-6" aria-hidden="true" /><p className="text-slate-300 mb-5">זה יכול להיות</p><ul className="grid grid-cols-2 gap-x-4 gap-y-4 text-lg">{["מחשבון", "סימולטור", "מחולל", "כלי שנותן המלצה אישית", "אפליקציה קטנה", "מערכת פנימית", "מוצר דיגיטלי חדש"].map(x => <li key={x} className="border-b border-white/15 pb-3">{x}</li>)}</ul><p className="text-xl font-semibold text-yellow-300 leading-relaxed mt-7">לא רק לבנות את מה שעוטף את המוצר שלכם.<br />עם AI אפשר להתחיל לבנות גם את המוצר עצמו.</p></div>
     </div>
   </section>;
@@ -79,19 +79,31 @@ export function OutputsSection() {
 }
 
 const library = [
-  { title: "לבנות את הדרך למכירה", text: "דפי נחיתה, דפי הרשמה, איסוף לידים, דפי תודה, הצעות מחיר ונכסים שהלקוחות פוגשים בדרך לרכישה." },
-  { title: "להפוך תוכן לתנועה בעסק", text: "פוסטים, קרוסלות, תסריטים, ארגון תוכן וחיבור בין תוכן לבין מטרות עסקיות." },
-  { title: "לעשות סדר במה שקורה אחרי שמגיע ליד", text: "כלים ותהליכים לניהול לידים ועבודה מסודרת יותר." },
-  { title: "לבנות מוצרים וכלים עם AI", text: "Vibe Coding, אפליקציות קטנות, מוצרי טעימה חכמים וכלים אינטראקטיביים." },
+  { title: "להפוך תוכן לתנועה בעסק", text: "בנק תוכן בשפת המותג, קרוסלות, פוסטים ותסריטים שמחברים בין הידע שלכם לבין מה שמעניין את הלקוחות.", kind: "content", icon: Layers3 },
+  { title: "לבנות מוצרים וכלים עם AI", text: "להפוך את הידע שלכם לכלים חכמים, מוצרים אינטראקטיביים ואפליקציות שמותאמים לעסק שלכם.", kind: "tools", icon: Sparkles },
+  { title: "לעשות סדר במה שקורה אחרי שמגיע ליד", text: "CRM, דיוור ומעקב מסודר שמחברים בין הפנייה הראשונה לבין הצעד הבא עם כל לקוח.", kind: "crm", icon: Workflow },
 ];
+
+function ComingSoonArt({ kind }: { kind: string }) {
+  return <div className={`coming-soon-art coming-soon-art--${kind}`} aria-hidden="true">
+    <img src={heroBackground03} alt="" className="absolute inset-0 h-full w-full object-cover opacity-20" />
+    {kind === "content" ? <div className="future-content-stack">{[0, 1, 2].map(n => <div className="future-content-sheet" key={n}><span /><i /><i /><b /></div>)}</div>
+      : kind === "crm" ? <div className="future-crm-board">{[0, 1, 2].map(n => <div key={n}><span />{[0, 1, 2].slice(0, n === 1 ? 2 : 3).map(k => <i key={k} />)}</div>)}</div>
+      : <div className="future-tool-window"><div className="flex gap-1.5 mb-5"><i /><i /><i /></div><Sparkles className="h-9 w-9 text-violet-200 mx-auto mb-4" /><span className="future-tool-input" /><span className="future-tool-result" /></div>}
+  </div>;
+}
 
 export function LibrarySection() {
   return <section id="growing-library" className="bg-slate-900 py-16 md:py-24 text-white">
-    <div className={wrap}><div className="max-w-3xl mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
-      <DraftNote className="mb-8">תוכנית ההרחבות לספרייה עדיין ממתינה לאישור. התחומים הבאים מציגים כיווני התפתחות, ואינם רשימת יחידות זמינות לצפייה.</DraftNote>
-      <div className="grid gap-x-12 md:grid-cols-2">{library.map(item => <article key={item.title} className="py-7 border-t border-white/20"><span className="inline-block text-xs font-medium text-yellow-200 border border-yellow-200/40 px-2 py-1 rounded mb-4">זמינות ממתינה לאישור</span><h3 className="text-xl font-bold mb-3">{item.title}</h3><p className="text-slate-300 text-lg leading-relaxed">{item.text}</p></article>)}</div>
-      <p className="max-w-3xl text-lg leading-relaxed mt-8">המטרה היא לא שתצטרכו את כל הדברים האלה ביום הראשון. המטרה היא שככל שהעסק שלכם מתקדם, יהיו לכם בתוך הקורס כלים שיעזרו לכם לבנות את הדבר הבא שאתם צריכים.</p>
-      <DraftNote className="mt-6 max-w-3xl">החלטה לגבי גישת רוכשי מחיר ההשקה ליחידות עתידיות ולגבי תשלום נוסף, אם יהיה.</DraftNote>
+    <div className={wrap}>
+      <div className="max-w-3xl mb-10"><h2 className={`${heading} mb-6`}>והקורס ממשיך להתפתח יחד עם הדרך שבה AI משנה את העסק</h2><p className="text-lg leading-relaxed text-slate-300">״מרעיון לעסק״ הוא לא קורס שבניתי פעם אחת והשארתי כמו שהוא.</p><p className="text-lg leading-relaxed text-slate-300 mt-4">אני ממשיך להוסיף אליו שיעורים פרקטיים מתוך הדברים שאני בעצמי בונה, בודק ומשתמש בהם בעבודה.</p></div>
+      <div className="grid gap-6 lg:grid-cols-3">{library.map(item => <article key={item.title} className="future-library-card rounded-2xl border border-white/15 bg-white/[0.04] overflow-hidden">
+        <div className="relative"><ComingSoonArt kind={item.kind} /><span className="coming-soon-badge"><Sparkles className="h-4 w-4" aria-hidden="true" />בקרוב</span></div>
+        <div className="p-6"><item.icon className="h-6 w-6 text-yellow-300 mb-4" aria-hidden="true" /><h3 className="text-2xl font-bold mb-4">{item.title}</h3><p className="text-slate-200 text-lg leading-relaxed">{item.text}</p></div>
+      </article>)}</div>
+      <p className="max-w-4xl text-xl md:text-2xl font-medium leading-relaxed mt-12">המטרה היא לא שתצטרכו את כל הדברים האלה ביום הראשון. המטרה היא שככל שהעסק שלכם מתקדם, יהיו לכם בתוך הקורס כלים שיעזרו לכם לבנות את הדבר הבא שאתם צריכים.</p>
+      <a href="#upcoming-content" className="inline-flex items-center gap-2 text-yellow-300 text-lg font-bold mt-6 underline underline-offset-4">הצצה לתכנים שבדרך<ArrowLeft className="h-5 w-5" aria-hidden="true" /></a>
+      <DraftNote className="mt-8 max-w-3xl">רשימת ההרחבות בהמשך היא טיוטה רחבה לבחירתך. יש לסגור את התכולה ואת מדיניות הגישה לתכנים עתידיים לפני הפרסום.</DraftNote>
     </div>
   </section>;
 }
@@ -146,9 +158,17 @@ export function AvailableLessons() {
       <p className="text-lg text-yellow-300 font-bold mb-2">בונוס זמין בקורס</p>
       <h4 className="text-xl md:text-2xl font-bold">{digitalProductBonus}</h4>
     </div>
-    <div className="mt-8 border-t border-white/15 pt-6">
-      <h4 className="text-lg font-bold mb-4">בקרוב · עדיין לא זמין לצפייה</h4>
-      <ul className="flex flex-wrap gap-3">{upcomingCourseUnits.map(unit => <li key={unit} className="rounded-lg border border-white/20 px-3 py-2 text-base text-slate-300">{unit}</li>)}</ul>
+    <div id="upcoming-content" className="mt-12 border-t border-white/20 pt-10 scroll-mt-8">
+      <p className="text-yellow-300 font-bold text-lg mb-2">וזו רק ההתחלה</p>
+      <h4 className="text-2xl md:text-3xl font-bold mb-4">בקרוב: עוד דרכים לבנות ולקדם את העסק</h4>
+      <p className="text-lg text-slate-200 leading-relaxed mb-6">תוכן, לקוחות, כלים חכמים והזדמנויות חדשות. הצצה לנושאים שמתוכננים להרחיב את מה שתוכלו לעשות עם AI.</p>
+      <DraftNote className="mb-6">ריכזתי כאן את הרעיונות מהפרויקט, מהמשימות וממאגר הרעיונות. זו רשימה רחבה לעריכה שלך, לא סילבוס סופי או התחייבות למועד עלייה.</DraftNote>
+      <Accordion type="multiple" defaultValue={["upcoming-0"]} dir="rtl">
+        {upcomingCourseGroups.map((group, i) => <AccordionItem key={group.title} value={`upcoming-${i}`} className="border-white/20">
+          <AccordionTrigger className="text-right text-xl gap-4 py-6 font-bold">{group.title}</AccordionTrigger>
+          <AccordionContent className="text-lg text-slate-100 leading-relaxed"><ul className="space-y-4 pb-3">{group.items.map(item => <li key={item} className="flex gap-3"><span className="text-yellow-300 shrink-0" aria-hidden="true">＋</span><span>{item}</span></li>)}</ul></AccordionContent>
+        </AccordionItem>)}
+      </Accordion>
     </div>
   </div>;
 }
@@ -165,7 +185,7 @@ const faqs = [
   { q: "אני לא טכנולוגי, זה בשבילי?", a: "לא צריך ניסיון בכתיבת קוד. כן צריך נכונות להתנסות, ללמוד ולבדוק את מה שבונים. AI עוזר בתהליך, ואתם מקבלים את ההחלטות." },
   { q: "כמה זמן צריך להשקיע?", a: "זהו קורס מוקלט ללמידה בקצב שלכם. היישום דורש זמן ועבודה, בהתאם לרעיון ולמה שתרצו לבנות. אפשר להתקדם שלב אחר שלב; אין כאן הבטחה לעסק מוכן בלחיצת כפתור." },
   { q: "יש לי כבר עסק ואתר, האם הקורס עדיין רלוונטי?", a: "כן. אפשר לעבוד על מוצר חדש, לחדד הצעה קיימת או לפתח כלי שיעזור לעסק. אין צורך להתחיל את העסק מחדש." },
-  { q: "מה זמין בקורס כרגע ומה יתווסף בהמשך?", a: "כבר זמינים שיעורי הפתיחה, יסודות העסק, מוצרים והצעה, בניית דף נחיתה, חומרי העזר והבונוס על מוצר דיגיטלי לחדירה לשוק. מבוא ל־GEN-AI, היכרות עם הכלים, עבודה חכמה עם AI ויחידות Vibe Coding מסומנים בקרוב ואינם זמינים עדיין לצפייה. הפירוט המלא מופיע באזור ״מה מקבלים בפועל״." },
+  { q: "מה זמין בקורס כרגע ומה יתווסף בהמשך?", a: "כבר זמינים שיעורי הפתיחה, יסודות העסק, מוצרים והצעה, בניית דף נחיתה, חומרי העזר והבונוס על מוצר דיגיטלי לחדירה לשוק. באזור ״בקרוב״ מוצגים כיווני ההמשך: תוכן שיווקי, קרוסלות, דיוור, CRM, אוטומציות וכלים חכמים. רשימת התכנים העתידיים עדיין בעריכה ואינה זמינה לצפייה. הפירוט מופיע באזור ״מה מקבלים בפועל״." },
   { q: "האם יש גישה לתכנים עתידיים?", todo: "מדיניות הגישה ליחידות עתידיות לרוכשי מחיר ההשקה, כולל השאלה אם תהיה תוספת תשלום. התשובה הסופית טרם נקבעה." },
 ];
 

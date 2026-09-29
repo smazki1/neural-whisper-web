@@ -4,3 +4,76 @@
   padding-block: 0.08em;
   overflow-wrap: break-word;
 }
+
+.idea-to-business .coming-soon-art {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at top, #6552a6, #25224c 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ffffff20;
+}
+.idea-to-business .coming-soon-art--crm {
+  background: radial-gradient(ellipse at top, #276a81, #172e49 80%);
+}
+.idea-to-business .coming-soon-art--content {
+  background: radial-gradient(ellipse at top, #76527c, #352349 80%);
+}
+.idea-to-business .coming-soon-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  color: #192036;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 999px;
+  border: 1px solid #fff4be;
+  background: linear-gradient(110deg, #fde68a 25%, #fff8d7 45%, #fde68a 65%);
+  background-size: 240% 100%;
+  animation: idea-coming-soon-sheen 6s ease-in-out infinite;
+}
+@keyframes idea-coming-soon-sheen {
+  0%, 65% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+.idea-to-business .future-content-stack {
+  position: relative;
+  width: 210px;
+  height: 145px;
+  margin-top: 30px;
+}
+.idea-to-business .future-content-sheet {
+  position: absolute;
+  left: 45px;
+  width: 118px;
+  height: 136px;
+  border: 1px solid #ffffff65;
+  border-radius: 12px;
+  padding: 16px;
+  background: #eee7fa;
+  box-shadow: 0 12px 30px #10152945;
+}
+.idea-to-business .future-content-sheet:first-child { transform: translateX(-48px) rotate(-13deg); background: #9986bd; }
+.idea-to-business .future-content-sheet:last-child { transform: translateX(48px) rotate(13deg); background: #cbb9df; }
+.idea-to-business .future-content-sheet:nth-child(2) { z-index: 1; transform: translateY(-9px); }
+.idea-to-business .future-content-sheet span { display: block; height: 43px; border-radius: 6px; background: linear-gradient(140deg, #b495cf, #615488); margin-bottom: 12px; }
+.idea-to-business .future-content-sheet i { display: block; height: 5px; width: 100%; background: #5e487770; border-radius: 3px; margin: 7px 0; }
+.idea-to-business .future-content-sheet b { display: block; width: 26px; height: 6px; background: #e8b850; border-radius: 4px; margin-top: 12px; }
+.idea-to-business .future-crm-board { position: relative; display: flex; gap: 10px; padding: 16px; width: 248px; height: 142px; margin-top: 30px; border: 1px solid #ffffff50; border-radius: 12px; background: #18293dde; transform: rotate(-4deg); }
+.idea-to-business .future-crm-board > div { flex: 1; }
+.idea-to-business .future-crm-board span { display: block; height: 5px; width: 60%; background: #8bccdd; border-radius: 3px; margin-bottom: 12px; }
+.idea-to-business .future-crm-board i { display: block; height: 23px; background: #749cab55; border: 1px solid #ffffff20; border-radius: 5px; margin-bottom: 7px; }
+.idea-to-business .future-crm-board > div:last-child i { background: #65b49865; }
+.idea-to-business .future-tool-window { position: relative; width: 210px; padding: 14px 20px; border: 1px solid #d2c0ff70; border-radius: 14px; background: #251d45df; margin-top: 28px; box-shadow: 0 10px 35px #b391ff20; }
+.idea-to-business .future-tool-window i { width: 5px; height: 5px; border-radius: 50%; background: #ac97cc; }
+.idea-to-business .future-tool-input { display: block; height: 13px; border-radius: 4px; background: #bca8dc35; margin-bottom: 10px; }
+.idea-to-business .future-tool-result { display: block; height: 19px; width: 70%; margin-inline: auto; border-radius: 5px; background: linear-gradient(90deg, #9875c0, #c4b0de); }
+@media (prefers-reduced-motion: reduce) {
+  .idea-to-business .coming-soon-badge { animation: none; }
+}
