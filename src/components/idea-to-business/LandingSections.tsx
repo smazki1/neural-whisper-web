@@ -120,7 +120,7 @@ export function UpcomingLibraryCards() {
   </div>;
 }
 
-const collagePositions = ["md:col-span-2 md:row-span-2 md:rotate-[-2deg]", "md:rotate-[3deg] md:-mr-5 md:mt-6", "md:rotate-[-3deg] md:-mr-3", "md:col-span-2 md:col-start-2 md:rotate-[2deg]"];
+const collagePositions = ["md:col-span-2 md:row-span-2 md:rotate-[-2deg]", "md:rotate-[3deg] md:-mr-5 md:mt-6", "md:rotate-[-3deg] md:-mr-3", "md:col-span-2 md:rotate-[2deg]", "md:rotate-[-2deg]"];
 
 export function AboutAviSection() {
   const { aviPhotos } = ideaToBusiness;
@@ -129,7 +129,7 @@ export function AboutAviSection() {
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 items-start">
         <figure>
           <div className="grid grid-cols-2 md:grid-cols-3 auto-rows-[144px] md:auto-rows-[176px] gap-3 md:gap-4 md:py-5">
-            {aviPhotos.map((photo, i) => <div key={photo.src} className={`relative min-w-0 min-h-0 overflow-hidden rounded-2xl md:shadow-md ${collagePositions[i % collagePositions.length]}`}><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="w-full h-full object-cover" style={{ objectPosition: photo.position }} /></div>)}
+            {aviPhotos.map((photo, i) => <div key={photo.src} className={`relative min-w-0 min-h-0 overflow-hidden rounded-2xl md:shadow-md ${collagePositions[i % collagePositions.length]}`}><img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="w-full h-full object-cover" style={{ objectPosition: photo.position, transform: "zoom" in photo ? `scale(${photo.zoom})` : undefined, transformOrigin: "50% 60%" }} /></div>)}
           </div>
         </figure>
         <div className="space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p>אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p>את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p>לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p></div>
@@ -145,7 +145,7 @@ export function TestimonialsSection() {
   return <section id="feedback" className="bg-slate-100 py-16 md:py-24 text-slate-900 overflow-hidden">
     <div className={wrap}><h2 className={`${heading} text-blue-900 text-center mb-6`}>אל תיקחו רק את המילה שלי</h2>
       <div className="flex items-start gap-4 overflow-x-auto snap-x snap-mandatory pb-6 pt-3 md:block md:columns-3 lg:columns-4 md:gap-5 md:overflow-visible">
-        {testimonials.map((item, i) => <figure key={item.src} className={`w-[78%] shrink-0 snap-center md:w-auto md:break-inside-avoid mb-5 rounded-2xl bg-white p-3 border border-slate-200 shadow-sm ${feedbackRotation[i % feedbackRotation.length]}`}><img src={item.src} alt={item.alt} loading="lazy" decoding="async" className="w-full h-auto rounded-xl" /></figure>)}
+        {testimonials.map((item, i) => <figure key={item.src} className={`w-[78%] shrink-0 snap-center md:w-auto md:break-inside-avoid mb-5 rounded-2xl bg-gradient-to-br from-[#e7cf8a] via-[#c5a253] to-[#a67c32] p-[3px] border border-[#c5a253] shadow-sm ${feedbackRotation[i % feedbackRotation.length]}`}><img src={item.src} alt={item.alt} loading="lazy" decoding="async" className="w-full h-auto rounded-xl" /></figure>)}
       </div>
     </div>
   </section>;

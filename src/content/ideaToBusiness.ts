@@ -12,10 +12,11 @@ export const ideaToBusiness = {
     { title: "תמונות מוקאפ למוצרים", src: "/media/idea-to-business/product-photography.mp4", poster: "/media/idea-to-business/product-photography-poster.jpg", alt: "מתמונת מוצר לצילום שיווקי", caption: "מעלים תמונת מוצר והופכים אותה לתמונה עם רקע ואווירה חדשים." },
   ],
   aviPhotos: [
-    { src: "/images/idea-to-business/avi-workshop-audience.jpg", alt: "אבי מרצה בסדנה מול משתתפים שעובדים עם מחשבים ניידים", position: "50% 76%" },
-    { src: "/images/idea-to-business/avi-workshop-teaching.jpg", alt: "אבי מסביר למשתתפים בסדנה מעשית", position: "60% 70%" },
+    { src: "/images/idea-to-business/avi-workshop-audience.jpg", alt: "אבי מסביר למשתתפים בסדנה מעשית", position: "60% 70%" },
     { src: "/images/idea-to-business/avi-lecture.jpg", alt: "אבי במהלך הרצאה, לצד פודיום ולוח", position: "48% 45%" },
-    { src: "/images/idea-to-business/avi-hands-on-guidance.png", alt: "אבי מסייע למשתתפים בעבודה אישית מול המחשב", position: "50% 65%" },
+    { src: "/images/idea-to-business/workshop-smiling-participants.jpg", alt: "שני משתתפים מחייכים בזמן תרגול בסדנת AI", position: "50% 65%", zoom: 1.65 },
+    { src: "/images/idea-to-business/avi-kfar-maccabiah-audience.jpg", alt: "אבי מרצה מול משתתפים סביב שולחן בכפר מכביה", position: "50% 45%" },
+    { src: "/images/idea-to-business/workshop-participants-portrait.jpg", alt: "משתתפי סדנה מקשיבים ועובדים עם מחשבים ניידים", position: "50% 65%" },
   ],
   testimonials: [
     { src: "/images/idea-to-business/testimonial-business-plan.png", alt: "עדות משתתף: למדתי לכוון את הצ׳אט לדברים שאני צריך. הוא בנה לי תוכנית עסקית מלאה כולל תקציב, אנשי מקצוע וזמנים. הדבר חסך לי שבועות של עבודה. כיום הוא יוצר לי תכנים, תיאורים למוצרים ומיילים, ולדברי המשתתף חוסך יותר מ־60 אחוז מזמן העבודה." },
