@@ -1,5 +1,6 @@
 import "./idea-to-business.css";
 import React from "react";
+import { useLandingMotionVisibility } from "@/components/idea-to-business/useLandingMotionVisibility";
 import { motion } from "framer-motion";
 import {
   CheckCircle,
@@ -12,8 +13,8 @@ import { useProductCheckout } from "@/hooks/useProductCheckout";
 import { ideaToBusiness } from "@/content/ideaToBusiness";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
-import heroBackground01 from "@/assets/backgrounds/hero/hero-background-01.png";
-import heroBackground02 from "@/assets/backgrounds/hero/hero-background-02.png";
+const heroBackground01 = "/images/idea-to-business/optimized/landing-background-01.webp";
+const heroBackground02 = "/images/idea-to-business/optimized/landing-background-02.webp";
 import {
   AboutAviSection, AvailableLessons, FAQSection, LibrarySection,
   OutputsSection, PossibilitiesSection, SolutionSection,
@@ -21,9 +22,28 @@ import {
 } from "@/components/idea-to-business/LandingSections";
 
 const IdeaToBusiness = () => {
+  useLandingMotionVisibility();
   const { price } = ideaToBusiness;
   const { checkoutUrl, checkoutLoading } = useProductCheckout();
   const { trackEvent } = useAnalytics();
+  const scrollToPossibilities = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const section = document.getElementById("possibilities");
+    const header = section?.querySelector("header");
+    const firstCard = section?.querySelector("article");
+    if (!header || !firstCard) return;
+
+    event.preventDefault();
+    // Center the introduction and first card, keeping the heading visible on small screens.
+    const openingHeight = header.offsetHeight
+      + parseFloat(getComputedStyle(header).marginBottom)
+      + firstCard.offsetHeight;
+    const inset = Math.max(24, (window.innerHeight - openingHeight) / 2);
+    window.scrollTo({
+      top: window.scrollY + header.getBoundingClientRect().top - inset,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
+  };
   const purchaseClick = () =>
     trackEvent({
       action: "course_checkout_click",
@@ -119,7 +139,7 @@ const IdeaToBusiness = () => {
               asChild
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-lg md:text-2xl px-6 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-              <a className="landing-hero-cta" href="#start-building">אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
+              <a className="landing-hero-cta" href="#possibilities" onClick={scrollToPossibilities}>אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
             </Button>
 
           </motion.div>

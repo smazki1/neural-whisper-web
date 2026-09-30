@@ -1,9 +1,10 @@
+import { LandingImage } from "./LandingImage";
 import { HoverDemo } from "./HoverDemo";
 import { KnowledgeTakesShape } from "./KnowledgeTakesShape";
 import { TimeToProgress } from "./TimeToProgress";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import heroBackground03 from "@/assets/backgrounds/hero/hero-background-03.png";
+const heroBackground03 = "/images/idea-to-business/optimized/landing-background-03.webp";
 import { availableCourseModules, upcomingCourseGroups, ideaToBusiness } from "@/content/ideaToBusiness";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -88,7 +89,7 @@ const library = [
 
 function ComingSoonArt({ kind }: { kind: string }) {
   return <div className={`coming-soon-art coming-soon-art--${kind}`} aria-hidden="true">
-    <img src={heroBackground03} alt="" className="absolute inset-0 h-full w-full object-cover opacity-20" />
+    <img src={heroBackground03} loading="lazy" decoding="async" width={1392} height={752} alt="" className="absolute inset-0 h-full w-full object-cover opacity-20" />
     {kind === "content" ? <div className="future-content-stack">{[0, 1, 2].map(n => <div className="future-content-sheet" key={n}><span /><i /><i /><b /></div>)}</div>
       : kind === "crm" ? <div className="future-crm-board">{[0, 1, 2].map(n => <div key={n}><span />{[0, 1, 2].slice(0, n === 1 ? 2 : 3).map(k => <i key={k} />)}</div>)}</div>
       : <div className="future-tool-window"><div className="flex gap-1.5 mb-5"><i /><i /><i /></div><Sparkles className="h-9 w-9 text-violet-200 mx-auto mb-4" /><span className="future-tool-input" /><span className="future-tool-result" /></div>}
@@ -123,12 +124,12 @@ export function AboutAviSection() {
       <div className="audience-intro">
         <div className="audience-copy space-y-5 text-lg leading-relaxed"><p className="font-bold text-xl">נעים מאוד, אבי פריד, מרצה, יזם ויוצר בתחום ה-AI.</p><p>בשנים האחרונות אני עובד עם בעלי עסקים, צוותים וארגונים על שאלה אחת שחוזרת שוב ושוב:</p><p className="text-xl font-semibold text-blue-900 border-r-4 border-yellow-400 pr-5">איך לוקחים את כל מה ש-AI יודע לעשות והופכים אותו למשהו שבאמת מקדם את העבודה או את העסק?</p><p className="hidden md:block">אני בעצמי משתמש ב-AI כדי לחקור, לפתח רעיונות, לבנות מוצרים, ליצור דפי נחיתה, לפתח כלים ואפליקציות ולבדוק דרכים חדשות להפוך רעיון למשהו שעובד בעולם האמיתי.</p><p className="hidden md:block">את הקורס הזה בניתי מתוך אותו תהליך בדיוק.</p><p className="hidden md:block">לא כדי ללמד אתכם עוד רשימה של כלים, אלא כדי לתת לכם דרך עבודה שתעזור לכם לחשוב, לבנות ולבצע יותר בעצמכם.</p></div>
         <figure className="audience-main-photo">
-          <img src={aviPhotos[0].src} alt={aviPhotos[0].alt} loading="lazy" decoding="async" style={{ objectPosition: audiencePositions[0] }} />
+          <LandingImage src={aviPhotos[0].preview} srcSet={aviPhotos[0].srcSet} sizes="(min-width: 1456px) 787px, (min-width: 1024px) 57vw, calc(100vw - 32px)" width={aviPhotos[0].width} height={aviPhotos[0].height} alt={aviPhotos[0].alt} loading="lazy" decoding="async" style={{ objectPosition: audiencePositions[0] }} />
         </figure>
       </div>
       <div className="audience-gallery">
         {aviPhotos.slice(1).map((photo, i) => <figure key={photo.src}>
-          <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" style={{ objectPosition: audiencePositions[i + 1] }} />
+          <LandingImage src={photo.preview} srcSet={photo.srcSet} sizes="(min-width: 1456px) 668px, (min-width: 640px) 46vw, calc(100vw - 32px)" width={photo.width} height={photo.height} alt={photo.alt} loading="lazy" decoding="async" style={{ objectPosition: audiencePositions[i + 1] }} />
         </figure>)}
       </div>
     </div>
@@ -143,7 +144,7 @@ export function TestimonialsSection() {
       <div className="testimonials-gallery">
         {testimonials.map((item, i) => <figure key={item.src}>
           <a href={item.src} target="_blank" rel="noopener noreferrer" aria-label={`פתיחת עדות ${i + 1} בגודל מלא בחלון חדש`}>
-            <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+            <LandingImage src={item.preview} width={item.width} height={item.height} alt={item.alt} loading="lazy" decoding="async" />
           </a>
         </figure>)}
       </div>

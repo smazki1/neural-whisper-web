@@ -77,16 +77,18 @@
 
 .demo-showcase__gesture {
   position: absolute;
-  left: 24px;
-  bottom: 24px;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   border: 1px solid #ffe59e99;
   border-radius: 50%;
   color: #ffe69a;
-  background: #111b2ce8;
+  background: #111b2cb3;
   box-shadow: 0 5px 20px #0005, inset 0 1px 0 #ffffff25;
   backdrop-filter: blur(8px);
   pointer-events: none;
@@ -96,20 +98,13 @@
 .demo-showcase__gesture svg {
   width: 27px;
   height: 27px;
-  animation: demo-finger-point 3.2s ease-in-out infinite;
-}
-
-.demo-showcase__ripple {
-  position: absolute;
-  inset: -1px;
-  border: 1px solid #dfb85a;
-  border-radius: inherit;
-  animation: demo-touch-ripple 3.2s ease-out infinite;
+  margin-left: 3px;
 }
 
 .demo-showcase__frame[data-playing="true"] .demo-showcase__gesture {
   opacity: 0;
-  transform: scale(.85);
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(.9);
 }
 
 @keyframes demo-rim-orbit {
@@ -117,22 +112,11 @@
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-@keyframes demo-finger-point {
-  0%, 55%, 100% { transform: translateY(2px) rotate(-12deg); }
-  25%, 40% { transform: translateY(-3px) rotate(-5deg); }
-}
-
-@keyframes demo-touch-ripple {
-  0%, 30% { transform: scale(1); opacity: 0; }
-  35% { opacity: .6; }
-  70%, 100% { transform: scale(1.35); opacity: 0; }
-}
-
 @media (max-width: 640px) {
   .demo-showcase__frame { padding: 3px; border-radius: 17px; }
   .demo-showcase__frame::after { border-radius: 15px; }
   .demo-showcase__screen { border-radius: 14px; }
-  .demo-showcase__gesture { width: 44px; height: 44px; left: 18px; bottom: 18px; }
+  .demo-showcase__gesture { width: 48px; height: 48px; }
   .demo-showcase__gesture svg { width: 24px; height: 24px; }
 }
 
@@ -141,7 +125,7 @@
   .demo-showcase__gesture { transition: none; }
   .demo-showcase__frame[data-playing="true"] { transform: none; }
   .demo-showcase__frame::before { animation: none; transform: translate(-50%, -50%); }
-  .demo-showcase__gesture svg,
-  .demo-showcase__ripple { animation: none; }
-  .demo-showcase__ripple { display: none; }
 }
+
+/* An opaque poster covers the entire video immediately, including letterboxing. */
+.demo-showcase__screen img { z-index: 1; background: #0f172a; }
