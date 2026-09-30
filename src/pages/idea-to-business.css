@@ -124,6 +124,7 @@
 }
 .idea-to-business .audience-main-photo img {
   display: block;
+  height: auto;
   width: 100%;
   aspect-ratio: 1.12;
   object-fit: cover;
@@ -138,6 +139,7 @@
 .idea-to-business .audience-gallery figure { margin: 0; }
 .idea-to-business .audience-gallery img {
   display: block;
+  height: auto;
   width: 100%;
   aspect-ratio: 3 / 2;
   object-fit: cover;
@@ -299,4 +301,10 @@
   .idea-to-business #start-building > .container > p { max-width: 38em; }
   .idea-to-business .landing-hero a,
   .idea-to-business #start-building a { font-size: var(--landing-lead); }
+}
+
+/* Decorative loops run only where they can be seen. */
+.idea-to-business :is(.demo-showcase, .upcoming-library, .kts, .tfp):not([data-motion-visible="true"]) *,
+.idea-to-business .demo-showcase:not([data-motion-visible="true"]) .demo-showcase__frame::before {
+  animation-play-state: paused !important;
 }
