@@ -26,21 +26,14 @@ const IdeaToBusiness = () => {
   const { price } = ideaToBusiness;
   const { checkoutUrl, checkoutLoading } = useProductCheckout();
   const { trackEvent } = useAnalytics();
-  const scrollToPossibilities = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const scrollToCurriculum = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const section = document.getElementById("possibilities");
-    const header = section?.querySelector("header");
-    const firstCard = section?.querySelector("article");
-    if (!header || !firstCard) return;
+    const section = document.getElementById("course-curriculum");
+    if (!section) return;
 
     event.preventDefault();
-    // Center the introduction and first card, keeping the heading visible on small screens.
-    const openingHeight = header.offsetHeight
-      + parseFloat(getComputedStyle(header).marginBottom)
-      + firstCard.offsetHeight;
-    const inset = Math.max(24, (window.innerHeight - openingHeight) / 2);
-    window.scrollTo({
-      top: window.scrollY + header.getBoundingClientRect().top - inset,
+    section.scrollIntoView({
+      block: "start",
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
     });
   };
@@ -139,7 +132,7 @@ const IdeaToBusiness = () => {
               asChild
               className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold text-lg md:text-2xl px-6 md:px-16 py-8 h-auto md:h-11 whitespace-normal max-w-full rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
-              <a className="landing-hero-cta" href="#possibilities" onClick={scrollToPossibilities}>אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
+              <a className="landing-hero-cta" href="#course-curriculum" onClick={scrollToCurriculum}>אני רוצה להתחיל לבנות את העסק שלי עם AI</a>
             </Button>
 
           </motion.div>
@@ -198,7 +191,7 @@ const IdeaToBusiness = () => {
       <LibrarySection />
 
       {/* Bonuses Section */}
-      <section className="landing-responsive landing-curriculum py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">
+      <section id="course-curriculum" className="landing-responsive landing-curriculum py-20 bg-gradient-to-br from-yellow-900/20 via-gray-900 to-orange-900/20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(234,179,8,0.1),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(249,115,22,0.1),transparent_50%)]"></div>
         <div className="container mx-auto px-6 relative z-10">
