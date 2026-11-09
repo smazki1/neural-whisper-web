@@ -30,7 +30,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogManager = lazy(() => import("./pages/BlogManager"));
 const BlogEditor = lazy(() => import("./pages/BlogEditor"));
 const BusinessWorkshop = lazy(() => import("./pages/BusinessWorkshop"));
-const IdeaToBusiness = lazy(() => import("./pages/IdeaToBusiness"));
+const IdeaToBusiness = lazy(() => import("./pages/IdeaBusinessCollage"));
 const AIStrategyCourse = lazy(() => import("./pages/AIStrategyCourse"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
