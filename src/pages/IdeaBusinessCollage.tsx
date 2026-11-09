@@ -27,23 +27,13 @@ export default function IdeaBusinessCollage() {
     />
     <motion.div className="cw-reading-progress" style={{ scaleX: reduced ? scrollYProgress : progress }} aria-hidden="true" />
     <div className="night-opening">
-      <header className="collage-nav night-nav" id="main-navigation">
-        <a className="collage-brand" href="#main-content"><bdi>AI MASTER</bdi></a>
-        <nav aria-label="ניווט בעמוד">
-          <a href="#collage-process">איך זה עובד</a>
-          <a href="#course-curriculum">מה לומדים</a>
-          <a className="nav-enroll" href="#enroll">לפרטי ההצטרפות</a>
-        </nav>
-      </header>
       <section className="night-hero" aria-labelledby="collage-title">
         <div className="night-hero-copy">
-          <h1 id="collage-title">
-            <span>יש לכם מה לתת.</span>
-            בואו נהפוך את זה<br />למשהו שאפשר למכור.
-          </h1>
+          <h1 id="collage-title">בואו נהפוך את הרעיון שלכם<br />למשהו שאפשר למכור.</h1>
           <p>רעיון שאתם רוצים להוציא לפועל. ידע וניסיון שאחרים נעזרים בהם. שירות קיים שאתם רוצים לפתח.</p>
-          <p>בקורס תלמדו לפתח מוצר או שירות ולבנות לו מותג ואתר עם AI, כדי לחסוך זמן עבודה והוצאות על אנשי מקצוע.</p>
-          <a className="collage-button night-action" href="#collage-process">מה תוכלו ליצור עם AI</a>
+          <nav id="main-navigation" aria-label="המשך לתהליך">
+            <a className="collage-button night-action" href="#collage-process">איך זה עובד?</a>
+          </nav>
         </div>
         <BusinessHeroArt />
       </section>
@@ -51,7 +41,7 @@ export default function IdeaBusinessCollage() {
     <BusinessStory />
     <section className="cook-your-turn cw-shell">
       <Reveal><h2>למה שהלקוחות<br /><em>יבחרו דווקא בכם?</em></h2></Reveal>
-      <Reveal><p className="cw-body">יכול להיות שאתם מקימים עסק, מפתחים מוצר חדש או רוצים לתת לשירות הקיים שלכם כיוון ברור יותר.</p><p className="cw-body">תלמדו לזהות מי הכי צריך את מה שאתם מציעים, ולפתח עבורו מוצר או שירות שנותן מענה מדויק וסיבה לקנות דווקא מכם.</p><a className="collage-button" href="#course-curriculum">מה לומדים בקורס</a></Reveal>
+      <Reveal><p className="cw-body">למי השירות שלכם הכי מתאים? מה יגרום לאותו אדם לבחור בו? משתי השאלות האלה מתחילים לבנות את ההצעה שלכם.</p><a className="collage-button" href="#course-curriculum">מה לומדים בקורס</a></Reveal>
     </section>
     {/* RealWorkPreview is temporarily hidden; the component and demos are preserved. */}
     <AboutAndProof />
