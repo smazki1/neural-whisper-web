@@ -1,0 +1,93 @@
+/* AI Master colors only. Keep collage geometry and the Bekol example identity.
+   The journey animation has its matching palette in its own worktree. */
+.business-page {
+  --paper: hsl(var(--background));
+  --ink: hsl(var(--brand-text-primary));
+  --blue: hsl(var(--brand-secondary));
+  --red: hsl(var(--brand-accent));
+  --soft-ink: hsl(var(--brand-text-body));
+  --brand-rule: hsl(var(--brand-text-primary) / .16);
+}
+
+.business-page .collage-button {
+  background: hsl(var(--brand-accent));
+  color: var(--ink) !important;
+  box-shadow: 3px 4px 0 var(--ink);
+}
+.business-page .collage-button:hover { box-shadow: 5px 6px 0 var(--ink); }
+.business-page .collage-button:active { box-shadow: 1px 2px 0 var(--ink); }
+.business-page .collage-button > span { background: hsl(var(--brand-text-primary) / .07); }
+.business-page .collage-nav,
+.business-page .collage-footer,
+.business-page .cook-your-turn,
+.business-page .cw-demo-menu button,
+.business-page .cw-course-folder details,
+.business-page .cw-faq details,
+.business-page .collage-price { border-color: var(--brand-rule); }
+.business-page .collage-footer,
+.business-page .collage-price > span,
+.business-page .cw-demo-index,
+.business-page .bm-intro > span,
+.business-page .bm-intro p,
+.business-page .bm-disclaimer { color: var(--soft-ink); }
+
+.business-page .cw-showcase,
+.business-page .cw-about { background: hsl(var(--section-alt)); }
+.business-page .cw-demo-window {
+  background: hsl(var(--section-alt));
+  box-shadow: 10px 12px 0 hsl(var(--brand-text-primary) / .1), 14px 18px 28px hsl(var(--brand-text-primary) / .07);
+}
+.business-page .cw-browser-chrome {
+  background: hsl(var(--section-alt));
+  border-color: var(--brand-rule);
+}
+.business-page .cw-browser-chrome i { background: hsl(var(--brand-text-primary) / .35); }
+.business-page .cw-demo-screen { background: var(--ink); }
+.business-page .cw-play-demo i { background: hsl(var(--brand-accent)); color: var(--ink); }
+.business-page .cw-course-folder,
+.business-page .collage-purchase {
+  background: hsl(var(--background));
+  box-shadow: 7px 9px 0 hsl(var(--brand-text-primary) / .1), 8px 15px 30px hsl(var(--brand-text-primary) / .04);
+}
+.business-page .cw-avi-main,
+.business-page .cw-avi-small,
+.business-page .cw-testimonial {
+  background: hsl(var(--background));
+  box-shadow: 4px 8px 20px hsl(var(--brand-text-primary) / .1);
+}
+.business-page .paper-tape { background: hsl(var(--brand-accent) / .5); }
+.business-page .bm-live-embed {
+  background: hsl(var(--section-alt));
+  border-color: var(--brand-rule);
+  box-shadow: 0 24px 70px hsl(var(--brand-text-primary) / .07);
+}
+.business-page .cw-fit { background: var(--ink); color: hsl(var(--background)); }
+.business-page .cw-fit h2 em,
+.business-page .cw-fit ul li::before,
+.business-page .cw-fit ol li > span { color: hsl(var(--brand-accent)); }
+.business-page .cw-fit ul,
+.business-page .cw-fit .cw-body,
+.business-page .cw-fit ol p,
+.business-page .cw-fit-honest { color: hsl(var(--background) / .85); }
+
+/* Only the course's paper annotations change. Bekol's swatches and mock site
+   deliberately retain their plum, coral and ivory palette. */
+.business-page .biz-art-orbit {
+  border-color: hsl(var(--brand-secondary) / .12);
+  background: radial-gradient(ellipse at 40% 60%, hsl(var(--brand-secondary) / .04), transparent 65%);
+}
+.business-page .biz-direction-map {
+  background-color: hsl(var(--section-alt));
+  background-image: radial-gradient(hsl(var(--brand-text-primary) / .12) .7px, transparent .7px);
+  box-shadow: 2px 5px 0 hsl(var(--brand-text-primary) / .13), 6px 10px 22px hsl(var(--brand-text-primary) / .05);
+}
+.business-page .biz-language-sheet {
+  background: hsl(var(--background));
+  box-shadow: 2px 5px 0 hsl(var(--brand-text-primary) / .13), 5px 11px 16px hsl(var(--brand-text-primary) / .06);
+}
+.business-page .biz-layer-caption,
+.business-page .biz-before-audience,
+.business-page .biz-hero-art figcaption,
+.business-page .biz-hero-art--bekol .biz-map-root,
+.business-page .biz-hero-art--bekol .biz-before-audience > span { color: var(--soft-ink); }
+.business-page .biz-before-audience > span::after { background: var(--blue); }

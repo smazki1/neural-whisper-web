@@ -1,0 +1,16 @@
+.business-motion { padding-top: 110px; padding-bottom: 45px; scroll-margin-top: 30px; }
+.bm-intro { max-width: 750px; margin: 0 auto 45px; text-align: center; }
+.bm-intro > span { font-size: 13px; color: #786e5c; }
+.collage-page .bm-intro h2 { font-size: clamp(40px, 5.7vw, 72px); font-weight: 850; line-height: 1.12; letter-spacing: -2px; margin: 18px 0 24px; }
+.bm-intro p { font-size: 18px; color: #665f52; line-height: 1.7; }
+.bm-live-embed { max-width: 900px; margin-inline: auto; background: #f3eddf; border: 1px solid #c8c0ac; box-shadow: 0 24px 70px #5a4b2812; overflow: hidden; }
+.bm-live-embed iframe { display: block; width: 100%; aspect-ratio: 1080 / 800; border: 0; }
+.bm-disclaimer { text-align: center; font-size: 12px; color: #756c5b; margin-top: 20px; }
+@media(max-width:700px) {
+ .business-motion { padding: 65px 16px 30px; }
+ .bm-intro { padding: 0 8px; margin-bottom: 30px; }
+ .collage-page .bm-intro h2 { font-size: 42px; letter-spacing: -1.3px; }
+ .bm-intro p { font-size: 16px; }
+ .bm-disclaimer { font-size: 11px; padding: 0 9px; }
+
+}

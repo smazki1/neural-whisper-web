@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'Business Rubik';
+  src: url('../assets/fonts/rubik-variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Broad, soft display type; retain Heebo for reading and the independent
+   typography of the Bekol illustration and embedded motion piece. */
+.business-page .collage-hero h1,
+.business-page h2,
+.business-page h3 {
+  font-family: 'Business Rubik', Heebo, sans-serif;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.business-page .collage-hero h1 {
+  font-weight: 800;
+  font-size: clamp(48px, 5.1vw, 74px);
+  line-height: 1.12;
+  letter-spacing: -.025em;
+}
+.business-page .collage-hero h1 > span {
+  font-weight: 650;
+  letter-spacing: -.015em;
+}
+.business-page .bm-intro h2,
+.business-page .enrollment-copy h2 { letter-spacing: -.02em; font-weight: 700; }
+.business-page .collage-button { font-family: 'Business Rubik', Heebo, sans-serif; font-weight: 600; }
+
+@media (max-width: 700px) {
+  .business-page .collage-hero h1 { font-size: clamp(41px, 10.4vw, 64px); }
+}
