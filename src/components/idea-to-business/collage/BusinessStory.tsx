@@ -32,7 +32,7 @@ export function BusinessStory() {
   }, []);
 
   return <section className="business-motion cw-shell" id="collage-process" aria-labelledby="business-motion-title">
-    <div className="bm-intro"><h2 id="business-motion-title">הרעיון שלכם יכול<br/><em>להתקדם הרבה יותר מהר.</em></h2><p>עם AI אפשר לבחון כיוונים לעסק, לפתח הצעה ולבנות את מה שצריך כדי להציג אותה ללקוחות. בקורס תלמדו איך לחבר את העבודה הזאת, כך שמה שבחרתם להציע יבוא לידי ביטוי גם במילים, בעיצוב ובאתר.</p></div>
+    <div className="bm-intro"><h2 id="business-motion-title">העסק שלכם יכול<br/><em>להתקדם הרבה יותר מהר.</em></h2></div>
     <div ref={host} className="bm-live-embed">
       <iframe ref={frame} src="/business-journey/index.html?embed" title="המסע בקורס: מכיוון ראשוני להצעה ולאתר" loading="lazy" style={height ? { height } : undefined} />
     </div>

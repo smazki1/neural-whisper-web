@@ -9,27 +9,17 @@
   background: url('/images/idea-to-business/night-stage-light.webp') left top / cover no-repeat;
   mask-image: linear-gradient(#000 60%, transparent);
 }
-.business-page .night-nav {
-  width: min(92%, 1440px);
-  padding: 13px 0;
-  min-height: 59px;
-  border-bottom: 1px solid #d8d5db50;
-}
-.night-nav .collage-brand bdi { font-size: clamp(20px, 2vw, 28px); }
-.business-page .night-nav nav a { color: #eeeef3; }
-.business-page .night-nav .nav-enroll { border-color: #eec643; }
-.night-hero-copy { position: relative; z-index: 2; text-align: center; padding: 22px 20px 0; }
+.night-hero-copy { position: relative; z-index: 2; text-align: center; padding: clamp(46px, 5.5vw, 78px) 20px 0; }
 .business-page .night-hero-copy h1 {
   font-family: 'Business Rubik', Heebo, sans-serif;
-  font-size: clamp(48px, 5.3vw, 80px);
-  font-weight: 800;
-  line-height: .99;
-  letter-spacing: -.042em;
+  font-size: clamp(44px, 4.8vw, 72px);
+  font-weight: 670;
+  line-height: 1.08;
+  letter-spacing: -.027em;
   margin: 0 auto 12px;
   color: #f1f0f2;
   text-shadow: 0 2px 2px #0005;
 }
-.night-hero-copy h1 span { display: block; font-size: .56em; margin-bottom: 8px; }
 .night-hero-copy p {
   max-width: 620px;
   margin: 8px auto 0;
@@ -47,7 +37,7 @@
   border-radius: 6px;
   box-shadow: 0 5px 16px #04081466;
   font-size: clamp(17px, 1.6vw, 22px);
-  font-weight: 730;
+  font-weight: 600;
 }
 .business-page .night-action:hover { transform: translateY(-2px); background: #f6d269; }
 .night-opening a:focus-visible { outline: 3px solid #eec643; outline-offset: 4px; }
@@ -126,10 +116,9 @@
   @keyframes night-arrive { from { opacity: .4; translate: 0 9px; } }
 }
 @media (max-width: 700px) {
-  .business-page .night-nav { min-height: 48px; width: 90%; padding: 10px 0; }
   .night-opening::before { background-position: 25% top; }
-  .night-hero-copy { padding-top: 28px; }
-  .business-page .night-hero-copy h1 { font-size: clamp(35px, 8.9vw, 55px); }
+  .night-hero-copy { padding-top: 42px; }
+  .business-page .night-hero-copy h1 { font-size: clamp(26px, 7.55vw, 48px); }
   .night-hero-copy p { max-width: 36ch; line-height: 1.45; }
   .night-ribbon { margin-top: 5px; }
   .ribbon-artwork { background-size: auto 100%; mask-image: linear-gradient(transparent, #000 14%, #000 89%, transparent); }
@@ -147,4 +136,39 @@
   .ribbon-site { grid-area: 3 / 1 / 4 / 3; width: min(90%, 260px); }
   .business-page .business-motion.cw-shell { padding: 12px 16px 40px; }
   .business-page .bm-intro h2 { font-size: clamp(31px, 8vw, 46px); }
+}
+
+/* The silver surface continues from the ribbon through the offer. */
+.business-page { font-family: 'Business Rubik', sans-serif; font-weight: 400; }
+.business-page .business-motion.cw-shell { padding-bottom: clamp(26px, 3vw, 44px); }
+.business-page .cook-your-turn {
+  width: 100%; max-width: none;
+  padding: clamp(30px, 4.5vw, 64px) max(6vw, calc((100vw - 1080px) / 2));
+  gap: clamp(20px, 5vw, 72px);
+  align-items: center; border: 0;
+  background: linear-gradient(160deg, #f7f7fa, #e2e5ee);
+}
+.business-page .cook-your-turn h2,
+.business-page .cw-about h2 { font-size: clamp(32px, 3.8vw, 54px); font-weight: 620; }
+.business-page .cw-body { line-height: 1.65; }
+.business-page .cook-your-turn .collage-button {
+  padding: 8px 0 3px; border-bottom: 2px solid #b39531; margin-top: 10px;
+  box-shadow: none; background: transparent;
+}
+.business-page .cw-about {
+  background: #101933 url('/images/idea-to-business/night-stage-light.webp') left top / cover no-repeat;
+  padding-block: clamp(34px, 4vw, 62px); color: #f0eef3;
+}
+.business-page .cw-about h2 em, .business-page .cw-about .cw-signature { color: #eec643; }
+.business-page .cw-about .cw-body { color: #e2e2e9; font-size: 17px; margin-top: 14px; max-width: 42ch; }
+.business-page .cw-about-photos-trio { min-height: 0; aspect-ratio: 1.12; }
+.business-page .cw-about-photos-trio .cw-avi-main img { height: auto; aspect-ratio: 1.52; }
+.business-page .cw-about-photos-trio .cw-avi-small { top: 36%; }
+.business-page .cw-about-photos-trio .cw-avi-small img { height: auto; aspect-ratio: 1.4; }
+.business-page .cw-about-photos-trio .cw-avi-lecture { width: 57%; right: 15%; }
+@media (max-width: 700px) {
+  .business-page .cook-your-turn { padding-inline: 24px; gap: 12px; }
+  .business-page .cook-your-turn h2 br { display: none; }
+  .business-page .cook-your-turn h2 em::before { content: ' '; }
+  .business-page .cw-about-layout { gap: 24px; }
 }
